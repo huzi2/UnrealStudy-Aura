@@ -7,6 +7,9 @@
 #include "AuraPlayerController.generated.h"
 
 class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+class IEnemyInterface;
 /**
  * 
  */
@@ -20,8 +23,21 @@ private:
 
 private:
 	virtual void BeginPlay() final;
+	virtual void SetupInputComponent() final;
+	virtual void PlayerTick(float DeltaTime) final;
+
+private:
+	void Move(const FInputActionValue& InputActionValue);
+	void CursorTrace();
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> AuraContext;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> MoveAction;
+
+private:
+	IEnemyInterface* LastActor;
+	IEnemyInterface* ThisActor;
 };
