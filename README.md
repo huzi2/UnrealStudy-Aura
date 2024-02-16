@@ -1,5 +1,7 @@
 # UnrealStudy-Aura
 
+<img width="776" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/74afe339-fce5-4d1e-af69-2adaa49bf8dd">
+
 ## 프로젝트 개요
 
 - 언리얼 5.3 C++과 GAS를 활용한 쿼터뷰 RPG 게임
