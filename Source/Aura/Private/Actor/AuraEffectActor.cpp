@@ -10,6 +10,7 @@ AAuraEffectActor::AAuraEffectActor()
 	, DurationEffectApplicationPolicy(EEffectApplicationPolicy::DoNotApply)
 	, InfiniteEffectApplicationPolicy(EEffectApplicationPolicy::DoNotApply)
 	, InfiniteEffectRemovalPolicy(EEffectRemovalPolicy::RemoveOnEndOverlap)
+	, ActorLevel(1.f)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -30,7 +31,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
 	// ÀÌÆåÆ®¸¦ ÀÏÀ¸Å² °´Ã¼
 	EffectContextHandle.AddSourceObject(this);
-	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.f, EffectContextHandle);
+	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, ActorLevel, EffectContextHandle);
 	// ÀÌÆåÆ® ¹ßµ¿
 	FActiveGameplayEffectHandle ActiveEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 
