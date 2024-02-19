@@ -21,6 +21,9 @@ protected:
 protected:
 	virtual void BeginPlay() override;
 
+protected:
+	virtual void InitAbilityActorInfo();
+
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 

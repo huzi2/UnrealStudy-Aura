@@ -22,4 +22,5 @@ private:
 	virtual void BeginPlay() final;
 	virtual void HighlightActor() final;
 	virtual void UnHighlightActor() final;
+	virtual void InitAbilityActorInfo() final;
 };

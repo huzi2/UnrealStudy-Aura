@@ -22,7 +22,7 @@ void AAuraEnemy::BeginPlay()
 	
 	check(AbilitySystemComponent);
 
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	InitAbilityActorInfo();
 }
 
 void AAuraEnemy::HighlightActor()
@@ -48,5 +48,15 @@ void AAuraEnemy::UnHighlightActor()
 	if (Weapon)
 	{
 		Weapon->SetRenderCustomDepth(false);
+	}
+}
+
+void AAuraEnemy::InitAbilityActorInfo()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		AuraAbilitySystemComponent->AbilityActorInfoSet();
 	}
 }
