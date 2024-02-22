@@ -28,7 +28,7 @@ public:
 
 private:
 	// 플레이어는 PlayerState에서 어빌리티와 어트리뷰트를 가짐
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()

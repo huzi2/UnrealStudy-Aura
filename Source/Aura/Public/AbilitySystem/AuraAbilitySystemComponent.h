@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAbilitySystemComponent.generated.h"
 
+// 적용된 이펙트 자체의 에셋 태그를 확인해서 해당 태그에 대한 델리게이트
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& AssetTags)
 
 /**
