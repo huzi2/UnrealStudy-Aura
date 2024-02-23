@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/AuraCharacterBase.h"
+#include "AbilitySystemComponent.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
 {
@@ -23,4 +24,16 @@ void AAuraCharacterBase::InitAbilityActorInfo()
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void AAuraCharacterBase::InitializePrimaryAttributes() const
+{
+	check(GetAbilitySystemComponent());
+	check(DefaultPrimaryAttributes);
+
+	// 게임플레이 이펙트를 활용한 어트리뷰트 세트 초기화
+	// 초기화는 서버에서만 하면된다. 어트리뷰트 세트는 자동적으로 레플리케이션 된다.
+	const FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultPrimaryAttributes, 1.f, ContextHandle);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
 }

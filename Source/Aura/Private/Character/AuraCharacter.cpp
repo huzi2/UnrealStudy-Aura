@@ -64,4 +64,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 			}
 		}
 	}
+
+	// 기본 스탯 어트리뷰트 초기화
+	InitializePrimaryAttributes();
 }
