@@ -65,6 +65,14 @@ void AAuraCharacter::InitAbilityActorInfo()
 		}
 	}
 
-	// 기본 스탯 어트리뷰트 초기화
-	InitializePrimaryAttributes();
+	// 스탯 어트리뷰트 게임플레이 이펙트로 초기화
+	InitializeDefaultAttributes();
+}
+
+int32 AAuraCharacter::GetPlayerLevel() const
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+
+	return AuraPlayerState->GetPlayerLevel();
 }

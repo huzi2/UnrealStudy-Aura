@@ -20,5 +20,8 @@ private:
 private:
 	virtual void PossessedBy(AController* NewController) final;
 	virtual void OnRep_PlayerState() final;
+
 	virtual void InitAbilityActorInfo() final;
+
+	virtual int32 GetPlayerLevel() const final;
 };

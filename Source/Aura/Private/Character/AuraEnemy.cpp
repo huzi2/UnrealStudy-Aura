@@ -6,6 +6,7 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 
 AAuraEnemy::AAuraEnemy()
+	: Level(1)
 {
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 
@@ -23,6 +24,21 @@ void AAuraEnemy::BeginPlay()
 	check(AbilitySystemComponent);
 
 	InitAbilityActorInfo();
+}
+
+void AAuraEnemy::InitAbilityActorInfo()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		AuraAbilitySystemComponent->AbilityActorInfoSet();
+	}
+}
+
+int32 AAuraEnemy::GetPlayerLevel() const
+{
+	return Level;
 }
 
 void AAuraEnemy::HighlightActor()
@@ -48,15 +64,5 @@ void AAuraEnemy::UnHighlightActor()
 	if (Weapon)
 	{
 		Weapon->SetRenderCustomDepth(false);
-	}
-}
-
-void AAuraEnemy::InitAbilityActorInfo()
-{
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-
-	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
-	{
-		AuraAbilitySystemComponent->AbilityActorInfoSet();
 	}
 }

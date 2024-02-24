@@ -20,7 +20,15 @@ private:
 
 private:
 	virtual void BeginPlay() final;
+
+	virtual void InitAbilityActorInfo() final;
+
+	virtual int32 GetPlayerLevel() const final;
+
 	virtual void HighlightActor() final;
 	virtual void UnHighlightActor() final;
-	virtual void InitAbilityActorInfo() final;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	int32 Level;
 };
