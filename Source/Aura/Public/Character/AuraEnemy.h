@@ -28,7 +28,7 @@ private:
 	virtual void HighlightActor() final;
 	virtual void UnHighlightActor() final;
 
-private:
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level;
 };
