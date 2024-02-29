@@ -31,5 +31,5 @@ float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectS
 
 	const int32 PlayerLevel = CombatInterface->GetPlayerLevel();
 
-	return 50.f + (2.5f * Intelligence) + (15.f * PlayerLevel);
+	return 50.f + (2.5f * Intelligence) + (15.f * static_cast<float>(PlayerLevel));
 }

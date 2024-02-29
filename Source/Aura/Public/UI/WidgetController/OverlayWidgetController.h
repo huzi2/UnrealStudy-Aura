@@ -80,5 +80,5 @@ inline T* UOverlayWidgetController::GetDataTableRowByTag(UDataTable* DataTable, 
 {
 	if (!DataTable) return nullptr;
 	
-	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
+	return DataTable->FindRow<T>(Tag.GetTagName(), FString());
 }

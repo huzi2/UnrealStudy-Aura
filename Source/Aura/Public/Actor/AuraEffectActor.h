@@ -35,9 +35,6 @@ private:
 	AAuraEffectActor();
 
 private:
-	virtual void BeginPlay() final;
-
-private:
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 

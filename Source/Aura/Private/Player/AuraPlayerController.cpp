@@ -48,8 +48,8 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	const FVector2D& InputAxisVector = InputActionValue.Get<FVector2D>();
-	const FRotator& Rotation = GetControlRotation();
+	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
+	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0.0, Rotation.Yaw, 0.0);
 
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
