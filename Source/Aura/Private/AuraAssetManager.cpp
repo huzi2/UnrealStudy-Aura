@@ -1,0 +1,20 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#include "AuraAssetManager.h"
+#include "AuraGameplayTags.h"
+
+const UAuraAssetManager& UAuraAssetManager::Get()
+{
+	check(GEngine);
+
+	UAuraAssetManager* AuraAssetManager = Cast<UAuraAssetManager>(GEngine->AssetManager);
+	return *AuraAssetManager;
+}
+
+void UAuraAssetManager::StartInitialLoading()
+{
+	Super::StartInitialLoading();
+
+	// 게임 태그 관리하는 싱글톤 클래스의 초기화(필요한 태그를 태그매니저에 기입)
+	UAuraGameplayTags::InitializeNativeGameplayTags();
+}
