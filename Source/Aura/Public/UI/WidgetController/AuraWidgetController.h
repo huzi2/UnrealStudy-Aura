@@ -42,10 +42,12 @@ class AURA_API UAuraWidgetController : public UObject
 	GENERATED_BODY()
 
 public:
-	virtual void BroadcastInitialValue();
 	virtual void BindCallbacksToDependencies();
 
 public:
+	UFUNCTION(BlueprintCallable)
+	virtual void BroadcastInitialValue();
+
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 

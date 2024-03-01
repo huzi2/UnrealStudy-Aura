@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 
-// 게임플레이 태그를 관리하는 싱글톤 클래스
+// 게임플레이 태그를 변수로 관리하는 싱글톤 클래스
 class UAuraGameplayTags
 {
 public:
