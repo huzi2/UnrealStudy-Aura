@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/AuraCharacterBase.h"
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
 {
@@ -45,4 +45,15 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
+void AAuraCharacterBase::AddCharacterAbilities()
+{
+	UAuraAbilitySystemComponent* AuraAbilitySystemComponent = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+
+	// 어빌리티의 부여는 서버만 해야한다. 클라들은 레플리케이션된 정보를 사용
+	if (!HasAuthority()) return;
+
+	// 어빌리티 시스템 컴포넌트에 어빌리티 부여
+	AuraAbilitySystemComponent->AddCharacterAbilities(StartupAbilites);
 }

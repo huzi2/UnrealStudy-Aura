@@ -8,15 +8,35 @@
 void UAttributeMenuWidgetController::BroadcastInitialValue()
 {
 	check(AttributeInfo);
-	const UAuraAttributeSet* AS = CastChecked<UAuraAttributeSet>(AttributeSet);
+	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
 	
 	// 데이터에셋을 사용해서 에셋들에게 초기값을 브로드캐스트
-	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(UAuraGameplayTags::Get().Attribute_Primary_Strength);
-	Info.AttributeValue = AS->GetStrength();
-	AttributeInfoDelegate.Broadcast(Info);
+	for (const auto& Pair : AuraAttributeSet->TagsToAttribute)
+	{
+		BroadcastAttributeInfo(Pair.Key, Pair.Value());
+	}
 }
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
-	
+	if (!AbilitySystemComponent) return;
+	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+
+	for (const auto& Pair : AuraAttributeSet->TagsToAttribute)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
+			[this, Pair](const FOnAttributeChangeData& Data)
+			{
+				BroadcastAttributeInfo(Pair.Key, Pair.Value());
+			}
+		);
+	}
+}
+
+void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
+{
+	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	// FGameplayAttribute에서 값 얻어오기
+	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
+	AttributeInfoDelegate.Broadcast(Info);
 }

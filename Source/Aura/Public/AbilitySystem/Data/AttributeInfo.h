@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "AttributeInfo.generated.h"
 
+// 위젯에서 사용할 정보. 위젯 컨트롤러를 통해 위젯에다 구조체에 설정한 값을 가져다 세팅
 USTRUCT(BlueprintType)
 struct FAuraAttributeInfo
 {

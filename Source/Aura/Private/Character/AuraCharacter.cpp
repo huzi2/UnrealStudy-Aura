@@ -28,6 +28,9 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 
 	// 서버에서 어빌리티 시스템 컴포넌트 초기화
 	InitAbilityActorInfo();
+
+	// 게임 시작부터 주어지는 어빌리티 
+	AddCharacterAbilities();
 }
 
 void AAuraCharacter::OnRep_PlayerState()

@@ -7,6 +7,7 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAttributeSet.generated.h"
 
+// 자동으로 어트리뷰트 세트에 대한 Get, Set, Init 함수를 만들어주는 매크로
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
@@ -61,6 +62,9 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 
 private:
+	UAuraAttributeSet();
+
+private:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const final;
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) final;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) final;
@@ -69,6 +73,9 @@ private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 
 public:
+	// FGameplayAttribute(*)()는 FGameplayAttribute를 얻어오는 함수의 포인터
+	TMap<FGameplayTag, FGameplayAttribute(*)()> TagsToAttribute;
+
 	// Primary Attributes
 	// Strength : 물리 데미지를 증가
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes")
