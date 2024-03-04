@@ -2,12 +2,24 @@
 
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
-#include "EnhancedInputComponent.h"
 #include "Interaction/EnemyInterface.h"
+#include "Input/AuraInputComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Components/SplineComponent.h"
+#include "AuraGameplayTags.h"
 
 AAuraPlayerController::AAuraPlayerController()
+	: AutoRunAcceptanceRadius(50.f)
+	, CachedDestination(FVector::ZeroVector)
+	, FollowTime(0.f)
+	, ShortPressThreshold(0.5f)
+	, bAutoRunning(false)
+	, bTargeting(false)
 {
 	bReplicates = true;
+
+	Spline = CreateDefaultSubobject<USplineComponent>(TEXT("Spline"));
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -34,9 +46,11 @@ void AAuraPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
-	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
+	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);
+	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
 
+	// 인풋 컨피그에서 설정한 입력 액션과 태그를 컨트롤러의 함수와 연결해서, 입력 액션을 하면 해당 입력에 맞는 태그를 얻어올 수 있다.
+	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
 void AAuraPlayerController::PlayerTick(float DeltaTime)
@@ -44,6 +58,15 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 
 	CursorTrace();
+}
+
+UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraAbilitySystemComponent()
+{
+	if (!AuraAbilitySystemComponent)
+	{
+		AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return AuraAbilitySystemComponent;
 }
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -94,6 +117,69 @@ void AAuraPlayerController::CursorTrace()
 				LastActor->UnHighlightActor();
 				ThisActor->HighlightActor();
 			}
+		}
+	}
+}
+
+void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+	if (InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
+	{
+		// 마우스 위에 타겟을 클릭했다면 자동 이동은 취소됨
+		bTargeting = ThisActor ? true : false;
+		bAutoRunning = false;
+	}
+}
+
+void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+	if (!GetAuraAbilitySystemComponent()) return;
+
+	GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
+}
+
+void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
+{
+	// 마우스 클릭 외 발동
+	if (!InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
+	{
+		if (GetAuraAbilitySystemComponent())
+		{
+			GetAuraAbilitySystemComponent()->AbilityInputTagHeld(InputTag);
+		}
+		return;
+	}
+
+	// 클릭 중이면 타겟팅일 때 능력 발동, 아니면 이동
+	if (bTargeting)
+	{
+		if (GetAuraAbilitySystemComponent())
+		{
+			GetAuraAbilitySystemComponent()->AbilityInputTagHeld(InputTag);
+		}
+	}
+	// 마우스 클릭 이동
+	else
+	{
+		if (!GetWorld()) return;
+
+		// 클릭을 누르는 시간을 누적 기록
+		FollowTime += GetWorld()->GetDeltaSeconds();
+
+		// 마우스 커서와 지면 충돌 체크
+		FHitResult Hit;
+		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		{
+			// 목표 지점은 클릭한 곳
+			CachedDestination = Hit.ImpactPoint;
+		}
+
+		if (APawn* ControllerPawn = GetPawn())
+		{
+			// 목표 지점으로 방향을 설정
+			const FVector WorldDirection = (CachedDestination - ControllerPawn->GetActorLocation()).GetSafeNormal();
+			// 해당 방향으로 이동
+			ControllerPawn->AddMovementInput(WorldDirection);
 		}
 	}
 }

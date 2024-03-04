@@ -4,12 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayTagContainer.h"
 #include "AuraPlayerController.generated.h"
 
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 class IEnemyInterface;
+class UAuraInputConfig;
+struct FGameplayTag;
+class UAuraAbilitySystemComponent;
+class USplineComponent;
 /**
  * 
  */
@@ -27,8 +32,13 @@ private:
 	virtual void PlayerTick(float DeltaTime) final;
 
 private:
+	UAuraAbilitySystemComponent* GetAuraAbilitySystemComponent();
+
 	void Move(const FInputActionValue& InputActionValue);
 	void CursorTrace();
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Input")
@@ -36,6 +46,33 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UAuraInputConfig> InputConfig;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> Spline;
+
+	// 이동 관련 변수
+	// 목표 지점에 도달해서 자동 이동을 중지할 거리
+	UPROPERTY(EditAnywhere)
+	float AutoRunAcceptanceRadius;
+
+	UPROPERTY()
+	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
+
+private:
+	// 이동 관련 변수
+	// 클릭한 목표 벡터
+	FVector CachedDestination;
+	// 클릭을 유지한 시간
+	float FollowTime;
+	// 클릭이 짧은 클릭으로 여겨질 기준 시간
+	float ShortPressThreshold;
+	// 자동으로 이동 중인가?
+	bool bAutoRunning;
+	// 무언가를 타겟 중인가?
+	bool bTargeting;
 
 private:
 	IEnemyInterface* LastActor;
