@@ -8,9 +8,11 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Components/SplineComponent.h"
 #include "AuraGameplayTags.h"
+#include "NavigationSystem.h"
+#include "NavigationPath.h"
 
 AAuraPlayerController::AAuraPlayerController()
-	: AutoRunAcceptanceRadius(50.f)
+	: AutoRunAcceptanceRadius(50.0)
 	, CachedDestination(FVector::ZeroVector)
 	, FollowTime(0.f)
 	, ShortPressThreshold(0.5f)
@@ -58,6 +60,8 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 
 	CursorTrace();
+
+	AutoRun();
 }
 
 UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraAbilitySystemComponent()
@@ -87,35 +91,37 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAuraPlayerController::CursorTrace()
 {
-	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
 	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
 
-	if (!LastActor)
+	if (LastActor != ThisActor)
 	{
-		// 이전 타겟이 없는 상태에서 새 타겟으로 움직였으므로 하이라이트
-		if (ThisActor)
-		{
-			ThisActor->HighlightActor();
-		}
+		if (LastActor) LastActor->UnHighlightActor();
+		if (ThisActor)ThisActor->HighlightActor();
 	}
-	else
+}
+
+void AAuraPlayerController::AutoRun()
+{
+	if (!bAutoRunning) return;
+
+	// 스플라인에 저장된 위치대로 이동
+	if (APawn* ControllerPawn = GetPawn())
 	{
-		// 이전 타겟이 있는 상태에서 빈 곳으로 움직였으므로 언하이라이트
-		if (!ThisActor)
+		if (Spline)
 		{
-			LastActor->UnHighlightActor();
-		}
-		else
-		{
-			// 이전 타겟이 있는 상태에서 다른 타겟으로 움직였으므로 하이라이트를 변경
-			if (LastActor != ThisActor)
+			const FVector LocationOnSpline = Spline->FindLocationClosestToWorldLocation(ControllerPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+			const FVector Direction = Spline->FindDirectionClosestToWorldLocation(LocationOnSpline, ESplineCoordinateSpace::World);
+
+			ControllerPawn->AddMovementInput(Direction);
+
+			const double DistanceToDestination = (LocationOnSpline - CachedDestination).Length();
+			if (DistanceToDestination <= AutoRunAcceptanceRadius)
 			{
-				LastActor->UnHighlightActor();
-				ThisActor->HighlightActor();
+				bAutoRunning = false;
 			}
 		}
 	}
@@ -135,7 +141,56 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	if (!GetAuraAbilitySystemComponent()) return;
 
-	GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
+	// 마우스 클릭 외 발동
+	if (!InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
+	{
+		if (GetAuraAbilitySystemComponent())
+		{
+			GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
+		}
+		return;
+	}
+	
+	// 클릭 중이면 타겟팅일 때 능력 발동
+	if (bTargeting)
+	{
+		if (GetAuraAbilitySystemComponent())
+		{
+			GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
+		}
+	}
+	// 마우스를 땠을 때 짧게 눌렀으면 목표 위치로 네비게이션 통해서 자동 이동
+	else
+	{
+		if (FollowTime <= ShortPressThreshold)
+		{
+			if (const APawn* ControllPawn = GetPawn())
+			{
+				if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControllPawn->GetActorLocation(), CachedDestination))
+				{
+					if (Spline)
+					{
+						Spline->ClearSplinePoints();
+
+						// 길찾기로 찾은 경로들을 스플라인으로 곡선 형태로 수정
+						for (const FVector& PointLoc : NavPath->PathPoints)
+						{
+							Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
+
+							//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+						}
+
+						// 도착 지점을 네비메시 상 도달할 수 있는 지점으로 설정
+						CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
+
+						bAutoRunning = true;
+					}
+				}
+			}
+		}
+		FollowTime = 0.f;
+		bTargeting = false;
+	}
 }
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
@@ -150,7 +205,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		return;
 	}
 
-	// 클릭 중이면 타겟팅일 때 능력 발동, 아니면 이동
+	// 클릭 중이면 타겟팅일 때 능력 발동
 	if (bTargeting)
 	{
 		if (GetAuraAbilitySystemComponent())
@@ -167,11 +222,10 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		FollowTime += GetWorld()->GetDeltaSeconds();
 
 		// 마우스 커서와 지면 충돌 체크
-		FHitResult Hit;
-		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		if (CursorHit.bBlockingHit)
 		{
 			// 목표 지점은 클릭한 곳
-			CachedDestination = Hit.ImpactPoint;
+			CachedDestination = CursorHit.ImpactPoint;
 		}
 
 		if (APawn* ControllerPawn = GetPawn())

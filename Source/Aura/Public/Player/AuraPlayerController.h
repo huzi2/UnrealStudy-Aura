@@ -36,6 +36,8 @@ private:
 
 	void Move(const FInputActionValue& InputActionValue);
 	void CursorTrace();
+	void AutoRun();
+
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
@@ -56,12 +58,16 @@ private:
 	// 이동 관련 변수
 	// 목표 지점에 도달해서 자동 이동을 중지할 거리
 	UPROPERTY(EditAnywhere)
-	float AutoRunAcceptanceRadius;
+	double AutoRunAcceptanceRadius;
 
 	UPROPERTY()
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
 
 private:
+	IEnemyInterface* LastActor;
+	IEnemyInterface* ThisActor;
+	FHitResult CursorHit;
+
 	// 이동 관련 변수
 	// 클릭한 목표 벡터
 	FVector CachedDestination;
@@ -73,8 +79,4 @@ private:
 	bool bAutoRunning;
 	// 무언가를 타겟 중인가?
 	bool bTargeting;
-
-private:
-	IEnemyInterface* LastActor;
-	IEnemyInterface* ThisActor;
 };
