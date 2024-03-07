@@ -26,6 +26,8 @@ protected:
 
 	virtual void InitAbilityActorInfo();
 
+	virtual FVector GetCombatSocketLocation() const override;
+
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
@@ -40,6 +42,9 @@ protected:
 protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName WeaponTipSocketName;
 
 	// 능력치 초기화에 사용할 게임플레이 이펙트들
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")

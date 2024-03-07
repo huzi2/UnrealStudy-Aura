@@ -7,6 +7,8 @@
 AAuraProjectile::AAuraProjectile()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	// 생성을 서버에서만 할 거라 클라들을 위해서 레플리케이션
+	bReplicates = true;
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	SetRootComponent(Sphere);
