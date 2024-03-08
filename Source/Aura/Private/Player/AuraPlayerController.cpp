@@ -18,6 +18,7 @@ AAuraPlayerController::AAuraPlayerController()
 	, ShortPressThreshold(0.5f)
 	, bAutoRunning(false)
 	, bTargeting(false)
+	, bShiftKeyDown(false)
 {
 	bReplicates = true;
 
@@ -50,6 +51,8 @@ void AAuraPlayerController::SetupInputComponent()
 
 	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);
 	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &ThisClass::ShiftPressed);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &ThisClass::ShiftReleased);
 
 	// 인풋 컨피그에서 설정한 입력 액션과 태그를 컨트롤러의 함수와 연결해서, 입력 액션을 하면 해당 입력에 맞는 태그를 얻어올 수 있다.
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
@@ -150,17 +153,15 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		}
 		return;
 	}
-	
-	// 클릭 중이면 타겟팅일 때 능력 발동
-	if (bTargeting)
+
+	// 땠을 때 능력 발동
+	if (GetAuraAbilitySystemComponent())
 	{
-		if (GetAuraAbilitySystemComponent())
-		{
-			GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
-		}
+		GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
 	}
+
 	// 마우스를 땠을 때 짧게 눌렀으면 목표 위치로 네비게이션 통해서 자동 이동
-	else
+	if (!bTargeting && !bShiftKeyDown)
 	{
 		if (FollowTime <= ShortPressThreshold)
 		{
@@ -205,8 +206,8 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		return;
 	}
 
-	// 클릭 중이면 타겟팅일 때 능력 발동
-	if (bTargeting)
+	// 클릭 중이면 타겟팅일 때 능력 발동. 또는 쉬프트키 누른 상태면 맨 땅에 발동
+	if (bTargeting || bShiftKeyDown)
 	{
 		if (GetAuraAbilitySystemComponent())
 		{

@@ -35,6 +35,8 @@ private:
 	UAuraAbilitySystemComponent* GetAuraAbilitySystemComponent();
 
 	void Move(const FInputActionValue& InputActionValue);
+	FORCEINLINE void ShiftPressed() { bShiftKeyDown = true; }
+	FORCEINLINE void ShiftReleased() { bShiftKeyDown = false; }
 	void CursorTrace();
 	void AutoRun();
 
@@ -48,6 +50,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> ShiftAction;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;
@@ -79,4 +84,6 @@ private:
 	bool bAutoRunning;
 	// 무언가를 타겟 중인가?
 	bool bTargeting;
+
+	bool bShiftKeyDown;
 };
