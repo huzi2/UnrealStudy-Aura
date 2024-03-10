@@ -6,7 +6,7 @@
 #include "UObject/Interface.h"
 #include "CombatInterface.generated.h"
 
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, BlueprintType)
 class UCombatInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -22,4 +22,10 @@ class AURA_API ICombatInterface
 public:
 	virtual int32 GetPlayerLevel() const;
 	virtual FVector GetCombatSocketLocation() const;
+
+protected:
+	// 어빌리티의 블루프린트가 액터에 종속되지않도록 인터페이스에서 구현
+	// 모션워핑 컴포넌트를 코드가 아니라 블루프린트에서 직접 추가했으므로 함수내용도 블루프린트에서 구현
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateFacingTarget(const FVector& Target);
 };
