@@ -22,6 +22,18 @@ private:
 	virtual void OnRep_PlayerState() final;
 
 	virtual void InitAbilityActorInfo() final;
+	virtual void InitializeDefaultAttributes() const final;
 
 	virtual int32 GetPlayerLevel() const final;
+
+protected:
+	// 능력치 초기화에 사용할 게임플레이 이펙트들
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 };

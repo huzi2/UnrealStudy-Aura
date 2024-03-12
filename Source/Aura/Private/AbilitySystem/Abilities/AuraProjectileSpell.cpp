@@ -5,6 +5,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "AuraGameplayTags.h"
 
 void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
@@ -42,6 +43,12 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		{
 			// 발사체의 이펙트 스펙 핸들에 적용
 			Projectile->DamageEffectSpecHandle = SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), SourceAbilitySystemComponent->MakeEffectContext());
+
+			// 발사체의 메타 어트리뷰트 Damage에 데미지값 적용
+			const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
+			// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
+			const float ScaledDamage = Damage.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, GameplayTags.Damage, ScaledDamage);
 		}
 	}
 	

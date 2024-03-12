@@ -72,6 +72,13 @@ void AAuraCharacter::InitAbilityActorInfo()
 	InitializeDefaultAttributes();
 }
 
+void AAuraCharacter::InitializeDefaultAttributes() const
+{
+	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
+	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
 int32 AAuraCharacter::GetPlayerLevel() const
 {
 	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();

@@ -18,15 +18,6 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
-void AAuraCharacterBase::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void AAuraCharacterBase::InitAbilityActorInfo()
-{
-}
-
 FVector AAuraCharacterBase::GetCombatSocketLocation() const
 {
 	check(Weapon);
@@ -37,6 +28,14 @@ FVector AAuraCharacterBase::GetCombatSocketLocation() const
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void AAuraCharacterBase::InitAbilityActorInfo()
+{
+}
+
+void AAuraCharacterBase::InitializeDefaultAttributes() const
+{
 }
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
@@ -51,13 +50,6 @@ void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Gameplay
 	ContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, Level, ContextHandle);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
-}
-
-void AAuraCharacterBase::InitializeDefaultAttributes() const
-{
-	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
-	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
-	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
 }
 
 void AAuraCharacterBase::AddCharacterAbilities()

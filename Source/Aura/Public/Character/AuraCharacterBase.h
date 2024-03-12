@@ -22,21 +22,20 @@ protected:
 	AAuraCharacterBase();
 
 protected:
-	virtual void BeginPlay() override;
-
-	virtual void InitAbilityActorInfo();
-
 	virtual FVector GetCombatSocketLocation() const override;
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+private:
+	virtual void InitAbilityActorInfo();
+	virtual void InitializeDefaultAttributes() const;
 
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
-	void InitializeDefaultAttributes() const;
 	void AddCharacterAbilities();
 
 protected:
@@ -45,16 +44,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
-
-	// 능력치 초기화에 사용할 게임플레이 이펙트들
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
-	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
-	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
-
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
-	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
 	// 게임플레이 어빌리티 시스템의 핵심 컴포넌트
 	UPROPERTY()

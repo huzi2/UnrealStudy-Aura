@@ -7,9 +7,11 @@
 #include "Aura/Aura.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 
 AAuraEnemy::AAuraEnemy()
 	: Level(1)
+	, CharacterClass(ECharacterClass::Warrior)
 {
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECollisionResponse::ECR_Overlap);
@@ -72,7 +74,13 @@ void AAuraEnemy::InitAbilityActorInfo()
 		AuraAbilitySystemComponent->AbilityActorInfoSet();
 	}
 
+	// 게임플레이 이펙트를 통한 능력치 초기화
 	InitializeDefaultAttributes();
+}
+
+void AAuraEnemy::InitializeDefaultAttributes() const
+{
+	UAuraAbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterClass, static_cast<float>(Level), AbilitySystemComponent);
 }
 
 int32 AAuraEnemy::GetPlayerLevel() const
