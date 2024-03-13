@@ -8,10 +8,15 @@
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "AuraGameplayTags.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AAuraEnemy::AAuraEnemy()
 	: Level(1)
 	, CharacterClass(ECharacterClass::Warrior)
+	, bHitReacting(false)
+	, BaseWalkSpeed(250.f)
+	, LifeSpan(5.f)
 {
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECollisionResponse::ECR_Overlap);
@@ -31,9 +36,17 @@ void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
+	}
+
 	check(AbilitySystemComponent);
 
 	InitAbilityActorInfo();
+
+	// 기본 어빌리티들 부여
+	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
 
 	// 위젯 컨트롤러를 자신으로 설정한다. 위젯 컨트롤러는 단순한 UObject이므로 가능함
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
@@ -59,6 +72,9 @@ void AAuraEnemy::BeginPlay()
 			}
 		);
 
+		// Effects.HitReact 태그를 얻었을 때 피격 모션을 재생함하는 함수를 바인드
+		AbilitySystemComponent->RegisterGameplayTagEvent(UAuraGameplayTags::Get().Effects_HitReact, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::HitReactTagChanged);
+
 		// 초기값 설정
 		OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 		OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
@@ -81,6 +97,13 @@ void AAuraEnemy::InitAbilityActorInfo()
 void AAuraEnemy::InitializeDefaultAttributes() const
 {
 	UAuraAbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterClass, static_cast<float>(Level), AbilitySystemComponent);
+}
+
+void AAuraEnemy::Die()
+{
+	Super::Die();
+
+	SetLifeSpan(5.f);
 }
 
 int32 AAuraEnemy::GetPlayerLevel() const
@@ -111,5 +134,16 @@ void AAuraEnemy::UnHighlightActor()
 	if (Weapon)
 	{
 		Weapon->SetRenderCustomDepth(false);
+	}
+}
+
+void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	// 새로운 태그가 들어올 때만
+	bHitReacting = NewCount > 0;
+
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
 	}
 }

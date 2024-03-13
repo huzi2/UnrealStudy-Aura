@@ -27,10 +27,14 @@ private:
 	virtual void InitAbilityActorInfo() final;
 	virtual void InitializeDefaultAttributes() const final;
 
+	virtual void Die() final;
 	virtual int32 GetPlayerLevel() const final;
 
 	virtual void HighlightActor() final;
 	virtual void UnHighlightActor() final;
+
+private:
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
 public:
 	// 오버레이 위젯 컨트롤러에서 가져온 체력 변경될 때 적용할 델리게이트
@@ -50,4 +54,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	bool bHitReacting;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float BaseWalkSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float LifeSpan;
 };

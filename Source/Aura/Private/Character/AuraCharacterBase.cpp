@@ -18,16 +18,29 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+void AAuraCharacterBase::Die()
+{
+	// 캐릭터가 죽었을 때 서버에서만 수행할 일
+
+	// 무기를 떨어뜨리는건 레플리케이션되므로 멀티캐스트에서 안해도됨
+	if (Weapon)
+	{
+		Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
+	}
+	
+	MulticastHandleDeath();
+}
+
 FVector AAuraCharacterBase::GetCombatSocketLocation() const
 {
 	check(Weapon);
 	
 	return Weapon->GetSocketLocation(WeaponTipSocketName);
-}
-
-UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
-{
-	return AbilitySystemComponent;
 }
 
 void AAuraCharacterBase::InitAbilityActorInfo()
@@ -36,6 +49,11 @@ void AAuraCharacterBase::InitAbilityActorInfo()
 
 void AAuraCharacterBase::InitializeDefaultAttributes() const
 {
+}
+
+UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation() const
+{
+	return HitReactMontage;
 }
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
@@ -61,4 +79,32 @@ void AAuraCharacterBase::AddCharacterAbilities()
 
 	// 어빌리티 시스템 컴포넌트에 어빌리티 부여
 	AuraAbilitySystemComponent->AddCharacterAbilities(StartupAbilites);
+}
+
+void AAuraCharacterBase::MulticastHandleDeath_Implementation()
+{
+	// 캐릭터가 죽었을 때 서버와 클라 모두 수행할 일
+
+	// 무기를 래그돌로 바꾼다.
+	if (Weapon)
+	{
+		Weapon->SetSimulatePhysics(true);
+		Weapon->SetEnableGravity(true);
+		Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	}
+
+	// 본체를 래그돌
+	if (GetMesh())
+	{
+		GetMesh()->SetSimulatePhysics(true);
+		GetMesh()->SetEnableGravity(true);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+		GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECollisionResponse::ECR_Block);
+	}
+
+	// 충돌처리 제거
+	if (GetCapsuleComponent())
+	{
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }

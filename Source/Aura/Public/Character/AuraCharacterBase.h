@@ -21,15 +21,18 @@ class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInte
 protected:
 	AAuraCharacterBase();
 
-protected:
-	virtual FVector GetCombatSocketLocation() const override;
-
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+protected:
+	virtual void Die() override;
+	virtual FVector GetCombatSocketLocation() const override;
 
 private:
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeDefaultAttributes() const;
+
+	virtual UAnimMontage* GetHitReactMontage_Implementation() const final;
 
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
@@ -37,6 +40,10 @@ public:
 protected:
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 	void AddCharacterAbilities();
+
+private:
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
@@ -57,4 +64,7 @@ private:
 	// 게임 시작부터 주어지는 어빌리티(능력)
 	UPROPERTY(EditAnywhere, Category = "Abilites")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilites;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TObjectPtr<UAnimMontage> HitReactMontage;
 };
