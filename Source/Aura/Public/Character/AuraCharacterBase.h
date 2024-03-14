@@ -42,6 +42,16 @@ protected:
 	void AddCharacterAbilities();
 
 private:
+	void Dissolve();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartWeaponDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+
+private:
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath();
 
@@ -51,6 +61,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
 
 	// 게임플레이 어빌리티 시스템의 핵심 컴포넌트
 	UPROPERTY()

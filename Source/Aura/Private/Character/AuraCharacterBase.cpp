@@ -81,6 +81,26 @@ void AAuraCharacterBase::AddCharacterAbilities()
 	AuraAbilitySystemComponent->AddCharacterAbilities(StartupAbilites);
 }
 
+void AAuraCharacterBase::Dissolve()
+{
+	// 메시와 무기에 사라지는 듯한 디졸브 머티리얼 효과를 부여
+	if (GetMesh() && IsValid(DissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(DissolveMaterialInstance, this);
+		GetMesh()->SetMaterial(0, DynamicMatInst);
+
+		StartDissolveTimeline(DynamicMatInst);
+	}
+
+	if (Weapon && IsValid(WeaponDissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(WeaponDissolveMaterialInstance, this);
+		Weapon->SetMaterial(0, DynamicMatInst);
+
+		StartWeaponDissolveTimeline(DynamicMatInst);
+	}
+}
+
 void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 {
 	// 캐릭터가 죽었을 때 서버와 클라 모두 수행할 일
@@ -107,4 +127,7 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 	{
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
+
+	// 머티리얼로 메시와 무기가 사라지는 효과
+	Dissolve();
 }
