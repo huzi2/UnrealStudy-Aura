@@ -15,6 +15,7 @@ class UAuraInputConfig;
 struct FGameplayTag;
 class UAuraAbilitySystemComponent;
 class USplineComponent;
+class UDamageTextComponent;
 /**
  * 
  */
@@ -30,6 +31,10 @@ private:
 	virtual void BeginPlay() final;
 	virtual void SetupInputComponent() final;
 	virtual void PlayerTick(float DeltaTime) final;
+
+public:
+	UFUNCTION(Client, Reliable)
+	void ClientShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter);
 
 private:
 	UAuraAbilitySystemComponent* GetAuraAbilitySystemComponent();
@@ -60,10 +65,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;
 
-	// 이동 관련 변수
 	// 목표 지점에 도달해서 자동 이동을 중지할 거리
 	UPROPERTY(EditAnywhere)
 	double AutoRunAcceptanceRadius;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 
 	UPROPERTY()
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;

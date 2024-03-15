@@ -10,6 +10,8 @@
 #include "AuraGameplayTags.h"
 #include "NavigationSystem.h"
 #include "NavigationPath.h"
+#include "GameFramework/Character.h"
+#include "UI/Widget/DamageTextComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
 	: AutoRunAcceptanceRadius(50.0)
@@ -65,6 +67,22 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	CursorTrace();
 
 	AutoRun();
+}
+
+void AAuraPlayerController::ClientShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
+{
+	if (!IsValid(TargetCharacter)) return;
+	if (!DamageTextComponentClass) return;
+
+	if (UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass))
+	{
+		DamageText->RegisterComponent();
+		// 어태치로 붙이자마자 블루프린트를 통해서 위젯 애니메이션이 재생될 것
+		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		// 애니메이션이 재생됬으면 캐릭터에 붙어있을 필요가 없으니 바로 디태치
+		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+		DamageText->SetDamageText(DamageAmount);
+	}
 }
 
 UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraAbilitySystemComponent()

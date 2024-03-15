@@ -7,6 +7,8 @@
 #include "GameFramework/Character.h"
 #include "AuraGameplayTags.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/AuraPlayerController.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -102,6 +104,9 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			const float NewHealth = GetHealth() - LocalIncomingDamage;
 			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
 
+			// 해당 클라이언트에게 타겟 머리 위에 데미지 UI 표시
+			ShowFloatingText(Props, LocalIncomingDamage);
+
 			const bool bFatal = NewHealth <= 0.f;
 			// 죽지 않았으면 피격 어빌리티 활성화
 			if (!bFatal)
@@ -153,6 +158,17 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		Props.TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
 		Props.TargetCharacter = Cast<ACharacter>(Props.TargetAvatarActor);
 		Props.TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Props.TargetAvatarActor);
+	}
+}
+
+void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage) const
+{
+	if (Props.SourceCharacter != Props.TargetCharacter)
+	{
+		if (AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter, 0)))
+		{
+			PlayerController->ClientShowDamageNumber(Damage, Props.TargetCharacter);
+		}
 	}
 }
 
