@@ -26,7 +26,10 @@
   - 어트리뷰트 세트를 변경할 때는 게임플레이 이펙트를 사용
 - 게임플레이 이펙트
   - 즉시(포션), 지속(포션), 무한(불지역)의 다양한 효과를 가진 게임플레이 이펙트가 적용된 액터들을 구현
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/caefaea0-f7aa-4fdc-a7cb-e585f97b2b26)
   - 능력치(어트리뷰트 세트)를 게임플레이 이펙트로 초기화. RPG의 복잡한 스탯 공식을 적용
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/778bd31c-3257-4e17-a2b1-ccfff8475406)
+  - 게임플레이 이펙트와 커브 테이블을 통해서 레벨에 따라 능력치가 달라지도록 적용
 - 게임플레이 태그
   - <img width="599" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/e1f4d0be-76ac-40ea-ba1b-9f47be852593">
   - 능력치(어트리뷰트 세트), 향상된 입력, 게임플레이 이펙트를 태그로 관리
@@ -35,6 +38,12 @@
   - 어트리뷰트 세트의 값이 변경됬을 때 태그를 통해서 UI 수정
 - 게임플레이 어빌리티
   - 향상된 입력과 게임플레이 어빌리티의 연결
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/642dac9e-9005-43f6-b267-ba6ed058fa32)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/a3e2c806-e882-4ce8-b07c-a8dfa6d1205c)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/c9dc21ce-ef51-4cce-bc25-e2dd8b55b080)
+  - 클릭으로 적에게 화염구를 날리는 어빌리티의 구현
+- 실행 계산(UGameplayEffectExecutionCalculation)으로 복잡한 데미지 처리 구현
+  - 이펙트를 수행한 소스의 크리티컬 어트리뷰트로 확률을 계산해서 데미지를 올리고, 타겟의 블록 어트리뷰트로 데미지를 줄이는 등, 복잡한 데미지를 실행 계산으로 구현
 
 ### 게임 로직
 - 마우스에 닿은 적 강조
@@ -75,3 +84,5 @@
 - 스탯 메뉴 구현
   - <img width="441" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/1e6877a0-b72a-46fc-869b-78e47d2b9a4c">
   - 어트리뷰트 세트와 태그로 연결되어서 어트리뷰트 세트가 변경될 때 바로 적용. 아래 2차 속성은 1차 속성이 변경되면 무한 게임플레이 이펙트로 복잡한 식이 계산되서 바로 적용됨
+- 적 체력바와 데미지 팝업 위젯 구현
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/26172a44-dac3-4e58-8bea-69a97f09e150)
