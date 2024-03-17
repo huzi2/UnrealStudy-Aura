@@ -47,6 +47,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
 
+	// 데미지 계산에 사용될 계수 커브
+	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults|Damage")
+	TObjectPtr<UCurveTable> DamageCalculationCoefficients;
+
 	// 주요 속성은 각 클래스별로 다르게 설정
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
 	TMap<ECharacterClass, FCharacterClassDefaultInfo> CharacterClassInformation;
