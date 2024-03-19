@@ -103,7 +103,8 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	// 음수값이 나오지 않도록 Clamp
 	TargetBlockChance = FMath::Max<float>(0.f, TargetBlockChance);
 	// 블록되면 데미지를 절반으로
-	if (FMath::FRandRange(1.f, 100.f) < TargetBlockChance) Damage *= 0.5f;
+	const bool bBlocked = FMath::FRandRange(1.f, 100.f) < TargetBlockChance;
+	if (bBlocked) Damage *= 0.5f;
 
 	// 방어력은 방어력 수치만큼 퍼센트로 데미지를 경감시킨다.
 	// 장갑관통력이 타겟의 방어력의 퍼센트만큼 무시한다.
@@ -156,7 +157,13 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	SourceCriticalHitDamage = FMath::Max<float>(0.f, SourceCriticalHitDamage);
 	
 	// 치명타가 터졌다면 2배 데미지에 나의 치명타 데미지만큼 더해준다.
-	if (FMath::FRandRange(1.f, 100.f) < EffectiveCriticalHitChance) Damage = Damage * 2.f + SourceCriticalHitDamage;
+	const bool bCriticalHit = FMath::FRandRange(1.f, 100.f) < EffectiveCriticalHitChance;
+	if (bCriticalHit) Damage = Damage * 2.f + SourceCriticalHitDamage;
+
+	// 커스텀 게임플레이 이펙트 컨텍스트에 값 설정. 다른 곳에서 확인하기 위함
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
+	UAuraAbilitySystemLibrary::SetIsCriticalHit(EffectContextHandle, bCriticalHit);
 
 	// 최종 계산된 데미지값을 IncomingDamage 어트리뷰트에 Additive
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(), EGameplayModOp::Additive, Damage);

@@ -71,7 +71,7 @@ private:
 
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
-	void ShowFloatingText(const FEffectProperties& Props, float Damage) const;
+	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool bCriticalHit) const;
 
 public:
 	// FGameplayAttribute(*)()는 FGameplayAttribute를 얻어오는 함수의 포인터
