@@ -62,10 +62,15 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 
 			// 발사체의 메타 어트리뷰트 Damage에 데미지값 적용
 			const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
-			// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
-			//const float ScaledDamage = Damage.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
-			const float ScaledDamage = Damage.GetValueAtLevel(10);
-			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, GameplayTags.Damage, ScaledDamage);
+
+			// 데미지 타입별로 적용
+			for (const auto& Pair : DamageTypes)
+			{
+				// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
+				const float ScaledDamage = Pair.Value.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
+
+				UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, Pair.Key, ScaledDamage);
+			}			
 		}
 	}
 	
