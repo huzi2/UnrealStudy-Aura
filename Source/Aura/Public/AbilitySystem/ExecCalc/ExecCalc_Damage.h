@@ -20,3 +20,5 @@ private:
 private:
 	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const final;
 };
+
+void InitializeAuraDamageStatics();

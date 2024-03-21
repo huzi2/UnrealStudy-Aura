@@ -3,6 +3,7 @@
 #include "AuraAssetManager.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystemGlobals.h"
+#include "AbilitySystem/ExecCalc/ExecCalc_Damage.h"
 
 const UAuraAssetManager& UAuraAssetManager::Get()
 {
@@ -21,4 +22,6 @@ void UAuraAssetManager::StartInitialLoading()
 
 	// 타겟 데이터와 같은 데이터 초기화. 타겟 데이터 쓰려면 반드시 해야함
 	UAbilitySystemGlobals::Get().InitGlobalData();
+
+	InitializeAuraDamageStatics();
 }

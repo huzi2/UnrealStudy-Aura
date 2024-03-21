@@ -18,6 +18,12 @@ public:
 	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitChance);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitDamage);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(FireResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(LightningResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(ArcaneResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(PhysicalResistance);
+
+	TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition> TagToCaptureDefs;
 
 	AuraDamageStatics()
 	{
@@ -26,19 +32,44 @@ public:
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, Armor, Target, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, BlockChance, Target, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitResistance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, FireResistance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, LightningResistance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArcaneResistance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, PhysicalResistance, Target, false);
 
 		// 자신이 가지고 있는 어트리뷰트
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArmorPenetration, Source, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitChance, Source, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitDamage, Source, false);
 	}
+
+	void Initialize()
+	{
+		// 태그와 캡쳐를 서로 연결
+		const UAuraGameplayTags& Tags = UAuraGameplayTags::Get();
+		TagToCaptureDefs.Add(Tags.Attribute_Secondary_Armor, ArmorDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Secondary_ArmorPenetration, ArmorPenetrationDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Secondary_BlockChance, BlockChanceDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitChance, CriticalHitChanceDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitDamage, CriticalHitDamageDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitResistance, CriticalHitResistanceDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Fire, FireResistanceDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Lightning, LightningResistanceDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Arcane, ArcaneResistanceDef);
+		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Physical, PhysicalResistanceDef);
+	}
 };
 
 // 정적 함수로 캡쳐 변수를 얻어온다.
-static const AuraDamageStatics& DamageStatics()
+static AuraDamageStatics& DamageStatics()
 {
-	static AuraDamageStatics DStatics;
+	static AuraDamageStatics DStatics{};
 	return DStatics;
+}
+
+void InitializeAuraDamageStatics()
+{
+	DamageStatics().Initialize();
 }
 
 UExecCalc_Damage::UExecCalc_Damage()
@@ -50,6 +81,10 @@ UExecCalc_Damage::UExecCalc_Damage()
 	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitChanceDef);
 	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitDamageDef);
 	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitResistanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().FireResistanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().LightningResistanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().ArcaneResistanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().PhysicalResistanceDef);
 }
 
 void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
@@ -94,7 +129,27 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	float Damage = 0.f;
 	for (const TTuple<FGameplayTag, FGameplayTag>& Pair : UAuraGameplayTags::Get().DamageTypesToResistances)
 	{
-		Damage += Spec.GetSetByCallerMagnitude(Pair.Key);
+		const FGameplayTag& DamageTypeTag = Pair.Key;
+		const FGameplayTag& ResistanceTag = Pair.Value;
+
+		float DamageTypeValue = Spec.GetSetByCallerMagnitude(DamageTypeTag, false);
+		if (DamageTypeValue == 0.f) continue;
+
+		// 해당 공격 타입에 대한 저항값이 있다면 저항에 따라 데미지를 감소
+		if (DamageStatics().TagToCaptureDefs.Contains(ResistanceTag))
+		{
+			const FGameplayEffectAttributeCaptureDefinition& CaptureDef = DamageStatics().TagToCaptureDefs[ResistanceTag];
+			
+			float ResistanceValue = 0.f;
+			ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDef, EvaluationParameters, ResistanceValue);
+			// 저항값은 최대가 100이 되도록함
+			ResistanceValue = FMath::Clamp(ResistanceValue, 0.f, 100.f);
+			ResistanceValue = 50.f;
+
+			DamageTypeValue *= (100.f - ResistanceValue) / 100.f;
+		}
+
+		Damage += DamageTypeValue;
 	}
 
 	// 타겟의 BlockChance로 블록할 확률을 구함
