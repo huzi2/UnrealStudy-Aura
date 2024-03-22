@@ -74,6 +74,9 @@ void AAuraPlayerController::ClientShowDamageNumber_Implementation(float DamageAm
 	if (!IsValid(TargetCharacter)) return;
 	if (!DamageTextComponentClass) return;
 
+	// 로컬 플레이어만 해당 데미지를 보면됨
+	if (!IsLocalController()) return;
+
 	if (UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass))
 	{
 		DamageText->RegisterComponent();

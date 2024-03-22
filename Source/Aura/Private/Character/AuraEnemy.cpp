@@ -10,6 +10,9 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AuraGameplayTags.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "AI/AuraAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "BehaviorTree/BehaviorTree.h"
 
 AAuraEnemy::AAuraEnemy()
 	: Level(1)
@@ -45,8 +48,12 @@ void AAuraEnemy::BeginPlay()
 
 	InitAbilityActorInfo();
 
-	// 기본 어빌리티들 부여
-	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+	// 기본 어빌리티는 적캐릭터의 직업에 맞춰서 가져온다. 그런 정보는 게임모드에 저장되어있으므로 서버에서만 수행하도록 한다.
+	if (HasAuthority())
+	{
+		// 기본 어빌리티들 부여
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+	}
 
 	// 위젯 컨트롤러를 자신으로 설정한다. 위젯 컨트롤러는 단순한 UObject이므로 가능함
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
@@ -81,6 +88,23 @@ void AAuraEnemy::BeginPlay()
 	}
 }
 
+void AAuraEnemy::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	// AI는 서버에서만 사용
+	if (!HasAuthority()) return;
+
+	if (AuraAIController = Cast<AAuraAIController>(NewController))
+	{
+		if (AuraAIController->GetBlackboardComponent() && BehaviorTree)
+		{
+			AuraAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+			AuraAIController->RunBehaviorTree(BehaviorTree);
+		}
+	}
+}
+
 void AAuraEnemy::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
@@ -90,8 +114,12 @@ void AAuraEnemy::InitAbilityActorInfo()
 		AuraAbilitySystemComponent->AbilityActorInfoSet();
 	}
 
-	// 게임플레이 이펙트를 통한 능력치 초기화
-	InitializeDefaultAttributes();
+	// 적캐릭터의 직업에 맞춰서 초기화. 그런 정보는 게임모드에 저장되어있으므로 서버에서만 수행하도록 한다.
+	if (HasAuthority())
+	{
+		// 게임플레이 이펙트를 통한 능력치 초기화
+		InitializeDefaultAttributes();
+	}
 }
 
 void AAuraEnemy::InitializeDefaultAttributes() const

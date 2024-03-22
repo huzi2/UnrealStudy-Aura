@@ -33,6 +33,7 @@ private:
 	virtual void PlayerTick(float DeltaTime) final;
 
 public:
+	// 데미지 어트리뷰트가 메타 어트리뷰트로써 레플리케이트되지않는 서버 어트리뷰트다. 그래서 각 클라에서 실행하기위해 Client RPC로 만든다.
 	UFUNCTION(Client, Reliable)
 	void ClientShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit);
 
