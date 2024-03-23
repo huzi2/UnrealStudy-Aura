@@ -5,7 +5,8 @@
 #include "AbilitySystemBlueprintLibrary.h"
 
 AAuraEffectActor::AAuraEffectActor()
-	: bDestroyOnEffectRemoval(false)
+	: bDestroyOnEffectApplication(false)
+	, bApplyEffectsToEnemies(false)
 	, InstantEffectApplicationPolicy(EEffectApplicationPolicy::DoNotApply)
 	, DurationEffectApplicationPolicy(EEffectApplicationPolicy::DoNotApply)
 	, InfiniteEffectApplicationPolicy(EEffectApplicationPolicy::DoNotApply)
@@ -19,6 +20,11 @@ AAuraEffectActor::AAuraEffectActor()
 
 void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
+	if (!TargetActor) return;
+
+	// 적에게는 적용되지 않는 이펙트면 리턴
+	if (TargetActor->ActorHasTag(TEXT("Enemy")) && !bApplyEffectsToEnemies) return;
+
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (!TargetASC) return;
 	check(GameplayEffectClass);
@@ -35,6 +41,12 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	if (bIsInfinite && InfiniteEffectRemovalPolicy != EEffectRemovalPolicy::DoNotRemove)
 	{
 		ActiveEffectHandles.Add(ActiveEffectHandle, TargetASC);
+	}
+
+	// 이펙트 유형이 무한이 아니면서 적용 후 제거되야한다면 제거함
+	if (bDestroyOnEffectApplication && !bIsInfinite)
+	{
+		Destroy();
 	}
 }
 

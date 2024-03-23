@@ -48,7 +48,11 @@ private:
 protected:
 	// 이펙트 적용 후 액터를 제거할 것인지
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
-	bool bDestroyOnEffectRemoval;
+	bool bDestroyOnEffectApplication;
+
+	// 적에게도 이펙트를 적용할 것인지
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
+	bool bApplyEffectsToEnemies;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
 	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
