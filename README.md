@@ -62,6 +62,10 @@
 ### 프로그래밍
 - 인터페이스
 
+### AI
+- 비헤이비어 트리
+- 블랙보드
+
 ### UI
 - 어트리뷰트 세트(데이터) <=> 위젯 컨트롤러 <=> 위젯(UI) 구조로 데이터가 변경되었을 때 위젯 컨트롤러를 통해서 태그와 연결된 UI에 데이터를 반영
   - <img width="1124" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/bc66234e-bdeb-489f-b5d9-92208996f069">
@@ -86,3 +90,7 @@
   - 어트리뷰트 세트와 태그로 연결되어서 어트리뷰트 세트가 변경될 때 바로 적용. 아래 2차 속성은 1차 속성이 변경되면 무한 게임플레이 이펙트로 복잡한 식이 계산되서 바로 적용됨
 - 적 체력바와 데미지 팝업 위젯 구현
   - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/26172a44-dac3-4e58-8bea-69a97f09e150)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/6be13e01-03f1-4004-aa08-26776904c228)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/4aec3f20-2568-4272-bd79-bd76cacb7843)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/ee1e665c-4b13-4cde-bbc9-ad0e851e5abe)
+  - 치명타, 블록 등의 데미지 상태를 실행 계산으로 구현해서 데미지 팝업에 적용
