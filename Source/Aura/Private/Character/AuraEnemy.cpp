@@ -106,6 +106,10 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 		{
 			AuraAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 			AuraAIController->RunBehaviorTree(BehaviorTree);
+			
+			// 블랙보드 초기값 설정
+			AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("HitReacting"), false);
+			AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("RangedAttacker"), CharacterClass != ECharacterClass::Warrior);
 		}
 	}
 }
@@ -178,5 +182,10 @@ void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCou
 	if (GetCharacterMovement())
 	{
 		GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
+	}
+
+	if (AuraAIController && AuraAIController->GetBlackboardComponent())
+	{
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("HitReacting"), bHitReacting);
 	}
 }
