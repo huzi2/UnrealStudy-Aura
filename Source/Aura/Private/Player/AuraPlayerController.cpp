@@ -203,9 +203,11 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 						}
 
 						// 도착 지점을 네비메시 상 도달할 수 있는 지점으로 설정
-						CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
-
-						bAutoRunning = true;
+						if (NavPath->PathPoints.Num() > 0)
+						{
+							CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
+							bAutoRunning = true;
+						}
 					}
 				}
 			}
