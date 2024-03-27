@@ -56,4 +56,7 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 
 	// 맞았을 때 타겟에게 부여해서 피격 모션 출력하게하는 태그
 	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Effects.HitReact"), TEXT("Tag granted when Hit Reacting"));
+
+	// 어빌리티들
+	GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Attack"), TEXT("Attack Ability Tag"));
 }

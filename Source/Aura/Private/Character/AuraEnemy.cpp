@@ -57,7 +57,7 @@ void AAuraEnemy::BeginPlay()
 	if (HasAuthority())
 	{
 		// 기본 어빌리티들 부여
-		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterClass);
 	}
 
 	// 위젯 컨트롤러를 자신으로 설정한다. 위젯 컨트롤러는 단순한 UObject이므로 가능함
@@ -172,6 +172,16 @@ void AAuraEnemy::UnHighlightActor()
 	{
 		Weapon->SetRenderCustomDepth(false);
 	}
+}
+
+void AAuraEnemy::SetCombatTarget_Implementation(AActor* InCombatTarget)
+{
+	CombatTarget = InCombatTarget;
+}
+
+AActor* AAuraEnemy::GetCombatTarget_Implementation() const
+{
+	return CombatTarget;
 }
 
 void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)

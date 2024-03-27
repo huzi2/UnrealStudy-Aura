@@ -22,7 +22,6 @@ class AURA_API ICombatInterface
 public:
 	virtual void Die() = 0;
 	virtual int32 GetPlayerLevel() const;
-	virtual FVector GetCombatSocketLocation() const;
 
 protected:
 	// 어빌리티의 블루프린트가 액터에 종속되지않도록 인터페이스에서 구현
@@ -33,4 +32,13 @@ protected:
 	// BlueprintNativeEvent로 블루프린트에서도 구현이 가능하고 C++에서 구현이 가능하다. 그리고 자동적으로 virtual 속성이 붙게됨
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	UAnimMontage* GetHitReactMontage() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FVector GetCombatSocketLocation() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool IsDead() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	AActor* GetAvatar();
 };

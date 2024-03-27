@@ -8,6 +8,7 @@
 #include "Game/AuraGameModeBase.h"
 #include "AbilitySystemComponent.h"
 #include "AuraAbilityTypes.h"
+#include "Interaction/CombatInterface.h"
 
 UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
 {
@@ -88,18 +89,34 @@ void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* World
 	}
 }
 
-void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* AbilitySystemComponent)
+void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* AbilitySystemComponent, ECharacterClass CharacterClass)
 {
 	if (!AbilitySystemComponent) return;
 
 	if (UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject))
 	{
+		// 모든 캐릭터가 기본적으로 지니고 있는 어빌리티(피격반응 등) 부여
 		for (const TSubclassOf<UGameplayAbility> AbilityClass : CharacterClassInfo->CommonAbilities)
 		{
 			if (AbilityClass)
 			{
 				FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 				AbilitySystemComponent->GiveAbility(AbilitySpec);
+			}
+		}
+
+		// 직업별로 기본적으로 지니고 있는 어빌리티 부여
+		const FCharacterClassDefaultInfo& DefaultInfo = CharacterClassInfo->GetClassDefaultInfo(CharacterClass);
+		for (const TSubclassOf<UGameplayAbility> AbilityClass : DefaultInfo.StartupAbilities)
+		{
+			if (AbilityClass)
+			{
+				// 어빌리티 레벨에 캐릭터의 레벨을 적용
+				if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(AbilitySystemComponent->GetAvatarActor()))
+				{
+					FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, CombatInterface->GetPlayerLevel());
+					AbilitySystemComponent->GiveAbility(AbilitySpec);
+				}
 			}
 		}
 	}
@@ -137,4 +154,30 @@ bool UAuraAbilitySystemLibrary::IsCriticalHit(const FGameplayEffectContextHandle
 		return AuraEffectContext->IsCriticalHit();
 	}
 	return false;
+}
+
+void UAuraAbilitySystemLibrary::GetLivePlayersWithRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& SphereOrigin)
+{
+	if (!WorldContextObject) return;
+
+	UWorld* World = WorldContextObject->GetWorld();
+	if (!World) return;
+
+	FCollisionQueryParams SphereParams;
+	SphereParams.AddIgnoredActors(ActorsToIgnore);
+
+	TArray<FOverlapResult> Overlaps;
+	World->OverlapMultiByObjectType(Overlaps, SphereOrigin, FQuat::Identity, FCollisionObjectQueryParams(FCollisionObjectQueryParams::InitType::AllDynamicObjects), FCollisionShape::MakeSphere(Radius), SphereParams);
+
+	for (const FOverlapResult& Overlap : Overlaps)
+	{
+		if (Overlap.GetActor())
+		{
+			// 액터가 UCombatInterface를 상속받았는지 확인함
+			if (Overlap.GetActor()->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsDead(Overlap.GetActor()))
+			{
+				OutOverlappingActors.AddUnique(Overlap.GetActor());
+			}
+		}
+	}
 }

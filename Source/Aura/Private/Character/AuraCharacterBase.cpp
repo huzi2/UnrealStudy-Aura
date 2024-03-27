@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
+	: bDead(false)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -37,13 +38,6 @@ void AAuraCharacterBase::Die()
 	MulticastHandleDeath();
 }
 
-FVector AAuraCharacterBase::GetCombatSocketLocation() const
-{
-	check(Weapon);
-	
-	return Weapon->GetSocketLocation(WeaponTipSocketName);
-}
-
 void AAuraCharacterBase::InitAbilityActorInfo()
 {
 }
@@ -55,6 +49,23 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation() const
 {
 	return HitReactMontage;
+}
+
+FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation() const
+{
+	check(Weapon);
+
+	return Weapon->GetSocketLocation(WeaponTipSocketName);
+}
+
+bool AAuraCharacterBase::IsDead_Implementation() const
+{
+	return bDead;
+}
+
+AActor* AAuraCharacterBase::GetAvatar_Implementation()
+{
+	return this;
 }
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
@@ -131,4 +142,6 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 
 	// 머티리얼로 메시와 무기가 사라지는 효과
 	Dissolve();
+
+	bDead = true;
 }

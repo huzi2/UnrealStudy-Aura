@@ -26,13 +26,15 @@ public:
 
 protected:
 	virtual void Die() override;
-	virtual FVector GetCombatSocketLocation() const override;
 
 private:
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeDefaultAttributes() const;
 
-	virtual UAnimMontage* GetHitReactMontage_Implementation() const final;
+	virtual UAnimMontage* GetHitReactMontage_Implementation() const override;
+	virtual FVector GetCombatSocketLocation_Implementation() const override;
+	virtual bool IsDead_Implementation() const override;
+	virtual AActor* GetAvatar_Implementation() override;
 
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
@@ -83,4 +85,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
+
+private:
+	bool bDead;
 };

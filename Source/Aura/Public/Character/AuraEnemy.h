@@ -35,6 +35,8 @@ private:
 
 	virtual void HighlightActor() final;
 	virtual void UnHighlightActor() final;
+	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) final;
+	virtual AActor* GetCombatTarget_Implementation() const final;
 
 private:
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
@@ -66,6 +68,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float LifeSpan;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Combat")
+	TObjectPtr<AActor> CombatTarget;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
