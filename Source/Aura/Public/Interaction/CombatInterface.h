@@ -4,7 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "GameplayTagContainer.h"
 #include "CombatInterface.generated.h"
+
+USTRUCT(BlueprintType)
+struct FTaggedMontage
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UAnimMontage* Montage = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FGameplayTag MontageTag;
+};
 
 UINTERFACE(MinimalAPI, BlueprintType)
 class UCombatInterface : public UInterface
@@ -34,11 +48,14 @@ protected:
 	UAnimMontage* GetHitReactMontage() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	FVector GetCombatSocketLocation() const;
+	FVector GetCombatSocketLocation(const FGameplayTag& MontageTag) const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool IsDead() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	AActor* GetAvatar();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	TArray<FTaggedMontage> GetAttackMontages() const;
 };

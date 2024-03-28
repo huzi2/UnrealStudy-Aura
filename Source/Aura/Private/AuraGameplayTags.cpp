@@ -59,4 +59,9 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 
 	// 绢呼府萍甸
 	GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Attack"), TEXT("Attack Ability Tag"));
+
+	// 根鸥林 家南
+	GameplayTags.Montage_Attack_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack.Weapon"), TEXT("Attack by Weapon"));
+	GameplayTags.Montage_Attack_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack.LeftHand"), TEXT("Attack by Left Hand"));
+	GameplayTags.Montage_Attack_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack.RightHand"), TEXT("Attack by Right Hand"));
 }

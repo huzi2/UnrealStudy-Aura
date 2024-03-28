@@ -3,6 +3,7 @@
 #include "Character/AuraCharacterBase.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "AuraGameplayTags.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
 	: bDead(false)
@@ -17,6 +18,7 @@ AAuraCharacterBase::AAuraCharacterBase()
 
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
 	Weapon->SetupAttachment(GetMesh(), TEXT("WeaponHandSocket"));
+	Weapon->SetCollisionResponseToChannel(ECC_Camera, ECollisionResponse::ECR_Ignore);
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
@@ -51,11 +53,26 @@ UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation() const
 	return HitReactMontage;
 }
 
-FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation() const
+FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) const
 {
-	check(Weapon);
+	// 태그와 맞는 소켓을 리턴함. 이 게임에서는 딱 3개만 사용할 거라 이렇게 만듦
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
-	return Weapon->GetSocketLocation(WeaponTipSocketName);
+	if (IsValid(Weapon) && MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_Weapon))
+	{
+		return Weapon->GetSocketLocation(WeaponTipSocketName);
+	}
+
+	if (GetMesh() && MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_LeftHand))
+	{
+		return GetMesh()->GetSocketLocation(LeftHandSocketName);
+	}
+
+	if (GetMesh() && MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_RightHand))
+	{
+		return GetMesh()->GetSocketLocation(RightHandSocketName);
+	}
+	return FVector();
 }
 
 bool AAuraCharacterBase::IsDead_Implementation() const
@@ -66,6 +83,11 @@ bool AAuraCharacterBase::IsDead_Implementation() const
 AActor* AAuraCharacterBase::GetAvatar_Implementation()
 {
 	return this;
+}
+
+TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation() const
+{
+	return AttackMontages;
 }
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const

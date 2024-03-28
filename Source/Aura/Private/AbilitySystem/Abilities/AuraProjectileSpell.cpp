@@ -21,7 +21,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	if (!GetWorld()) return;
 
 	// 액터 관련값 떄문에 어빌리티가 액터 클래스에 종속되지 않기 위해서 인터페이스를 사용한다.
-	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo());
+	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo(), UAuraGameplayTags::Get().Montage_Attack_Weapon);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
 
 	FTransform SpawnTransform;
@@ -56,17 +56,14 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 			// 발사체의 이펙트 스펙 핸들에 적용
 			Projectile->DamageEffectSpecHandle = SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle);
 
-			// 발사체의 메타 어트리뷰트 Damage에 데미지값 적용
-			const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
-
 			// 데미지 타입별로 적용
-			for (const auto& Pair : DamageTypes)
+			for (const TTuple<FGameplayTag, FScalableFloat>& Pair : DamageTypes)
 			{
 				// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
 				const float ScaledDamage = Pair.Value.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
 
 				UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, Pair.Key, ScaledDamage);
-			}			
+			}
 		}
 	}
 	

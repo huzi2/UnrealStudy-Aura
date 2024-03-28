@@ -178,7 +178,14 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float D
 {
 	if (Props.SourceCharacter != Props.TargetCharacter)
 	{
+		// 플레이어가 때렸을 때 데미지 팝업
 		if (AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(Props.SourceCharacter->Controller))
+		{
+			PlayerController->ClientShowDamageNumber(Damage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
+			return;
+		}
+		// 적이 나를 때렸을 때 데미지 팝업
+		if (AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(Props.TargetCharacter->Controller))
 		{
 			PlayerController->ClientShowDamageNumber(Damage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
 		}

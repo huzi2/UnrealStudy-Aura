@@ -32,9 +32,10 @@ private:
 	virtual void InitializeDefaultAttributes() const;
 
 	virtual UAnimMontage* GetHitReactMontage_Implementation() const override;
-	virtual FVector GetCombatSocketLocation_Implementation() const override;
+	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) const override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor* GetAvatar_Implementation() override;
+	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() const override;
 
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
@@ -61,9 +62,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	FName WeaponTipSocketName;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
 
@@ -84,7 +82,19 @@ private:
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilites;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName WeaponTipSocketName;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName LeftHandSocketName;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName RightHandSocketName;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TArray<FTaggedMontage> AttackMontages;
 
 private:
 	bool bDead;
