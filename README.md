@@ -42,6 +42,13 @@
   - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/a3e2c806-e882-4ce8-b07c-a8dfa6d1205c)
   - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/c9dc21ce-ef51-4cce-bc25-e2dd8b55b080)
   - 클릭으로 적에게 화염구를 날리는 어빌리티의 구현
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/afde80ff-978c-4cdf-b0b4-f8702faaf067)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/05539f47-8727-4e39-b66e-2c3d5fcefa4a)
+  - 피격 반응을 어빌리티로 구현
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/48111d1f-8125-4a29-8394-6ca78b01a132)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/728a485f-afc5-4478-ada7-ed162f5b58d3)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/0537c28d-4798-4fce-9b3b-1d9fd104f3d6)
+  - 몬스터의 평타를 어빌리티로 구현
 - 실행 계산(UGameplayEffectExecutionCalculation)으로 복잡한 데미지 처리 구현
   - 이펙트를 수행한 소스의 크리티컬 어트리뷰트로 확률을 계산해서 데미지를 올리고, 타겟의 블록 어트리뷰트로 데미지를 줄이는 등, 복잡한 데미지를 실행 계산으로 구현
 
@@ -63,8 +70,16 @@
 - 인터페이스
 
 ### AI
+- ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/95a8af08-062a-44a1-a79e-355f226d2caa)
 - 비헤이비어 트리
 - 블랙보드
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/58aa6140-5e13-4f86-886a-d2d59e0960ce)
+  - 근접 몬스터의 AI 구현
+- EQS
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/105273ef-f9dc-4150-9c33-aba302414d98)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/8f7b5c9d-9148-49a7-aae9-e6a04eb08a1d)
+  - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/75d9a67c-af54-458c-9107-8d0e33ee37b2)
+  - 벽 뒤의 플레이어를 공격하기 위한 위치를 찾기 위해 EQS 사용
 
 ### UI
 - 어트리뷰트 세트(데이터) <=> 위젯 컨트롤러 <=> 위젯(UI) 구조로 데이터가 변경되었을 때 위젯 컨트롤러를 통해서 태그와 연결된 UI에 데이터를 반영
