@@ -141,6 +141,12 @@ void AAuraEnemy::Die()
 	Super::Die();
 
 	SetLifeSpan(5.f);
+
+	// 블랙보드에 죽었다고 체크
+	if (AuraAIController && AuraAIController->GetBlackboardComponent())
+	{
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("Dead"), true);
+	}
 }
 
 int32 AAuraEnemy::GetPlayerLevel() const
