@@ -70,6 +70,8 @@ void AAuraProjectile::Destroyed()
 		{
 			LoopingSoundComponent->Stop();
 		}
+
+		bHit = true;
 	}
 
 	Super::Destroyed();
@@ -99,6 +101,8 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		{
 			LoopingSoundComponent->Stop();
 		}
+
+		bHit = true;
 	}
 
 	// 서버에서 제거하는데 클라는 레플리케이션되서 제거된다.

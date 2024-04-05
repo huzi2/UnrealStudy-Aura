@@ -4,6 +4,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "AuraGameplayTags.h"
+#include "Kismet/GameplayStatics.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
 	: bDead(false)
@@ -58,17 +59,17 @@ FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGamepl
 	// 태그와 맞는 소켓을 리턴함. 이 게임에서는 딱 3개만 사용할 거라 이렇게 만듦
 	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
-	if (IsValid(Weapon) && MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_Weapon))
+	if (IsValid(Weapon) && MontageTag.MatchesTagExact(GameplayTags.CombatSocket_Weapon))
 	{
 		return Weapon->GetSocketLocation(WeaponTipSocketName);
 	}
 
-	if (GetMesh() && MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_LeftHand))
+	if (GetMesh() && MontageTag.MatchesTagExact(GameplayTags.CombatSocket_LeftHand))
 	{
 		return GetMesh()->GetSocketLocation(LeftHandSocketName);
 	}
 
-	if (GetMesh() && MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_RightHand))
+	if (GetMesh() && MontageTag.MatchesTagExact(GameplayTags.CombatSocket_RightHand))
 	{
 		return GetMesh()->GetSocketLocation(RightHandSocketName);
 	}
@@ -93,6 +94,18 @@ TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation() co
 UNiagaraSystem* AAuraCharacterBase::GetBloodEffect_Implementation() const
 {
 	return BloodEffect;
+}
+
+FTaggedMontage AAuraCharacterBase::GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) const
+{
+	for (const FTaggedMontage& TaggedMontage : AttackMontages)
+	{
+		if (TaggedMontage.MontageTag == MontageTag)
+		{
+			return TaggedMontage;
+		}
+	}
+	return FTaggedMontage();
 }
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
@@ -169,6 +182,12 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 
 	// 머티리얼로 메시와 무기가 사라지는 효과
 	Dissolve();
+
+	// 죽음 사운드 재생
+	if (DeathSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), GetActorRotation());
+	}
 
 	bDead = true;
 }

@@ -60,8 +60,15 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	// 绢呼府萍甸
 	GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Attack"), TEXT("Attack Ability Tag"));
 
-	// 根鸥林 家南
-	GameplayTags.Montage_Attack_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack.Weapon"), TEXT("Attack by Weapon"));
-	GameplayTags.Montage_Attack_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack.LeftHand"), TEXT("Attack by Left Hand"));
-	GameplayTags.Montage_Attack_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack.RightHand"), TEXT("Attack by Right Hand"));
+	// 傍拜 根鸥林 家南
+	GameplayTags.CombatSocket_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.Weapon"), TEXT("Attack by Weapon"));
+	GameplayTags.CombatSocket_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.LeftHand"), TEXT("Attack by Left Hand"));
+	GameplayTags.CombatSocket_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.RightHand"), TEXT("Attack by Right Hand"));
+
+	// 傍拜 根鸥林 怕弊
+	GameplayTags.Montage_Attack1 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack1"), TEXT("Attack 1"));
+	GameplayTags.Montage_Attack2 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack2"), TEXT("Attack 2"));
+	GameplayTags.Montage_Attack3 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack3"), TEXT("Attack 3"));
+	GameplayTags.Montage_Attack4 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack4"), TEXT("Attack 4"));
+
 }
