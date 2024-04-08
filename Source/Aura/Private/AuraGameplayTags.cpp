@@ -64,6 +64,7 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.CombatSocket_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.Weapon"), TEXT("Attack by Weapon"));
 	GameplayTags.CombatSocket_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.LeftHand"), TEXT("Attack by Left Hand"));
 	GameplayTags.CombatSocket_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.RightHand"), TEXT("Attack by Right Hand"));
+	GameplayTags.CombatSocket_Tail = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.Tail"), TEXT("Attack by Tail"));
 
 	// 공격 몽타주 태그
 	GameplayTags.Montage_Attack1 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack1"), TEXT("Attack 1"));

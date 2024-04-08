@@ -20,7 +20,7 @@ private:
 
 private:
 	UFUNCTION(BlueprintCallable, Category = "Projectile")
-	void SpawnProjectile(const FVector& ProjectileTargetLocation);
+	void SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag);
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
