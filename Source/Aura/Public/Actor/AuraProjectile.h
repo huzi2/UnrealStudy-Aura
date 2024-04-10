@@ -32,12 +32,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = "true"))
 	FGameplayEffectSpecHandle DamageEffectSpecHandle;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<USphereComponent> Sphere;
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 	float LifeSpan;
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USphereComponent> Sphere;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;

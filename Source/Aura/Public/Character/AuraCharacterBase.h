@@ -38,6 +38,8 @@ private:
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() const override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() const override;
 	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) const;
+	virtual int32 GetMinionCount_Implementation() const;
+	virtual void IncrementMinionCount_Implementation(int32 Amount);
 
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
@@ -109,4 +111,5 @@ private:
 
 private:
 	bool bDead;
+	int32 MinionCount;
 };

@@ -21,6 +21,9 @@ private:
 	UFUNCTION(BlueprintPure)
 	TArray<FVector> GetSpawnLocations() const;
 
+	UFUNCTION(BlueprintPure)
+	TSubclassOf<APawn> GetRandomMinionClass() const;
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Summoning")
 	int32 NumMinions;
