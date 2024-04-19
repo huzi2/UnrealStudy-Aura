@@ -8,6 +8,7 @@
 #include "OverlayWidgetController.generated.h"
 
 class UAuraUserWidget;
+class UAbilityInfo;
 struct FOnAttributeChangeData;
 
 // 이 테이블의 키 값은 FName
@@ -72,6 +73,9 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
+	TObjectPtr<UAbilityInfo> AbilityInfo;
 };
 
 // 테이블에서 FName으로 사용해서 필요한 데이터를 얻어옴. 에디터에서 테이블을 만들 때 키값을 태그와 똑같이 만들어야한다.
