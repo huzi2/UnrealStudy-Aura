@@ -9,6 +9,7 @@
 
 class UAuraUserWidget;
 class UAbilityInfo;
+class UAuraAbilitySystemComponent;
 struct FOnAttributeChangeData;
 
 // 이 테이블의 키 값은 FName
@@ -52,6 +53,8 @@ public:
 private:
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag) const;
+
+	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent);
 
 public:
 	// BlueprintAssignable로 연결되는 함수들은 각 UI의 블루프린트에서 직접 구현한다.

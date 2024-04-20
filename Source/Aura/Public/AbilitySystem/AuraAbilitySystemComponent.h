@@ -7,7 +7,9 @@
 #include "AuraAbilitySystemComponent.generated.h"
 
 // 적용된 이펙트 자체의 에셋 태그를 확인해서 해당 태그에 대한 델리게이트
-DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& AssetTags)
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer&)
+// 어빌리티를 얻을 때마다 수행할 델리게이트
+DECLARE_MULTICAST_DELEGATE_OneParam(FAbilitiesGiven, UAuraAbilitySystemComponent*);
 
 /**
  * 
@@ -29,5 +31,7 @@ public:
 	void AbilityInputTagHeld(const FGameplayTag& InputTag);
 
 public:
-	FEffectAssetTags EffectAssetTags;
+	FEffectAssetTags EffectAssetTagsDelegate;
+	FAbilitiesGiven AbilitiesGivenDelegate;
+	bool bStartupAbilitiesGiven = false;
 };

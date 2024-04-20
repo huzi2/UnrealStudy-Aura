@@ -52,7 +52,8 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
 	{
-		AuraAbilitySystemComponent->EffectAssetTags.AddLambda(
+		// 메시지 출력 델리게이트 연결
+		AuraAbilitySystemComponent->EffectAssetTagsDelegate.AddLambda(
 			[this](const FGameplayTagContainer& AssetTags)
 			{
 				for (const FGameplayTag& Tag : AssetTags)
@@ -69,5 +70,24 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 				}
 			}
 		);
+
+		// 어빌리티 얻을 때 델리게이트 연결
+		// 호출 시점에 따라 시작 어빌리티들을 못받았을 경우가 있음
+		if (AuraAbilitySystemComponent->bStartupAbilitiesGiven)
+		{
+			OnInitializeStartupAbilities(AuraAbilitySystemComponent);
+		}
+		else
+		{
+			AuraAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &ThisClass::OnInitializeStartupAbilities);
+		}
 	}
+}
+
+void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent)
+{
+	if (!AuraAbilitySystemComponent) return;
+	if (!AuraAbilitySystemComponent->bStartupAbilitiesGiven) return;
+
+
 }
