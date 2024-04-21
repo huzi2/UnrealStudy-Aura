@@ -2,6 +2,7 @@
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
+#include "Aura/AuraLogChannels.h"
 
 void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
@@ -9,6 +10,33 @@ void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySys
 	EffectSpec.GetAllAssetTags(TagContainer);
 
 	EffectAssetTagsDelegate.Broadcast(TagContainer);
+}
+
+FGameplayTag UAuraAbilitySystemComponent::GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec)
+{
+	if (AbilitySpec.Ability)
+	{
+		for (const FGameplayTag& Tag : AbilitySpec.Ability.Get()->AbilityTags)
+		{
+			if (Tag.MatchesTag(FGameplayTag::RequestGameplayTag(TEXT("Abilities"))))
+			{
+				return Tag;
+			}
+		}
+	}
+	return FGameplayTag();
+}
+
+FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec)
+{
+	for (const FGameplayTag& Tag : AbilitySpec.DynamicAbilityTags)
+	{
+		if (Tag.MatchesTag(FGameplayTag::RequestGameplayTag(TEXT("InputTag"))))
+		{
+			return Tag;
+		}
+	}
+	return FGameplayTag();
 }
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
@@ -72,6 +100,22 @@ void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputT
 			{
 				TryActivateAbility(AbilitySpec.Handle);
 			}
+		}
+	}
+}
+
+void UAuraAbilitySystemComponent::ForEachAbility(const FForEachAbility& Delegate)
+{
+	// 어빌리티의 델리게이트를 수행하기전에 어빌리티를 잠금(그 사이에 제거되거나 추가되지 않는다)
+	FScopedAbilityListLock ActiveScopeLock(*this);
+
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		// 어빌리티에 연결된 델리게이트를 실행
+		if (!Delegate.ExecuteIfBound(AbilitySpec))
+		{
+			// 어빌리티에 등록된 델리게이트가 없음
+			UE_LOG(LogAura, Error, TEXT("Failed to execute delegate in %hs"), __FUNCTION__);
 		}
 	}
 }

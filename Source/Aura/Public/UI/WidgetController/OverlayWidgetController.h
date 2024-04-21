@@ -32,11 +32,12 @@ public:
 	TObjectPtr<UTexture2D> Image = nullptr;
 };
 
-// 어트리뷰트 세트의 값이 변경될 때 위셎들에게 알려줄 델리게이트
+// 어트리뷰트 세트의 값이 변경될 때 위젯들에게 알려줄 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 // 태그에 따른 메시지 위젯을 표시할 때 사용할 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
-
+// 어빌리티 정보를 확인해서 UI에 표시하기위한 델리게이트
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAbilityInfoSignature, const FAuraAbilityInfo&, Info);
 /**
  * 
  */
@@ -72,6 +73,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
+
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
+	FAbilityInfoSignature AbilityInfoDelegate;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
