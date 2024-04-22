@@ -12,6 +12,19 @@ void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySys
 	EffectAssetTagsDelegate.Broadcast(TagContainer);
 }
 
+void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
+{
+	Super::OnRep_ActivateAbilities();
+
+	// 서버에서만 하던걸 클라에서도 수행
+	// 반복하지 않도록 함
+	if (!bStartupAbilitiesGiven)
+	{
+		bStartupAbilitiesGiven = true;
+		AbilitiesGivenDelegate.Broadcast(this);
+	}
+}
+
 FGameplayTag UAuraAbilitySystemComponent::GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec)
 {
 	if (AbilitySpec.Ability)
@@ -65,6 +78,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 	}
 
 	bStartupAbilitiesGiven = true;
+	// 이 함수는 서버에서만 수행됨. 클라는 OnRep_ActivateAbilities()을 통해서 수행
 	AbilitiesGivenDelegate.Broadcast(this);
 }
 
