@@ -15,9 +15,9 @@ struct FGameplayEffectSpec;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCooldownChangeSignature, float, TimeRemaining);
 
 /**
- * 
+ * 비동기적으로 쿨타임을 체크하는 블루프린트 노드 클래스
  */
-UCLASS()
+UCLASS(BlueprintType, meta = (ExposedAsyncProxy = "AsyncTask")) // 자기자신을 리턴하는 핀을 생성
 class AURA_API UWaitCooldownChange : public UBlueprintAsyncActionBase
 {
 	// 다른 작업을 차단하지 않도록 UBlueprintAsyncActionBase를 상속받아 비동기적으로 수행하는 태스크를 만듦
