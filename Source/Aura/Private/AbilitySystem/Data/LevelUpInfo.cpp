@@ -22,3 +22,13 @@ int32 ULevelUpInfo::FindLevelForXP(int32 XP) const
 	}
 	return Level;
 }
+
+int32 ULevelUpInfo::GetMaxLevel() const
+{
+	return LevelUpInformation.Num();
+}
+
+const FAuraLevelUpInfo& ULevelUpInfo::GetLevelUpInfo(int32 Level) const
+{
+	return LevelUpInformation[Level];
+}

@@ -39,6 +39,10 @@ class AURA_API ULevelUpInfo : public UDataAsset
 public:
 	// 경험치에 맞는 레벨을 얻어옴
 	int32 FindLevelForXP(int32 XP) const;
+	// 최대 레벨
+	int32 GetMaxLevel() const;
+	// 해당 레벨에 맞는 정보
+	const FAuraLevelUpInfo& GetLevelUpInfo(int32 Level) const;
 
 private:
 	UPROPERTY(EditDefaultsOnly)

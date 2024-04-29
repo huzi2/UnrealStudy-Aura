@@ -9,6 +9,7 @@
 
 class UAbilitySystemComponent;
 class UAttributeSet;
+class ULevelUpInfo;
 
 // 플레이어 스테이트의 변수가 변경되었을 때 호출할 델리게이트
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStateChanged, int32);
@@ -33,6 +34,7 @@ private:
 public:
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
 	FORCEINLINE int32 GetXP() const { return XP; }
+	FORCEINLINE ULevelUpInfo* GetLevelUpInfo() const { return LevelUpInfo; }
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	
 	void SetLevel(int32 InLevel);
@@ -57,6 +59,10 @@ private:
 	int32 XP = 1;
 	UFUNCTION()
 	void OnRep_XP(int32 OldXP);
+
+	// 레벨 업 정보
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<ULevelUpInfo> LevelUpInfo;
 
 	// 플레이어는 PlayerState에서 어빌리티와 어트리뷰트를 가짐
 	UPROPERTY(VisibleAnywhere)
