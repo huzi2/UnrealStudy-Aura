@@ -16,7 +16,6 @@
 
 AAuraEnemy::AAuraEnemy()
 	: Level(1)
-	, CharacterClass(ECharacterClass::Warrior)
 	, bHitReacting(false)
 	, BaseWalkSpeed(250.f)
 	, LifeSpan(5.f)

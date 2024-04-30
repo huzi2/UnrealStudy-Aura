@@ -4,11 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "ScalableFloat.h"
 #include "CharacterClassInfo.generated.h"
 
 class UGameplayEffect;
 class UGameplayAbility;
 
+/**
+ * 캐릭터 클래스(직업) 종류
+ */
 UENUM(BlueprintType)
 enum class ECharacterClass : uint8
 {
@@ -17,22 +21,30 @@ enum class ECharacterClass : uint8
 	Ranger
 };
 
-
+/**
+ * 클래스별로 설정할 변수들
+ */
 USTRUCT(BlueprintType)
 struct FCharacterClassDefaultInfo
 {
 	GENERATED_BODY()
 
 public:
+	// 클래스별 능력치
 	UPROPERTY(EditDefaultsOnly, Category = "Class Defaults")
 	TSubclassOf<UGameplayEffect> PrimaryAttributes;
 
+	// 클래스별 기본 어빌리티들
 	UPROPERTY(EditDefaultsOnly, Category = "Class Defaults")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
+
+	// 클래스별 처치시 획득할 경험치
+	UPROPERTY(EditDefaultsOnly, Category = "Class Defaults")
+	FScalableFloat XPReward = FScalableFloat();
 };
 
 /**
- * 
+ * 클래스별로 설정할 데이터 에셋 클래스
  */
 UCLASS()
 class AURA_API UCharacterClassInfo : public UDataAsset
@@ -40,13 +52,12 @@ class AURA_API UCharacterClassInfo : public UDataAsset
 	GENERATED_BODY()
 	
 public:
-	FCharacterClassDefaultInfo GetClassDefaultInfo(ECharacterClass CharacterClass) const;
+	const FCharacterClassDefaultInfo& GetClassDefaultInfo(ECharacterClass CharacterClass) const;
 
 public:
 	// 2차 속성과 체력마나 능력치는 모든 클래스가 공유할 것
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
 

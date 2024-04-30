@@ -103,9 +103,8 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	{
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
-
 	// 데미지의 처리. 메타 데이터(레플리케이트되지않음)이므로 서버에서만 처리된다
-	if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
+	else if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 	{
 		const float LocalIncomingDamage = GetIncomingDamage();
 		SetIncomingDamage(0.f);
@@ -138,6 +137,11 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 				}
 			}
 		}
+	}
+	else if (Data.EvaluatedData.Attribute == GetIncomingXPAttribute())
+	{
+		const float LocalIncomingXP = GetIncomingXP();
+		SetIncomingXP(LocalIncomingXP);
 	}
 }
 

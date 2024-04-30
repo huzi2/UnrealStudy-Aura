@@ -37,9 +37,10 @@ private:
 	virtual AActor* GetAvatar_Implementation() override;
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() const override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() const override;
-	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) const;
-	virtual int32 GetMinionCount_Implementation() const;
-	virtual void IncrementMinionCount_Implementation(int32 Amount);
+	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) const override;
+	virtual int32 GetMinionCount_Implementation() const override;
+	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
+	virtual ECharacterClass GetCharacterClass_Implementation() const override;
 
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
@@ -63,6 +64,9 @@ private:
 	virtual void MulticastHandleDeath();
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
