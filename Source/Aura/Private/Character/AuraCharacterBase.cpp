@@ -152,6 +152,8 @@ void AAuraCharacterBase::AddCharacterAbilities()
 
 	// 어빌리티 시스템 컴포넌트에 어빌리티 부여
 	AuraAbilitySystemComponent->AddCharacterAbilities(StartupAbilites);
+	// 어빌리티 시스템 컴포넌트에 패시브 어빌리티 부여
+	AuraAbilitySystemComponent->AddCharacterPassiveAbilities(StartupPassiveAbilites);
 }
 
 void AAuraCharacterBase::Dissolve()

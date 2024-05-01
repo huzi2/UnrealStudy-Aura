@@ -135,6 +135,9 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 				{
 					CombatInterface->Die();
 				}
+
+				// 죽였다면 경험치를 얻음
+				SendXPEvent(Props);
 			}
 		}
 	}
@@ -193,6 +196,27 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float D
 		{
 			PlayerController->ClientShowDamageNumber(Damage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
 		}
+	}
+}
+
+void UAuraAttributeSet::SendXPEvent(const FEffectProperties& Props)
+{
+	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter))
+	{
+		// 타겟의 레벨과 직업을 얻고 경험치 보상을 확인
+		const int32 TargetLevel = CombatInterface->GetPlayerLevel();
+		const ECharacterClass TargetClass = ICombatInterface::Execute_GetCharacterClass(Props.TargetCharacter);
+		const int32 XPReward = UAuraAbilitySystemLibrary::GetXPRewardForClassAndLevel(Props.TargetCharacter, TargetClass, static_cast<float>(TargetLevel));
+
+		// 패시브 어빌리티가 반응하도록 태그를 설정
+		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
+		// 패시브 어빌리티에서 확인할 태그와 수치를 저장해서 보낸다.
+		FGameplayEventData Payload;
+		Payload.EventTag = GameplayTags.Attribute_Meta_IncomingXP;
+		Payload.EventMagnitude = static_cast<float>(XPReward);
+
+		// 소스 액터에게 게임플레이 이벤트를 전송(패시브 어빌리티에서 반응할 것)
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Props.SourceCharacter, GameplayTags.Attribute_Meta_IncomingXP, Payload);
 	}
 }
 

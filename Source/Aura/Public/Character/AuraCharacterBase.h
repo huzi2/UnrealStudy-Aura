@@ -94,6 +94,9 @@ private:
 	// 게임 시작부터 주어지는 어빌리티(능력)
 	UPROPERTY(EditAnywhere, Category = "Abilites")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilites;
+	// 게임 시작부터 주어지는 패시브 어빌리티
+	UPROPERTY(EditAnywhere, Category = "Abilites")
+	TArray<TSubclassOf<UGameplayAbility>> StartupPassiveAbilites;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
