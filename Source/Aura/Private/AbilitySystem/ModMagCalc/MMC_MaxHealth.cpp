@@ -33,11 +33,12 @@ float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffec
 	GetCapturedAttributeMagnitude(VigorDef, Spec, EvaluationParameters, Vigor);
 	Vigor = FMath::Max<float>(Vigor, 0.f);
 
-	// 소스 캐릭터에서 레벨 얻어오기
-	ICombatInterface* CombatInterface = Cast<ICombatInterface>(Spec.GetContext().GetSourceObject());
-	if (!CombatInterface) return 0.f;
-
-	const int32 PlayerLevel = CombatInterface->GetPlayerLevel();
+	// 인터페이스를 통해 레벨을 얻어온다.
+	int32 PlayerLevel = 1;
+	if (Spec.GetContext().GetSourceObject()->Implements<UCombatInterface>())
+	{
+		PlayerLevel = ICombatInterface::Execute_GetPlayerLevel(Spec.GetContext().GetSourceObject());
+	}
 
 	// 최종 결과값. 기본값 80 + 활력 * 2.5 + 레벨 * 10
 	return 80.f + (2.5f * Vigor) + (10.f * static_cast<float>(PlayerLevel));

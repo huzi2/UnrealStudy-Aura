@@ -100,7 +100,7 @@ void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContext
 		{
 			if (AbilityClass)
 			{
-				FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
+				const FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 				AbilitySystemComponent->GiveAbility(AbilitySpec);
 			}
 		}
@@ -112,9 +112,9 @@ void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContext
 			if (AbilityClass)
 			{
 				// 어빌리티 레벨에 캐릭터의 레벨을 적용
-				if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(AbilitySystemComponent->GetAvatarActor()))
+				if (AbilitySystemComponent->GetAvatarActor()->Implements<UCombatInterface>())
 				{
-					FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, CombatInterface->GetPlayerLevel());
+					const FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, ICombatInterface::Execute_GetPlayerLevel(AbilitySystemComponent->GetAvatarActor()));
 					AbilitySystemComponent->GiveAbility(AbilitySpec);
 				}
 			}

@@ -51,10 +51,12 @@ class AURA_API ICombatInterface
 
 public:
 	virtual void Die() = 0;
-	// 플레이어와 적의 레벨 얻어오는 방법이 달라서 virtual로 구현
-	virtual int32 GetPlayerLevel() const;
 
 protected:
+	// 캐릭터의 레벨을 얻어온다.
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetPlayerLevel() const;
+
 	// 모션워핑 컴포넌트를 통해 객체가 타겟을 향하도록 한다.
 	// 어빌리티의 블루프린트가 액터에 종속되지않도록 인터페이스에서 구현
 	// 모션워핑 컴포넌트를 코드가 아니라 블루프린트에서 직접 추가했으므로 함수내용도 블루프린트에서 구현

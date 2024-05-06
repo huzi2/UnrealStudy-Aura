@@ -100,15 +100,21 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	const AActor* SourceAvatar = SourceAbilitySystemComponent->GetAvatarActor();
 	if (!SourceAvatar) return;
 
-	// 레벨을 얻어올 컴뱃인터페이스
-	const ICombatInterface* SourceCombatInterface = Cast<ICombatInterface>(SourceAvatar);
-	if (!SourceCombatInterface) return;
-
 	const AActor* TargetAvatar = TargetAbilitySystemComponent->GetAvatarActor();
 	if (!TargetAvatar) return;
 
-	const ICombatInterface* TargetCombatInterface = Cast<ICombatInterface>(TargetAvatar);
-	if (!TargetCombatInterface) return;
+	// 인터페이스에서 레벨을 얻어온다.
+	int32 SourcePlayerLevel = 1;
+	if (SourceAvatar->Implements<UCombatInterface>())
+	{
+		SourcePlayerLevel = ICombatInterface::Execute_GetPlayerLevel(SourceAvatar);
+	}
+
+	int32 TargetPlayerLevel = 1;
+	if (TargetAvatar->Implements<UCombatInterface>())
+	{
+		TargetPlayerLevel = ICombatInterface::Execute_GetPlayerLevel(TargetAvatar);
+	}
 
 	// 계수에 사용할 커브 테이블
 	const UCharacterClassInfo* CharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(SourceAvatar);
@@ -181,14 +187,14 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	// 자신 레벨에 따른 장갑관통력 계수를 테이블에서 얻어온다.
 	const FRealCurve* ArmorPenetrationCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(TEXT("ArmorPenetration"), FString());
-	const float ArmorPenetrationCoefficient = ArmorPenetrationCurve->Eval(SourceCombatInterface->GetPlayerLevel());
+	const float ArmorPenetrationCoefficient = ArmorPenetrationCurve->Eval(SourcePlayerLevel);
 
 	// 장갑관통력을 계산한 타겟의 방어력
 	const float EffectiveArmor = TargetArmor * (100.f - SourceArmorPenetration * ArmorPenetrationCoefficient) / 100.f;
 
 	// 타겟 레벨에 따른 유효한 방어력 계수를 테이블에서 얻어온다.
 	const FRealCurve* EffectiveArmorCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(TEXT("EffectiveArmor"), FString());
-	const float EffectiveArmorCoefficient = EffectiveArmorCurve->Eval(TargetCombatInterface->GetPlayerLevel());
+	const float EffectiveArmorCoefficient = EffectiveArmorCurve->Eval(TargetPlayerLevel);
 
 	// 유요한 방어력으로 데미지를 퍼센트로 경감
 	Damage *= (100.f - EffectiveArmor * EffectiveArmorCoefficient) / 100.f;
@@ -207,7 +213,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	// 타겟 레벨에 따른 치명타 저항력 계수를 테이블에서 얻어온다.
 	const FRealCurve* CriticalHitResistanceCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(TEXT("CriticalHitResistance"), FString());
-	const float CriticalHitResistanceCoefficient = CriticalHitResistanceCurve->Eval(TargetCombatInterface->GetPlayerLevel());
+	const float CriticalHitResistanceCoefficient = CriticalHitResistanceCurve->Eval(TargetPlayerLevel);
 
 	// 최종 치명타 확률은 나의 치명타 확률에서 타겟의 치명타 저항력을 뺀 것
 	const float EffectiveCriticalHitChance = SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCoefficient;

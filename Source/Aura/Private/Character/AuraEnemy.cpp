@@ -15,10 +15,6 @@
 #include "BehaviorTree/BehaviorTree.h"
 
 AAuraEnemy::AAuraEnemy()
-	: Level(1)
-	, bHitReacting(false)
-	, BaseWalkSpeed(250.f)
-	, LifeSpan(5.f)
 {
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECollisionResponse::ECR_Overlap);
@@ -148,7 +144,7 @@ void AAuraEnemy::Die()
 	}
 }
 
-int32 AAuraEnemy::GetPlayerLevel() const
+int32 AAuraEnemy::GetPlayerLevel_Implementation() const
 {
 	return Level;
 }
