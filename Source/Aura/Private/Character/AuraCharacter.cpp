@@ -6,6 +6,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "UI/HUD/AuraHUD.h"
+#include "AbilitySystem/Data/LevelUpInfo.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -89,6 +90,24 @@ int32 AAuraCharacter::GetPlayerLevel_Implementation() const
 	return AuraPlayerState->GetPlayerLevel();
 }
 
+int32 AAuraCharacter::FindLevelForXP_Implementation(int32 InXP) const
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+
+	if (!AuraPlayerState->GetLevelUpInfo()) return 0;
+
+	return AuraPlayerState->GetLevelUpInfo()->FindLevelForXP(InXP);
+}
+
+int32 AAuraCharacter::GetXP_Implementation() const
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+
+	return AuraPlayerState->GetXP();
+}
+
 void AAuraCharacter::AddToXP_Implementation(int32 InXP)
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
@@ -99,8 +118,43 @@ void AAuraCharacter::AddToXP_Implementation(int32 InXP)
 
 void AAuraCharacter::LevelUp_Implementation()
 {
+	
+}
+
+void AAuraCharacter::AddToPlayerLevel_Implementation(int32 InPlayerLevel)
+{
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check(AuraPlayerState);
 
-	AuraPlayerState->AddToLevel(1);
+	AuraPlayerState->AddToLevel(InPlayerLevel);
+}
+
+int32 AAuraCharacter::GetAttributePointReward_Implementation(int32 Level) const
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+
+	if (!AuraPlayerState->GetLevelUpInfo()) return 0;
+	if (!AuraPlayerState->GetLevelUpInfo()->GetLevelUpInformation().IsValidIndex(Level)) return 0;
+
+	return AuraPlayerState->GetLevelUpInfo()->GetLevelUpInformation()[Level].AttributePointAward;
+}
+
+void AAuraCharacter::AddToAttributePoints_Implementation(int32 InAttributePoints)
+{
+}
+
+int32 AAuraCharacter::GetSpellPointReward_Implementation(int32 Level) const
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+
+	if (!AuraPlayerState->GetLevelUpInfo()) return 0;
+	if (!AuraPlayerState->GetLevelUpInfo()->GetLevelUpInformation().IsValidIndex(Level)) return 0;
+
+	return AuraPlayerState->GetLevelUpInfo()->GetLevelUpInformation()[Level].SpellPointAward;
+}
+
+void AAuraCharacter::AddToSpellPoints_Implementation(int32 InSpellPoints)
+{
 }

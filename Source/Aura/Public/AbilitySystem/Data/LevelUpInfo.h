@@ -37,6 +37,8 @@ class AURA_API ULevelUpInfo : public UDataAsset
 	GENERATED_BODY()
 	
 public:
+	FORCEINLINE const TArray<FAuraLevelUpInfo>& GetLevelUpInformation() const { return LevelUpInformation; }
+
 	// 경험치에 맞는 레벨을 얻어옴
 	int32 FindLevelForXP(int32 XP) const;
 	// 최대 레벨

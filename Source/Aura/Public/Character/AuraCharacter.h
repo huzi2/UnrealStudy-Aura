@@ -30,8 +30,15 @@ private:
 	virtual int32 GetPlayerLevel_Implementation() const final;
 
 	// IPlayerInterface에서 상속
+	virtual int32 FindLevelForXP_Implementation(int32 InXP) const final;
+	virtual int32 GetXP_Implementation() const final;
 	virtual void AddToXP_Implementation(int32 InXP) final;
 	virtual void LevelUp_Implementation() final;
+	virtual void AddToPlayerLevel_Implementation(int32 InPlayerLevel) final;
+	virtual int32 GetAttributePointReward_Implementation(int32 Level) const final;
+	virtual void AddToAttributePoints_Implementation(int32 InAttributePoints) final;
+	virtual int32 GetSpellPointReward_Implementation(int32 Level) const final;
+	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) final;
 
 protected:
 	// 능력치 초기화에 사용할 게임플레이 이펙트들
