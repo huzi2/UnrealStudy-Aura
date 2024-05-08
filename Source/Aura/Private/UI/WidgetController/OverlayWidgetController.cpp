@@ -28,6 +28,14 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	// 경험치가 변경되었을 때 함수 바인드
 	AuraPlayerState->OnXPChangedDelegate.AddUObject(this, &ThisClass::OnXPChanged);
 
+	// 레벨이 변경됬을 때 함수 바인드
+	AuraPlayerState->OnLevelChangedDelegate.AddLambda(
+		[this](int32 NewLevel)
+		{
+			OnPlayerLevelChangedDelegate.Broadcast(NewLevel);
+		}
+	);
+
 	// 어트리뷰트 세트의 값이 변경됬을 때 브로드캐스트 하기위해 어트리뷰트 세트와 함수를 바인드
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetHealthAttribute()).AddLambda(
 		[this](const FOnAttributeChangeData& Data)

@@ -36,6 +36,8 @@ public:
 	TObjectPtr<UTexture2D> Image = nullptr;
 };
 
+// 플레이어의 정수 변수(레벨, 스킬포인트 등)가 변경됬을 때 알려줄 델리게이트
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChangedSignature, int32, NewValue);
 // 어트리뷰트 세트의 값이 변경될 때 위젯들에게 알려줄 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 // 태그에 따른 메시지 위젯을 표시할 때 사용할 델리게이트
@@ -88,6 +90,10 @@ public:
 	// 경험치가 변경될 때 사용할 델리게이트
 	UPROPERTY(BlueprintAssignable, Category = "GAS|XP")
 	FOnAttributeChangedSignature OnXPPercentChangedDelegate;
+
+	// 레벨 업 시 레벨을 수정할 델리게이트
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Level")
+	FOnPlayerStatChangedSignature OnPlayerLevelChangedDelegate;
 
 protected:
 	// 메시지 관련 데이터 테이블
