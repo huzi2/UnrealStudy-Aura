@@ -7,6 +7,10 @@
 #include "Interaction/PlayerInterface.h"
 #include "AuraCharacter.generated.h"
 
+class UNiagaraComponent;
+class UCameraComponent;
+class USpringArmComponent;
+
 /**
  * 플레이어 캐릭터 클래스
  */
@@ -40,6 +44,11 @@ private:
 	virtual int32 GetSpellPointReward_Implementation(int32 Level) const final;
 	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) final;
 
+private:
+	// 다른 클라들도 이펙트를 볼 수 있도록 멀티캐스트 함수로 선언
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastLevelUpParticles() const;
+
 protected:
 	// 능력치 초기화에 사용할 게임플레이 이펙트들
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
@@ -48,4 +57,14 @@ protected:
 	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+
+	// 카메라 관련
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USpringArmComponent> CameraBoom;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UCameraComponent> TopDownCameraComponent;
+
+	// 레벨 업 이펙트
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
 };
