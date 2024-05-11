@@ -34,6 +34,8 @@ private:
 public:
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
 	FORCEINLINE int32 GetXP() const { return XP; }
+	FORCEINLINE int32 GetAttributePoints() const { return AttributePoints; }
+	FORCEINLINE int32 GetSpellPoints() const { return SpellPoints; }
 	FORCEINLINE ULevelUpInfo* GetLevelUpInfo() const { return LevelUpInfo; }
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	
@@ -43,22 +45,44 @@ public:
 	void SetXP(int32 InXP);
 	void AddToXP(int32 InXP);
 
+	//void SetAttributePoints(int32 InAttributePoints);
+	void AddToAttributePoints(int32 InAttributePoints);
+
+	//void SetSpellPoints(int32 InSpellPoints);
+	void AddToSpellPoints(int32 InSpellPoints);
+
 public:
 	// 레벨이 변경되었을 때 호출할 델리게이트
 	FOnPlayerStateChanged OnLevelChangedDelegate;
 	// XP가 변경되었을 때 호출할 델리게이트
 	FOnPlayerStateChanged OnXPChangedDelegate;
+	// 능력치 포인트가 변경되었을 때 호출할 델리게이트
+	FOnPlayerStateChanged OnAttributePointsChangedDelegate;
+	// 스킬 포인트가 변경되었을 때 호출할 델리게이트
+	FOnPlayerStateChanged OnSpellPointsChangedDelegate;
 
 private:
 	// 레벨은 복잡한 어트리뷰트 기능이 필요없고, float와 어울리지 않아서 어트리뷰트로 설정하지 않고 직접 사용한다.
+	// 레벨
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
 	int32 Level = 1;
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);
+	// 경험치
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_XP)
 	int32 XP = 1;
 	UFUNCTION()
 	void OnRep_XP(int32 OldXP);
+	// 능력치 포인트
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_AttributePoints)
+	int32 AttributePoints = 0;
+	UFUNCTION()
+	void OnRep_AttributePoints(int32 OldAttributePoints);
+	// 스펠 포인트
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_SpellPoints)
+	int32 SpellPoints = 1;
+	UFUNCTION()
+	void OnRep_SpellPoints(int32 OldSpellPoints);
 
 	// 레벨 업 정보
 	UPROPERTY(EditDefaultsOnly)
