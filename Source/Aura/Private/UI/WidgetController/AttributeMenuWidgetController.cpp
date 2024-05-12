@@ -17,6 +17,11 @@ void UAttributeMenuWidgetController::BroadcastInitialValue()
 	{
 		BroadcastAttributeInfo(Pair.Key, Pair.Value());
 	}
+
+	// 능력치 포인트와 스킬 포인트 초기값을 브로드캐스트
+	const AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	AttributePointsChangedDelegate.Broadcast(AuraPlayerState->GetAttributePoints());
+	SpellPointsChangedDelegate.Broadcast(AuraPlayerState->GetSpellPoints());
 }
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
