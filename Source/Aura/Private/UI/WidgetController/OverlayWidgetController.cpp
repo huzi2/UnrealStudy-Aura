@@ -7,17 +7,6 @@
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
 
-void UOverlayWidgetController::BroadcastInitialValue()
-{
-	// 어트리뷰트 세트에 저장된 초기값을 위젯들에게 알림
-	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
-
-	OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
-	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
-	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
-	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
-}
-
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	if (!AbilitySystemComponent) return;
@@ -97,6 +86,17 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			AuraAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &ThisClass::OnInitializeStartupAbilities);
 		}
 	}
+}
+
+void UOverlayWidgetController::BroadcastInitialValue()
+{
+	// 어트리뷰트 세트에 저장된 초기값을 위젯들에게 알림
+	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+
+	OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
+	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
+	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
+	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
 }
 
 void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent)

@@ -34,13 +34,17 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToPlayerLevel(int32 InPlayerLevel);
 
-	// 능력치 관련
+	// 능력치 포인트 관련
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetAttributePoints() const;
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetAttributePointReward(int32 Level) const;
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToAttributePoints(int32 InAttributePoints);
 
-	// 스킬포인트 관련
+	// 스킬 포인트 관련
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetSpellPoints() const;
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetSpellPointReward(int32 Level) const;
 	UFUNCTION(BlueprintNativeEvent)

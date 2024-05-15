@@ -52,8 +52,8 @@ class AURA_API UOverlayWidgetController : public UAuraWidgetController
 	GENERATED_BODY()
 	
 public:
-	virtual void BroadcastInitialValue() final;
 	virtual void BindCallbacksToDependencies() final;
+	virtual void BroadcastInitialValue() final;
 
 private:
 	// 테이블에서 FName으로 사용해서 필요한 데이터를 얻어옴. 에디터에서 테이블을 만들 때 키값을 태그와 똑같이 만들어야한다.

@@ -23,11 +23,14 @@ class AURA_API UAttributeMenuWidgetController : public UAuraWidgetController
 	GENERATED_BODY()
 	
 public:
-	virtual void BroadcastInitialValue() final;
 	virtual void BindCallbacksToDependencies() final;
+	virtual void BroadcastInitialValue() final;
 
 private:
 	void BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const;
+
+	UFUNCTION(BlueprintCallable)
+	void UpgradeAttribute(const FGameplayTag& AttributeTag);
 
 public:
 	// 능력치 메뉴가 변경될 때 사용할 델리게이트

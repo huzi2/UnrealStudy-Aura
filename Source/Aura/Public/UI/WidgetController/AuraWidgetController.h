@@ -46,16 +46,16 @@ class AURA_API UAuraWidgetController : public UObject
 	GENERATED_BODY()
 
 public:
-	// UI에 초기값을 설정
+	// 위젯 컨트롤러에서 사용할 변수들을 설정
 	UFUNCTION(BlueprintCallable)
-	virtual void BroadcastInitialValue();
+	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 
 	// UI에 콜백함수 연결
 	virtual void BindCallbacksToDependencies();
 
-	// 위젯 컨트롤러에서 사용할 변수들을 설정
+	// UI에 초기값을 설정
 	UFUNCTION(BlueprintCallable)
-	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
+	virtual void BroadcastInitialValue();
 
 protected:
 	// UI에서 사용할 참조 변수들

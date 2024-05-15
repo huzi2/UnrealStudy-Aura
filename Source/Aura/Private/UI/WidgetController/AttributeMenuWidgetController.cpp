@@ -5,24 +5,7 @@
 #include "AbilitySystem/Data/AttributeInfo.h"
 #include "AuraGameplayTags.h"
 #include "Player/AuraPlayerState.h"
-
-void UAttributeMenuWidgetController::BroadcastInitialValue()
-{
-	check(AttributeInfo);
-
-	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
-	
-	// 데이터에셋을 사용해서 에셋들에게 초기값을 브로드캐스트
-	for (const auto& Pair : AuraAttributeSet->TagsToAttribute)
-	{
-		BroadcastAttributeInfo(Pair.Key, Pair.Value());
-	}
-
-	// 능력치 포인트와 스킬 포인트 초기값을 브로드캐스트
-	const AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
-	AttributePointsChangedDelegate.Broadcast(AuraPlayerState->GetAttributePoints());
-	SpellPointsChangedDelegate.Broadcast(AuraPlayerState->GetSpellPoints());
-}
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
@@ -58,10 +41,34 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 	);
 }
 
+void UAttributeMenuWidgetController::BroadcastInitialValue()
+{
+	check(AttributeInfo);
+
+	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+
+	// 데이터에셋을 사용해서 에셋들에게 초기값을 브로드캐스트
+	for (const auto& Pair : AuraAttributeSet->TagsToAttribute)
+	{
+		BroadcastAttributeInfo(Pair.Key, Pair.Value());
+	}
+
+	// 능력치 포인트와 스킬 포인트 초기값을 브로드캐스트
+	const AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	AttributePointsChangedDelegate.Broadcast(AuraPlayerState->GetAttributePoints());
+	SpellPointsChangedDelegate.Broadcast(AuraPlayerState->GetSpellPoints());
+}
+
 void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
 {
 	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
 	// FGameplayAttribute에서 값 얻어오기
 	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
 	AttributeInfoDelegate.Broadcast(Info);
+}
+
+void UAttributeMenuWidgetController::UpgradeAttribute(const FGameplayTag& AttributeTag)
+{
+	UAuraAbilitySystemComponent* AuraAbilitySystemComponent = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+	AuraAbilitySystemComponent->UpgradeAttribute(AttributeTag);
 }

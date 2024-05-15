@@ -39,8 +39,10 @@ private:
 	virtual void AddToXP_Implementation(int32 InXP) final;
 	virtual void LevelUp_Implementation() final;
 	virtual void AddToPlayerLevel_Implementation(int32 InPlayerLevel) final;
+	virtual int32 GetAttributePoints_Implementation() const;
 	virtual int32 GetAttributePointReward_Implementation(int32 Level) const final;
 	virtual void AddToAttributePoints_Implementation(int32 InAttributePoints) final;
+	virtual int32 GetSpellPoints_Implementation() const;
 	virtual int32 GetSpellPointReward_Implementation(int32 Level) const final;
 	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) final;
 

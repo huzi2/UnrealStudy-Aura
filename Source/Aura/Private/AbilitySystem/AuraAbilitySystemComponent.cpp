@@ -3,14 +3,8 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 #include "Aura/AuraLogChannels.h"
-
-void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
-{
-	FGameplayTagContainer TagContainer;
-	EffectSpec.GetAllAssetTags(TagContainer);
-
-	EffectAssetTagsDelegate.Broadcast(TagContainer);
-}
+#include "Interaction/PlayerInterface.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 {
@@ -141,5 +135,45 @@ void UAuraAbilitySystemComponent::ForEachAbility(const FForEachAbility& Delegate
 			// 어빌리티에 등록된 델리게이트가 없음
 			UE_LOG(LogAura, Error, TEXT("Failed to execute delegate in %hs"), __FUNCTION__);
 		}
+	}
+}
+
+void UAuraAbilitySystemComponent::UpgradeAttribute(const FGameplayTag& AttributeTag)
+{
+	if (GetAvatarActor() && GetAvatarActor()->Implements<UPlayerInterface>())
+	{
+		// 능력치 포인트가 있을 때
+		if (IPlayerInterface::Execute_GetAttributePoints(GetAvatarActor()) > 0)
+		{
+			// 서버에게 해당 능력치 상승 요청
+			ServerUpgradeAttribute(AttributeTag);
+		}
+	}
+}
+
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+{
+	FGameplayTagContainer TagContainer;
+	EffectSpec.GetAllAssetTags(TagContainer);
+
+	// 이펙트에 적용된 태그 관련 브로드캐스트
+	EffectAssetTagsDelegate.Broadcast(TagContainer);
+}
+
+void UAuraAbilitySystemComponent::ServerUpgradeAttribute_Implementation(const FGameplayTag& AttributeTag)
+{
+	if (!GetAvatarActor()) return;
+
+	FGameplayEventData Payload;
+	Payload.EventTag = AttributeTag;
+	Payload.EventMagnitude = 1.f;
+
+	// 스스로에게 이벤트를 전달. 어빌리티 중 이벤트를 처리하는 패시브 어빌리티 GA_ListenForEvent에서 처리 예정
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetAvatarActor(), AttributeTag, Payload);
+
+	if (GetAvatarActor()->Implements<UPlayerInterface>())
+	{
+		// 능력치 포인트를 올렸으므로 하나 제거
+		IPlayerInterface::Execute_AddToAttributePoints(GetAvatarActor(), -1);
 	}
 }
