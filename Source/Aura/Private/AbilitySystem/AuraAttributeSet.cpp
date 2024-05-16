@@ -167,15 +167,34 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 				IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
 				IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
 
-				// 체력과 마나 회복
-				SetHealth(GetMaxHealth());
-				SetMana(GetMaxMana());
+				// 체력과 마나 회복(레벨에 따라 Max가 달라지므로 후처리에서 진행)
+				bTopOffHelath = true;
+				bTopOffMana = true;
 
 				IPlayerInterface::Execute_LevelUp(Props.SourceCharacter);
 			}
 
 			IPlayerInterface::Execute_AddToXP(Props.SourceCharacter, LocalIncomingXP);
 		}
+	}
+}
+
+void UAuraAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+{
+	Super::PostAttributeChange(Attribute, OldValue, NewValue);
+
+	// 능력치 변화 후처리
+
+	// 레벨업했을 때 체력과 마나를 최대로 회복
+	if (Attribute == GetMaxHealthAttribute() && bTopOffHelath)
+	{
+		SetHealth(GetMaxHealth());
+		bTopOffHelath = false;
+	}
+	if (Attribute == GetMaxManaAttribute() && bTopOffMana)
+	{
+		SetMana(GetMaxMana());
+		bTopOffMana = false;
 	}
 }
 

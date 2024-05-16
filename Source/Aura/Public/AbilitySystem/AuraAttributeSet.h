@@ -65,9 +65,13 @@ private:
 	UAuraAttributeSet();
 
 private:
+	// UObject에서 상속
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const final;
+
+	// UAttributeSet에서 상속
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) final;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) final;
+	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) final;
 
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
@@ -252,4 +256,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Meta Attributes")
 	FGameplayAttributeData IncomingXP;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingXP);
+
+private:
+	// 레벨업시 체력과 마나를 최대치로 회복을 후처리에서 진행하기 위한 bool
+	bool bTopOffHelath = false;
+	bool bTopOffMana = false;
 };
