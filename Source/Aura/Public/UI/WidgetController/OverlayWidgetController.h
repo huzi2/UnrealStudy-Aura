@@ -8,7 +8,6 @@
 #include "OverlayWidgetController.generated.h"
 
 class UAuraUserWidget;
-class UAbilityInfo;
 class UAuraAbilitySystemComponent;
 struct FOnAttributeChangeData;
 
@@ -40,8 +39,6 @@ public:
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 // 태그에 따른 메시지 위젯을 표시할 때 사용할 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
-// 어빌리티 정보를 확인해서 UI에 표시하기위한 델리게이트
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAbilityInfoSignature, const FAuraAbilityInfo&, Info);
 
 /**
  * 오버레이 UI와 코드(블루프린트)를 연결해주는 컨트롤러
@@ -60,10 +57,8 @@ private:
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag) const;
 
-	// 시작 어빌리티들을 UI에 적용
-	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent);
 	// 경험치 변경 시 UI에 적용
-	void OnXPChanged(int32 NewXP) const;
+	void OnXPChanged(int32 NewXP);
 
 public:
 	// BlueprintAssignable로 연결되는 함수들은 각 UI의 블루프린트에서 직접 구현한다.
@@ -81,10 +76,6 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 
-	// 어빌리티 정보를 연결할 델리게이트
-	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
-	FAbilityInfoSignature AbilityInfoDelegate;
-
 	// 경험치가 변경될 때 사용할 델리게이트
 	UPROPERTY(BlueprintAssignable, Category = "GAS|XP")
 	FOnAttributeChangedSignature OnXPPercentChangedDelegate;
@@ -97,9 +88,6 @@ protected:
 	// 메시지 관련 데이터 테이블
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
-	TObjectPtr<UAbilityInfo> AbilityInfo;
 };
 
 template<typename T>

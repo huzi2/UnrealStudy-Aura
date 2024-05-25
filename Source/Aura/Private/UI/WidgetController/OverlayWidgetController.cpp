@@ -10,9 +10,9 @@
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	if (!AbilitySystemComponent) return;
-
-	AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
-	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+	if (!GetAuraPlayerState()) return;
+	if (!GetAuraAttributeSet()) return;
+	if (!GetAuraAbilitySystemComponent()) return;
 
 	// 경험치가 변경되었을 때 함수 바인드
 	AuraPlayerState->OnXPChangedDelegate.AddUObject(this, &ThisClass::OnXPChanged);
@@ -54,72 +54,51 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		}
 	);
 
-	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
-	{
-		// 메시지 출력 델리게이트 연결
-		AuraAbilitySystemComponent->EffectAssetTagsDelegate.AddLambda(
-			[this](const FGameplayTagContainer& AssetTags)
+	// 메시지 출력 델리게이트 연결
+	AuraAbilitySystemComponent->EffectAssetTagsDelegate.AddLambda(
+		[this](const FGameplayTagContainer& AssetTags)
+		{
+			for (const FGameplayTag& Tag : AssetTags)
 			{
-				for (const FGameplayTag& Tag : AssetTags)
+				// Message 태그인 경우에만 확인함
+				const FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(TEXT("Message"));
+				if (Tag.MatchesTag(MessageTag))
 				{
-					// Message 태그인 경우에만 확인함
-					const FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(TEXT("Message"));
-					if (Tag.MatchesTag(MessageTag))
+					if (const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag))
 					{
-						if (const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag))
-						{
-							MessageWidgetRowDelegate.Broadcast(*Row);
-						}
+						MessageWidgetRowDelegate.Broadcast(*Row);
 					}
 				}
 			}
-		);
+		}
+	);
 
-		// 어빌리티 얻을 때 델리게이트 연결
-		// 호출 시점에 따라 시작 어빌리티들을 못받았을 경우가 있음
-		if (AuraAbilitySystemComponent->bStartupAbilitiesGiven)
-		{
-			OnInitializeStartupAbilities(AuraAbilitySystemComponent);
-		}
-		else
-		{
-			AuraAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &ThisClass::OnInitializeStartupAbilities);
-		}
+	// 어빌리티 얻을 때 델리게이트 연결
+	// 호출 시점에 따라 시작 어빌리티들을 못받았을 경우가 있음
+	if (AuraAbilitySystemComponent->bStartupAbilitiesGiven)
+	{
+		BroadcastAbilityInfo();
+	}
+	else
+	{
+		AuraAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &UAuraWidgetController::BroadcastAbilityInfo);
 	}
 }
 
 void UOverlayWidgetController::BroadcastInitialValue()
 {
-	// 어트리뷰트 세트에 저장된 초기값을 위젯들에게 알림
-	const UAuraAttributeSet* AuraAttributeSet = CastChecked<UAuraAttributeSet>(AttributeSet);
+	if (!GetAuraAttributeSet()) return;
 
+	// 어트리뷰트 세트에 저장된 초기값을 위젯들에게 알림
 	OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
 	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
 }
 
-void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent)
+void UOverlayWidgetController::OnXPChanged(int32 NewXP)
 {
-	if (!AuraAbilitySystemComponent) return;
-	if (!AuraAbilitySystemComponent->bStartupAbilitiesGiven) return;
-
-	FForEachAbility BroadcastDelegate;
-	BroadcastDelegate.BindLambda([this](const FGameplayAbilitySpec& AbilitySpec)
-		{
-			FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(UAuraAbilitySystemComponent::GetAbilityTagFromSpec(AbilitySpec));
-			Info.InputTag = UAuraAbilitySystemComponent::GetInputTagFromSpec(AbilitySpec);
-			AbilityInfoDelegate.Broadcast(Info);
-		}
-	);
-
-	// 모든 어빌리티에 대하여 위 델리게이트를 수행
-	AuraAbilitySystemComponent->ForEachAbility(BroadcastDelegate);
-}
-
-void UOverlayWidgetController::OnXPChanged(int32 NewXP) const
-{
-	AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	if (!GetAuraPlayerState()) return;
 
 	if (const ULevelUpInfo* LevelUpInfo = AuraPlayerState->GetLevelUpInfo())
 	{
