@@ -1,6 +1,6 @@
 # UnrealStudy-Aura
 
-<img width="776" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/74afe339-fce5-4d1e-af69-2adaa49bf8dd">
+<img width="1524" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/a8fa241a-0db2-49e7-a4d8-fe759b35320b">
 
 ## 프로젝트 개요
 
@@ -73,6 +73,23 @@
   - <img width="442" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/b6c51d9e-683e-49df-9521-bf8731668324">
   - 방어력 = (회복력 + 2) * 0.25 + 6 식으로 복잡한 공식의 능력치 형태를 게임플레이 이펙트로 구현
   - Infinite로 적용되어서 스탯이 변경되면 즉시 공식 적용됨
+- 경험치와 레벨 업 구현
+  - <img width="343" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/19ef89d5-92e9-4e9a-81b9-08d3d59f32d3">
+  - 레벨과 경험치, 능력치 포인트, 스킬 포인트는 플레이어 스테이트에서 관리
+  - <img width="285" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/88bee676-f209-4d83-b765-730568245cf2">
+  - 위 변수들이 변경되었을 때 호출할 델리게이트도 설정
+  - <img width="311" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/056e88c9-926f-4256-bcea-2da3943ed491">
+  - 어트리뷰트 세트에서 경험치를 메타 어트리뷰트 값으로 관리
+  - <img width="1159" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/27d4c5ab-a857-4fba-8377-f253d67653f7">
+  - <img width="1028" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/c722512e-301e-4da1-b3a5-6ed746d15b74">
+  - 플레이어는 패시브 어빌리티를 통해 비동기적으로 게임플레이 이벤트를 기다린다. 해당 이벤트에서 경험치를 얻는 이벤트가 발생하면 게임플레이 이펙트를 통해 적용
+  - <img width="689" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/dfea3f2b-a5c5-4ef9-bd79-1d6ad7cff9d4">
+  - 게임플레이 이펙트로 경험치가 적용되면 그 양을 확인 후 레벨업. 레벨업하면 레벨과 능력치 포인트, 스킬 포인트를 상승
+  - <img width="549" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/81b064ad-9563-456c-82a2-cc2ed6b65b22">
+  - 레벨이 변경되었을 때 델리게이트를 통해 이펙트 재생
+  - <img width="140" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/4614d440-9358-4f63-a5f5-e7bcec4379df">
+  - <img width="440" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/98f786e8-8b28-4653-aadc-178a7bdeb743">
+  - UI에 레벨과 능력치 포인트 적용
 - 몬스터의 공격 구현
   - <img width="409" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/ac71107d-79a9-4f41-89d3-cfb82fa15854">
   - 몬스터마다 사용할 공격 모션의 몽타주와 몽타주 태그, 공격 지점을 정할 소켓 태그, 사용할 사운드를 지정
