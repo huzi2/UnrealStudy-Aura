@@ -30,6 +30,10 @@
   - 능력치(어트리뷰트 세트)를 게임플레이 이펙트로 초기화. RPG의 복잡한 스탯 공식을 적용
   - ![image](https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/778bd31c-3257-4e17-a2b1-ccfff8475406)
   - 게임플레이 이펙트와 커브 테이블을 통해서 레벨에 따라 능력치가 달라지도록 적용
+  - <img width="283" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/a9aca388-e455-469f-a5f1-ff58c1029b6a">
+  - <img width="358" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/f0db7a41-ae5e-4d5b-8e16-b4bb723e7952">
+  - <img width="327" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/63fef47d-5751-4e47-83a2-0a1214c76cfd">
+  - 어빌리티의 코스트와 쿨타임을 게임플레이 이펙트로 적용
 - 게임플레이 태그
   - <img width="599" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/e1f4d0be-76ac-40ea-ba1b-9f47be852593">
   - 능력치(어트리뷰트 세트), 향상된 입력, 게임플레이 이펙트를 태그로 관리
@@ -140,6 +144,19 @@
   - <img width="679" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/2249fc97-6791-4a6a-bb90-eaa661af4568">
   - <img width="891" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/86016547-34b1-4368-88cb-fe9da0707cb8">
   - 체력이나 마나가 닳았을 때 앞의 구슬은 즉시 빠지고, 뒤의 흰색 구슬은 천천히 빠지는 형식으로 구현
+- 스킬 UI 표시
+  - <img width="116" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/8b64c4fb-8098-488c-9af0-b027e652b658">
+  - 태그를 통해 인풋 태그와 어빌리티 태그를 매칭. 매칭되는 스킬을 UI에 표시
+  - <img width="117" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/f2005cac-38c3-44bf-b595-5510919d14f0">
+  - 어빌리티가 쿨타임 중이면 비활성화 및 쿨타임 표시
+- 경험치 바 표시
+  - <img width="481" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/3e634913-24ab-414a-a8f4-ab8ada137a6e">
+  - <img width="484" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/b39cb278-da78-450e-8d48-f56c01cfd535">
+- 레벨과 초상화 표시
+  - <img width="143" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/5eeb2fc9-6b6b-491c-bd1b-77fd2f2b6177">
+  - <img width="94" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/3d19342a-ee7e-4b12-bb68-ba2b2e66896f">
+  - <img width="508" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/18c864b5-5a05-4e17-9cba-6703caa68102">
+  - 레벨업 메시지도 표시
 - 능력치 메뉴 구현
   - <img width="439" alt="image" src="https://github.com/huzi2/UnrealStudy-Aura/assets/31639085/1327dd2f-4783-47c9-9052-afb25798cea9">
   - 어트리뷰트 세트와 태그로 연결되어서 어트리뷰트 세트가 변경될 때 바로 적용. 아래 2차 속성은 1차 속성이 변경되면 무한 게임플레이 이펙트로 복잡한 식이 계산되서 바로 적용됨
