@@ -9,7 +9,10 @@
 
 class UOverlayWidgetController;
 class UAttributeMenuWidgetController;
+class USpellMenuWidgetController;
 class UAbilitySystemComponent;
+class AAuraHUD;
+struct FWidgetControllerParams;
 
 /**
  * 게임 제작에 도움이 되는 라이브러리 함수. 블루프린트에서도 사용 가능
@@ -21,12 +24,16 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	
 public:
 	// 오버레이 위젯 컨트롤러를 얻어옴. 없을 경우 새로 생성
-	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController")
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
 
-	// 능력치 창의 위젯 컨트롤러를 얻어옴
-	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController")
+	// 능력치 메뉴 창의 위젯 컨트롤러를 얻어옴
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
 	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
+
+	// 스킬 메뉴 창의 위젯 컨트롤러를 얻어옴
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
+	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 
 	// 클래스의 킁력치나 어빌리티를 가져오는 UCharacterClassInfo를 얻어옴
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
@@ -58,6 +65,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
 	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
 
-
+	// 적 종류와 레벨에 따른 획득 경험치
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level);
+
+private:
+	// 위젯 컨트롤러에서 사용되는 변수들 세팅
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
+	static bool MakeWidgetControllerParams(const UObject* WorldContextObject, FWidgetControllerParams& OutWidgetControllerParams, AAuraHUD*& OutAuraHUD);
 };

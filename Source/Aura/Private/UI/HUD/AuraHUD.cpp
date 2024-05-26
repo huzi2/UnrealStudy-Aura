@@ -4,6 +4,7 @@
 #include "UI/Widget/AuraUserWidget.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
+#include "UI/WidgetController/SpellMenuWidgetController.h"
 
 UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
@@ -27,6 +28,17 @@ UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const
 	return AttributeMenuWidgetController;
 }
 
+USpellMenuWidgetController* AAuraHUD::GetSpellMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+	if (!SpellMenuWidgetController)
+	{
+		SpellMenuWidgetController = NewObject<USpellMenuWidgetController>(this, SpellMenuWidgetControllerClass);
+		SpellMenuWidgetController->SetWidgetControllerParams(WCParams);
+		SpellMenuWidgetController->BindCallbacksToDependencies();
+	}
+	return SpellMenuWidgetController;
+}
+
 void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	check(OverlayWidgetClass);
@@ -35,11 +47,14 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	OverlayWidget = CreateWidget<UAuraUserWidget>(GetWorld(), OverlayWidgetClass);
 	if (!OverlayWidget) return;
 
+	// 위젯 컨트롤러에서 사용할 기본 변수들 세팅
 	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
 	GetOverlayWidgetController(WidgetControllerParams);
 	if (!OverlayWidgetController) return;
 
+	// 위젯에 위젯 컨트롤러 세팅
 	OverlayWidget->SetWidgetController(OverlayWidgetController);
+	// 어트리뷰트 세트의 정보 반영
 	OverlayWidgetController->BroadcastInitialValue();
 	OverlayWidget->AddToViewport();
 }

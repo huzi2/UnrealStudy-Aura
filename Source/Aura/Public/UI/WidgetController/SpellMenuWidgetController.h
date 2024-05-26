@@ -9,7 +9,7 @@
 /**
  * 스킬 메뉴의 위젯 컨트롤러
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class AURA_API USpellMenuWidgetController : public UAuraWidgetController
 {
 	GENERATED_BODY()
