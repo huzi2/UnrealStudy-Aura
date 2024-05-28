@@ -14,11 +14,14 @@ public:
 	static void InitializeNativeGameplayTags();
 
 public:
+	// 능력치 관련 태그
+	// 주요 능력
 	FGameplayTag Attribute_Primary_Strength;
 	FGameplayTag Attribute_Primary_Intelligence;
 	FGameplayTag Attribute_Primary_Resilience;
 	FGameplayTag Attribute_Primary_Vigor;
 
+	// 보조 능력
 	FGameplayTag Attribute_Secondary_Armor;
 	FGameplayTag Attribute_Secondary_ArmorPenetration;
 	FGameplayTag Attribute_Secondary_BlockChance;
@@ -30,13 +33,16 @@ public:
 	FGameplayTag Attribute_Secondary_MaxHealth;
 	FGameplayTag Attribute_Secondary_MaxMana;
 
+	// 속성 저항력
 	FGameplayTag Attribute_Resistance_Fire;
 	FGameplayTag Attribute_Resistance_Lightning;
 	FGameplayTag Attribute_Resistance_Arcane;
 	FGameplayTag Attribute_Resistance_Physical;
 
+	// 메타 어트리뷰트
 	FGameplayTag Attribute_Meta_IncomingXP;
 
+	// 인풋 태그
 	FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
 	FGameplayTag InputTag_1;
@@ -46,6 +52,7 @@ public:
 	FGameplayTag InputTag_Passive_1;
 	FGameplayTag InputTag_Passive_2;
 
+	// 데미지 종류
 	FGameplayTag Damage;
 	FGameplayTag Damage_Fire;
 	FGameplayTag Damage_Lightning;
@@ -53,19 +60,41 @@ public:
 	FGameplayTag Damage_Physical;
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
+	// 이펙트
 	FGameplayTag Effects_HitReact;
 
+	// 어빌리티 관련 태그
+	// 어빌리티
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
+
+	// 속성 어빌리티
 	FGameplayTag Abilities_Fire_FireBolt;
 
+	// 기타 어빌리티
+	FGameplayTag Abilities_HitReact;
+
+	// 어빌리티 상태
+	FGameplayTag Abilities_Status_Locked;
+	FGameplayTag Abilities_Status_Eligible;
+	FGameplayTag Abilities_Status_Unlocked;
+	FGameplayTag Abilities_Status_Equipped;
+
+	// 어빌리티 종류
+	FGameplayTag Abilities_Type_Offensive;
+	FGameplayTag Abilities_Type_Passive;
+	FGameplayTag Abilities_Type_None;
+
+	// 어빌리티 쿨타임
 	FGameplayTag Cooldown_Fire_FireBolt;
 
+	// 공격 소켓
 	FGameplayTag CombatSocket_Weapon;
 	FGameplayTag CombatSocket_LeftHand;
 	FGameplayTag CombatSocket_RightHand;
 	FGameplayTag CombatSocket_Tail;
 
+	// 몬스터 공격 종류
 	FGameplayTag Montage_Attack1;
 	FGameplayTag Montage_Attack2;
 	FGameplayTag Montage_Attack3;

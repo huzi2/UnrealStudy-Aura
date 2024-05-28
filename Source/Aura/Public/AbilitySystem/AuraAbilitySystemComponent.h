@@ -29,6 +29,8 @@ public:
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 	// 어빌리티에서 인풋 태그 얻어오기
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
+	// 어빌리티에서 어빌리티의 상태 태그 얻어오기
+	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 
 public:
 	// 이펙트 적용될 때 함수에 바인드
