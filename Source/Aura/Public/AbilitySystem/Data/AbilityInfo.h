@@ -23,6 +23,8 @@ public:
 	FGameplayTag CooldownTag = FGameplayTag();
 	UPROPERTY(BlueprintReadOnly)
 	FGameplayTag InputTag = FGameplayTag();
+	UPROPERTY(BlueprintReadOnly)
+	FGameplayTag StatusTag = FGameplayTag();
 
 	// UI에 표시될 아이콘과 배경
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
