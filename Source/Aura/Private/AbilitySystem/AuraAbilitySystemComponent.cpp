@@ -6,6 +6,8 @@
 #include "Interaction/PlayerInterface.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "AbilitySystem/Data/AbilityInfo.h"
 
 void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 {
@@ -57,6 +59,26 @@ FGameplayTag UAuraAbilitySystemComponent::GetStatusFromSpec(const FGameplayAbili
 		}
 	}
 	return FGameplayTag();
+}
+
+FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const FGameplayTag& AbilityTag)
+{
+	// 어빌리티의 델리게이트를 수행하기전에 어빌리티를 잠금(그 사이에 제거되거나 추가되지 않는다)
+	FScopedAbilityListLock ActiveScopeLock(*this);
+
+	// 모든 활성화된 어빌리티들을 확인
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		for (const FGameplayTag& Tag : AbilitySpec.Ability.Get()->AbilityTags)
+		{
+			// 어빌리티 태그가 일치하는 태그가 있을 경우 리턴
+			if (Tag.MatchesTag(AbilityTag))
+			{
+				return &AbilitySpec;
+			}
+		}
+	}
+	return nullptr;
 }
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
@@ -162,6 +184,33 @@ void UAuraAbilitySystemComponent::UpgradeAttribute(const FGameplayTag& Attribute
 		{
 			// 서버에게 해당 능력치 상승 요청
 			ServerUpgradeAttribute(AttributeTag);
+		}
+	}
+}
+
+void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
+{
+	if (const UAbilityInfo* AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo(GetAvatarActor()))
+	{
+		// 모든 스킬 정보에 대해서 확인
+		for (const FAuraAbilityInfo& Info : AbilityInfo->GetAbilityInformation())
+		{
+			if (!Info.AbilityTag.IsValid()) continue;
+			// 레벨에 맞지 않는 스킬은 넘어감
+			if (Level < Info.LevelRequirement) continue;
+
+			// 현재 활성화되지 않은 스킬들은 생성해서 활성화
+			if (!GetSpecFromAbilityTag(Info.AbilityTag))
+			{
+				FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Info.Ability, 1);
+				// 스킬의 상태를 사용할 수 있는 상태로 변경
+				AbilitySpec.DynamicAbilityTags.AddTag(UAuraGameplayTags::Get().Abilities_Status_Eligible);
+
+				// 스킬 어빌리티 활성화
+				GiveAbility(AbilitySpec);
+				// 해당 어빌리티가 변경되었음을 알림
+				MarkAbilitySpecDirty(AbilitySpec);
+			}
 		}
 	}
 }

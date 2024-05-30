@@ -7,8 +7,10 @@
 #include "AuraGameModeBase.generated.h"
 
 class UCharacterClassInfo;
+class UAbilityInfo;
+
 /**
- * 
+ * 게임모드 클래스
  */
 UCLASS()
 class AURA_API AAuraGameModeBase : public AGameModeBase
@@ -17,8 +19,14 @@ class AURA_API AAuraGameModeBase : public AGameModeBase
 	
 public:
 	FORCEINLINE UCharacterClassInfo* GetCharacterClassInfo() const { return CharacterClassInfo; }
+	FORCEINLINE UAbilityInfo* GetAbilityInfo() const { return AbilityInfo; }
 
 private:
+	// 모든 직업 정보를 가진 클래스
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
 	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
+
+	// 플레이어의 모든 스킬 정보를 가진 클래스
+	UPROPERTY(EditDefaultsOnly, Category = "Ability Info")
+	TObjectPtr<UAbilityInfo> AbilityInfo;
 };

@@ -7,6 +7,8 @@
 #include "GameplayTagContainer.h"
 #include "AbilityInfo.generated.h"
 
+class UGameplayAbility;
+
 /**
  * 캐릭터의 입력과 연결될 스킬
  */
@@ -31,6 +33,14 @@ public:
 	TObjectPtr<const UTexture2D> Icon = nullptr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<const UMaterialInterface> BackgroundMaterial = nullptr;
+
+	// 스킬을 배우기 위한 필요 레벨
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 LevelRequirement = 1;
+
+	// 스킬 어빌리티 클래스
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UGameplayAbility> Ability;
 };
 
 /**
@@ -42,6 +52,8 @@ class AURA_API UAbilityInfo : public UDataAsset
 	GENERATED_BODY()
 	
 public:
+	FORCEINLINE const TArray<FAuraAbilityInfo>& GetAbilityInformation() const { return AbilityInformation; }
+
 	FAuraAbilityInfo FindAbilityInfoForTag(const FGameplayTag& AbilityTag, bool bNotLogFound = false) const;
 
 protected:

@@ -68,8 +68,9 @@ public:
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
 
-	// 속성 어빌리티
+	// 플레이어가 사용할 속성 어빌리티
 	FGameplayTag Abilities_Fire_FireBolt;
+	FGameplayTag Abilities_Lightning_Electrocute;
 
 	// 기타 어빌리티
 	FGameplayTag Abilities_HitReact;

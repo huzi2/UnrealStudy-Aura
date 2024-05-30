@@ -12,6 +12,7 @@ class UAttributeMenuWidgetController;
 class USpellMenuWidgetController;
 class UAbilitySystemComponent;
 class AAuraHUD;
+class UAbilityInfo;
 struct FWidgetControllerParams;
 
 /**
@@ -35,9 +36,13 @@ public:
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
 	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 
-	// 클래스의 킁력치나 어빌리티를 가져오는 UCharacterClassInfo를 얻어옴
+	// 클래스의 능력치나 어빌리티를 가져오는 UCharacterClassInfo를 얻어옴
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+
+	// 플레이어의 스킬 정보를 가져오는 UAbilityInfo를 얻어옴
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
+	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
 
 	// 적 캐릭터들의 클래스별로 능력치 초기화
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")

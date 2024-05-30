@@ -33,6 +33,9 @@ public:
 	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 
 public:
+	// 어빌리티 태그에서 통해 어빌리티 얻어오기
+	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
+
 	// 이펙트 적용될 때 함수에 바인드
 	void AbilityActorInfoSet();
 
@@ -51,6 +54,9 @@ public:
 
 	// 능력치 상승
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
+
+	// 레벨업할 때 어빌리티 상태 설정
+	void UpdateAbilityStatuses(int32 Level);
 
 private:
 	// OnGameplayEffectAppliedDelegateToSelf 델리게이트가 서버에서만 호출된다(엔진내용). 그래서 아래 함수를 Client RPC로 만들어 클라이언트에서도 호출되도록 한다.
