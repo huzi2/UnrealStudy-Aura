@@ -143,6 +143,12 @@ void AAuraCharacter::AddToPlayerLevel_Implementation(int32 InPlayerLevel)
 	check(AuraPlayerState);
 
 	AuraPlayerState->AddToLevel(InPlayerLevel);
+
+	// 레벨업하면서 활성화시킬 수 있는 스킬 확인해서 활성화
+	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent()))
+	{
+		AuraAbilitySystemComponent->UpdateAbilityStatuses(AuraPlayerState->GetPlayerLevel());
+	}
 }
 
 int32 AAuraCharacter::GetAttributePoints_Implementation() const

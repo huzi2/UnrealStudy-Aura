@@ -12,6 +12,8 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContaine
 DECLARE_MULTICAST_DELEGATE(FAbilitiesGiven);
 // 어빌리티에 필요한 정보를 넣기위해 오버레이위젯컨트롤러에서 연결하고 ForEachAbility()에서 수행할 델리게이트
 DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
+// 어빌리티 상태가 변경되었을 때 사용할 델리게이트. 어빌리티 태그와 상태 태그
+DECLARE_MULTICAST_DELEGATE_TwoParams(FAbilityStatusChanged, const FGameplayTag&, const FGameplayTag&);
 
 /**
  * 커스텀 어빌리티 시스템 컴포넌트
@@ -67,11 +69,17 @@ private:
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
 
+	// 클라이언트에게 어빌리티 상태가 변경되었음을 알림
+	UFUNCTION(Client, Reliable)
+	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag);
+
 public:
 	// 이펙트에 적용된 태그와 연동할 델리게이트
 	FEffectAssetTags EffectAssetTagsDelegate;
 	// 어빌리티가 적용될 때 델리게이트
 	FAbilitiesGiven AbilitiesGivenDelegate;
+	// 어빌리티 상태가 수정될 때 사용할 델리게이트
+	FAbilityStatusChanged AbilityStatusChangedDelegate;
 	// 시작 어빌리티들을 적용시켰는 지 확인
 	bool bStartupAbilitiesGiven = false;
 };

@@ -208,11 +208,19 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
 
 				// 스킬 어빌리티 활성화
 				GiveAbility(AbilitySpec);
-				// 해당 어빌리티가 변경되었음을 알림
+				// 해당 어빌리티가 변경되었음을 알림(서버)
 				MarkAbilitySpecDirty(AbilitySpec);
+				// 해당 어빌리티가 변경되었음을 알림(클라이언트)
+				ClientUpdateAbilityStatus(Info.AbilityTag, UAuraGameplayTags::Get().Abilities_Status_Eligible);
 			}
 		}
 	}
+}
+
+void UAuraAbilitySystemComponent::ClientUpdateAbilityStatus_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag)
+{
+	// 델리게이트로 변경되었음을 알림
+	AbilityStatusChangedDelegate.Broadcast(AbilityTag, StatusTag);
 }
 
 void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)

@@ -17,4 +17,9 @@ class AURA_API USpellMenuWidgetController : public UAuraWidgetController
 public:
 	virtual void BindCallbacksToDependencies() final;
 	virtual void BroadcastInitialValue() final;
+
+public:
+	// 플레이어의 스킬 포인트가 변경되었을 때 UI에서 사용할 델리게이트. 블루프린트에서 정의
+	UPROPERTY(BlueprintAssignable)
+	FOnPlayerStatChangedSignature SpellPointsChangedDelegate;
 };
