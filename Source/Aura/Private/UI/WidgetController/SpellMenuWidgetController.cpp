@@ -4,6 +4,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Data/AbilityInfo.h"
 #include "Player/AuraPlayerState.h"
+#include "AuraGameplayTags.h"
 
 void USpellMenuWidgetController::BindCallbacksToDependencies()
 {
@@ -39,4 +40,23 @@ void USpellMenuWidgetController::BroadcastInitialValue()
 
 	// 스킬 포인트 초기값을 UI에 알림
 	SpellPointsChangedDelegate.Broadcast(GetAuraPlayerState()->GetSpellPoints());
+}
+
+void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityTag)
+{
+	if (!GetAuraPlayerState()) return;
+	if (!GetAuraAbilitySystemComponent()) return;
+
+	const int32 SpellPoints = GetAuraPlayerState()->GetSpellPoints();
+
+	const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
+	const bool bTagValid = AbilityTag.IsValid();
+	const bool bTagNone = AbilityTag.MatchesTag(GameplayTags.Abilities_None);
+	const bool bSpecValid = GetAuraAbilitySystemComponent()->GetSpecFromAbilityTag(AbilityTag) != nullptr;
+
+	FGameplayTag AbilityStatus;
+	if (!bTagValid || bTagNone || !bSpecValid)
+	{
+		AbilityStatus = GameplayTags.Abilities_Status_Locked;
+	}
 }

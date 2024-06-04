@@ -65,6 +65,8 @@ public:
 
 	// 어빌리티 관련 태그
 	// 어빌리티
+	FGameplayTag Abilities_None;
+
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
 
