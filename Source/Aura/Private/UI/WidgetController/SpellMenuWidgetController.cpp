@@ -52,11 +52,65 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 	const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
 	const bool bTagValid = AbilityTag.IsValid();
 	const bool bTagNone = AbilityTag.MatchesTag(GameplayTags.Abilities_None);
-	const bool bSpecValid = GetAuraAbilitySystemComponent()->GetSpecFromAbilityTag(AbilityTag) != nullptr;
+	const FGameplayAbilitySpec* AbilitySpec = GetAuraAbilitySystemComponent()->GetSpecFromAbilityTag(AbilityTag);
+	const bool bSpecValid = AbilitySpec != nullptr;
 
-	FGameplayTag AbilityStatus;
+	FGameplayTag StatusTag;
+	// 어빌리티가 유효하지 않음
 	if (!bTagValid || bTagNone || !bSpecValid)
 	{
-		AbilityStatus = GameplayTags.Abilities_Status_Locked;
+		StatusTag = GameplayTags.Abilities_Status_Locked;
+	}
+	// 어빌리티가 유효함
+	else
+	{
+		StatusTag = GetAuraAbilitySystemComponent()->GetStatusFromSpec(*AbilitySpec);
+	}
+
+	// 스킬 포인트와 장착 버튼의 활성화 유무 확인
+	bool bShouldEnableSpellPointsButton = false;
+	bool bShouldEnableEquipButton = false;
+
+	ShouldEnableButton(StatusTag, SpellPoints, bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+
+	// 활성화 유무를 UI에게 델리게이트로 알림
+	SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+}
+
+void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)
+{
+	const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
+
+	// 기본적으로는 잠긴 상태
+	bShouldEnableSpellPointsButton = false;
+	bShouldEnableEquipButton = false;
+
+	// 스킬의 상태가 장착 상태라면 장착 가능
+	if (StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Equipped))
+	{
+		if (SpellPoints > 0)
+		{
+			bShouldEnableSpellPointsButton = true;
+		}
+
+		bShouldEnableEquipButton = true;
+	}
+	// 스킬의 상태가 사용 가능 상태라면 스킬 포인트 먼저 써야되서 장착은 불가
+	else if (StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Eligible))
+	{
+		if (SpellPoints > 0)
+		{
+			bShouldEnableSpellPointsButton = true;
+		}
+	}
+	// 스킬의 상태가 잠금 해제 상태라면 장착 가능
+	else if (StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Unlocked))
+	{
+		if (SpellPoints > 0)
+		{
+			bShouldEnableSpellPointsButton = true;
+		}
+
+		bShouldEnableEquipButton = true;
 	}
 }
