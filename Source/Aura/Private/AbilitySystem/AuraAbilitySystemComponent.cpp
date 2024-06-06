@@ -211,25 +211,10 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
 				// 해당 어빌리티가 변경되었음을 알림(서버)
 				MarkAbilitySpecDirty(AbilitySpec);
 				// 해당 어빌리티가 변경되었음을 알림(클라이언트)
-				ClientUpdateAbilityStatus(Info.AbilityTag, UAuraGameplayTags::Get().Abilities_Status_Eligible);
+				ClientUpdateAbilityStatus(Info.AbilityTag, UAuraGameplayTags::Get().Abilities_Status_Eligible, Level);
 			}
 		}
 	}
-}
-
-void UAuraAbilitySystemComponent::ClientUpdateAbilityStatus_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag)
-{
-	// 델리게이트로 변경되었음을 알림
-	AbilityStatusChangedDelegate.Broadcast(AbilityTag, StatusTag);
-}
-
-void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
-{
-	FGameplayTagContainer TagContainer;
-	EffectSpec.GetAllAssetTags(TagContainer);
-
-	// 이펙트에 적용된 태그 관련 브로드캐스트
-	EffectAssetTagsDelegate.Broadcast(TagContainer);
 }
 
 void UAuraAbilitySystemComponent::ServerUpgradeAttribute_Implementation(const FGameplayTag& AttributeTag)
@@ -248,4 +233,50 @@ void UAuraAbilitySystemComponent::ServerUpgradeAttribute_Implementation(const FG
 		// 능력치 포인트를 올렸으므로 하나 제거
 		IPlayerInterface::Execute_AddToAttributePoints(GetAvatarActor(), -1);
 	}
+}
+
+void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGameplayTag& AbilityTag)
+{
+	if (!GetAvatarActor()) return;
+
+	if (FGameplayAbilitySpec* AbilitySpec = GetSpecFromAbilityTag(AbilityTag))
+	{
+		// 스킬 포인트 사용
+		if (GetAvatarActor()->Implements<UPlayerInterface>())
+		{
+			IPlayerInterface::Execute_AddToSpellPoints(GetAvatarActor(), -1);
+		}
+
+		const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
+
+		const FGameplayTag Status = GetStatusFromSpec(*AbilitySpec);
+		// 스킬의 상태가 사용 가능 상태라면 언락 상태로 변경
+		if (Status.MatchesTagExact(GameplayTags.Abilities_Status_Eligible))
+		{
+			AbilitySpec->DynamicAbilityTags.RemoveTag(GameplayTags.Abilities_Status_Eligible);
+			AbilitySpec->DynamicAbilityTags.AddTag(GameplayTags.Abilities_Status_Unlocked);
+		}
+		// 스킬의 상태가 장착하거나 언락된 상태라면 스킬의 레벨업
+		else if (Status.MatchesTagExact(GameplayTags.Abilities_Status_Equipped) || Status.MatchesTagExact(GameplayTags.Abilities_Status_Unlocked))
+		{
+			++AbilitySpec->Level;
+		}
+
+		
+	}
+}
+
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+{
+	FGameplayTagContainer TagContainer;
+	EffectSpec.GetAllAssetTags(TagContainer);
+
+	// 이펙트에 적용된 태그 관련 브로드캐스트
+	EffectAssetTagsDelegate.Broadcast(TagContainer);
+}
+
+void UAuraAbilitySystemComponent::ClientUpdateAbilityStatus_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel)
+{
+	// 델리게이트로 변경되었음을 알림
+	AbilityStatusChangedDelegate.Broadcast(AbilityTag, StatusTag, AbilityLevel);
 }

@@ -4,7 +4,6 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Data/AbilityInfo.h"
 #include "Player/AuraPlayerState.h"
-#include "AuraGameplayTags.h"
 
 void USpellMenuWidgetController::BindCallbacksToDependencies()
 {
@@ -12,8 +11,23 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 	if (!GetAuraPlayerState()) return;
 
 	// 어빌리티 상태가 수정될 때 UI에 알려주는 함수 바인드
-	GetAuraAbilitySystemComponent()->AbilityStatusChangedDelegate.AddLambda([this](const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag)
+	GetAuraAbilitySystemComponent()->AbilityStatusChangedDelegate.AddLambda([this](const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel)
 	{
+		// 현재 선택된 스킬의 상태가 변경되었다면
+		if (SelectedAbility.AbilityTag.MatchesTagExact(AbilityTag))
+		{
+			SelectedAbility.StatusTag = StatusTag;
+
+			// 스킬 포인트와 장착 버튼의 활성화 유무 확인
+			bool bShouldEnableSpellPointsButton = false;
+			bool bShouldEnableEquipButton = false;
+
+			ShouldEnableButton(StatusTag, CurrentSpellPoints, bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+
+			// 활성화 유무를 UI에게 델리게이트로 알림
+			SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+		}
+
 		if (AbilityInfo)
 		{
 			FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
@@ -28,6 +42,16 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 	GetAuraPlayerState()->OnSpellPointsChangedDelegate.AddLambda([this](int32 SpellPoints)
 	{
 		SpellPointsChangedDelegate.Broadcast(SpellPoints);
+		CurrentSpellPoints = SpellPoints;
+
+		// 스킬 포인트와 장착 버튼의 활성화 유무 확인
+		bool bShouldEnableSpellPointsButton = false;
+		bool bShouldEnableEquipButton = false;
+
+		ShouldEnableButton(SelectedAbility.StatusTag, CurrentSpellPoints, bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+
+		// 활성화 유무를 UI에게 델리게이트로 알림
+		SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
 	});
 }
 
@@ -67,6 +91,11 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 		StatusTag = GetAuraAbilitySystemComponent()->GetStatusFromSpec(*AbilitySpec);
 	}
 
+	// 현재 선택되어있는 스킬의 상태가 변경되었을 때 델리게이트에서 수정하기위해 변수를 저장
+	SelectedAbility.AbilityTag = AbilityTag;
+	SelectedAbility.StatusTag = StatusTag;
+	CurrentSpellPoints = SpellPoints;
+
 	// 스킬 포인트와 장착 버튼의 활성화 유무 확인
 	bool bShouldEnableSpellPointsButton = false;
 	bool bShouldEnableEquipButton = false;
@@ -75,6 +104,11 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 
 	// 활성화 유무를 UI에게 델리게이트로 알림
 	SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+}
+
+void USpellMenuWidgetController::SpendPointButtonPressed()
+{
+
 }
 
 void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)
