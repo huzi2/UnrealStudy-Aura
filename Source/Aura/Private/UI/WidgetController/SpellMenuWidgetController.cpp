@@ -108,7 +108,10 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 
 void USpellMenuWidgetController::SpendPointButtonPressed()
 {
+	if (!GetAuraAbilitySystemComponent()) return;
 
+	// 서버에게 해당 스킬에게 스킬 포인트 사용을 요청
+	GetAuraAbilitySystemComponent()->ServerSpendSpellPoint(SelectedAbility.AbilityTag);
 }
 
 void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)

@@ -60,14 +60,14 @@ public:
 	// 레벨업할 때 어빌리티 상태 설정
 	void UpdateAbilityStatuses(int32 Level);
 
+	// 서버한테 스킬 포인트 사용 요청
+	UFUNCTION(Server, Reliable)
+	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);
+
 private:
 	// 서버한테 능력치 상승 요청
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
-
-	// 서버한테 스킬 포인트 사용 요청
-	UFUNCTION(Server, Reliable)
-	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);
 
 	// OnGameplayEffectAppliedDelegateToSelf 델리게이트가 서버에서만 호출된다(엔진내용). 그래서 아래 함수를 Client RPC로 만들어 클라이언트에서도 호출되도록 한다.
 	UFUNCTION(Client, Reliable)
