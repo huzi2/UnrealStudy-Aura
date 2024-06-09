@@ -38,6 +38,9 @@ public:
 	// 어빌리티 태그에서 통해 어빌리티 얻어오기
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
 
+	// 어빌리티 태그에서 어빌리티 설명 얻어오기
+	bool GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription);
+
 	// 이펙트 적용될 때 함수에 바인드
 	void AbilityActorInfoSet();
 

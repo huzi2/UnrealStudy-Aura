@@ -8,7 +8,7 @@
 #include "SpellMenuWidgetController.generated.h"
 
 // 스킬 메뉴에서 스킬 트리의 스킬 버튼을 눌렀을 때 호출할 델리게이트
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSpellGlobeSelectedSignature, bool, bSpendPointButtonEnabled, bool, bEquipButtonEnabled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FSpellGlobeSelectedSignature, bool, bSpendPointButtonEnabled, bool, bEquipButtonEnabled, FString, DescriptionString, FString, NextLevelDescriptionString);
 
 /**
 * 스킬 메뉴의 위젯 컨트롤러

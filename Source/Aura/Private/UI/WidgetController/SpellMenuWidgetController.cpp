@@ -24,8 +24,12 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 
 			ShouldEnableButton(StatusTag, CurrentSpellPoints, bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
 
-			// 활성화 유무를 UI에게 델리게이트로 알림
-			SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+			FString Description = FString();
+			FString NextLevelDescription = FString();
+			GetAuraAbilitySystemComponent()->GetDescriptionsByAbilityTag(AbilityTag, Description, NextLevelDescription);
+
+			// 활성화 유무와 스킬 설명을 UI에게 델리게이트로 알림
+			SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton, Description, NextLevelDescription);
 		}
 
 		if (AbilityInfo)
@@ -50,8 +54,12 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 
 		ShouldEnableButton(SelectedAbility.StatusTag, CurrentSpellPoints, bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
 
-		// 활성화 유무를 UI에게 델리게이트로 알림
-		SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+		FString Description = FString();
+		FString NextLevelDescription = FString();
+		GetAuraAbilitySystemComponent()->GetDescriptionsByAbilityTag(SelectedAbility.AbilityTag, Description, NextLevelDescription);
+
+		// 활성화 유무와 스킬 설명을 UI에게 델리게이트로 알림
+		SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton, Description, NextLevelDescription);
 	});
 }
 
@@ -102,8 +110,12 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 
 	ShouldEnableButton(StatusTag, SpellPoints, bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
 
-	// 활성화 유무를 UI에게 델리게이트로 알림
-	SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton);
+	FString Description = FString();
+	FString NextLevelDescription = FString();
+	GetAuraAbilitySystemComponent()->GetDescriptionsByAbilityTag(AbilityTag, Description, NextLevelDescription);
+
+	// 활성화 유무와 스킬 설명을 UI에게 델리게이트로 알림
+	SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton, Description, NextLevelDescription);
 }
 
 void USpellMenuWidgetController::SpendPointButtonPressed()

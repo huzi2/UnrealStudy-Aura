@@ -81,6 +81,30 @@ FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const F
 	return nullptr;
 }
 
+bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription)
+{
+	// 활성화된 어빌리티가 있으면 해당 어빌리티에서 설명 얻어옴
+	if (const FGameplayAbilitySpec* AbilitySpec = GetSpecFromAbilityTag(AbilityTag))
+	{
+		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(AbilitySpec->Ability))
+		{
+			OutDescription = AuraAbility->GetDescription(AbilitySpec->Level);
+			OutNextLevelDescription = AuraAbility->GetNextLevelDescription(AbilitySpec->Level + 1);
+		}
+		return true;
+	}
+
+	// 활성화된 어빌리티에서 해당 어빌리티가 없으니 어빌리티 정보들에서 탐색
+	if (const UAbilityInfo* AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo(GetAvatarActor()))
+	{
+		// 해당 레벨에서 활성화할 수 있음을 설명에 기입
+		OutDescription = UAuraGameplayAbility::GetLockedDescription(AbilityInfo->FindAbilityInfoForTag(AbilityTag).LevelRequirement);
+		OutNextLevelDescription = FString();
+		return false;
+	}
+	return false;
+}
+
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
 	// 이펙트가 적용될 때 델리게이트
