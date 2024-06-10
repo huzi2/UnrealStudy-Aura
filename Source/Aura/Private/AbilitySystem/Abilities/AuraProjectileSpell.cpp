@@ -12,6 +12,31 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
 
+FString UAuraProjectileSpell::GetDescription(int32 Level) const
+{
+	// 파이어볼 스킬에 대한 설명
+
+	// 레벨에 따라 변경되는 데미지(불속성만 얻어옴)
+	const int32 Damage = static_cast<int32>(DamageTypes[UAuraGameplayTags::Get().Damage_Fire].GetValueAtLevel(Level));
+
+	// 1레벨은 하나만 발사
+	if (Level == 1)
+	{
+		return FString::Printf(TEXT("<Title>FIRE BOLT</>\n\n<Default>Launched a bolt of fire, exploding on impact and dealing: </><Damage>%d</><Default> fire damage with a chance to burn</>\n\n<Small>Level: </><Level>%d</>"), Damage, Level);
+	}
+	// 그 후에는 레벨에 따라 발사체가 증가
+	else
+	{
+		return FString::Printf(TEXT("<Title>FIRE BOLT</>\n\n<Default>Launched %d bolts of fire, exploding on impact and dealing: </><Damage>%d</><Default> fire damage with a chance to burn</>\n\n<Small>Level: </><Level>%d</>"), FMath::Min(Level, NumProjectiles), Damage, Level);
+	}
+}
+
+FString UAuraProjectileSpell::GetNextLevelDescription(int32 Level) const
+{
+	const int32 Damage = static_cast<int32>(DamageTypes[UAuraGameplayTags::Get().Damage_Fire].GetValueAtLevel(Level));
+	return FString::Printf(TEXT("<Title>NEXT LEVEL: </>\n\n<Default>Launched %d bolts of fire, exploding on impact and dealing: </><Damage>%d</><Default> fire damage with a chance to burn</>\n\n<Small>Level: </><Level>%d</>"), FMath::Min(Level, NumProjectiles), Damage, Level);
+}
+
 void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch, float PitchOverride)
 {
 	if (!GetAvatarActorFromActorInfo()) return;
