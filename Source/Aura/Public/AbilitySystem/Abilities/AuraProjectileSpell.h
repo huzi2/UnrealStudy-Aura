@@ -18,11 +18,7 @@ class AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
 
 private:
 	// UGameplayAbility에서 상속
-	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) final;
-
-	// UAuraGameplayAbility에서 상속
-	virtual FString GetDescription(int32 Level) const final;
-	virtual FString GetNextLevelDescription(int32 Level) const final;
+	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 private:
 	// 발사체 생성
@@ -33,9 +29,4 @@ protected:
 	// 발사체 클래스
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
-
-private:
-	// 발사체 최대 갯수. 발사체 갯수는 레벨을 따라가고 최대 5개까지 증가
-	UPROPERTY(EditDefaultsOnly)
-	int32 NumProjectiles = 5;
 };

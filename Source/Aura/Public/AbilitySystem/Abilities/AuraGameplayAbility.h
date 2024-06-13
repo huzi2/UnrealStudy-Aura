@@ -20,6 +20,11 @@ public:
 	virtual FString GetNextLevelDescription(int32 Level) const;
 	static FString GetLockedDescription(int32 Level);
 
+protected:
+	// 스킬 설명에 사용하기 위한 마나와 쿨타임 확인
+	float GetManaCost(float InLevel = 1.f) const;
+	float GetCooldown(float InLevel = 1.f) const;
+
 public:
 	// 어빌리티의 입력 관련 태그
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
