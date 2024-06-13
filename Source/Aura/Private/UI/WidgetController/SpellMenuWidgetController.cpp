@@ -114,8 +114,17 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 	FString NextLevelDescription = FString();
 	GetAuraAbilitySystemComponent()->GetDescriptionsByAbilityTag(AbilityTag, Description, NextLevelDescription);
 
-	// 활성화 유무와 스킬 설명을 UI에게 델리게이트로 알림
+	// 버튼 활성화 유무와 스킬 설명을 UI에게 델리게이트로 알림
 	SpellGlobeSelectedDelegate.Broadcast(bShouldEnableSpellPointsButton, bShouldEnableEquipButton, Description, NextLevelDescription);
+}
+
+void USpellMenuWidgetController::SpellGlobeDeselect()
+{
+	SelectedAbility.AbilityTag = UAuraGameplayTags::Get().Abilities_None;
+	SelectedAbility.StatusTag = UAuraGameplayTags::Get().Abilities_Status_Locked;
+
+	// 버튼 활성화 유무와 스킬 설명 초기화
+	SpellGlobeSelectedDelegate.Broadcast(false, false, FString(), FString());
 }
 
 void USpellMenuWidgetController::SpendPointButtonPressed()

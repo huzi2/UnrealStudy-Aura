@@ -40,6 +40,10 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void SpellGlobeSelected(const FGameplayTag& AbilityTag);
 
+	// 스킬 버튼 선택 취소
+	UFUNCTION(BlueprintCallable)
+	void SpellGlobeDeselect();
+
 	// 스킬 포인트 버튼을 눌렀을 때
 	UFUNCTION(BlueprintCallable)
 	void SpendPointButtonPressed();

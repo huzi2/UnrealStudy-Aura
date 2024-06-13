@@ -97,8 +97,17 @@ bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag(const FGameplayTag
 	// 활성화된 어빌리티에서 해당 어빌리티가 없으니 어빌리티 정보들에서 탐색
 	if (const UAbilityInfo* AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo(GetAvatarActor()))
 	{
-		// 해당 레벨에서 활성화할 수 있음을 설명에 기입
-		OutDescription = UAuraGameplayAbility::GetLockedDescription(AbilityInfo->FindAbilityInfoForTag(AbilityTag).LevelRequirement);
+		// 어빌리티 태그가 유효하지 않거나 None 상태면 설명은 비워둠
+		if (!AbilityTag.IsValid() || AbilityTag.MatchesTagExact(UAuraGameplayTags::Get().Abilities_None))
+		{
+			OutDescription = FString();
+		}
+		else
+		{
+			// 해당 레벨에서 활성화할 수 있음을 설명에 기입
+			OutDescription = UAuraGameplayAbility::GetLockedDescription(AbilityInfo->FindAbilityInfoForTag(AbilityTag).LevelRequirement);
+		}
+		
 		OutNextLevelDescription = FString();
 		return false;
 	}
