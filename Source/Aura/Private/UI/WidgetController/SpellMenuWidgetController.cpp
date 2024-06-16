@@ -79,6 +79,15 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 	if (!GetAuraPlayerState()) return;
 	if (!GetAuraAbilitySystemComponent()) return;
 
+	// 스킬 장착을 기다리는 상태라면
+	if (bWaitingForEquipSelection && AbilityInfo)
+	{
+		const FGameplayTag AbilityTypeTag = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.AbilityTag).AbilityTypeTag;
+		// 다른 스킬을 선택했거나 다시 선택하면 스킬 장착 기다리는 상태도 취소
+		StopWaitingForEquipDelegate.Broadcast(AbilityTypeTag);
+		bWaitingForEquipSelection = false;
+	}
+
 	const int32 SpellPoints = GetAuraPlayerState()->GetSpellPoints();
 
 	const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
@@ -120,6 +129,15 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 
 void USpellMenuWidgetController::SpellGlobeDeselect()
 {
+	// 스킬 장착을 기다리는 상태라면
+	if (bWaitingForEquipSelection && AbilityInfo)
+	{
+		const FGameplayTag AbilityTypeTag = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.AbilityTag).AbilityTypeTag;
+		// 스킬 선택이 취소되었으니 스킬 장착 기다리는 상태도 취소
+		StopWaitingForEquipDelegate.Broadcast(AbilityTypeTag);
+		bWaitingForEquipSelection = false;
+	}
+
 	SelectedAbility.AbilityTag = UAuraGameplayTags::Get().Abilities_None;
 	SelectedAbility.StatusTag = UAuraGameplayTags::Get().Abilities_Status_Locked;
 
@@ -133,6 +151,20 @@ void USpellMenuWidgetController::SpendPointButtonPressed()
 
 	// 서버에게 해당 스킬에게 스킬 포인트 사용을 요청
 	GetAuraAbilitySystemComponent()->ServerSpendSpellPoint(SelectedAbility.AbilityTag);
+}
+
+void USpellMenuWidgetController::EquipButtonPressed()
+{
+	if (!AbilityInfo) return;
+
+	// 현재 선택된 스킬의 스킬 타입(오펜시브, 패시브)을 가져옴
+	const FGameplayTag AbilityTypeTag = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.AbilityTag).AbilityTypeTag;
+
+	// UI에 적용하기 위해 브로드캐스트
+	WaitForEquipSelectionDelegate.Broadcast(AbilityTypeTag);
+
+	// 스킬 장착을 대기 중인 상태
+	bWaitingForEquipSelection = true;
 }
 
 void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)

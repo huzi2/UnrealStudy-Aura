@@ -9,6 +9,8 @@
 
 // 스킬 메뉴에서 스킬 트리의 스킬 버튼을 눌렀을 때 호출할 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FSpellGlobeSelectedSignature, bool, bSpendPointButtonEnabled, bool, bEquipButtonEnabled, FString, DescriptionString, FString, NextLevelDescriptionString);
+// 스킬 장착 버튼을 눌렀을 때 호출할 델리게이트
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWaitForEquipSelectionSignature, const FGameplayTag&, AbilityTypeTag);
 
 /**
 * 스킬 메뉴의 위젯 컨트롤러
@@ -48,6 +50,10 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void SpendPointButtonPressed();
 
+	// 스킬 장착 버튼을 눌렀을 때
+	UFUNCTION(BlueprintCallable)
+	void EquipButtonPressed();
+
 	// 스킬 포인트와 장착 버튼의 활성화 유무 확인
 	static void ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton);
 
@@ -60,9 +66,19 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FSpellGlobeSelectedSignature SpellGlobeSelectedDelegate;
 
+	// 스킬 장착 버튼을 눌렀을 때 호출할 델리게이트
+	UPROPERTY(BlueprintAssignable)
+	FWaitForEquipSelectionSignature WaitForEquipSelectionDelegate;
+
+	// 스킬 장착 버튼을 누르고 대기 중에서 선택을 취소했을 때 호출할 델리게이트
+	UPROPERTY(BlueprintAssignable)
+	FWaitForEquipSelectionSignature StopWaitingForEquipDelegate;
+
 private:
 	// 현재 선택한 스킬의 태그와 상태 태그
 	FSelectedAbility SelectedAbility = { UAuraGameplayTags::Get().Abilities_None, UAuraGameplayTags::Get().Abilities_Status_Locked };
 	// 현재 스킬 포인트
 	int32 CurrentSpellPoints = 0;
+	// 스킬 장착을 대기하는 상태인가?
+	bool bWaitingForEquipSelection = false;
 };
