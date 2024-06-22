@@ -81,6 +81,24 @@ FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const F
 	return nullptr;
 }
 
+FGameplayTag UAuraAbilitySystemComponent::GetStatusFromAbilityTag(const FGameplayTag& AbilityTag)
+{
+	if (const FGameplayAbilitySpec* Spec = GetSpecFromAbilityTag(AbilityTag))
+	{
+		return GetStatusFromSpec(*Spec);
+	}
+	return FGameplayTag();
+}
+
+FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromAbilityTag(const FGameplayTag& AbilityTag)
+{
+	if (const FGameplayAbilitySpec* Spec = GetSpecFromAbilityTag(AbilityTag))
+	{
+		return GetInputTagFromSpec(*Spec);
+	}
+	return FGameplayTag();
+}
+
 bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription)
 {
 	// 활성화된 어빌리티가 있으면 해당 어빌리티에서 설명 얻어옴
@@ -250,6 +268,36 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
 	}
 }
 
+void UAuraAbilitySystemComponent::ClearSlot(FGameplayAbilitySpec& AbilitySpec)
+{
+	// 스킬의 현재 인풋 태그를 삭제
+	const FGameplayTag InputTag = GetInputTagFromSpec(AbilitySpec);
+	AbilitySpec.DynamicAbilityTags.RemoveTag(InputTag);
+	// 어빌리티가 변경되었음을 서버에 알림
+	MarkAbilitySpecDirty(AbilitySpec);
+}
+
+void UAuraAbilitySystemComponent::ClearAbilitiesOfSlot(const FGameplayTag& InputTag)
+{
+	FScopedAbilityListLock ActiveScopeLock(*this);
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilityHasSlot(AbilitySpec, InputTag))
+		{
+			ClearSlot(AbilitySpec);
+		}
+	}
+}
+
+bool UAuraAbilitySystemComponent::AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag)
+{
+	for (const FGameplayTag Tag : AbilitySpec.DynamicAbilityTags)
+	{
+		if (Tag.MatchesTagExact(InputTag)) return true;
+	}
+	return false;
+}
+
 void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGameplayTag& AbilityTag)
 {
 	if (!GetAvatarActor()) return;
@@ -282,6 +330,35 @@ void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGa
 		MarkAbilitySpecDirty(*AbilitySpec);
 		// 클라이언트에게 스킬의 상태가 변경되었음을 알림
 		ClientUpdateAbilityStatus(AbilityTag, StatusTag, AbilitySpec->Level);
+	}
+}
+
+void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& InputTag)
+{
+	if (FGameplayAbilitySpec* AbilitySpec = GetSpecFromAbilityTag(AbilityTag))
+	{
+		const FGameplayTag& StatusTag = GetStatusFromSpec(*AbilitySpec);
+
+		// 스킬 상태가 이미 장착되었거나 언락된 상태만 장착 가능
+		if (StatusTag == UAuraGameplayTags::Get().Abilities_Status_Equipped || StatusTag == UAuraGameplayTags::Get().Abilities_Status_Unlocked)
+		{
+			// 먼저 해당 슬롯의 스킬 제거
+			ClearAbilitiesOfSlot(InputTag);
+
+			// 선택한 스킬의 슬롯에서도 스킬 제거
+			ClearSlot(*AbilitySpec);
+
+			// 스킬에 현재 슬롯의 인풋 태그를 부여
+			AbilitySpec->DynamicAbilityTags.AddTag(InputTag);
+
+			// 스킬 상태가 언락이었다면
+			if (StatusTag.MatchesTagExact(UAuraGameplayTags::Get().Abilities_Status_Unlocked))
+			{
+
+			}
+
+			//const FGameplayTag& PrevInputTag = GetInputTagFromSpec(*AbilitySpec);
+		}
 	}
 }
 

@@ -156,6 +156,7 @@ void USpellMenuWidgetController::SpendPointButtonPressed()
 void USpellMenuWidgetController::EquipButtonPressed()
 {
 	if (!AbilityInfo) return;
+	if (!GetAuraAbilitySystemComponent()) return;
 
 	// 현재 선택된 스킬의 스킬 타입(오펜시브, 패시브)을 가져옴
 	const FGameplayTag AbilityTypeTag = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.AbilityTag).AbilityTypeTag;
@@ -165,6 +166,26 @@ void USpellMenuWidgetController::EquipButtonPressed()
 
 	// 스킬 장착을 대기 중인 상태
 	bWaitingForEquipSelection = true;
+	
+	// 현재 선택한 스킬의 상태를 확인해서 장착된 능력이면 장착된 슬롯의 인풋 태그를 얻음
+	const FGameplayTag SelectedStatusTag = GetAuraAbilitySystemComponent()->GetStatusFromAbilityTag(SelectedAbility.AbilityTag);
+	if (SelectedStatusTag.MatchesTagExact(UAuraGameplayTags::Get().Abilities_Status_Equipped))
+	{
+		SelectedInputTag = GetAuraAbilitySystemComponent()->GetInputTagFromAbilityTag(SelectedAbility.AbilityTag);
+	}
+}
+
+void USpellMenuWidgetController::SpellRowGlobePressed(const FGameplayTag& InputTag, const FGameplayTag& AbilityTypeTag)
+{
+	if (!AbilityInfo) return;
+	// 장착 대기 상태에서만 스킬 장착 가능
+	if (!bWaitingForEquipSelection) return;
+	
+	// 장착하려는 스킬 타입과 선택한 구슬 슬롯이 같은지 확인
+	const FGameplayTag& SelectedAbilityTypeTag = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.AbilityTag).AbilityTypeTag;
+	if (!SelectedAbilityTypeTag.MatchesTagExact(AbilityTypeTag)) return;
+
+
 }
 
 void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)

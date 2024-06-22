@@ -37,6 +37,10 @@ public:
 public:
 	// 어빌리티 태그에서 통해 어빌리티 얻어오기
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
+	// 어빌리티 태그에서 어빌리티의 상태 태그 얻어오기
+	FGameplayTag GetStatusFromAbilityTag(const FGameplayTag& AbilityTag);
+	// 어빌리티 태그에서 인풋 태그 얻어오기
+	FGameplayTag GetInputTagFromAbilityTag(const FGameplayTag& AbilityTag);
 
 	// 어빌리티 태그에서 어빌리티 설명 얻어오기
 	bool GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription);
@@ -67,6 +71,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);
 
+	// 서버한테 스킬 장착 요청
+	UFUNCTION(Server, Reliable)
+	void ServerEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& InputTag);
+
 private:
 	// 서버한테 능력치 상승 요청
 	UFUNCTION(Server, Reliable)
@@ -79,6 +87,14 @@ private:
 	// 클라이언트에게 어빌리티 상태가 변경되었음을 알림
 	UFUNCTION(Client, Reliable)
 	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel);
+
+	// 스킬 제거 관련
+	// 해당 스킬을 슬롯에서 제거
+	void ClearSlot(FGameplayAbilitySpec& AbilitySpec);
+	// 해당 인풋 태그를 사용하는 모든 스킬을 슬롯에서 제거
+	void ClearAbilitiesOfSlot(const FGameplayTag& InputTag);
+	// 해당 스킬이 해당 슬롯에 장착된 상태인지?
+	static bool AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag);
 
 public:
 	// 이펙트에 적용된 태그와 연동할 델리게이트

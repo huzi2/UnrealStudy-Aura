@@ -54,6 +54,10 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void EquipButtonPressed();
 
+	// 스킬 장착 대기 상태에서 장착할 스킬 구슬을 눌렀을 때
+	UFUNCTION(BlueprintCallable)
+	void SpellRowGlobePressed(const FGameplayTag& InputTag, const FGameplayTag& AbilityTypeTag);
+
 	// 스킬 포인트와 장착 버튼의 활성화 유무 확인
 	static void ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton);
 
@@ -81,4 +85,6 @@ private:
 	int32 CurrentSpellPoints = 0;
 	// 스킬 장착을 대기하는 상태인가?
 	bool bWaitingForEquipSelection = false;
+	// 현재 선택되어있는롯 스킬 슬롯의 인풋 태그(장착을 위함)
+	FGameplayTag SelectedInputTag;
 };
