@@ -61,6 +61,9 @@ private:
 	// 스킬 포인트와 장착 버튼의 활성화 유무 확인
 	static void ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton);
 
+	// 장착되는 스킬의 정보가 어빌리티 시스템 컴포넌트의 델리게이트를 통해 전달될 때 수행
+	void OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag);
+
 public:
 	// 플레이어의 스킬 포인트가 변경되었을 때 UI에서 사용할 델리게이트. 블루프린트에서 정의
 	UPROPERTY(BlueprintAssignable)

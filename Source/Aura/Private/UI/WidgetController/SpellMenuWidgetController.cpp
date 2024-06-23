@@ -42,6 +42,9 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 		}
 	});
 
+	// 스킬 장착했을 때 함수 바인드
+	GetAuraAbilitySystemComponent()->AbilityEquippedDelegate.AddUObject(this, &ThisClass::OnAbilityEquipped);
+
 	// 플레이어 스테이트에서 스킬 포인트가 변화할 때 사용하는 델리게이트에 함수 바인드
 	GetAuraPlayerState()->OnSpellPointsChangedDelegate.AddLambda([this](int32 SpellPoints)
 	{
@@ -90,7 +93,7 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 
 	const int32 SpellPoints = GetAuraPlayerState()->GetSpellPoints();
 
-	const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 	const bool bTagValid = AbilityTag.IsValid();
 	const bool bTagNone = AbilityTag.MatchesTag(GameplayTags.Abilities_None);
 	const FGameplayAbilitySpec* AbilitySpec = GetAuraAbilitySystemComponent()->GetSpecFromAbilityTag(AbilityTag);
@@ -178,6 +181,7 @@ void USpellMenuWidgetController::EquipButtonPressed()
 void USpellMenuWidgetController::SpellRowGlobePressed(const FGameplayTag& InputTag, const FGameplayTag& AbilityTypeTag)
 {
 	if (!AbilityInfo) return;
+	if (!GetAuraAbilitySystemComponent()) return;
 	// 장착 대기 상태에서만 스킬 장착 가능
 	if (!bWaitingForEquipSelection) return;
 	
@@ -185,12 +189,13 @@ void USpellMenuWidgetController::SpellRowGlobePressed(const FGameplayTag& InputT
 	const FGameplayTag& SelectedAbilityTypeTag = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.AbilityTag).AbilityTypeTag;
 	if (!SelectedAbilityTypeTag.MatchesTagExact(AbilityTypeTag)) return;
 
-
+	// 서버에게 스킬 장착 요청
+	GetAuraAbilitySystemComponent()->ServerEquipAbility(SelectedAbility.AbilityTag, InputTag);
 }
 
 void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton)
 {
-	const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
 	// 기본적으로는 잠긴 상태
 	bShouldEnableSpellPointsButton = false;
@@ -224,4 +229,30 @@ void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTa
 
 		bShouldEnableEquipButton = true;
 	}
+}
+
+void USpellMenuWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag)
+{
+	if (!AbilityInfo) return;
+
+	// 스킬 장착 대기 상태 해제
+	bWaitingForEquipSelection = false;
+
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
+
+	FAuraAbilityInfo PrevSlotInfo;
+	PrevSlotInfo.AbilityTag = GameplayTags.Abilities_None;
+	PrevSlotInfo.StatusTag = GameplayTags.Abilities_Status_Unlocked;
+	PrevSlotInfo.InputTag = PrevInputTag;
+	// UI에게 이전 슬롯의 스킬 상태가 변경되었음을 알림
+	AbilityInfoDelegate.Broadcast(PrevSlotInfo);
+
+	FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
+	Info.StatusTag = StatusTag;
+	Info.InputTag = InputTag;
+	// UI에게 장착할 스킬의 상태가 변경되었음을 알림
+	AbilityInfoDelegate.Broadcast(Info);
+
+	// 스킬 장착 대기가 해제되었음을 알림(애니메이션 캔슬)
+	StopWaitingForEquipDelegate.Broadcast(AbilityInfo->FindAbilityInfoForTag(AbilityTag).AbilityTypeTag);
 }

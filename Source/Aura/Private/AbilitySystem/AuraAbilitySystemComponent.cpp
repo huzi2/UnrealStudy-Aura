@@ -268,36 +268,6 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
 	}
 }
 
-void UAuraAbilitySystemComponent::ClearSlot(FGameplayAbilitySpec& AbilitySpec)
-{
-	// 스킬의 현재 인풋 태그를 삭제
-	const FGameplayTag InputTag = GetInputTagFromSpec(AbilitySpec);
-	AbilitySpec.DynamicAbilityTags.RemoveTag(InputTag);
-	// 어빌리티가 변경되었음을 서버에 알림
-	MarkAbilitySpecDirty(AbilitySpec);
-}
-
-void UAuraAbilitySystemComponent::ClearAbilitiesOfSlot(const FGameplayTag& InputTag)
-{
-	FScopedAbilityListLock ActiveScopeLock(*this);
-	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
-	{
-		if (AbilityHasSlot(AbilitySpec, InputTag))
-		{
-			ClearSlot(AbilitySpec);
-		}
-	}
-}
-
-bool UAuraAbilitySystemComponent::AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag)
-{
-	for (const FGameplayTag Tag : AbilitySpec.DynamicAbilityTags)
-	{
-		if (Tag.MatchesTagExact(InputTag)) return true;
-	}
-	return false;
-}
-
 void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGameplayTag& AbilityTag)
 {
 	if (!GetAvatarActor()) return;
@@ -310,7 +280,7 @@ void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGa
 			IPlayerInterface::Execute_AddToSpellPoints(GetAvatarActor(), -1);
 		}
 
-		const UAuraGameplayTags GameplayTags = UAuraGameplayTags::Get();
+		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
 		FGameplayTag StatusTag = GetStatusFromSpec(*AbilitySpec);
 		// 스킬의 상태가 사용 가능 상태라면 언락 상태로 변경
@@ -337,10 +307,14 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 {
 	if (FGameplayAbilitySpec* AbilitySpec = GetSpecFromAbilityTag(AbilityTag))
 	{
+		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
+
+		// 새로 변경되기 전 인풋 태그를 기억
+		const FGameplayTag& PrevInputTag = GetInputTagFromSpec(*AbilitySpec);
 		const FGameplayTag& StatusTag = GetStatusFromSpec(*AbilitySpec);
 
 		// 스킬 상태가 이미 장착되었거나 언락된 상태만 장착 가능
-		if (StatusTag == UAuraGameplayTags::Get().Abilities_Status_Equipped || StatusTag == UAuraGameplayTags::Get().Abilities_Status_Unlocked)
+		if (StatusTag == GameplayTags.Abilities_Status_Equipped || StatusTag == GameplayTags.Abilities_Status_Unlocked)
 		{
 			// 먼저 해당 슬롯의 스킬 제거
 			ClearAbilitiesOfSlot(InputTag);
@@ -352,13 +326,20 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 			AbilitySpec->DynamicAbilityTags.AddTag(InputTag);
 
 			// 스킬 상태가 언락이었다면
-			if (StatusTag.MatchesTagExact(UAuraGameplayTags::Get().Abilities_Status_Unlocked))
+			if (StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Unlocked))
 			{
-
+				// 언락 상태를 해제하고 장착 상태로 변경
+				AbilitySpec->DynamicAbilityTags.RemoveTag(GameplayTags.Abilities_Status_Unlocked);
+				AbilitySpec->DynamicAbilityTags.AddTag(GameplayTags.Abilities_Status_Equipped);
 			}
 
-			//const FGameplayTag& PrevInputTag = GetInputTagFromSpec(*AbilitySpec);
+			// 어빌리티가 변경되었음을 서버에 알림
+			MarkAbilitySpecDirty(*AbilitySpec);
+
+			
 		}
+
+		ClientEquipAbility(AbilityTag, GameplayTags.Abilities_Status_Equipped, InputTag, PrevInputTag);
 	}
 }
 
@@ -393,4 +374,40 @@ void UAuraAbilitySystemComponent::ClientUpdateAbilityStatus_Implementation(const
 {
 	// 델리게이트로 변경되었음을 알림
 	AbilityStatusChangedDelegate.Broadcast(AbilityTag, StatusTag, AbilityLevel);
+}
+
+void UAuraAbilitySystemComponent::ClientEquipAbility_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag)
+{
+	// 델리게이트로 스킬이 장착되었음을 알림
+	AbilityEquippedDelegate.Broadcast(AbilityTag, StatusTag, InputTag, PrevInputTag);
+}
+
+void UAuraAbilitySystemComponent::ClearSlot(FGameplayAbilitySpec& AbilitySpec)
+{
+	// 스킬의 현재 인풋 태그를 삭제
+	const FGameplayTag InputTag = GetInputTagFromSpec(AbilitySpec);
+	AbilitySpec.DynamicAbilityTags.RemoveTag(InputTag);
+	// 어빌리티가 변경되었음을 서버에 알림
+	MarkAbilitySpecDirty(AbilitySpec);
+}
+
+void UAuraAbilitySystemComponent::ClearAbilitiesOfSlot(const FGameplayTag& InputTag)
+{
+	FScopedAbilityListLock ActiveScopeLock(*this);
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilityHasSlot(AbilitySpec, InputTag))
+		{
+			ClearSlot(AbilitySpec);
+		}
+	}
+}
+
+bool UAuraAbilitySystemComponent::AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag)
+{
+	for (const FGameplayTag Tag : AbilitySpec.DynamicAbilityTags)
+	{
+		if (Tag.MatchesTagExact(InputTag)) return true;
+	}
+	return false;
 }

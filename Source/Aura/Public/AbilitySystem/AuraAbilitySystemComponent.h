@@ -14,6 +14,8 @@ DECLARE_MULTICAST_DELEGATE(FAbilitiesGiven);
 DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
 // 어빌리티 상태가 변경되었을 때 사용할 델리게이트. 어빌리티 태그와 상태 태그, 어빌리티 레벨
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag&, const FGameplayTag&, int32);
+// 스킬 장착할 때 호출할 델리게이트. 어빌리티 태그, 상태 태그, 인풋 태그, 이전 인풋 태그
+DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&);
 
 /**
  * 커스텀 어빌리티 시스템 컴포넌트
@@ -88,6 +90,10 @@ private:
 	UFUNCTION(Client, Reliable)
 	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel);
 
+	// 클라이언트에서 스킬 장착 수행
+	UFUNCTION(Client, Reliable)
+	void ClientEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag);
+
 	// 스킬 제거 관련
 	// 해당 스킬을 슬롯에서 제거
 	void ClearSlot(FGameplayAbilitySpec& AbilitySpec);
@@ -103,6 +109,8 @@ public:
 	FAbilitiesGiven AbilitiesGivenDelegate;
 	// 어빌리티 상태가 수정될 때 사용할 델리게이트
 	FAbilityStatusChanged AbilityStatusChangedDelegate;
+	// 스킬 장착할 때 호출할 델리게이트
+	FAbilityEquipped AbilityEquippedDelegate;
 	// 시작 어빌리티들을 적용시켰는 지 확인
 	bool bStartupAbilitiesGiven = false;
 };
