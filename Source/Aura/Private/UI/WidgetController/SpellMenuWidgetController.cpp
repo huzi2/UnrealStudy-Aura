@@ -233,6 +233,7 @@ void USpellMenuWidgetController::ShouldEnableButton(const FGameplayTag& StatusTa
 
 void USpellMenuWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag)
 {
+	// USpellMenuWidgetController에서 하는건 스킬 메뉴창의 UI를 수정
 	if (!AbilityInfo) return;
 
 	// 스킬 장착 대기 상태 해제
@@ -255,4 +256,8 @@ void USpellMenuWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTa
 
 	// 스킬 장착 대기가 해제되었음을 알림(애니메이션 캔슬)
 	StopWaitingForEquipDelegate.Broadcast(AbilityInfo->FindAbilityInfoForTag(AbilityTag).AbilityTypeTag);
+	// 스킬 장착 대기가 해제되었음을 알림(스킬 구슬의 선택 대기상태 취소하고 사운드 재생)
+	FSpellGlobeReassignedDelegate.Broadcast(AbilityTag);
+	// 스킬 구슬 상태 초기화
+	SpellGlobeDeselect();
 }

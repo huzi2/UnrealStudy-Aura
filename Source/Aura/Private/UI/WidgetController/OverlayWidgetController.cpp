@@ -6,6 +6,7 @@
 #include "AbilitySystem/Data/AbilityInfo.h"
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
+#include "AuraGameplayTags.h"
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
@@ -83,6 +84,9 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	{
 		AuraAbilitySystemComponent->AbilitiesGivenDelegate.AddUObject(this, &UAuraWidgetController::BroadcastAbilityInfo);
 	}
+
+	// 스킬 장착했을 때 함수 연결
+	AuraAbilitySystemComponent->AbilityEquippedDelegate.AddUObject(this, &ThisClass::OnAbilityEquipped);
 }
 
 void UOverlayWidgetController::BroadcastInitialValue()
@@ -94,6 +98,27 @@ void UOverlayWidgetController::BroadcastInitialValue()
 	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
 	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
+}
+
+void UOverlayWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag) const
+{
+	// UOverlayWidgetController에서 하는건 게임 화면에서의 UI를 수정
+	if (!AbilityInfo) return;
+
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
+
+	FAuraAbilityInfo PrevSlotInfo;
+	PrevSlotInfo.AbilityTag = GameplayTags.Abilities_None;
+	PrevSlotInfo.StatusTag = GameplayTags.Abilities_Status_Unlocked;
+	PrevSlotInfo.InputTag = PrevInputTag;
+	// UI에게 이전 슬롯의 스킬 상태가 변경되었음을 알림
+	AbilityInfoDelegate.Broadcast(PrevSlotInfo);
+
+	FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
+	Info.StatusTag = StatusTag;
+	Info.InputTag = InputTag;
+	// UI에게 장착할 스킬의 상태가 변경되었음을 알림
+	AbilityInfoDelegate.Broadcast(Info);
 }
 
 void UOverlayWidgetController::OnXPChanged(int32 NewXP)

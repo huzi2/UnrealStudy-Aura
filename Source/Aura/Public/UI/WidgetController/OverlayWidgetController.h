@@ -52,6 +52,10 @@ public:
 	virtual void BindCallbacksToDependencies() final;
 	virtual void BroadcastInitialValue() final;
 
+protected:
+	// 장착되는 스킬의 정보가 어빌리티 시스템 컴포넌트의 델리게이트를 통해 전달될 때 수행
+	void OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag) const;
+
 private:
 	// 테이블에서 FName으로 사용해서 필요한 데이터를 얻어옴. 에디터에서 테이블을 만들 때 키값을 태그와 똑같이 만들어야한다.
 	template<typename T>
