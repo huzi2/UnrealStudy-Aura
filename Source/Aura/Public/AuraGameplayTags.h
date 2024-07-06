@@ -60,6 +60,13 @@ public:
 	FGameplayTag Damage_Physical;
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
+	// 디버프
+	FGameplayTag Debuff_Burn;
+	FGameplayTag Debuff_Stun;
+	FGameplayTag Debuff_Arcane;
+	FGameplayTag Debuff_Physical;
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
+
 	// 이펙트
 	FGameplayTag Effects_HitReact;
 

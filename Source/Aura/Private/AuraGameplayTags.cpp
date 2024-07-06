@@ -3,6 +3,8 @@
 #include "AuraGameplayTags.h"
 #include "GameplayTagsManager.h"
 
+constexpr int32 DAMAGE_TYPE_MAX = 4;
+
 UAuraGameplayTags UAuraGameplayTags::GameplayTags;
 
 void UAuraGameplayTags::InitializeNativeGameplayTags()
@@ -52,12 +54,26 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Damage_Lightning = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage.Lightning"), TEXT("Lightning Damage Type"));
 	GameplayTags.Damage_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage.Arcane"), TEXT("Arcane Damage Type"));
 	GameplayTags.Damage_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage.Physical"), TEXT("Fire Damage Type"));
-	
+
 	// 데미지 타입과 데미지 타입 저항을 맵에 연결
+	GameplayTags.DamageTypesToResistances.Reserve(DAMAGE_TYPE_MAX);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Attribute_Resistance_Fire);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Lightning, GameplayTags.Attribute_Resistance_Lightning);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Arcane, GameplayTags.Attribute_Resistance_Arcane);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Physical, GameplayTags.Attribute_Resistance_Physical);
+
+	// 디버프 태그들
+	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Burn"), TEXT("Debuff for Fire Damage"));
+	GameplayTags.Debuff_Stun = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Stun"), TEXT("Debuff for Lightning Damage"));
+	GameplayTags.Debuff_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Arcane"), TEXT("Debuff for Arcane Damage"));
+	GameplayTags.Debuff_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Physical"), TEXT("Debuff for Physical Damage"));
+
+	// 데미지 타입과 디버프 태그을 맵에 연결
+	GameplayTags.DamageTypesToDebuffs.Reserve(DAMAGE_TYPE_MAX);
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Fire, GameplayTags.Debuff_Burn);
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Lightning, GameplayTags.Debuff_Stun);
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Arcane, GameplayTags.Debuff_Arcane);
+	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Physical, GameplayTags.Debuff_Physical);
 
 	// 맞았을 때 타겟에게 부여해서 피격 모션 출력하게하는 태그
 	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Effects.HitReact"), TEXT("Tag granted when Hit Reacting"));

@@ -60,14 +60,9 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 			// 발사체의 이펙트 스펙 핸들에 적용
 			Projectile->DamageEffectSpecHandle = SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle);
 
-			// 데미지 타입별로 적용
-			for (const TTuple<FGameplayTag, FScalableFloat>& Pair : DamageTypes)
-			{
-				// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
-				const float ScaledDamage = Pair.Value.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
-
-				UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, Pair.Key, ScaledDamage);
-			}
+			// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
+			const float ScaledDamage = Damage.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, DamageType, ScaledDamage);
 		}
 	}
 	

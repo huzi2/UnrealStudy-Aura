@@ -8,7 +8,7 @@ FString UAuraFireBolt::GetDescription(int32 Level) const
 	// 파이어볼 스킬에 대한 설명
 
 	// 레벨에 따라 변경되는 데미지(불속성만 얻어옴)
-	const int32 Damage = static_cast<int32>(GetDamageByDamageType(static_cast<float>(Level), UAuraGameplayTags::Get().Damage_Fire));
+	const int32 ScaledDamage = static_cast<int32>(Damage.GetValueAtLevel(static_cast<float>(Level)));
 	// 마나 코스트
 	const float ManaCost = FMath::Abs(GetManaCost(static_cast<float>(Level)));
 	// 쿨타임
@@ -30,7 +30,7 @@ FString UAuraFireBolt::GetDescription(int32 Level) const
 			// 데미지
 			"<Damage>%d</><Default> fire damage with"
 			" a chance to burn</>\n\n"), 
-			Level, ManaCost, Cooldown, Damage);
+			Level, ManaCost, Cooldown, ScaledDamage);
 	}
 	// 그 후에는 레벨에 따라 발사체가 증가
 	else
@@ -48,13 +48,13 @@ FString UAuraFireBolt::GetDescription(int32 Level) const
 			// 데미지
 			"<Damage>%d</><Default> fire damage with"
 			" a chance to burn</>\n\n"),
-			Level, ManaCost, Cooldown, FMath::Min(Level, NumProjectiles), Damage);
+			Level, ManaCost, Cooldown, FMath::Min(Level, NumProjectiles), ScaledDamage);
 	}
 }
 
 FString UAuraFireBolt::GetNextLevelDescription(int32 Level) const
 {
-	const int32 Damage = static_cast<int32>(GetDamageByDamageType(static_cast<float>(Level), UAuraGameplayTags::Get().Damage_Fire));
+	const int32 ScaledDamage = static_cast<int32>(Damage.GetValueAtLevel(static_cast<float>(Level)));
 	const float ManaCost = FMath::Abs(GetManaCost(static_cast<float>(Level)));
 	const float Cooldown = GetCooldown(static_cast<float>(Level));
 
@@ -70,5 +70,5 @@ FString UAuraFireBolt::GetNextLevelDescription(int32 Level) const
 		// 데미지
 		"<Damage>%d</><Default> fire damage with"
 		" a chance to burn</>\n\n"),
-		Level, ManaCost, Cooldown, FMath::Min(Level, NumProjectiles), Damage);
+		Level, ManaCost, Cooldown, FMath::Min(Level, NumProjectiles), ScaledDamage);
 }
