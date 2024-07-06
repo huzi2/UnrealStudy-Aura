@@ -28,9 +28,22 @@ protected:
 	TSubclassOf<UGameplayEffect> DamageEffectClass;
 
 	// 스킬의 데미지 타입 태그
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FGameplayTag DamageType;
 	// 스킬의 데미지 커브 테이블 값
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FScalableFloat Damage;
+	
+	// 디버프 확률
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float DebuffChance = 20.f;
+	// 디버프 데미지
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float DebuffDamage = 5.f;
+	// 디버프 지속시간
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	float DebuffDuration = 5.f;
+	// 디버프 주기
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float DebuffFrequency = 1.f;
 };

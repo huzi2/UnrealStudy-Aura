@@ -67,6 +67,12 @@ public:
 	FGameplayTag Debuff_Physical;
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
 
+	// 디버프 변수
+	FGameplayTag Debuff_Chance;
+	FGameplayTag Debuff_Damage;
+	FGameplayTag Debuff_Duration;
+	FGameplayTag Debuff_Frequency;
+
 	// 이펙트
 	FGameplayTag Effects_HitReact;
 
