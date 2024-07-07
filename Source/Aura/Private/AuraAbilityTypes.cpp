@@ -1,11 +1,5 @@
 #include "AuraAbilityTypes.h"
 
-FAuraGameplayEffectContext::FAuraGameplayEffectContext()
-	: bIsBlockedHit(false)
-	, bIsCriticalHit(false)
-{
-}
-
 // 추가된 bool 변수를 직렬화로 저장하기 위해 NetSerialize()를 커스텀
 bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bool& bOutSuccess)
 {

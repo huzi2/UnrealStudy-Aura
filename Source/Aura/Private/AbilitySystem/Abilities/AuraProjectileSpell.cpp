@@ -62,7 +62,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 
 			// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
 			const float ScaledDamage = Damage.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
-			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, DamageType, ScaledDamage);
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, DamageTypeTag, ScaledDamage);
 		}
 	}
 	

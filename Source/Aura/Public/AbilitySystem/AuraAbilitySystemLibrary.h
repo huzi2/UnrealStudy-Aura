@@ -14,6 +14,7 @@ class UAbilitySystemComponent;
 class AAuraHUD;
 class UAbilityInfo;
 struct FWidgetControllerParams;
+struct FDamageEffectParams;
 
 /**
  * 게임 제작에 도움이 되는 라이브러리 함수. 블루프린트에서도 사용 가능
@@ -69,6 +70,10 @@ public:
 	// 아군인지 적군인지 확인
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
 	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
+
+	// 데미지 이펙트를 적용
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|DamageEffect")
+	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
 
 	// 적 종류와 레벨에 따른 획득 경험치
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level);

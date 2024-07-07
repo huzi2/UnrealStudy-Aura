@@ -9,6 +9,8 @@
 #include "AuraAbilityTypes.h"
 #include "Interaction/CombatInterface.h"
 #include "UI/WidgetController/AuraWidgetController.h"
+#include "AuraGameplayTags.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
 {
@@ -192,6 +194,33 @@ bool UAuraAbilitySystemLibrary::IsNotFriend(AActor* FirstActor, AActor* SecondAc
 	const bool bBothAreEnemies = FirstActor->ActorHasTag(TEXT("Enemy")) && SecondActor->ActorHasTag(TEXT("Enemy"));
 	const bool bFriends = bBothArePlayers || bBothAreEnemies;
 	return !bFriends;
+}
+
+FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams)
+{
+	const UAuraGameplayTags& GameplayTag = UAuraGameplayTags::Get();
+
+	// 액터 얻어오고
+	const AActor* SourceAvaterActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+
+	// 이펙트 콘텍스트 핸들 생성
+	FGameplayEffectContextHandle EffectContextHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(SourceAvaterActor);
+
+	// 스펙 핸들 생성
+	const FGameplayEffectSpecHandle SpecHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffectParams.DamageGameplayEffectClass, DamageEffectParams.AbilityLevel, EffectContextHandle);
+
+	// 데미지와 디버프 데미지 태그를 통해서 스펙 핸들에 적용
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, DamageEffectParams.DamageTypeTag, DamageEffectParams.BaseDamage);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTag.Debuff_Chance, DamageEffectParams.DebuffChance);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTag.Debuff_Damage, DamageEffectParams.DebuffDamage);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTag.Debuff_Duration, DamageEffectParams.DebuffDuration);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTag.Debuff_Frequency, DamageEffectParams.DebuffFrequency);
+
+	// 자신에게 이펙트 적용
+	DamageEffectParams.TargetAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
+
+	return EffectContextHandle;
 }
 
 int32 UAuraAbilitySystemLibrary::GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level)

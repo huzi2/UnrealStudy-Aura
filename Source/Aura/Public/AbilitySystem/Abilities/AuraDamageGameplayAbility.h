@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 #include "Interaction/CombatInterface.h"
+#include "AuraAbilityTypes.h"
 #include "AuraDamageGameplayAbility.generated.h"
 
 /**
@@ -15,6 +16,10 @@ class AURA_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
 {
 	GENERATED_BODY()
 	
+public:
+	// 데미지 이펙트에서 사용할 구조체 생성
+	FDamageEffectParams MakeDamageEffectParamsFromClassDefault(AActor* TargetActor = nullptr) const;
+
 private:
 	UFUNCTION(BlueprintCallable)
 	void CauseDamage(AActor* TargetActor);
@@ -29,7 +34,7 @@ protected:
 
 	// 스킬의 데미지 타입 태그
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	FGameplayTag DamageType;
+	FGameplayTag DamageTypeTag;
 	// 스킬의 데미지 커브 테이블 값
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FScalableFloat Damage;
