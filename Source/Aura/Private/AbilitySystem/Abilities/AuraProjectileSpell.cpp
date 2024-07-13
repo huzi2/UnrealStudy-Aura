@@ -36,35 +36,37 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(ProjectileClass, SpawnTransform, GetOwningActorFromActorInfo(), Cast<APawn>(GetOwningActorFromActorInfo()), ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 	if (!Projectile) return;
 
-	// 액터의 어빌리티 시스템 컴포넌트를 사용해서 어빌리티에 적용할 게임플레이 이펙트 스펙 핸들을 생성
-	if (const UAbilitySystemComponent* SourceAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo()))
-	{
-		if (DamageEffectClass)
-		{
-			// 이펙트의 정보를 채우기 위해 게임플레이 컨텍스트 핸들을 생성
-			FGameplayEffectContextHandle EffectContextHandle = SourceAbilitySystemComponent->MakeEffectContext();
-			// 아래 목록은 게임플레이 컨텍스트 핸들로 가능한 것들을 모아놓은 것. 이 게임에서는 의미는 없다.
-			// 이펙트를 발생시킨 어빌리티 등록
-			EffectContextHandle.SetAbility(this);
-			// 이펙트를 발생시킨 주체(발사체) 등록
-			EffectContextHandle.AddSourceObject(Projectile);
-			// 이펙트와 관련된 액터들 정보에 발사체 등록
-			TArray<TWeakObjectPtr<AActor>> Actors;
-			Actors.Add(Projectile);
-			EffectContextHandle.AddActors(Actors);
-			// 충돌처리 관련 결과가 있을 때 충돌처리 결과를 전달(현재는 비어있음)
-			FHitResult HitResult;
-			HitResult.Location = ProjectileTargetLocation;
-			EffectContextHandle.AddHitResult(HitResult);
+	Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefault();
 
-			// 발사체의 이펙트 스펙 핸들에 적용
-			Projectile->DamageEffectSpecHandle = SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle);
+	//// 액터의 어빌리티 시스템 컴포넌트를 사용해서 어빌리티에 적용할 게임플레이 이펙트 스펙 핸들을 생성
+	//if (const UAbilitySystemComponent* SourceAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo()))
+	//{
+	//	if (DamageEffectClass)
+	//	{
+	//		// 이펙트의 정보를 채우기 위해 게임플레이 컨텍스트 핸들을 생성
+	//		FGameplayEffectContextHandle EffectContextHandle = SourceAbilitySystemComponent->MakeEffectContext();
+	//		// 아래 목록은 게임플레이 컨텍스트 핸들로 가능한 것들을 모아놓은 것. 이 게임에서는 의미는 없다.
+	//		// 이펙트를 발생시킨 어빌리티 등록
+	//		EffectContextHandle.SetAbility(this);
+	//		// 이펙트를 발생시킨 주체(발사체) 등록
+	//		EffectContextHandle.AddSourceObject(Projectile);
+	//		// 이펙트와 관련된 액터들 정보에 발사체 등록
+	//		TArray<TWeakObjectPtr<AActor>> Actors;
+	//		Actors.Add(Projectile);
+	//		EffectContextHandle.AddActors(Actors);
+	//		// 충돌처리 관련 결과가 있을 때 충돌처리 결과를 전달(현재는 비어있음)
+	//		FHitResult HitResult;
+	//		HitResult.Location = ProjectileTargetLocation;
+	//		EffectContextHandle.AddHitResult(HitResult);
 
-			// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
-			const float ScaledDamage = Damage.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
-			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, DamageTypeTag, ScaledDamage);
-		}
-	}
+	//		// 발사체의 이펙트 스펙 핸들에 적용
+	//		Projectile->DamageEffectSpecHandle = SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle);
+
+	//		// 어빌리티 레벨에 따라 커브테이블에 적용된 데미지를 얻어온다.
+	//		const float ScaledDamage = Damage.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
+	//		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->DamageEffectSpecHandle, DamageTypeTag, ScaledDamage);
+	//	}
+	//}
 	
 	// 발사체 이제 생성
 	Projectile->FinishSpawning(SpawnTransform);

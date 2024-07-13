@@ -12,10 +12,9 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 
 AAuraProjectile::AAuraProjectile()
-	: LifeSpan(15.f)
-	, bHit(false)
 {
 	PrimaryActorTick.bCanEverTick = false;
+
 	// 생성을 서버에서만 할 거라 클라들을 위해서 레플리케이션
 	bReplicates = true;
 
@@ -56,22 +55,7 @@ void AAuraProjectile::Destroyed()
 	// 클라이언트에서 서버가 발사체를 제거하라고 레플리케이션 했는데, 사운드와 이펙트를 출력하지 못한 경우
 	if (!bHit && !HasAuthority())
 	{
-		if (ImpactSound)
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
-		}
-
-		if (ImpactEffect)
-		{
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
-		}
-
-		if (LoopingSoundComponent)
-		{
-			LoopingSoundComponent->Stop();
-		}
-
-		bHit = true;
+		OnHit();
 	}
 
 	Super::Destroyed();
@@ -80,38 +64,25 @@ void AAuraProjectile::Destroyed()
 void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// 효과를 수행한 액터와 충돌액터가 같으면 리턴
-	if (!DamageEffectSpecHandle.Data.IsValid() || DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor) return;
+	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+	if (SourceAvatarActor == OtherActor) return;
 
 	// 발사체 대상이 아군이면 리턴
-	if (!UAuraAbilitySystemLibrary::IsNotFriend(DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser(), OtherActor)) return;
+	if (!UAuraAbilitySystemLibrary::IsNotFriend(SourceAvatarActor, OtherActor)) return;
 
 	if (!bHit)
 	{
-		if (ImpactSound)
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
-		}
-
-		if (ImpactEffect)
-		{
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
-		}
-
-		if (LoopingSoundComponent)
-		{
-			LoopingSoundComponent->Stop();
-		}
-
-		bHit = true;
+		OnHit();
 	}
 
 	// 서버에서 제거하는데 클라는 레플리케이션되서 제거된다.
 	if (HasAuthority())
 	{
-		// 타겟의 어빌리티 시스템 컴포넌트를 통해서 데미지 이펙트를 적용
+		// 타겟에게 데미지 이펙트를 적용
 		if (UAbilitySystemComponent* TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
-			TargetAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
+			DamageEffectParams.TargetAbilitySystemComponent = TargetAbilitySystemComponent;
+			UAuraAbilitySystemLibrary::ApplyDamageEffect(DamageEffectParams);
 		}
 
 		Destroy();
@@ -121,4 +92,24 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 	{
 		bHit = true;
 	}
+}
+
+void AAuraProjectile::OnHit()
+{
+	if (ImpactSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
+	}
+
+	if (ImpactEffect)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
+	}
+
+	if (LoopingSoundComponent)
+	{
+		LoopingSoundComponent->Stop();
+	}
+
+	bHit = true;
 }
