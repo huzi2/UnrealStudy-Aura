@@ -23,8 +23,6 @@ public:
 	DECLARE_ATTRIBUTE_CAPTUREDEF(ArcaneResistance);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(PhysicalResistance);
 
-	TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition> TagToCaptureDefs;
-
 	AuraDamageStatics()
 	{
 		// 캡쳐 변수를 정의
@@ -42,22 +40,6 @@ public:
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitChance, Source, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitDamage, Source, false);
 	}
-
-	void Initialize()
-	{
-		// 태그와 캡쳐를 서로 연결
-		const UAuraGameplayTags& Tags = UAuraGameplayTags::Get();
-		TagToCaptureDefs.Add(Tags.Attribute_Secondary_Armor, ArmorDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Secondary_ArmorPenetration, ArmorPenetrationDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Secondary_BlockChance, BlockChanceDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitChance, CriticalHitChanceDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitDamage, CriticalHitDamageDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitResistance, CriticalHitResistanceDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Fire, FireResistanceDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Lightning, LightningResistanceDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Arcane, ArcaneResistanceDef);
-		TagToCaptureDefs.Add(Tags.Attribute_Resistance_Physical, PhysicalResistanceDef);
-	}
 };
 
 // 정적 함수로 캡쳐 변수를 얻어온다.
@@ -65,11 +47,6 @@ static AuraDamageStatics& DamageStatics()
 {
 	static AuraDamageStatics DStatics{};
 	return DStatics;
-}
-
-void InitializeAuraDamageStatics()
-{
-	DamageStatics().Initialize();
 }
 
 UExecCalc_Damage::UExecCalc_Damage()
@@ -89,6 +66,21 @@ UExecCalc_Damage::UExecCalc_Damage()
 
 void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
+	// 태그와 캡쳐를 서로 연결
+	const UAuraGameplayTags& Tags = UAuraGameplayTags::Get();
+	TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition> TagToCaptureDefs;
+	
+	TagToCaptureDefs.Add(Tags.Attribute_Secondary_Armor, DamageStatics().ArmorDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Secondary_ArmorPenetration, DamageStatics().ArmorPenetrationDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Secondary_BlockChance, DamageStatics().BlockChanceDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitChance, DamageStatics().CriticalHitChanceDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitDamage, DamageStatics().CriticalHitDamageDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Secondary_CriticalHitResistance, DamageStatics().CriticalHitResistanceDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Resistance_Fire, DamageStatics().FireResistanceDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Resistance_Lightning, DamageStatics().LightningResistanceDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Resistance_Arcane, DamageStatics().ArcaneResistanceDef);
+	TagToCaptureDefs.Add(Tags.Attribute_Resistance_Physical, DamageStatics().PhysicalResistanceDef);
+
 	// 게임플레이 이펙트에서 Executions에 이 클래스를 추가했다면 이펙트 적용될 때 이 함수로 들어온다.
 	// OutExecutionOutput에 수정할 어트리뷰트들을 저장하면 적용된다.
 	const UAbilitySystemComponent* SourceAbilitySystemComponent = ExecutionParams.GetSourceAbilitySystemComponent();
@@ -130,10 +122,15 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	FAggregatorEvaluateParameters EvaluationParameters;
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
+	
+	// 디버프 처리
+	DetermineDebuff(ExecutionParams, Spec, EvaluationParameters, TagToCaptureDefs);
+
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
 	// Caller Magnitude에 설정한 태그에 저장된 데미지 값을 얻어온다.
 	float Damage = 0.f;
-	for (const TTuple<FGameplayTag, FGameplayTag>& Pair : UAuraGameplayTags::Get().DamageTypesToResistances)
+	for (const TTuple<FGameplayTag, FGameplayTag>& Pair : GameplayTags.DamageTypesToResistances)
 	{
 		const FGameplayTag& DamageTypeTag = Pair.Key;
 		const FGameplayTag& ResistanceTag = Pair.Value;
@@ -142,9 +139,9 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		if (DamageTypeValue == 0.f) continue;
 
 		// 해당 공격 타입에 대한 저항값이 있다면 저항에 따라 데미지를 감소
-		if (DamageStatics().TagToCaptureDefs.Contains(ResistanceTag))
+		if (TagToCaptureDefs.Contains(ResistanceTag))
 		{
-			const FGameplayEffectAttributeCaptureDefinition& CaptureDef = DamageStatics().TagToCaptureDefs[ResistanceTag];
+			const FGameplayEffectAttributeCaptureDefinition& CaptureDef = TagToCaptureDefs[ResistanceTag];
 			
 			float ResistanceValue = 0.f;
 			ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDef, EvaluationParameters, ResistanceValue);
@@ -235,4 +232,40 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	// 최종 계산된 데미지값을 IncomingDamage 어트리뷰트에 Additive
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(), EGameplayModOp::Additive, Damage);
 	OutExecutionOutput.AddOutputModifier(EvaluatedData);
+}
+
+void UExecCalc_Damage::DetermineDebuff(const FGameplayEffectCustomExecutionParameters& ExecutionParams, const FGameplayEffectSpec& Spec, const FAggregatorEvaluateParameters& EvaluationParameters, const TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition>& TagToCaptureDefs) const
+{
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
+
+	// 디버프 처리
+	for (const TTuple<FGameplayTag, FGameplayTag>& Pair : GameplayTags.DamageTypesToDebuffs)
+	{
+		const FGameplayTag& DamageTypeTag = Pair.Key;
+		const FGameplayTag& DebuffTypeTag = Pair.Value;
+
+		const float TypeDamage = Spec.GetSetByCallerMagnitude(DamageTypeTag, false, -1.f);
+		// 해당 타입에 디버프가 있음
+		if (TypeDamage > -1.f)
+		{
+			// 디버프에 걸릴 확률
+			const float SourceDebuffChance = Spec.GetSetByCallerMagnitude(GameplayTags.Debuff_Chance, false, -1.f);
+
+			// 디버프 저항값(속성 저항값을 그대로 사용)
+			const FGameplayTag& ResistanceTag = GameplayTags.DamageTypesToResistances[DamageTypeTag];
+			const FGameplayEffectAttributeCaptureDefinition& CaptureDef = TagToCaptureDefs[ResistanceTag];
+
+			float ResistanceValue = 0.f;
+			ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDef, EvaluationParameters, ResistanceValue);
+			ResistanceValue = FMath::Max<float>(ResistanceValue, 0.f);
+			const float EffectiveDebuffChance = SourceDebuffChance * (100.f - ResistanceValue) / 100.f;
+
+			// 디버프 걸렸는 지 확인
+			const bool bDebuff = FMath::FRandRange(1.f, 100.f) < EffectiveDebuffChance;
+			if (bDebuff)
+			{
+				int a = 0;
+			}
+		}
+	}
 }
