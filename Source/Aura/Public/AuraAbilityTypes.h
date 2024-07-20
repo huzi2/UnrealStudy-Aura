@@ -85,8 +85,18 @@ public:
 public:
 	FORCEINLINE bool IsBlockedHit() const { return bIsBlockedHit; }
 	FORCEINLINE bool IsCriticalHit() const { return bIsCriticalHit; }
+	FORCEINLINE bool IsSuccessfulDebuff() const { return bIsSuccessfulDebuff; }
+	FORCEINLINE float GetDebuffDamage() const { return DebuffDamage; }
+	FORCEINLINE float GetDebuffDuration() const { return DebuffDuration; }
+	FORCEINLINE float GetDebuffFrequency() const { return DebuffFrequency; }
+	FORCEINLINE TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 	FORCEINLINE void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
 	FORCEINLINE void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
+	FORCEINLINE void SetIsSuccessfulDebuff(bool bIsInSuccessfulDebuff) { bIsSuccessfulDebuff = bIsInSuccessfulDebuff; }
+	FORCEINLINE void SetDebuffDamage(float InDebuffDamage) { DebuffDamage = InDebuffDamage; }
+	FORCEINLINE void SetDebuffDuration(float InDebuffDuration) { DebuffDuration = InDebuffDuration; }
+	FORCEINLINE void SetDebuffFrequency(float InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
+	//FORCEINLINE void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
 
 private:
 	// 공격을 막았음
@@ -95,6 +105,23 @@ private:
 	// 공격에 치명타가 터짐
 	UPROPERTY()
 	bool bIsCriticalHit = false;
+
+	// 디버프 관련
+	// 디버프 성공 여부
+	UPROPERTY()
+	bool bIsSuccessfulDebuff = false;
+	// 디버프 데미지
+	UPROPERTY()
+	float DebuffDamage = 0.f;
+	// 디버프 시간
+	UPROPERTY()
+	float DebuffDuration = 0.f;
+	// 디버프 간격
+	UPROPERTY()
+	float DebuffFrequency = 0.f;
+
+	// 데미지 타입 태그
+	TSharedPtr<FGameplayTag> DamageType;
 };
 
 // 커스텀 NetSerialize()를 위해 위 구조체의 속성 정의
