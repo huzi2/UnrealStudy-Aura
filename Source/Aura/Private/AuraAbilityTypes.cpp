@@ -67,7 +67,7 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 	}
 
 	// 기존에 7를 저장했지만 bool 변수가 2개 더 늘어났으므로 9로 저장
-	Ar.SerializeBits(&RepBits, 9);
+	Ar.SerializeBits(&RepBits, 13);
 
 	if (RepBits & (1 << 0))
 	{

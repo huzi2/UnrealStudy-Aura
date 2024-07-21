@@ -14,47 +14,46 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
-// 이펙트 후처리를 하기 위해 필요한 변수 모음
+/**
+ * 이펙트 후처리를 하기 위해 필요한 변수 모음
+ */
 USTRUCT()
 struct FEffectProperties
 {
 	GENERATED_BODY()
 
 public:
-	FEffectProperties() {}
-
-public:
+	// 이펙트를 수행하는 어빌리티 시스템 컴포넌트
 	UPROPERTY()
 	UAbilitySystemComponent* SourceASC = nullptr;
-
+	// 이펙트를 수행하는 액터
 	UPROPERTY()
 	AActor* SourceAvatarActor = nullptr;
-
+	// 이펙트를 수행하는 컨트롤러
 	UPROPERTY()
 	AController* SourceController = nullptr;
-
+	// 이펙트를 수행하는 캐릭터
 	UPROPERTY()
 	ACharacter* SourceCharacter = nullptr;
-
+	// 이펙트의 타겟 어빌리티 시스템 컴포넌트
 	UPROPERTY()
 	UAbilitySystemComponent* TargetASC = nullptr;
-
+	// 이펙트의 타겟 액터
 	UPROPERTY()
 	AActor* TargetAvatarActor = nullptr;
-
+	// 이펙트의 타겟 컨트롤러
 	UPROPERTY()
 	AController* TargetController = nullptr;
-
+	// 이펙트의 타겟 캐릭터
 	UPROPERTY()
 	ACharacter* TargetCharacter = nullptr;
 
-
-public:
+	// 이펙트 컨텍스트 핸들
 	FGameplayEffectContextHandle EffectContextHandle;
 };
 
 /**
- * 
+ * 게임에서 사용되는 속성을 관리하는 커스텀 어트리뷰트 세트
  */
 UCLASS()
 class AURA_API UAuraAttributeSet : public UAttributeSet
@@ -74,8 +73,20 @@ private:
 	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) final;
 
 private:
+	// EffectProperties의 변수 채우기
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
+
+	// 데미지 처리
+	void HandleIncomingDamage(const FEffectProperties& Props);
+	// 데미지의 디버프 처리
+	void Debuff(const FEffectProperties& Props);
+	// 경험치 처리
+	void HandleIncomingXP(const FEffectProperties& Props);
+
+	// 화면에 데미지 표시
 	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool bCriticalHit) const;
+
+	// 경험치 이벤트 발생
 	void SendXPEvent(const FEffectProperties& Props);
 
 public:
