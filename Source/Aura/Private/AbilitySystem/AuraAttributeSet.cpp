@@ -10,6 +10,7 @@
 #include "Player/AuraPlayerController.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Interaction/PlayerInterface.h"
+#include "AuraAbilityTypes.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -93,6 +94,15 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	// 이펙트로 변수가 변경된 후에 실행. 소스와 타겟 관련 변수를 얻어서 후처리를 할 수 있다.
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
+
+	// 타겟 캐릭터가 죽어있다면 리턴
+	if (Props.TargetCharacter && Props.TargetCharacter->Implements<UCombatInterface>())
+	{
+		if (ICombatInterface::Execute_IsDead(Props.TargetCharacter))
+		{
+			return;
+		}
+	}
 
 	// PreAttributeChange()에서 했던 클램핑을 여기서도 해서 여기서는 실제 값을 클램핑해준다.
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
@@ -213,7 +223,62 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 
 void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 {
+	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
+	// 이펙트 핸들 객체 생성
+	FGameplayEffectContextHandle EffectContextHandle = Props.SourceASC->MakeEffectContext();
+	// 이펙트 핸들에 사용 주체 설정
+	EffectContextHandle.AddSourceObject(Props.SourceAvatarActor);
+
+	// 이펙트 컨텍스트 핸들에서 디브퍼 관련 정보들 얻어오기
+	const FGameplayTag DamageTypeTag = UAuraAbilitySystemLibrary::GetDamageType(Props.EffectContextHandle);
+	const FString DebuffName = FString::Printf(TEXT("DynamicDebuff_%s"), *DamageTypeTag.ToString());
+	const float DebuffDamage = UAuraAbilitySystemLibrary::GetDebuffDamage(Props.EffectContextHandle);
+	const float DebuffDuration = UAuraAbilitySystemLibrary::GetDebuffDuration(Props.EffectContextHandle);
+	const float DebuffFrequency = UAuraAbilitySystemLibrary::GetDebuffFrequency(Props.EffectContextHandle);
+
+	// 디버프 네임을 붙여서 이펙트 객체 생성
+	if (UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName(DebuffName)))
+	{
+		// 디버프는 지속됨
+		Effect->DurationPolicy = EGameplayEffectDurationType::HasDuration;
+		// 디버프 지속시간
+		Effect->DurationMagnitude = FScalableFloat(DebuffDuration);
+		// 디버프 주기
+		Effect->Period = DebuffFrequency;
+
+		// 데미지 타입에 따른 디버프 태그를 넣어서 디버프가 중복되지 않도록 방지
+		Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageTypeTag]);
+
+		// 이펙트 주체자 기준으로 스택
+		Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;
+		// 디버프는 하나만 적용
+		Effect->StackLimitCount = 1;
+
+		// 이펙트의 모디파이어 세팅
+		const int32 Index = Effect->Modifiers.Num();
+		Effect->Modifiers.Add(FGameplayModifierInfo());
+		FGameplayModifierInfo& ModifierInfo = Effect->Modifiers[Index];
+
+		// 모디파이어에 디버프 데미지 세팅
+		ModifierInfo.ModifierMagnitude = FScalableFloat(DebuffDamage);
+		ModifierInfo.ModifierOp = EGameplayModOp::Additive;
+		ModifierInfo.Attribute = UAuraAttributeSet::GetIncomingDamageAttribute();
+
+		// 1레벨의 이펙트 스펙 생성
+		if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContextHandle, 1.f))
+		{
+			if (FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get()))
+			{
+				// 태그 설정
+				TSharedPtr<FGameplayTag> DebuffDamageTypeTag = MakeShareable(new FGameplayTag(DamageTypeTag));
+				AuraContext->SetDamageType(DebuffDamageTypeTag);
+			}
+			
+			// 타겟에게 이펙트 적용
+			Props.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
+		}
+	}
 }
 
 void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
