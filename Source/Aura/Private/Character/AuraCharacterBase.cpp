@@ -5,10 +5,9 @@
 #include "Components/CapsuleComponent.h"
 #include "AuraGameplayTags.h"
 #include "Kismet/GameplayStatics.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
-	: bDead(false)
-	, MinionCount(0)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -22,6 +21,11 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon->SetupAttachment(GetMesh(), TEXT("WeaponHandSocket"));
 	Weapon->SetCollisionResponseToChannel(ECC_Camera, ECollisionResponse::ECR_Ignore);
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	BurnDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>(TEXT("BurnDebuffComponent"));
+	BurnDebuffComponent->SetupAttachment(GetRootComponent());
+	BurnDebuffComponent->SetDebuffTag(UAuraGameplayTags::Get().Debuff_Burn);
+
 }
 
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
@@ -40,6 +44,16 @@ void AAuraCharacterBase::Die()
 	}
 	
 	MulticastHandleDeath();
+}
+
+FOnAbilitySystemComponentRegistered AAuraCharacterBase::GetOnAbilitySystemComponentRegisteredDelegate() const
+{
+	return OnAbilitySystemComponentRegisteredDelegate;
+}
+
+FOnDeath AAuraCharacterBase::GetOnDeathDelegate() const
+{
+	return OnDeathDelegate;
 }
 
 void AAuraCharacterBase::InitAbilityActorInfo()
@@ -178,8 +192,6 @@ void AAuraCharacterBase::Dissolve()
 
 void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 {
-	// 캐릭터가 죽었을 때 서버와 클라 모두 수행할 일
-
 	// 무기를 래그돌로 바꾼다.
 	if (Weapon)
 	{
@@ -213,4 +225,7 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 	}
 
 	bDead = true;
+
+	// 죽었음을 알리는 델리게이트 호출
+	OnDeathDelegate.Broadcast(this);
 }

@@ -11,6 +11,7 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Interaction/PlayerInterface.h"
 #include "AuraAbilityTypes.h"
+#include "GameplayEffectComponents/TargetTagsGameplayEffectComponent.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -248,7 +249,10 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 		Effect->Period = DebuffFrequency;
 
 		// 데미지 타입에 따른 디버프 태그를 넣어서 디버프가 중복되지 않도록 방지
-		Effect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageTypeTag]);
+		UTargetTagsGameplayEffectComponent& AssetTagsComponent = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
+		FInheritedTagContainer InheritedTagContainer;
+		InheritedTagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageTypeTag]);
+		AssetTagsComponent.SetAndApplyTargetTagChanges(InheritedTagContainer);
 
 		// 이펙트 주체자 기준으로 스택
 		Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;

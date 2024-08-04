@@ -111,8 +111,12 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 
 void AAuraEnemy::InitAbilityActorInfo()
 {
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+		OnAbilitySystemComponentRegisteredDelegate.Broadcast(AbilitySystemComponent);
+	}
+	
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
 	{
 		AuraAbilitySystemComponent->AbilityActorInfoSet();

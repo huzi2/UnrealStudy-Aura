@@ -9,6 +9,12 @@
 #include "CombatInterface.generated.h"
 
 class UNiagaraSystem;
+class UAbilitySystemComponent;
+
+// 어빌리티 시스템 컴포넌트가 등록되었을 때 호출할 델리게이트
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilitySystemComponentRegistered, UAbilitySystemComponent*);
+// 캐릭터가 죽었을 때 호출할 델리게이트
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnDeath, AActor*);
 
 /**
  * 태그와 애님 몽타주를 연결
@@ -51,6 +57,8 @@ class AURA_API ICombatInterface
 
 public:
 	virtual void Die() = 0;
+	virtual FOnAbilitySystemComponentRegistered GetOnAbilitySystemComponentRegisteredDelegate() const = 0;
+	virtual FOnDeath GetOnDeathDelegate() const = 0;
 
 protected:
 	// 캐릭터의 레벨을 얻어온다.

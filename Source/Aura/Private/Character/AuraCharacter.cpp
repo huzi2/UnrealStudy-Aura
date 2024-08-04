@@ -69,6 +69,9 @@ void AAuraCharacter::InitAbilityActorInfo()
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent()))
 	{
 		AuraAbilitySystemComponent->AbilityActorInfoSet();
+
+		// 어빌리티 시스템 컴포넌트가 연결되었다는 델리게이트 호출
+		OnAbilitySystemComponentRegisteredDelegate.Broadcast(AbilitySystemComponent);
 	}
 
 	if (AuraPlayerState->GetAbilitySystemComponent())
