@@ -248,7 +248,9 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 		// 디버프 주기
 		Effect->Period = DebuffFrequency;
 
+		// UE 5.3부터는 UTargetTagsGameplayEffectComponent를 이펙트에 추가하는 형태로 태그를 적용시켜야함
 		// 데미지 타입에 따른 디버프 태그를 넣어서 디버프가 중복되지 않도록 방지
+		// 디버프 태그로 디버프 이펙트 컴포넌트도 활성화됨
 		UTargetTagsGameplayEffectComponent& AssetTagsComponent = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
 		FInheritedTagContainer InheritedTagContainer;
 		InheritedTagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageTypeTag]);
