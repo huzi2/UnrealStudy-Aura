@@ -210,6 +210,8 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 		}
 		else
 		{
+			// 죽음 충격 벡터 적용해야함
+
 			// 인터페이스를 통한 죽음 처리(래그돌로 변경)
 			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
 			{

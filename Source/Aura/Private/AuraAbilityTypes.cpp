@@ -64,10 +64,14 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 		{
 			RepBits |= 1 << 13;
 		}
+		if (!DeathImpulse.IsZero())
+		{
+			RepBits |= 1 << 14;
+		}
 	}
 
 	// 기존에 7를 저장했지만 bool 변수가 2개 더 늘어났으므로 9로 저장
-	Ar.SerializeBits(&RepBits, 13);
+	Ar.SerializeBits(&RepBits, 14);
 
 	if (RepBits & (1 << 0))
 	{
@@ -146,6 +150,10 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 			}
 		}
 		DamageType->NetSerialize(Ar, Map, bOutSuccess);
+	}
+	if (RepBits & (1 << 14))
+	{
+		DeathImpulse.NetSerialize(Ar, Map, bOutSuccess);
 	}
 
 	if (Ar.IsLoading())

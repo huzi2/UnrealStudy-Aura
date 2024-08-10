@@ -49,6 +49,14 @@ public:
 	// 디버프 데미지 주기
 	UPROPERTY()
 	float DebuffFrequency = 0.f;
+
+	// 죽었을 때 충격 정도
+	UPROPERTY()
+	float DeathImpulseMagnitude = 60.f;
+
+	// 죽었을 때 가할 충격 벡터
+	UPROPERTY()
+	FVector DeathImpulse = FVector::ZeroVector;
 };
 
 /**
@@ -90,6 +98,7 @@ public:
 	FORCEINLINE float GetDebuffDuration() const { return DebuffDuration; }
 	FORCEINLINE float GetDebuffFrequency() const { return DebuffFrequency; }
 	FORCEINLINE TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
+	FORCEINLINE FVector GetDeathImpulse() const { return DeathImpulse; }
 	FORCEINLINE void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
 	FORCEINLINE void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 	FORCEINLINE void SetIsSuccessfulDebuff(bool bIsInSuccessfulDebuff) { bIsSuccessfulDebuff = bIsInSuccessfulDebuff; }
@@ -97,6 +106,7 @@ public:
 	FORCEINLINE void SetDebuffDuration(float InDebuffDuration) { DebuffDuration = InDebuffDuration; }
 	FORCEINLINE void SetDebuffFrequency(float InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
 	FORCEINLINE void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
+	FORCEINLINE void SetDeathImpulse(const FVector& InDeathImpulse) { DeathImpulse = InDeathImpulse; }
 
 private:
 	// 공격을 막았음
@@ -122,6 +132,10 @@ private:
 
 	// 데미지 타입 태그
 	TSharedPtr<FGameplayTag> DamageType;
+
+	// 죽었을 때 가할 충격 벡터
+	UPROPERTY()
+	FVector DeathImpulse = FVector::ZeroVector;
 };
 
 // 커스텀 NetSerialize()를 위해 위 구조체의 속성 정의

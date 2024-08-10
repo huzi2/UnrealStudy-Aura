@@ -51,4 +51,8 @@ protected:
 	// 디버프 주기
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DebuffFrequency = 1.f;
+
+	// 죽었을 때 충격 정도
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float DeathImpulseMagnitude = 60.f;
 };
