@@ -44,8 +44,10 @@ void UDebuffNiagaraComponent::BeginPlay()
 
 void UDebuffNiagaraComponent::DebuffTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
+	const bool bOwnerAlibe = IsValid(GetOwner()) && GetOwner()->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsDead(GetOwner());
+
 	// 디버프 갯수가 1개 이상일 때 활성화
-	if (NewCount > 0)
+	if (NewCount > 0 && bOwnerAlibe)
 	{
 		Activate();
 	}

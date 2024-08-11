@@ -54,5 +54,5 @@ protected:
 
 	// 죽었을 때 충격 정도
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DeathImpulseMagnitude = 60.f;
+	float DeathImpulseMagnitude = 18000.f;
 };

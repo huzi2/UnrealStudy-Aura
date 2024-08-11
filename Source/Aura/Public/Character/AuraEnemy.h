@@ -32,7 +32,7 @@ private:
 	virtual void InitializeDefaultAttributes() const final;
 
 	// ICombatInterface에서 상속
-	virtual void Die() final;
+	virtual void Die(const FVector& DeathImpulse) final;
 	virtual int32 GetPlayerLevel_Implementation() const final;
 
 	// IEnemyInterface에서 상속

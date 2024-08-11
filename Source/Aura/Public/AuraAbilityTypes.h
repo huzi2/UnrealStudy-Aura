@@ -52,7 +52,7 @@ public:
 
 	// 죽었을 때 충격 정도
 	UPROPERTY()
-	float DeathImpulseMagnitude = 60.f;
+	float DeathImpulseMagnitude = 18000.f;
 
 	// 죽었을 때 가할 충격 벡터
 	UPROPERTY()

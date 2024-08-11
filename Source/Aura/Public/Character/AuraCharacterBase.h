@@ -31,7 +31,7 @@ public:
 
 protected:
 	// ICombatInterface에서 상속
-	virtual void Die() override;
+	virtual void Die(const FVector& DeathImpulse) override;
 	virtual FOnAbilitySystemComponentRegistered GetOnAbilitySystemComponentRegisteredDelegate() const override;
 	virtual FOnDeath GetOnDeathDelegate() const override;
 
@@ -72,7 +72,7 @@ private:
 
 	// 캐릭터가 죽었을 때 서버와 클라 모두 수행할 함수
 	UFUNCTION(NetMulticast, Reliable)
-	virtual void MulticastHandleDeath();
+	virtual void MulticastHandleDeath(const FVector& DeathImpulse);
 
 protected:
 	// 게임플레이 어빌리티 시스템의 핵심 컴포넌트

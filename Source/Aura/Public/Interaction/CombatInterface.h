@@ -56,7 +56,7 @@ class AURA_API ICombatInterface
 	GENERATED_BODY()
 
 public:
-	virtual void Die() = 0;
+	virtual void Die(const FVector& DeathImpulse) = 0;
 	virtual FOnAbilitySystemComponentRegistered GetOnAbilitySystemComponentRegisteredDelegate() const = 0;
 	virtual FOnDeath GetOnDeathDelegate() const = 0;
 

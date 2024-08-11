@@ -135,9 +135,9 @@ void AAuraEnemy::InitializeDefaultAttributes() const
 	UAuraAbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterClass, static_cast<float>(Level), AbilitySystemComponent);
 }
 
-void AAuraEnemy::Die()
+void AAuraEnemy::Die(const FVector& DeathImpulse)
 {
-	Super::Die();
+	Super::Die(DeathImpulse);
 
 	SetLifeSpan(5.f);
 

@@ -33,7 +33,7 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-void AAuraCharacterBase::Die()
+void AAuraCharacterBase::Die(const FVector& DeathImpulse)
 {
 	// 캐릭터가 죽었을 때 서버에서만 수행할 일
 
@@ -43,7 +43,7 @@ void AAuraCharacterBase::Die()
 		Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	}
 	
-	MulticastHandleDeath();
+	MulticastHandleDeath(DeathImpulse);
 }
 
 FOnAbilitySystemComponentRegistered AAuraCharacterBase::GetOnAbilitySystemComponentRegisteredDelegate() const
@@ -190,7 +190,7 @@ void AAuraCharacterBase::Dissolve()
 	}
 }
 
-void AAuraCharacterBase::MulticastHandleDeath_Implementation()
+void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& DeathImpulse)
 {
 	// 무기를 래그돌로 바꾼다.
 	if (Weapon)
@@ -198,6 +198,7 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 		Weapon->SetSimulatePhysics(true);
 		Weapon->SetEnableGravity(true);
 		Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+		Weapon->AddImpulse(DeathImpulse * 0.1f, NAME_None, true);
 	}
 
 	// 본체를 래그돌
@@ -207,6 +208,7 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 		GetMesh()->SetEnableGravity(true);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 		GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECollisionResponse::ECR_Block);
+		GetMesh()->AddImpulse(DeathImpulse, NAME_None, true);
 	}
 
 	// 충돌처리 제거
