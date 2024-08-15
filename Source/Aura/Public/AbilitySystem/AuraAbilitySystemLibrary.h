@@ -70,6 +70,8 @@ public:
 	static void SetDamageType(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FGameplayTag& InDamageType);
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static void SetDeathImpulse(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FVector& InDeathImpulse);
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static void SetKnockbackForce(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FVector& InKnockbackForce);
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static bool IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle);
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects")
@@ -86,6 +88,8 @@ public:
 	static FGameplayTag GetDamageType(const FGameplayEffectContextHandle& EffectContextHandle);
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static FVector GetDeathImpulse(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static FVector GetKnockbackForce(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	// 범위 안의 플레이어 객체들을 얻어옴
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
@@ -96,7 +100,7 @@ public:
 	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
 
 	// 데미지 이펙트를 적용
-	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|DamageEffect")
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
 	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
 
 	// 적 종류와 레벨에 따른 획득 경험치

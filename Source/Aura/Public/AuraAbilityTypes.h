@@ -15,48 +15,57 @@ struct FDamageEffectParams
 
 public:
 	// 월드 오브젝트
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UObject> WorldContextObject = nullptr;
 	// 데미지를 입히는 이펙트 클래스
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TSubclassOf<UGameplayEffect> DamageGameplayEffectClass = nullptr;
 	// 데미지를 입히는 주체
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> SourceAbilitySystemComponent = nullptr;
 	// 데미지를 입는 주체
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> TargetAbilitySystemComponent = nullptr;
 
 	// 데미지량
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float BaseDamage = 0.f;
 	// 스킬 레벨
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float AbilityLevel = 1.f;
 	// 데미지 타입
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FGameplayTag DamageTypeTag = FGameplayTag();
 
 	// 디버프 데미지 확률
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffChance = 0.f;
 	// 디버프 데미지량
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffDamage = 0.f;
 	// 디버프 데미지 지속시간
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffDuration = 0.f;
 	// 디버프 데미지 주기
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffFrequency = 0.f;
 
 	// 죽었을 때 충격 정도
-	UPROPERTY()
-	float DeathImpulseMagnitude = 18000.f;
-
+	UPROPERTY(BlueprintReadWrite)
+	float DeathImpulseMagnitude = 1000.f;
 	// 죽었을 때 가할 충격 벡터
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FVector DeathImpulse = FVector::ZeroVector;
+
+	// 넉백 확률
+	UPROPERTY(BlueprintReadWrite)
+	float KnockbackChance = 20.f;
+	// 넉백 충격 정도
+	UPROPERTY(BlueprintReadWrite)
+	float KnockbackForceMagnitude = 500.f;
+	// 넉백에 가할 충격 벡터
+	UPROPERTY(BlueprintReadWrite)
+	FVector KnockbackForce = FVector::ZeroVector;
 };
 
 /**
@@ -99,6 +108,8 @@ public:
 	FORCEINLINE float GetDebuffFrequency() const { return DebuffFrequency; }
 	FORCEINLINE TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 	FORCEINLINE FVector GetDeathImpulse() const { return DeathImpulse; }
+	FORCEINLINE FVector GetKnockbackForce() const { return KnockbackForce; }
+
 	FORCEINLINE void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
 	FORCEINLINE void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 	FORCEINLINE void SetIsSuccessfulDebuff(bool bIsInSuccessfulDebuff) { bIsSuccessfulDebuff = bIsInSuccessfulDebuff; }
@@ -107,6 +118,7 @@ public:
 	FORCEINLINE void SetDebuffFrequency(float InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
 	FORCEINLINE void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
 	FORCEINLINE void SetDeathImpulse(const FVector& InDeathImpulse) { DeathImpulse = InDeathImpulse; }
+	FORCEINLINE void SetKnockbackForce(const FVector& InKnockbackForce) { KnockbackForce = InKnockbackForce; }
 
 private:
 	// 공격을 막았음
@@ -136,6 +148,10 @@ private:
 	// 죽었을 때 가할 충격 벡터
 	UPROPERTY()
 	FVector DeathImpulse = FVector::ZeroVector;
+
+	// 넉백에 가할 충격 벡터
+	UPROPERTY()
+	FVector KnockbackForce = FVector::ZeroVector;
 };
 
 // 커스텀 NetSerialize()를 위해 위 구조체의 속성 정의

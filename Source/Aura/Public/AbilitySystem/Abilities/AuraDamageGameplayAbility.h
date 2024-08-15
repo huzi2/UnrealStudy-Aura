@@ -9,7 +9,7 @@
 #include "AuraDamageGameplayAbility.generated.h"
 
 /**
- * 
+ * 데미지를 가진 어빌리티
  */
 UCLASS()
 class AURA_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
@@ -18,12 +18,15 @@ class AURA_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
 	
 public:
 	// 데미지 이펙트에서 사용할 구조체 생성
+	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFromClassDefault(AActor* TargetActor = nullptr) const;
 
 private:
+	// 타겟에게 데미지 적용
 	UFUNCTION(BlueprintCallable)
 	void CauseDamage(AActor* TargetActor);
 
+	// 태그와 연결된 몽타주 랜덤 선택
 	UFUNCTION(BlueprintPure)
 	FTaggedMontage GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages) const;
 
@@ -54,5 +57,12 @@ protected:
 
 	// 죽었을 때 충격 정도
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DeathImpulseMagnitude = 18000.f;
+	float DeathImpulseMagnitude = 1000.f;
+
+	// 넉백 확률
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float KnockbackChance = 0.f;
+	// 넉백 충격 정도
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float KnockbackForceMagnitude = 1000.f;
 };

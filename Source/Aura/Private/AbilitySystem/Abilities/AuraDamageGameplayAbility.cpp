@@ -20,6 +20,18 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	Params.DebuffDuration = DebuffDuration;
 	Params.DebuffFrequency = DebuffFrequency;
 	Params.DeathImpulseMagnitude = DeathImpulseMagnitude;
+	Params.KnockbackChance = KnockbackChance;
+	Params.KnockbackForceMagnitude = KnockbackForceMagnitude;
+
+	// 발사체에서 하던 충돌 벡터 계산을 발사체 아닌 곳에서 하기 위해서 계산
+	if (IsValid(TargetActor))
+	{
+		FRotator Rotation = (TargetActor->GetActorLocation() - GetAvatarActorFromActorInfo()->GetActorLocation()).Rotation();
+		Rotation.Pitch = 45.f;
+		const FVector ToTarget = Rotation.Vector();
+		Params.DeathImpulse = ToTarget * DeathImpulseMagnitude;
+		Params.KnockbackForce = ToTarget * KnockbackForceMagnitude;
+	}
 	return Params;
 }
 

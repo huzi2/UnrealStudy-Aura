@@ -207,6 +207,14 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 			FGameplayTagContainer TagContainer;
 			TagContainer.AddTag(UAuraGameplayTags::Get().Effects_HitReact);
 			Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+
+			// ³Ë¹é Àû¿ë
+			const FVector KnockbackForce = UAuraAbilitySystemLibrary::GetKnockbackForce(Props.EffectContextHandle);
+			if (!KnockbackForce.IsNearlyZero(10.f))
+			{
+				// Å¸°Ù Ä³¸¯ÅÍ¿¡°Ô ³Ë¹é º¤ÅÍ Àû¿ë
+				Props.TargetCharacter->LaunchCharacter(KnockbackForce, true, true);
+			}
 		}
 		else
 		{
