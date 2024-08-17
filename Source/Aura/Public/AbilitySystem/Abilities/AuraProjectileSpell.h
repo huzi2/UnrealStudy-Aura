@@ -29,4 +29,8 @@ protected:
 	// 발사체 클래스
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
+
+	// 발사체 개수
+	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
+	int32 NumProjectiles = 1;
 };

@@ -2,6 +2,7 @@
 
 #include "AbilitySystem/Abilities/AuraFireBolt.h"
 #include "AuraGameplayTags.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 FString UAuraFireBolt::GetDescription(int32 Level) const
 {
@@ -48,7 +49,7 @@ FString UAuraFireBolt::GetDescription(int32 Level) const
 			// 데미지
 			"<Damage>%d</><Default> fire damage with"
 			" a chance to burn</>\n\n"),
-			Level, ManaCost, Cooldown, FMath::Min(Level, NumProjectiles), ScaledDamage);
+			Level, ManaCost, Cooldown, FMath::Min(Level, MaxNumProjectiles), ScaledDamage);
 	}
 }
 
@@ -70,5 +71,52 @@ FString UAuraFireBolt::GetNextLevelDescription(int32 Level) const
 		// 데미지
 		"<Damage>%d</><Default> fire damage with"
 		" a chance to burn</>\n\n"),
-		Level, ManaCost, Cooldown, FMath::Min(Level, NumProjectiles), ScaledDamage);
+		Level, ManaCost, Cooldown, FMath::Min(Level, MaxNumProjectiles), ScaledDamage);
+}
+
+void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch, float PitchOverride, AActor* HomingTarget)
+{
+	if (!GetAvatarActorFromActorInfo()) return;
+
+	// 발사체 생성은 서버에서만 진행
+	if (!GetAvatarActorFromActorInfo()->HasAuthority()) return;
+	if (!GetWorld()) return;
+
+	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo(), SocketTag);
+	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+
+	if (bOverridePitch)
+	{
+		Rotation.Pitch = PitchOverride;
+	}
+
+	const FVector Forward = Rotation.Vector();
+
+	// 발사체 개수는 레벨 ~ MaxNumProjectiles
+	// NumProjectiles = FMath::Min(GetAbilityLevel(), MaxNumProjectiles);
+	NumProjectiles = 5;
+	// 멀티 샷
+	if (NumProjectiles > 1)
+	{
+		const FVector LeftOfSpread = Forward.RotateAngleAxis(-ProjectileSpread / 2.f, FVector::UpVector);
+		const FVector RightOfSpread = Forward.RotateAngleAxis(ProjectileSpread / 2.f, FVector::UpVector);
+		const float DeltaSpread = ProjectileSpread / (NumProjectiles - 1);
+
+		for (int32 i = 0; i < NumProjectiles; ++i)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, FVector::UpVector);
+
+			UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), SocketLocation, SocketLocation + Direction * 75.f, 1.f, FLinearColor::Red, 120.f, 1.f);
+		}
+
+		UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), SocketLocation, SocketLocation + LeftOfSpread * 100.f, 1.f, FLinearColor::Gray, 120.f, 1.f);
+		UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), SocketLocation, SocketLocation + RightOfSpread * 100.f, 1.f, FLinearColor::Gray, 120.f, 1.f);
+	}
+	// 싱글 샷
+	else
+	{
+		
+	}
+
+	UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), SocketLocation, SocketLocation + Forward * 100.f, 1.f, FLinearColor::White, 120.f, 1.f);
 }
