@@ -26,6 +26,11 @@ private:
 	virtual void BeginPlay() final;
 	virtual void Destroyed() final;
 
+public:
+	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+	USceneComponent* GetHomingTargetSceneComponent() const { return HomingTargetSceneComponent; }
+	void SetHomingTargetSceneComponent(USceneComponent* InHomingTargetSceneComponent) { HomingTargetSceneComponent = InHomingTargetSceneComponent; }
+
 private:
 	UFUNCTION()
 	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -68,4 +73,8 @@ private:
 	// 날아가는 동안 출력할 사운드 컴포넌트
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> LoopingSoundComponent;
+
+	// 발사체가 타겟으로 잡은 컴포넌트
+	UPROPERTY()
+	TObjectPtr<USceneComponent> HomingTargetSceneComponent;
 };

@@ -32,4 +32,13 @@ private:
 	// 발사체가 퍼지는 정도
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
 	float ProjectileSpread = 90.f;
+
+	// 추격을 할 것인가
+	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
+	bool bLaunchHomingProjectiles = true;
+	// 발사체 추격 값
+	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
+	float HomingAccelerationMin = 1600.f;
+	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
+	float HomingAccelerationMax = 3200.f;
 };

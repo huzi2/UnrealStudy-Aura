@@ -4,6 +4,7 @@
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Actor/AuraProjectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 FString UAuraFireBolt::GetDescription(int32 Level) const
 {
@@ -94,8 +95,7 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 	const FVector Forward = Rotation.Vector();
 
 	// 발사체 개수는 레벨 ~ MaxNumProjectiles
-	// NumProjectiles = FMath::Min(GetAbilityLevel(), MaxNumProjectiles);
-	NumProjectiles = 5;
+	 NumProjectiles = FMath::Min(GetAbilityLevel(), MaxNumProjectiles);
 
 	const TArray<FRotator> Rotations = UAuraAbilitySystemLibrary::EvenlySpreadRotators(Forward, FVector::UpVector, ProjectileSpread, NumProjectiles);
 	for (const FRotator& Direction : Rotations)
@@ -109,6 +109,25 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 		if (!Projectile) return;
 
 		Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefault();
+
+		if (Projectile->GetProjectileMovement())
+		{
+			if (HomingTarget && HomingTarget->Implements<UCombatInterface>())
+			{
+				// 타겟 설정
+				Projectile->GetProjectileMovement()->HomingTargetComponent = HomingTarget->GetRootComponent();
+			}
+			else
+			{
+				// 타겟이 없으면 비어있는 임시 컴포넌트로 설정
+				Projectile->SetHomingTargetSceneComponent(NewObject<USceneComponent>(USceneComponent::StaticClass()));
+				Projectile->GetHomingTargetSceneComponent()->SetWorldLocation(ProjectileTargetLocation);
+				Projectile->GetProjectileMovement()->HomingTargetComponent = Projectile->GetHomingTargetSceneComponent();
+			}
+
+			Projectile->GetProjectileMovement()->HomingAccelerationMagnitude = FMath::FRandRange(HomingAccelerationMin, HomingAccelerationMax);
+			Projectile->GetProjectileMovement()->bIsHomingProjectile = bLaunchHomingProjectiles;
+		}
 
 		// 발사체 이제 생성
 		Projectile->FinishSpawning(SpawnTransform);
