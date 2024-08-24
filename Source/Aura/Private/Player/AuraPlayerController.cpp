@@ -12,15 +12,9 @@
 #include "NavigationPath.h"
 #include "GameFramework/Character.h"
 #include "UI/Widget/DamageTextComponent.h"
+#include "NiagaraFunctionLibrary.h"
 
 AAuraPlayerController::AAuraPlayerController()
-	: AutoRunAcceptanceRadius(50.0)
-	, CachedDestination(FVector::ZeroVector)
-	, FollowTime(0.f)
-	, ShortPressThreshold(0.5f)
-	, bAutoRunning(false)
-	, bTargeting(false)
-	, bShiftKeyDown(false)
 {
 	bReplicates = true;
 
@@ -124,7 +118,7 @@ void AAuraPlayerController::CursorTrace()
 	if (LastActor != ThisActor)
 	{
 		if (LastActor) LastActor->UnHighlightActor();
-		if (ThisActor)ThisActor->HighlightActor();
+		if (ThisActor) ThisActor->HighlightActor();
 	}
 }
 
@@ -207,6 +201,8 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 						{
 							CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
 							bAutoRunning = true;
+
+							UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
 						}
 					}
 				}
