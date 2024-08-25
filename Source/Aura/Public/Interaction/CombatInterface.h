@@ -71,6 +71,10 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void UpdateFacingTarget(const FVector& Target);
 
+	// 전기 충격 공격 상태로 설정한다.
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetInShockLoop(bool bInShockLoop);
+
 	// 피격 반응 액션을 얻어온다.
 	// BlueprintNativeEvent로 블루프린트에서도 구현이 가능하고 C++에서 구현이 가능하다. 그리고 자동적으로 virtual 속성이 붙게됨
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

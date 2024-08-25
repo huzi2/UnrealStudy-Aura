@@ -55,6 +55,8 @@ public:
 	// 캐릭터에 패시브 어빌리티 추가
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilites);
 
+	// 입력이 눌렀을 때 연결된 태그 함수 호출
+	void AbilityInputTagPressed(const FGameplayTag& InputTag);
 	// 입력이 릴리즈되었을 때 연결된 태그 함수 호출
 	void AbilityInputTagReleased(const FGameplayTag& InputTag);
 	// 입력이 눌러졌을 때 연결된 태그 함수 호출
