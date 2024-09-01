@@ -19,9 +19,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StoreMouseDataInfo(const FHitResult& HitResult);
 
-	// 플레이어 컨트롤러를 저장
+	// 소유자 관련 변수들을 저장
 	UFUNCTION(BlueprintCallable)
-	void StoreOwnerPlayerControlloer();
+	void StoreOwnerVariables();
 
 protected:
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
@@ -32,4 +32,7 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
 	TObjectPtr<APlayerController> OwnerPlayerController;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Beam")
+	TObjectPtr<ACharacter> OwnerCharcter;
 };
