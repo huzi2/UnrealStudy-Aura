@@ -93,6 +93,12 @@ UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraAbilitySystemComponen
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
+	// Player_Block_InputPressed 태그를 가지고 있는 상태라면 인풋을 막음
+	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputPressed))
+	{
+		return;
+	}
+
 	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0.0, Rotation.Yaw, 0.0);
@@ -109,6 +115,16 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAuraPlayerController::CursorTrace()
 {
+	// Player_Block_CursorTrace 태그를 가지고 있는 상태라면 커서 트레이스를 막고 모든 하이라이트 제거
+	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_CursorTrace))
+	{
+		if (LastActor) LastActor->UnHighlightActor();
+		if (ThisActor) ThisActor->UnHighlightActor();
+		LastActor = nullptr;
+		ThisActor = nullptr;
+		return;
+	}
+
 	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 
@@ -147,6 +163,12 @@ void AAuraPlayerController::AutoRun()
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
+	// Player_Block_InputPressed 태그를 가지고 있는 상태라면 인풋을 막음
+	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputPressed))
+	{
+		return;
+	}
+
 	if (InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
 	{
 		// 마우스 위에 타겟을 클릭했다면 자동 이동은 취소됨
@@ -163,6 +185,12 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
+	// Player_Block_InputReleased 태그를 가지고 있는 상태라면 인풋을 막음
+	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputReleased))
+	{
+		return;
+	}
+
 	if (!GetAuraAbilitySystemComponent()) return;
 
 	// 마우스 클릭 외 발동
@@ -208,7 +236,10 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 							CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
 							bAutoRunning = true;
 
-							UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
+							if (GetAuraAbilitySystemComponent() && !GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputPressed))
+							{
+								UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
+							}
 						}
 					}
 				}
@@ -221,6 +252,12 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
+	// Player_Block_InputHeld 태그를 가지고 있는 상태라면 인풋을 막음
+	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputHeld))
+	{
+		return;
+	}
+
 	// 마우스 클릭 외 발동
 	if (!InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
 	{

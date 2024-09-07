@@ -119,4 +119,9 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Montage_Attack3 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack3"), TEXT("Attack 3"));
 	GameplayTags.Montage_Attack4 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack4"), TEXT("Attack 4"));
 
+	// 해당 태그가 있으면 해당 입력을 막음
+	GameplayTags.Player_Block_InputPressed = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.InputPressed"), TEXT("Block Input Pressed callback for input"));
+	GameplayTags.Player_Block_InputHeld = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.InputHeld"), TEXT("Block Input Held callback for input"));
+	GameplayTags.Player_Block_InputReleased = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.InputReleased"), TEXT("Block Input Released callback for input"));
+	GameplayTags.Player_Block_CursorTrace = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.CursorTrace"), TEXT("Block tracing under the cursor"));
 }

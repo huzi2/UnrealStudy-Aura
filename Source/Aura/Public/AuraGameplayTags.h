@@ -116,6 +116,12 @@ public:
 	FGameplayTag Montage_Attack3;
 	FGameplayTag Montage_Attack4;
 
+	// 해당 태그가 있으면 해당 입력을 막음
+	FGameplayTag Player_Block_InputPressed;
+	FGameplayTag Player_Block_InputHeld;
+	FGameplayTag Player_Block_InputReleased;
+	FGameplayTag Player_Block_CursorTrace;
+
 private:
 	static UAuraGameplayTags GameplayTags;
 };
