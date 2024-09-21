@@ -96,6 +96,11 @@ FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGamepl
 	return FVector();
 }
 
+USkeletalMeshComponent* AAuraCharacterBase::GetWeapon_Implementation() const
+{
+	return Weapon;
+}
+
 bool AAuraCharacterBase::IsDead_Implementation() const
 {
 	return bDead;

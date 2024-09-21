@@ -88,6 +88,10 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FVector GetCombatSocketLocation(const FGameplayTag& MontageTag) const;
 
+	// 무기의 메쉬 컴포넌트를 얻어온다.
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	USkeletalMeshComponent* GetWeapon() const;
+
 	// 죽었는 지 확인
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool IsDead() const;
