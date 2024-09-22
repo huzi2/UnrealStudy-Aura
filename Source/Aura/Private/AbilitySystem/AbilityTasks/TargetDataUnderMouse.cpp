@@ -2,6 +2,7 @@
 
 #include "AbilitySystem/AbilityTasks/TargetDataUnderMouse.h"
 #include "AbilitySystemComponent.h"
+#include "Aura/Aura.h"
 
 void UTargetDataUnderMouse::Activate()
 {
@@ -34,7 +35,6 @@ void UTargetDataUnderMouse::Activate()
 	// 결론은 Vaild Data를 통해 클라는 타겟 데이터를 서버로 보내고, 해당 위치는 로컬 클라와 서버가 알게된다.
 }
 
-
 UTargetDataUnderMouse* UTargetDataUnderMouse::CreateTargetDataUnderMouse(UGameplayAbility* OwningAbility)
 {
 	UTargetDataUnderMouse* MyObj = NewAbilityTask<UTargetDataUnderMouse>(OwningAbility);
@@ -52,7 +52,7 @@ void UTargetDataUnderMouse::SendMouseCursorData()
 		if (APlayerController* PlayerController = Ability->GetCurrentActorInfo()->PlayerController.Get())
 		{
 			// 타겟 데이터에 커서 충돌 타겟 위치 전달
-			PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, Data->HitResult);
+			PlayerController->GetHitResultUnderCursor(ECC_Target, false, Data->HitResult);
 
 			FGameplayAbilityTargetDataHandle DataHandle;
 			DataHandle.Add(Data);

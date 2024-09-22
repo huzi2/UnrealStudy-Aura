@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMouseTargetDataSignature, const FGameplayAbilityTargetDataHandle&, DataHandle);
 
 /**
- * 
+ * 마우스 아래 타겟을 찾는 어빌리티 태스크
  */
 UCLASS()
 class AURA_API UTargetDataUnderMouse : public UAbilityTask
@@ -25,7 +25,10 @@ private:
 	static UTargetDataUnderMouse* CreateTargetDataUnderMouse(UGameplayAbility* OwningAbility);
 
 private:
+	// 클라에서 확인한 타겟 위치를 서버에 전달
 	void SendMouseCursorData();
+
+	// 타겟 데이터가 복사됬을 때 호출
 	void OnTargetDataReplicatedCallback(const FGameplayAbilityTargetDataHandle& DataHandle, FGameplayTag ActivationTag);
 
 private:
