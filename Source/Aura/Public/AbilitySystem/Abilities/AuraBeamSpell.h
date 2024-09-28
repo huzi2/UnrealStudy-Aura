@@ -23,6 +23,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StoreOwnerVariables();
 
+	// 첫번째 타겟 자동 조준
+	UFUNCTION(BlueprintCallable)
+	void TraceFirstTarget(const FVector& BeamTargetLocation);
+
 protected:
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
 	FVector MouseHitLocation;
