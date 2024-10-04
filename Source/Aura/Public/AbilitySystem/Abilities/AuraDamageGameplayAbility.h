@@ -30,6 +30,10 @@ private:
 	UFUNCTION(BlueprintPure)
 	FTaggedMontage GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages) const;
 
+	// 스킬의 설정된 데미지 값을 얻어옴
+	UFUNCTION(BlueprintPure)
+	float GetDamageAtLevel() const;
+
 protected:
 	// 데미지를 가하는 게임플레이 이펙트 클래스
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
