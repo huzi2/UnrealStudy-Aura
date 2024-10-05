@@ -33,7 +33,7 @@ protected:
 	// ICombatInterface에서 상속
 	virtual void Die(const FVector& DeathImpulse) override;
 	virtual FOnAbilitySystemComponentRegistered GetOnAbilitySystemComponentRegisteredDelegate() const override;
-	virtual FOnDeath GetOnDeathDelegate() const override;
+	virtual FOnDeath& GetOnDeathDelegate() override;
 
 private:
 	virtual void InitAbilityActorInfo();
@@ -86,8 +86,6 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	FOnDeath OnDeathDelegate;
-
 	// 캐릭터의 직업
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
@@ -114,6 +112,9 @@ protected:
 	// 죽음 사운드
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<USoundBase> DeathSound;
+
+	// 자신이 죽었을 때 호출할 델리게이트
+	FOnDeath OnDeathDelegate;
 
 private:
 	// 게임 플레이 어빌리티

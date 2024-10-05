@@ -38,7 +38,7 @@ void UDebuffNiagaraComponent::BeginPlay()
 	// 캐릭터가 죽었을 때 비활성화 되도록 바인드
 	if (CombatInterface)
 	{
-		CombatInterface->GetOnDeathDelegate().AddUObject(this, &UDebuffNiagaraComponent::OnOwnerDeath);
+		CombatInterface->GetOnDeathDelegate().AddDynamic(this, &UDebuffNiagaraComponent::OnOwnerDeath);
 	}
 }
 

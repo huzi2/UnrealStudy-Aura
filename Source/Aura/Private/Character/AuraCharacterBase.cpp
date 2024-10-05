@@ -51,7 +51,7 @@ FOnAbilitySystemComponentRegistered AAuraCharacterBase::GetOnAbilitySystemCompon
 	return OnAbilitySystemComponentRegisteredDelegate;
 }
 
-FOnDeath AAuraCharacterBase::GetOnDeathDelegate() const
+FOnDeath& AAuraCharacterBase::GetOnDeathDelegate()
 {
 	return OnDeathDelegate;
 }
@@ -232,6 +232,12 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 	}
 
 	bDead = true;
+
+	// 불타는 이펙트 취소
+	if (BurnDebuffComponent)
+	{
+		BurnDebuffComponent->Deactivate();
+	}
 
 	// 죽었음을 알리는 델리게이트 호출
 	OnDeathDelegate.Broadcast(this);
