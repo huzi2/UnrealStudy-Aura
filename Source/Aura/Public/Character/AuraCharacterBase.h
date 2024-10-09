@@ -26,6 +26,8 @@ protected:
 	AAuraCharacterBase();
 
 public:
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
 	// IAbilitySystemInterface에서 상속
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
@@ -34,6 +36,9 @@ protected:
 	virtual void Die(const FVector& DeathImpulse) override;
 	virtual FOnAbilitySystemComponentRegistered GetOnAbilitySystemComponentRegisteredDelegate() const override;
 	virtual FOnDeath& GetOnDeathDelegate() override;
+
+	// 기절 태그가 변경되었을 때 호출할 콜백 함수
+	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
 private:
 	virtual void InitAbilityActorInfo();
@@ -89,6 +94,14 @@ protected:
 	// 캐릭터의 직업
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
+	// 이동 속도
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float BaseWalkSpeed = 600.f;
+
+	// 기절 상태인가
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	bool bIsStunned = false;
 
 	// 무기 컴포넌트
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")

@@ -10,6 +10,7 @@
 #include "NiagaraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "AuraGameplayTags.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -72,12 +73,16 @@ void AAuraCharacter::InitAbilityActorInfo()
 
 		// 어빌리티 시스템 컴포넌트가 연결되었다는 델리게이트 호출
 		OnAbilitySystemComponentRegisteredDelegate.Broadcast(AbilitySystemComponent);
+
+		// 기절 태그에 대한 콜백 함수 설정
+		AuraAbilitySystemComponent->RegisterGameplayTagEvent(UAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::StunTagChanged);
 	}
 
 	if (AuraPlayerState->GetAbilitySystemComponent())
 	{
 		AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
 		AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
+
 		AttributeSet = AuraPlayerState->GetAttributeSet();
 
 		// 위젯 컨트롤러 초기화. 아래 4가지 변수를 모두 얻을 수 있는 곳이므로 여기서 초기화함

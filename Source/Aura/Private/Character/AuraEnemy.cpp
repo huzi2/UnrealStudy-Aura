@@ -115,6 +115,9 @@ void AAuraEnemy::InitAbilityActorInfo()
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 		OnAbilitySystemComponentRegisteredDelegate.Broadcast(AbilitySystemComponent);
+
+		// 기절 태그에 대한 콜백 함수 설정
+		AbilitySystemComponent->RegisterGameplayTagEvent(UAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::StunTagChanged);
 	}
 	
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
