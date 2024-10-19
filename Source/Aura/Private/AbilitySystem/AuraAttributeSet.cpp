@@ -259,9 +259,20 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 		// UE 5.3부터는 UTargetTagsGameplayEffectComponent를 이펙트에 추가하는 형태로 태그를 적용시켜야함
 		// 데미지 타입에 따른 디버프 태그를 넣어서 디버프가 중복되지 않도록 방지
 		// 디버프 태그로 디버프 이펙트 컴포넌트도 활성화됨
+		const FGameplayTag DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageTypeTag];
 		UTargetTagsGameplayEffectComponent& AssetTagsComponent = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
 		FInheritedTagContainer InheritedTagContainer;
-		InheritedTagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageTypeTag]);
+		InheritedTagContainer.Added.AddTag(DebuffTag);
+
+		// 디버프가 스턴이면 플레이어 입력 막는 태그도 같이 적용
+		if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+		{
+			InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_CursorTrace);
+			InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_InputHeld);
+			InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_InputPressed);
+			InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_InputReleased);
+		}
+
 		AssetTagsComponent.SetAndApplyTargetTagChanges(InheritedTagContainer);
 
 		// 이펙트 주체자 기준으로 스택

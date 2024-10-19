@@ -100,8 +100,10 @@ protected:
 	float BaseWalkSpeed = 600.f;
 
 	// 기절 상태인가
-	UPROPERTY(Replicated, BlueprintReadOnly)
+	UPROPERTY(ReplicatedUsing=OnRep_Stunned, BlueprintReadOnly)
 	bool bIsStunned = false;
+	UFUNCTION()
+	virtual void OnRep_Stunned();
 
 	// 무기 컴포넌트
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")

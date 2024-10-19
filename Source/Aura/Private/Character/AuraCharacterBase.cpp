@@ -215,6 +215,11 @@ void AAuraCharacterBase::Dissolve()
 	}
 }
 
+void AAuraCharacterBase::OnRep_Stunned()
+{
+
+}
+
 void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& DeathImpulse)
 {
 	// 무기를 래그돌로 바꾼다.

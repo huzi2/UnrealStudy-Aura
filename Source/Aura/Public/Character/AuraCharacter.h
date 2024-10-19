@@ -29,6 +29,7 @@ private:
 	// AAuraCharacterBase에서 상속
 	virtual void InitAbilityActorInfo() final;
 	virtual void InitializeDefaultAttributes() const final;
+	virtual void OnRep_Stunned() final;
 
 	// ICombatInterface에서 상속
 	virtual int32 GetPlayerLevel_Implementation() const final;

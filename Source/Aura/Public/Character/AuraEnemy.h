@@ -30,6 +30,7 @@ private:
 	// AAuraCharacterBase에서 상속
 	virtual void InitAbilityActorInfo() final;
 	virtual void InitializeDefaultAttributes() const final;
+	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount) final;
 
 	// ICombatInterface에서 상속
 	virtual void Die(const FVector& DeathImpulse) final;

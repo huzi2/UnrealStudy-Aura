@@ -106,6 +106,29 @@ void AAuraCharacter::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
 }
 
+void AAuraCharacter::OnRep_Stunned()
+{
+	// 스턴 태그가 들어왔을 때 서버에서도 입력 막는 태그를 적용
+	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
+		FGameplayTagContainer BlockedTags;
+		BlockedTags.AddTag(GameplayTags.Player_Block_CursorTrace);
+		BlockedTags.AddTag(GameplayTags.Player_Block_InputHeld);
+		BlockedTags.AddTag(GameplayTags.Player_Block_InputPressed);
+		BlockedTags.AddTag(GameplayTags.Player_Block_InputReleased);
+
+		if (bIsStunned)
+		{
+			AuraAbilitySystemComponent->AddLooseGameplayTags(BlockedTags);
+		}
+		else
+		{
+			AuraAbilitySystemComponent->RemoveLooseGameplayTags(BlockedTags);
+		}
+	}
+}
+
 int32 AAuraCharacter::GetPlayerLevel_Implementation() const
 {
 	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
