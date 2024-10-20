@@ -38,6 +38,7 @@ void AAuraProjectile::BeginPlay()
 	Super::BeginPlay();	
 
 	SetLifeSpan(LifeSpan);
+	SetReplicateMovement(true);
 
 	if (Sphere)
 	{
@@ -63,6 +64,8 @@ void AAuraProjectile::Destroyed()
 
 void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (!DamageEffectParams.SourceAbilitySystemComponent) return;
+
 	// 효과를 수행한 액터와 충돌액터가 같으면 리턴
 	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
 	if (SourceAvatarActor == OtherActor) return;

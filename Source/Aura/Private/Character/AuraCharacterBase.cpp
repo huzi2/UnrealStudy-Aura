@@ -28,6 +28,10 @@ AAuraCharacterBase::AAuraCharacterBase()
 	BurnDebuffComponent->SetupAttachment(GetRootComponent());
 	BurnDebuffComponent->SetDebuffTag(UAuraGameplayTags::Get().Debuff_Burn);
 
+	StunDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>(TEXT("StunDebuffComponent"));
+	StunDebuffComponent->SetupAttachment(GetRootComponent());
+	StunDebuffComponent->SetDebuffTag(UAuraGameplayTags::Get().Debuff_Stun);
+
 	BaseWalkSpeed = 250.f;
 }
 
@@ -35,6 +39,7 @@ void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AAuraCharacterBase, bIsBurned);
 	DOREPLIFETIME(AAuraCharacterBase, bIsStunned);
 }
 
@@ -56,7 +61,7 @@ void AAuraCharacterBase::Die(const FVector& DeathImpulse)
 	MulticastHandleDeath(DeathImpulse);
 }
 
-FOnAbilitySystemComponentRegistered AAuraCharacterBase::GetOnAbilitySystemComponentRegisteredDelegate() const
+FOnAbilitySystemComponentRegistered& AAuraCharacterBase::GetOnAbilitySystemComponentRegisteredDelegate()
 {
 	return OnAbilitySystemComponentRegisteredDelegate;
 }
@@ -215,11 +220,6 @@ void AAuraCharacterBase::Dissolve()
 	}
 }
 
-void AAuraCharacterBase::OnRep_Stunned()
-{
-
-}
-
 void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& DeathImpulse)
 {
 	// 무기를 래그돌로 바꾼다.
@@ -262,6 +262,12 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 	if (BurnDebuffComponent)
 	{
 		BurnDebuffComponent->Deactivate();
+	}
+
+	// 기절 이펙트 취소
+	if (StunDebuffComponent)
+	{
+		StunDebuffComponent->Deactivate();
 	}
 
 	// 죽었음을 알리는 델리게이트 호출

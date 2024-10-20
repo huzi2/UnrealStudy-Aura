@@ -11,6 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "AuraGameplayTags.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -106,9 +107,28 @@ void AAuraCharacter::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
 }
 
+void AAuraCharacter::OnRep_Burned()
+{
+	// 클라에도 불타는 이펙트 적용
+	if (bIsBurned)
+	{
+		if (BurnDebuffComponent)
+		{
+			BurnDebuffComponent->Activate();
+		}
+	}
+	else
+	{
+		if (BurnDebuffComponent)
+		{
+			BurnDebuffComponent->Deactivate();
+		}
+	}
+}
+
 void AAuraCharacter::OnRep_Stunned()
 {
-	// 스턴 태그가 들어왔을 때 서버에서도 입력 막는 태그를 적용
+	// 스턴 태그가 들어왔을 때 클라에서도 입력 막는 태그를 적용. 이펙트도 적용
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
 	{
 		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
@@ -121,10 +141,20 @@ void AAuraCharacter::OnRep_Stunned()
 		if (bIsStunned)
 		{
 			AuraAbilitySystemComponent->AddLooseGameplayTags(BlockedTags);
+
+			if (StunDebuffComponent)
+			{
+				StunDebuffComponent->Activate();
+			}
 		}
 		else
 		{
 			AuraAbilitySystemComponent->RemoveLooseGameplayTags(BlockedTags);
+
+			if (StunDebuffComponent)
+			{
+				StunDebuffComponent->Deactivate();
+			}
 		}
 	}
 }

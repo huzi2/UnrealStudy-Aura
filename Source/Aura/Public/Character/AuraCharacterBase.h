@@ -34,7 +34,7 @@ public:
 protected:
 	// ICombatInterface에서 상속
 	virtual void Die(const FVector& DeathImpulse) override;
-	virtual FOnAbilitySystemComponentRegistered GetOnAbilitySystemComponentRegisteredDelegate() const override;
+	virtual FOnAbilitySystemComponentRegistered& GetOnAbilitySystemComponentRegisteredDelegate() override;
 	virtual FOnDeath& GetOnDeathDelegate() override;
 
 	// 기절 태그가 변경되었을 때 호출할 콜백 함수
@@ -99,11 +99,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float BaseWalkSpeed = 600.f;
 
+	// 불타는 상태인가
+	UPROPERTY(ReplicatedUsing=OnRep_Burned, BlueprintReadOnly)
+	bool bIsBurned = false;
+	UFUNCTION()
+	virtual void OnRep_Burned() {};
 	// 기절 상태인가
 	UPROPERTY(ReplicatedUsing=OnRep_Stunned, BlueprintReadOnly)
 	bool bIsStunned = false;
 	UFUNCTION()
-	virtual void OnRep_Stunned();
+	virtual void OnRep_Stunned() {};
 
 	// 무기 컴포넌트
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
@@ -112,6 +117,10 @@ protected:
 	// 불탈 때 사용할 디버프 이펙트 컴포넌트
 	UPROPERTY(VisibleAnywhere, Category = "Debuff")
 	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
+
+	// 기절될 때 사용할 디버프 이펙트 컴포넌트
+	UPROPERTY(VisibleAnywhere, Category = "Debuff")
+	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
 
 	// 이펙트
 	// 소멸 이펙트
