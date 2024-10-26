@@ -44,6 +44,7 @@ private:
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeDefaultAttributes() const;
 
+	// ICombatInterface에서 상속
 	virtual UAnimMontage* GetHitReactMontage_Implementation() const override;
 	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) const override;
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() const override;
@@ -55,6 +56,8 @@ private:
 	virtual int32 GetMinionCount_Implementation() const override;
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() const override;
+	virtual bool IsBeInShocked_Implementation() const override;
+	virtual void SetIsBeInShocked_Implementation(bool bInShock) override;
 
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
@@ -109,6 +112,9 @@ protected:
 	bool bIsStunned = false;
 	UFUNCTION()
 	virtual void OnRep_Stunned() {};
+	// 감전 공격 받는 상태인가
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	bool bIsBeInShocked = false;
 
 	// 무기 컴포넌트
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")

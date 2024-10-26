@@ -203,10 +203,14 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 		// 죽지 않았으면 피격 어빌리티 활성화
 		if (!bFatal)
 		{
-			// Effect.HitReact 태그가 붙은 어빌리티를 활성화
-			FGameplayTagContainer TagContainer;
-			TagContainer.AddTag(UAuraGameplayTags::Get().Effects_HitReact);
-			Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+			// 캐릭터가 현재 감전 루프 상태인 지 확인
+			if (Props.TargetCharacter->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsBeInShocked(Props.TargetCharacter))
+			{
+				// Effect.HitReact 태그가 붙은 어빌리티를 활성화
+				FGameplayTagContainer TagContainer;
+				TagContainer.AddTag(UAuraGameplayTags::Get().Effects_HitReact);
+				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+			}
 
 			// 넉백 적용
 			const FVector KnockbackForce = UAuraAbilitySystemLibrary::GetKnockbackForce(Props.EffectContextHandle);

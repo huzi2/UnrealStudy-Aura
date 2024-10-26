@@ -41,6 +41,7 @@ void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 
 	DOREPLIFETIME(AAuraCharacterBase, bIsBurned);
 	DOREPLIFETIME(AAuraCharacterBase, bIsStunned);
+	DOREPLIFETIME(AAuraCharacterBase, bIsBeInShocked);
 }
 
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
@@ -171,6 +172,16 @@ void AAuraCharacterBase::IncrementMinionCount_Implementation(int32 Amount)
 ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation() const
 {
 	return CharacterClass;
+}
+
+bool AAuraCharacterBase::IsBeInShocked_Implementation() const
+{
+	return bIsBeInShocked;
+}
+
+void AAuraCharacterBase::SetIsBeInShocked_Implementation(bool bInShock)
+{
+	bIsBeInShocked = bInShock;
 }
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const

@@ -119,4 +119,11 @@ protected:
 	// 객체의 직업을 얻어온다.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	ECharacterClass GetCharacterClass() const;
+
+	// 감전 공격 받는 상태인가
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool IsBeInShocked() const;
+	// 감전 공격 받는 상태 설정
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetIsBeInShocked(bool bInShock);
 };
