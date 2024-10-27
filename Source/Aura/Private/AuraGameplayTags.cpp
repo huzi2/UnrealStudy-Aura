@@ -93,6 +93,11 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Abilities_Lightning_Electrocute = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Lightning.Electrocute"), TEXT("Electrocute Ability Tag"));
 	GameplayTags.Abilities_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.HitReact"), TEXT("HitReact Ability Tag"));
 
+	// 패시브 어빌리티들
+	GameplayTags.Abilities_Paasive_HaloOfProtection = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Paasive.HaloOfProtection"), TEXT("Halo Of Protection"));
+	GameplayTags.Abilities_Paasive_LifeSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Paasive.LifeSiphon"), TEXT("Life Siphon"));
+	GameplayTags.Abilities_Paasive_ManaSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Paasive.ManaSiphon"), TEXT("Mana Siphon"));
+
 	// 어빌리티 상태
 	GameplayTags.Abilities_Status_Locked = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Status.Locked"), TEXT("Locked Status"));
 	GameplayTags.Abilities_Status_Eligible = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Status.Eligible"), TEXT("Eligible Status"));

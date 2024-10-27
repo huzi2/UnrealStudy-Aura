@@ -87,6 +87,11 @@ public:
 	FGameplayTag Abilities_Fire_FireBolt;
 	FGameplayTag Abilities_Lightning_Electrocute;
 
+	// 패시브 어빌리티
+	FGameplayTag Abilities_Paasive_HaloOfProtection;
+	FGameplayTag Abilities_Paasive_LifeSiphon;
+	FGameplayTag Abilities_Paasive_ManaSiphon;
+
 	// 기타 어빌리티
 	FGameplayTag Abilities_HitReact;
 
