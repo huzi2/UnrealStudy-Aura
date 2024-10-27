@@ -16,6 +16,8 @@ DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag&, const FGameplayTag&, int32);
 // 스킬 장착할 때 호출할 델리게이트. 어빌리티 태그, 상태 태그, 인풋 태그, 이전 인풋 태그
 DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&);
+// 패시브 스킬 비활성화할 때 사용할 델리게이트. 어빌리티 태그
+DECLARE_MULTICAST_DELEGATE_OneParam(FDeactivatePassiveAbility, const FGameplayTag&);
 
 /**
  * 커스텀 어빌리티 시스템 컴포넌트
@@ -113,6 +115,8 @@ public:
 	FAbilityStatusChanged AbilityStatusChangedDelegate;
 	// 스킬 장착할 때 호출할 델리게이트
 	FAbilityEquipped AbilityEquippedDelegate;
+	// 패시브 스킬 비활성화할 때 사용할 델리게이트
+	FDeactivatePassiveAbility DeactivatePassiveAbilityDelegate;
 	// 시작 어빌리티들을 적용시켰는 지 확인
 	bool bStartupAbilitiesGiven = false;
 };
