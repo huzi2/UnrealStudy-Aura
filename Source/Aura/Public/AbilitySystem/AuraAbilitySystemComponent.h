@@ -103,8 +103,17 @@ private:
 	void ClearSlot(FGameplayAbilitySpec& AbilitySpec);
 	// 해당 인풋 태그를 사용하는 모든 스킬을 슬롯에서 제거
 	void ClearAbilitiesOfSlot(const FGameplayTag& InputTag);
-	// 해당 스킬이 해당 슬롯에 장착된 상태인지?
-	static bool AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag);
+
+	// 해당 슬롯이 비어있는 지 확인
+	bool SlotIsEmpty(const FGameplayTag& InputTag);
+	// 해당 어빌리티가 해당 슬롯에 있는 지 확인
+	bool AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag) const;
+
+	// 해당 슬롯에서 스킬 얻어오기
+	FGameplayAbilitySpec* GetSpecWithSlot(const FGameplayTag& InputTag);
+
+	// 해당 스킬이 패시브 스킬인 지 확인
+	bool IsPassiveAbility(const FGameplayAbilitySpec& AbilitySpec) const;
 
 public:
 	// 이펙트에 적용된 태그와 연동할 델리게이트
