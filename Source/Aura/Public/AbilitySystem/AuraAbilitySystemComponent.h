@@ -38,6 +38,17 @@ public:
 	// 어빌리티에서 어빌리티의 상태 태그 얻어오기
 	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 
+	// 해당 스킬을 슬롯에서 제거
+	static void ClearSlot(FGameplayAbilitySpec& AbilitySpec);
+
+	// 해당 어빌리티가 해당 슬롯에 있는 지 확인
+	static bool AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag);
+	// 해당 어빌리티가 어떤 슬롯에라도 잇는 지 확인
+	static bool AbilityHasAnySlot(const FGameplayAbilitySpec& AbilitySpec);
+
+	// 해당 슬롯에 스킬 등록
+	static void AssignSlotToAbility(FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag);
+
 public:
 	// 어빌리티 태그에서 통해 어빌리티 얻어오기
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
@@ -98,16 +109,11 @@ private:
 	UFUNCTION(Client, Reliable)
 	void ClientEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag);
 
-	// 스킬 제거 관련
-	// 해당 스킬을 슬롯에서 제거
-	void ClearSlot(FGameplayAbilitySpec& AbilitySpec);
 	// 해당 인풋 태그를 사용하는 모든 스킬을 슬롯에서 제거
 	void ClearAbilitiesOfSlot(const FGameplayTag& InputTag);
 
 	// 해당 슬롯이 비어있는 지 확인
 	bool SlotIsEmpty(const FGameplayTag& InputTag);
-	// 해당 어빌리티가 해당 슬롯에 있는 지 확인
-	bool AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag) const;
 
 	// 해당 슬롯에서 스킬 얻어오기
 	FGameplayAbilitySpec* GetSpecWithSlot(const FGameplayTag& InputTag);

@@ -61,6 +61,29 @@ FGameplayTag UAuraAbilitySystemComponent::GetStatusFromSpec(const FGameplayAbili
 	return FGameplayTag();
 }
 
+void UAuraAbilitySystemComponent::ClearSlot(FGameplayAbilitySpec& AbilitySpec)
+{
+	// 스킬의 현재 인풋 태그를 삭제
+	const FGameplayTag InputTag = GetInputTagFromSpec(AbilitySpec);
+	AbilitySpec.DynamicAbilityTags.RemoveTag(InputTag);
+}
+
+bool UAuraAbilitySystemComponent::AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag)
+{
+	return AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag);
+}
+
+bool UAuraAbilitySystemComponent::AbilityHasAnySlot(const FGameplayAbilitySpec& AbilitySpec)
+{
+	return AbilitySpec.DynamicAbilityTags.HasTag(FGameplayTag::RequestGameplayTag(TEXT("InputTag")));
+}
+
+void UAuraAbilitySystemComponent::AssignSlotToAbility(FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag)
+{
+	ClearSlot(AbilitySpec);
+	AbilitySpec.DynamicAbilityTags.AddTag(InputTag);
+}
+
 FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const FGameplayTag& AbilityTag)
 {
 	// 어빌리티의 델리게이트를 수행하기전에 어빌리티를 잠금(그 사이에 제거되거나 추가되지 않는다)
@@ -356,30 +379,33 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 						ClientEquipAbility(AbilityTag, GameplayTags.Abilities_Status_Equipped, InputTag, PrevInputTag);
 						return;
 					}
+
+					// 패시브 스킬인 경우 비활성화함
+					if (IsPassiveAbility(*SpecWithSlot))
+					{
+						DeactivatePassiveAbilityDelegate.Broadcast(GetAbilityTagFromSpec(*SpecWithSlot));
+					}
+
+					// 선택한 스킬의 슬롯에서 스킬 제거
+					ClearSlot(*SpecWithSlot);
 				}
 			}
 
-			// 먼저 해당 슬롯의 스킬 제거
-			ClearAbilitiesOfSlot(InputTag);
-
-			// 선택한 스킬의 슬롯에서도 스킬 제거
-			ClearSlot(*AbilitySpec);
-
-			// 스킬에 현재 슬롯의 인풋 태그를 부여
-			AbilitySpec->DynamicAbilityTags.AddTag(InputTag);
-
-			// 스킬 상태가 언락이었다면
-			if (StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Unlocked))
+			// 해당 스킬이 어떤 슬롯에도 있지 않다면, 즉 활성화된 상태가 아니라면
+			if (!AbilityHasAnySlot(*AbilitySpec))
 			{
-				// 언락 상태를 해제하고 장착 상태로 변경
-				AbilitySpec->DynamicAbilityTags.RemoveTag(GameplayTags.Abilities_Status_Unlocked);
-				AbilitySpec->DynamicAbilityTags.AddTag(GameplayTags.Abilities_Status_Equipped);
+				// 패시브 스킬이라면 활성화
+				if (IsPassiveAbility(*AbilitySpec))
+				{
+					TryActivateAbility(AbilitySpec->Handle);
+				}
 			}
+
+			// 해당 슬롯에 스킬 등록
+			AssignSlotToAbility(*AbilitySpec, InputTag);
 
 			// 어빌리티가 변경되었음을 서버에 알림
 			MarkAbilitySpecDirty(*AbilitySpec);
-
-			
 		}
 
 		ClientEquipAbility(AbilityTag, GameplayTags.Abilities_Status_Equipped, InputTag, PrevInputTag);
@@ -425,15 +451,6 @@ void UAuraAbilitySystemComponent::ClientEquipAbility_Implementation(const FGamep
 	AbilityEquippedDelegate.Broadcast(AbilityTag, StatusTag, InputTag, PrevInputTag);
 }
 
-void UAuraAbilitySystemComponent::ClearSlot(FGameplayAbilitySpec& AbilitySpec)
-{
-	// 스킬의 현재 인풋 태그를 삭제
-	const FGameplayTag InputTag = GetInputTagFromSpec(AbilitySpec);
-	AbilitySpec.DynamicAbilityTags.RemoveTag(InputTag);
-	// 어빌리티가 변경되었음을 서버에 알림
-	MarkAbilitySpecDirty(AbilitySpec);
-}
-
 void UAuraAbilitySystemComponent::ClearAbilitiesOfSlot(const FGameplayTag& InputTag)
 {
 	FScopedAbilityListLock ActiveScopeLock(*this);
@@ -455,11 +472,6 @@ bool UAuraAbilitySystemComponent::SlotIsEmpty(const FGameplayTag& InputTag)
 		if (AbilityHasSlot(AbilitySpec, InputTag)) return false;
 	}
 	return true;
-}
-
-bool UAuraAbilitySystemComponent::AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag) const
-{
-	return AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag);
 }
 
 FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecWithSlot(const FGameplayTag& InputTag)
