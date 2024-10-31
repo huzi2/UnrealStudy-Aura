@@ -320,6 +320,11 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
 	}
 }
 
+void UAuraAbilitySystemComponent::MulticastActivatePassiveEffect_Implementation(const FGameplayTag& AbilityTag, bool bActivate)
+{
+	ActivatePassiveAbilityDelegate.Broadcast(AbilityTag, bActivate);
+}
+
 void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGameplayTag& AbilityTag)
 {
 	if (!GetAvatarActor()) return;
@@ -383,6 +388,9 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 					// 패시브 스킬인 경우 비활성화함
 					if (IsPassiveAbility(*SpecWithSlot))
 					{
+						// 이펙트 비활성화
+						MulticastActivatePassiveEffect(GetAbilityTagFromSpec(*SpecWithSlot), false);
+						// 스킬 비활성화
 						DeactivatePassiveAbilityDelegate.Broadcast(GetAbilityTagFromSpec(*SpecWithSlot));
 					}
 

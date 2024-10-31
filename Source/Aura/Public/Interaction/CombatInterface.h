@@ -9,10 +9,10 @@
 #include "CombatInterface.generated.h"
 
 class UNiagaraSystem;
-class UAbilitySystemComponent;
+class UAuraAbilitySystemComponent;
 
 // 어빌리티 시스템 컴포넌트가 등록되었을 때 호출할 델리게이트
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilitySystemComponentRegistered, UAbilitySystemComponent*);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilitySystemComponentRegistered, UAuraAbilitySystemComponent*);
 // 캐릭터가 죽었을 때 호출할 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeath, AActor*, DeadActor);
 

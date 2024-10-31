@@ -18,6 +18,8 @@ DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag
 DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&);
 // 패시브 스킬 비활성화할 때 사용할 델리게이트. 어빌리티 태그
 DECLARE_MULTICAST_DELEGATE_OneParam(FDeactivatePassiveAbility, const FGameplayTag&);
+// 패시브 스킬 활성화할 때 사용할 델리게이트. 어빌리티 태그, 활성화 여부
+DECLARE_MULTICAST_DELEGATE_TwoParams(FActivatePassiveAbility, const FGameplayTag&, bool);
 
 /**
  * 커스텀 어빌리티 시스템 컴포넌트
@@ -92,6 +94,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& InputTag);
 
+	// 클라, 서버에서 패시브 스킬 이펙트 활성화
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastActivatePassiveEffect(const FGameplayTag& AbilityTag, bool bActivate);
+
 private:
 	// 서버한테 능력치 상승 요청
 	UFUNCTION(Server, Reliable)
@@ -132,6 +138,9 @@ public:
 	FAbilityEquipped AbilityEquippedDelegate;
 	// 패시브 스킬 비활성화할 때 사용할 델리게이트
 	FDeactivatePassiveAbility DeactivatePassiveAbilityDelegate;
+	// 패시브 스킬 활성화할 때 사용할 델리게이트
+	FActivatePassiveAbility ActivatePassiveAbilityDelegate;
+
 	// 시작 어빌리티들을 적용시켰는 지 확인
 	bool bStartupAbilitiesGiven = false;
 };

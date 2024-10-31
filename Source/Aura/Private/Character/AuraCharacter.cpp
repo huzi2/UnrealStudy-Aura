@@ -73,7 +73,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 		AuraAbilitySystemComponent->AbilityActorInfoSet();
 
 		// 어빌리티 시스템 컴포넌트가 연결되었다는 델리게이트 호출
-		OnAbilitySystemComponentRegisteredDelegate.Broadcast(AbilitySystemComponent);
+		OnAbilitySystemComponentRegisteredDelegate.Broadcast(AuraAbilitySystemComponent);
 
 		// 기절 태그에 대한 콜백 함수 설정
 		AuraAbilitySystemComponent->RegisterGameplayTagEvent(UAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::StunTagChanged);
