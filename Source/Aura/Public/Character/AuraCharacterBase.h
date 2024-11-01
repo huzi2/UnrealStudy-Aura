@@ -13,6 +13,7 @@ class UAttributeSet;
 class UGameplayEffect;
 class UGameplayAbility;
 class UDebuffNiagaraComponent;
+class UPassiveNiagaraComponent;
 
 /**
  * 캐릭터와 적 캐릭터 베이스 클래스
@@ -27,6 +28,7 @@ protected:
 
 public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void Tick(float DeltaTime) override;
 
 	// IAbilitySystemInterface에서 상속
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -172,6 +174,18 @@ private:
 	// 공격 애니메이션
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
+
+	// 패시브 스킬 이펙트가 붙을 곳
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent> EffectAttachComponent;
+
+	// 패시브 스킬 이펙트
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> HaloOfProtectionNiagaraComponent;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> LifeSiphonNiagaraComponent;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> ManaSiphonNiagaraComponent;
 
 	// 죽었는가
 	bool bDead = false;

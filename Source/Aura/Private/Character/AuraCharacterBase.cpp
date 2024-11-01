@@ -8,10 +8,11 @@
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Net/UnrealNetwork.h"
+#include "AbilitySystem/Abilities/Passive/PassiveNiagaraComponent.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	// 충돌체크는 메쉬에서 다룸
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECollisionResponse::ECR_Ignore);
@@ -32,6 +33,18 @@ AAuraCharacterBase::AAuraCharacterBase()
 	StunDebuffComponent->SetupAttachment(GetRootComponent());
 	StunDebuffComponent->SetDebuffTag(UAuraGameplayTags::Get().Debuff_Stun);
 
+	EffectAttachComponent = CreateDefaultSubobject<USceneComponent>(TEXT("EffectAttachComponent"));
+	EffectAttachComponent->SetupAttachment(GetRootComponent());
+
+	HaloOfProtectionNiagaraComponent = CreateDefaultSubobject<UPassiveNiagaraComponent>(TEXT("HaloOfProtectionNiagaraComponent"));
+	HaloOfProtectionNiagaraComponent->SetupAttachment(EffectAttachComponent);
+
+	LifeSiphonNiagaraComponent = CreateDefaultSubobject<UPassiveNiagaraComponent>(TEXT("LifeSiphonNiagaraComponent"));
+	LifeSiphonNiagaraComponent->SetupAttachment(EffectAttachComponent);
+
+	ManaSiphonNiagaraComponent = CreateDefaultSubobject<UPassiveNiagaraComponent>(TEXT("ManaSiphonNiagaraComponent"));
+	ManaSiphonNiagaraComponent->SetupAttachment(EffectAttachComponent);
+
 	BaseWalkSpeed = 250.f;
 }
 
@@ -42,6 +55,16 @@ void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AAuraCharacterBase, bIsBurned);
 	DOREPLIFETIME(AAuraCharacterBase, bIsStunned);
 	DOREPLIFETIME(AAuraCharacterBase, bIsBeInShocked);
+}
+
+void AAuraCharacterBase::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (EffectAttachComponent)
+	{
+		EffectAttachComponent->SetWorldRotation(FRotator::ZeroRotator);
+	}
 }
 
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const

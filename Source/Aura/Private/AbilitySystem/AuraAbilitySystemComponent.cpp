@@ -405,7 +405,10 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 				// 패시브 스킬이라면 활성화
 				if (IsPassiveAbility(*AbilitySpec))
 				{
+					// 스킬 활성화
 					TryActivateAbility(AbilitySpec->Handle);
+					// 이펙트 활성화
+					MulticastActivatePassiveEffect(GetAbilityTagFromSpec(*AbilitySpec), true);
 				}
 			}
 
