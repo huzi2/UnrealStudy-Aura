@@ -17,6 +17,7 @@ class UAuraAbilitySystemComponent;
 class USplineComponent;
 class UDamageTextComponent;
 class UNiagaraSystem;
+class AMagicCircle;
 
 /**
  * 커스텀 플레이어 컨트롤러 클래스
@@ -39,6 +40,13 @@ public:
 	// 클라이언트에게 데미지 UI를 표시
 	UFUNCTION(Client, Reliable)
 	void ClientShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit);
+
+	// 마법진 생성
+	UFUNCTION(BlueprintCallable)
+	void ShowMagicCircle();
+	// 마법진 제거
+	UFUNCTION(BlueprintCallable)
+	void HideMagicCircle();
 
 private:
 	UAuraAbilitySystemComponent* GetAuraAbilitySystemComponent();
@@ -63,6 +71,9 @@ private:
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	// 인풋 태그를 유지할 때
 	void AbilityInputTagHeld(FGameplayTag InputTag);
+
+	// 마법진의 위치를 틱마다 커서 위치로 이동
+	void UpdateMagicCircleLocation();
 
 private:
 	// 어빌리티 시스템 컴포넌트
@@ -118,4 +129,11 @@ private:
 	bool bTargeting = false;
 	// 쉬프트키를 누른 상태인가?
 	bool bShiftKeyDown = false;
+
+	// 생성할 마법진 클래스
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AMagicCircle> MagicCircleClass;
+	// 생성된 마법진 액터
+	UPROPERTY()
+	TObjectPtr<AMagicCircle> MagicCircle;
 };
