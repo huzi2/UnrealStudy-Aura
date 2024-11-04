@@ -14,6 +14,7 @@
 #include "UI/Widget/DamageTextComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Actor/MagicCircle.h"
+#include "Components/DecalComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -85,12 +86,18 @@ void AAuraPlayerController::ClientShowDamageNumber_Implementation(float DamageAm
 	}
 }
 
-void AAuraPlayerController::ShowMagicCircle()
+void AAuraPlayerController::ShowMagicCircle(UMaterialInstance* DecalMaterial)
 {
 	if (!GetWorld()) return;
 	if (IsValid(MagicCircle)) return;
 
 	MagicCircle = GetWorld()->SpawnActor<AMagicCircle>(MagicCircleClass);
+
+	// 새 데칼을 지정했다면 적용
+	if (DecalMaterial && MagicCircle && MagicCircle->GetMagicCircleDecal())
+	{
+		MagicCircle->GetMagicCircleDecal()->SetMaterial(0, DecalMaterial);
+	}
 }
 
 void AAuraPlayerController::HideMagicCircle()

@@ -43,7 +43,7 @@ public:
 
 	// 付过柳 积己
 	UFUNCTION(BlueprintCallable)
-	void ShowMagicCircle();
+	void ShowMagicCircle(UMaterialInstance* DecalMaterial = nullptr);
 	// 付过柳 力芭
 	UFUNCTION(BlueprintCallable)
 	void HideMagicCircle();

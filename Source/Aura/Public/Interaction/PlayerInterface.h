@@ -49,4 +49,11 @@ protected:
 	int32 GetSpellPointReward(int32 Level) const;
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToSpellPoints(int32 InSpellPoints);
+
+	// 付过柳 积己
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ShowMagicCircle(UMaterialInstance* DecalMaterial = nullptr);
+	// 付过柳 力芭
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HideMagicCircle();
 };

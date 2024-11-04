@@ -21,6 +21,9 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+public:
+	UDecalComponent* GetMagicCircleDecal() const { return MagicCircleDecal; }
+
 protected:
 	// 마법진에 표시할 데칼 이펙트
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
