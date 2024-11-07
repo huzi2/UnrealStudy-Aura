@@ -7,7 +7,7 @@
 #include "PointCollection.generated.h"
 
 /**
- * 특정 포인트 지점들을 생성하는 액터
+ * 특정 포인트 지점들을 생성하는 액터(비전 파편의 공격 지점이 됨)
  */
 UCLASS()
 class AURA_API APointCollection : public AActor

@@ -2,6 +2,7 @@
 
 #include "Actor/PointCollection.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 APointCollection::APointCollection()
 {
@@ -66,7 +67,7 @@ TArray<USceneComponent*> APointCollection::GetGroundPoints(const FVector& Ground
 
 	for (USceneComponent* Pt : ImmutablePts)
 	{
-		if (ArrayCopy.Num() > NumPoints) return ArrayCopy;
+		if (ArrayCopy.Num() >= NumPoints) return ArrayCopy;
 
 		if (Pt != Pt_0)
 		{
@@ -76,13 +77,24 @@ TArray<USceneComponent*> APointCollection::GetGroundPoints(const FVector& Ground
 			Pt->SetWorldLocation(Pt_0->GetComponentLocation() + ToPoint);
 		}
 
+		// 충돌 체크로 바닥에 닿는 위치 확인
 		const FVector RaisedLocation = FVector(Pt->GetComponentLocation().X, Pt->GetComponentLocation().Y, Pt->GetComponentLocation().Z + 500.f);
 		const FVector LoweredLocation = FVector(Pt->GetComponentLocation().X, Pt->GetComponentLocation().Y, Pt->GetComponentLocation().Z - 500.f);
 
 		FHitResult HitResult;
 		TArray<AActor*> IgnoreActors;
 		UAuraAbilitySystemLibrary::GetLivePlayersWithRadius(this, IgnoreActors, TArray<AActor*>(), 1500.f, GetActorLocation());
+
+		FCollisionQueryParams QueryParams;
+		QueryParams.AddIgnoredActors(IgnoreActors);
+		GetWorld()->LineTraceSingleByProfile(HitResult, RaisedLocation, LoweredLocation, FName(TEXT("BlockAll")), QueryParams);
+
+		const FVector AdjustedLocation = FVector(Pt->GetComponentLocation().X, Pt->GetComponentLocation().Y, HitResult.ImpactPoint.Z);
+		Pt->SetWorldLocation(AdjustedLocation);
+		Pt->SetWorldRotation(UKismetMathLibrary::MakeRotFromZ(HitResult.ImpactNormal));
+
+		ArrayCopy.Add(Pt);
 	}
 
-	return TArray<USceneComponent*>();
+	return ArrayCopy;
 }
