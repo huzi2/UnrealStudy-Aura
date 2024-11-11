@@ -66,6 +66,20 @@ public:
 	// 넉백에 가할 충격 벡터
 	UPROPERTY(BlueprintReadWrite)
 	FVector KnockbackForce = FVector::ZeroVector;
+
+	// 방사형 데미지 관련
+	// 방사형 데미지인가?
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsRadialDamage = false;
+	// 방사형 데미지 내각 크기
+	UPROPERTY(BlueprintReadWrite)
+	float RadialDamageInnerRadius = 0.f;
+	// 방사형 데미지 외곽 크기
+	UPROPERTY(BlueprintReadWrite)
+	float RadialDamageOuterRadius = 0.f;
+	// 방사형 데미지 원점
+	UPROPERTY(BlueprintReadWrite)
+	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
 
 /**
@@ -109,6 +123,10 @@ public:
 	FORCEINLINE TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 	FORCEINLINE FVector GetDeathImpulse() const { return DeathImpulse; }
 	FORCEINLINE FVector GetKnockbackForce() const { return KnockbackForce; }
+	FORCEINLINE bool GetIsRadialDamage() const { return bIsRadialDamage; }
+	FORCEINLINE float GetRadialDamageInnerRadius() const { return RadialDamageInnerRadius; }
+	FORCEINLINE float GetRadialDamageOuterRadius() const { return RadialDamageOuterRadius; }
+	FORCEINLINE FVector GetRadialDamageOrigin() const { return RadialDamageOrigin; }
 
 	FORCEINLINE void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
 	FORCEINLINE void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
@@ -119,6 +137,10 @@ public:
 	FORCEINLINE void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
 	FORCEINLINE void SetDeathImpulse(const FVector& InDeathImpulse) { DeathImpulse = InDeathImpulse; }
 	FORCEINLINE void SetKnockbackForce(const FVector& InKnockbackForce) { KnockbackForce = InKnockbackForce; }
+	FORCEINLINE void SetIsRadialDamage(bool bInIsRadialDamage) { bIsRadialDamage = bInIsRadialDamage; }
+	FORCEINLINE void SetRadialDamageInnerRadius(float InRadialDamageInnerRadius) { RadialDamageInnerRadius = InRadialDamageInnerRadius; }
+	FORCEINLINE void SetRadialDamageOuterRadius(float InRadialDamageOuterRadius) { RadialDamageOuterRadius = InRadialDamageOuterRadius; }
+	FORCEINLINE void SetRadialDamageOrigin(const FVector& InRadialDamageOrigin) { RadialDamageOrigin = InRadialDamageOrigin; }
 
 private:
 	// 공격을 막았음
@@ -152,6 +174,20 @@ private:
 	// 넉백에 가할 충격 벡터
 	UPROPERTY()
 	FVector KnockbackForce = FVector::ZeroVector;
+
+	// 방사형 데미지 관련
+	// 방사형 데미지인가?
+	UPROPERTY()
+	bool bIsRadialDamage = false;
+	// 방사형 데미지 내각 크기
+	UPROPERTY()
+	float RadialDamageInnerRadius = 0.f;
+	// 방사형 데미지 외곽 크기
+	UPROPERTY()
+	float RadialDamageOuterRadius = 0.f;
+	// 방사형 데미지 원점
+	UPROPERTY()
+	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
 
 // 커스텀 NetSerialize()를 위해 위 구조체의 속성 정의
