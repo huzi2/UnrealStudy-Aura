@@ -123,7 +123,7 @@ public:
 	FORCEINLINE TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 	FORCEINLINE FVector GetDeathImpulse() const { return DeathImpulse; }
 	FORCEINLINE FVector GetKnockbackForce() const { return KnockbackForce; }
-	FORCEINLINE bool GetIsRadialDamage() const { return bIsRadialDamage; }
+	FORCEINLINE bool IsRadialDamage() const { return bIsRadialDamage; }
 	FORCEINLINE float GetRadialDamageInnerRadius() const { return RadialDamageInnerRadius; }
 	FORCEINLINE float GetRadialDamageOuterRadius() const { return RadialDamageOuterRadius; }
 	FORCEINLINE FVector GetRadialDamageOrigin() const { return RadialDamageOrigin; }
