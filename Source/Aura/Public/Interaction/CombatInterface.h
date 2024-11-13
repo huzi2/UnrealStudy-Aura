@@ -15,6 +15,8 @@ class UAuraAbilitySystemComponent;
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilitySystemComponentRegistered, UAuraAbilitySystemComponent*);
 // 캐릭터가 죽었을 때 호출할 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeath, AActor*, DeadActor);
+// 데미지를 받았을 때 사용할 델리게이트, 데미지 량
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnDamageSignature, float);
 
 /**
  * 태그와 애님 몽타주를 연결
@@ -59,6 +61,7 @@ public:
 	virtual void Die(const FVector& DeathImpulse) = 0;
 	virtual FOnAbilitySystemComponentRegistered& GetOnAbilitySystemComponentRegisteredDelegate() = 0;
 	virtual FOnDeath& GetOnDeathDelegate() = 0;
+	virtual FOnDamageSignature& GetOnDamageSignatureDelegate() = 0;
 
 protected:
 	// 캐릭터의 레벨을 얻어온다.

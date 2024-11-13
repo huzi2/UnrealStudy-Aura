@@ -29,6 +29,7 @@ protected:
 public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void Tick(float DeltaTime) override;
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 	// IAbilitySystemInterface에서 상속
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -38,6 +39,7 @@ protected:
 	virtual void Die(const FVector& DeathImpulse) override;
 	virtual FOnAbilitySystemComponentRegistered& GetOnAbilitySystemComponentRegisteredDelegate() override;
 	virtual FOnDeath& GetOnDeathDelegate() override;
+	virtual FOnDamageSignature& GetOnDamageSignatureDelegate() override;
 
 	// 기절 태그가 변경되었을 때 호출할 콜백 함수
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
@@ -192,4 +194,7 @@ private:
 
 	// 소환수 숫자
 	int32 MinionCount = 0;
+
+	// 데미지를 받았을 때 사용할 델리게이트
+	FOnDamageSignature OnDamageSignatureDelegate;
 };

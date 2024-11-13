@@ -6,6 +6,7 @@
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 
 // 어트리뷰트의 캡쳐를 위한 정적 구조체
 struct AuraDamageStatics
@@ -89,10 +90,10 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	const UAbilitySystemComponent* TargetAbilitySystemComponent = ExecutionParams.GetTargetAbilitySystemComponent();
 	if (!TargetAbilitySystemComponent) return;
 
-	const AActor* SourceAvatar = SourceAbilitySystemComponent->GetAvatarActor();
+	AActor* SourceAvatar = SourceAbilitySystemComponent->GetAvatarActor();
 	if (!SourceAvatar) return;
 
-	const AActor* TargetAvatar = TargetAbilitySystemComponent->GetAvatarActor();
+	AActor* TargetAvatar = TargetAbilitySystemComponent->GetAvatarActor();
 	if (!TargetAvatar) return;
 
 	// 인터페이스에서 레벨을 얻어온다.
@@ -113,8 +114,9 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	if (!CharacterClassInfo) return;
 	if (!CharacterClassInfo->DamageCalculationCoefficients) return;
 
-	// 이펙트에 자체의 태그와 타겟에 대한 태그를 가져온다.
+	// 이펙트에 자체의 태그와 타겟에 대한 태그, 이펙트 핸들을 가져온다.
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 
@@ -151,6 +153,25 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 			DamageTypeValue *= (100.f - ResistanceValue) / 100.f;
 		}
+
+		// 방사형 데미지라면 방사형 데미지 값을 세팅
+		if (UAuraAbilitySystemLibrary::IsRadialDamage(EffectContextHandle))
+		{
+			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(TargetAvatar))
+			{
+				CombatInterface->GetOnDamageSignatureDelegate().AddLambda([&](float DamageAmount)
+					{
+						DamageTypeValue = DamageAmount;
+					});
+			}
+		}
+
+		// 방사형 데미지를 타겟에게 적용
+		UGameplayStatics::ApplyRadialDamageWithFalloff(TargetAvatar, DamageTypeValue, 0.f
+			, UAuraAbilitySystemLibrary::GetRadialDamageOrigin(EffectContextHandle)
+			, UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContextHandle)
+			, UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContextHandle)
+			, 1.f, UDamageType::StaticClass(), TArray<AActor*>(), SourceAvatar, nullptr);
 
 		Damage += DamageTypeValue;
 	}
@@ -225,7 +246,6 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	if (bCriticalHit) Damage = Damage * 2.f + SourceCriticalHitDamage;
 
 	// 커스텀 게임플레이 이펙트 컨텍스트에 값 설정. 다른 곳에서 확인하기 위함
-	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
 	UAuraAbilitySystemLibrary::SetIsCriticalHit(EffectContextHandle, bCriticalHit);
 

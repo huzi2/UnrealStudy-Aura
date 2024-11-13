@@ -67,6 +67,13 @@ void AAuraCharacterBase::Tick(float DeltaTime)
 	}
 }
 
+float AAuraCharacterBase::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	const float DamageTaken = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	OnDamageSignatureDelegate.Broadcast(DamageTaken);
+	return DamageTaken;
+}
+
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
@@ -93,6 +100,11 @@ FOnAbilitySystemComponentRegistered& AAuraCharacterBase::GetOnAbilitySystemCompo
 FOnDeath& AAuraCharacterBase::GetOnDeathDelegate()
 {
 	return OnDeathDelegate;
+}
+
+FOnDamageSignature& AAuraCharacterBase::GetOnDamageSignatureDelegate()
+{
+	return OnDamageSignatureDelegate;
 }
 
 void AAuraCharacterBase::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
