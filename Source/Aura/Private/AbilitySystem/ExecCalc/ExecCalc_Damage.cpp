@@ -138,7 +138,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		const FGameplayTag& ResistanceTag = Pair.Value;
 
 		float DamageTypeValue = Spec.GetSetByCallerMagnitude(DamageTypeTag, false);
-		if (DamageTypeValue == 0.f) continue;
+		if (DamageTypeValue <= 0.f) continue;
 
 		// 해당 공격 타입에 대한 저항값이 있다면 저항에 따라 데미지를 감소
 		if (TagToCaptureDefs.Contains(ResistanceTag))

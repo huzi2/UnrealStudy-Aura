@@ -4,7 +4,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 
-FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassDefault(AActor* TargetActor) const
+FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassDefault(AActor* TargetActor, FVector InRadialDamageOrigin) const
 {
 	// 데미지 이펙트에서 사용할 구조체 변수 설정
 	FDamageEffectParams Params;
@@ -39,7 +39,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 		Params.bIsRadialDamage = bIsRadialDamage;
 		Params.RadialDamageInnerRadius = RadialDamageInnerRadius;
 		Params.RadialDamageOuterRadius = RadialDamageOuterRadius;
-		Params.RadialDamageOrigin = RadialDamageOrigin;
+		Params.RadialDamageOrigin = InRadialDamageOrigin;
 	}
 	return Params;
 }

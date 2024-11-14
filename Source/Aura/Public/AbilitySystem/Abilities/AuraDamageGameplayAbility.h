@@ -19,7 +19,7 @@ class AURA_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
 public:
 	// 데미지 이펙트에서 사용할 구조체 생성
 	UFUNCTION(BlueprintPure)
-	FDamageEffectParams MakeDamageEffectParamsFromClassDefault(AActor* TargetActor = nullptr) const;
+	FDamageEffectParams MakeDamageEffectParamsFromClassDefault(AActor* TargetActor = nullptr, FVector InRadialDamageOrigin = FVector::ZeroVector) const;
 
 private:
 	// 타겟에게 데미지 적용
@@ -75,12 +75,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	bool bIsRadialDamage = false;
 	// 방사형 데미지 내각 크기
-	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	float RadialDamageInnerRadius = 0.f;
 	// 방사형 데미지 외곽 크기
-	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	float RadialDamageOuterRadius = 0.f;
-	// 방사형 데미지 원점
-	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
