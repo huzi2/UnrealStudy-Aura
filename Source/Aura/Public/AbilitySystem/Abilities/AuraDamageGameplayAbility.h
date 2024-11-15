@@ -19,7 +19,15 @@ class AURA_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
 public:
 	// 데미지 이펙트에서 사용할 구조체 생성
 	UFUNCTION(BlueprintPure)
-	FDamageEffectParams MakeDamageEffectParamsFromClassDefault(AActor* TargetActor = nullptr, FVector InRadialDamageOrigin = FVector::ZeroVector) const;
+	FDamageEffectParams MakeDamageEffectParamsFromClassDefault(
+		AActor* TargetActor = nullptr, 
+		FVector InRadialDamageOrigin = FVector::ZeroVector, 
+		bool bOverriedKnockbackDirection = false, 
+		FVector InKnockbackDirectionOverried = FVector::ZeroVector,
+		bool bOverriedDeathImpulse = false, 
+		FVector InDeathImpulseOverried = FVector::ZeroVector, 
+		bool bOverriedPitch = false, 
+		float InPitchOverried = 0.f) const;
 
 private:
 	// 타겟에게 데미지 적용

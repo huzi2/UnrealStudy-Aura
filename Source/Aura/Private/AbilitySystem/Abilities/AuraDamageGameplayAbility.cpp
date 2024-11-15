@@ -4,7 +4,15 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 
-FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassDefault(AActor* TargetActor, FVector InRadialDamageOrigin) const
+FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassDefault(
+	AActor* TargetActor,
+	FVector InRadialDamageOrigin,
+	bool bOverriedKnockbackDirection,
+	FVector InKnockbackDirectionOverried,
+	bool bOverriedDeathImpulse,
+	FVector InDeathImpulseOverried,
+	bool bOverriedPitch,
+	float InPitchOverried) const
 {
 	// 데미지 이펙트에서 사용할 구조체 변수 설정
 	FDamageEffectParams Params;
@@ -27,10 +35,46 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	if (IsValid(TargetActor))
 	{
 		FRotator Rotation = (TargetActor->GetActorLocation() - GetAvatarActorFromActorInfo()->GetActorLocation()).Rotation();
-		Rotation.Pitch = 45.f;
+		if (bOverriedPitch)
+		{
+			Rotation.Pitch = InPitchOverried;
+		}
 		const FVector ToTarget = Rotation.Vector();
-		Params.DeathImpulse = ToTarget * DeathImpulseMagnitude;
-		Params.KnockbackForce = ToTarget * KnockbackForceMagnitude;
+
+		if (!bOverriedKnockbackDirection)
+		{
+			Params.KnockbackForce = ToTarget * KnockbackForceMagnitude;
+		}
+		if (!bOverriedDeathImpulse)
+		{
+			Params.DeathImpulse = ToTarget * DeathImpulseMagnitude;
+		}
+	}
+
+	// 매개변수로 덮어씌울 경우 계산
+	if (bOverriedKnockbackDirection)
+	{
+		InKnockbackDirectionOverried.Normalize();
+		Params.KnockbackForce = InKnockbackDirectionOverried * KnockbackForceMagnitude;
+
+		if (bOverriedPitch)
+		{
+			FRotator KnockbackRotation = InKnockbackDirectionOverried.Rotation();
+			KnockbackRotation.Pitch = InPitchOverried;
+			Params.KnockbackForce = KnockbackRotation.Vector() * KnockbackForceMagnitude;
+		}
+	}
+	if (bOverriedDeathImpulse)
+	{
+		InDeathImpulseOverried.Normalize();
+		Params.DeathImpulse = InDeathImpulseOverried * DeathImpulseMagnitude;
+
+		if (bOverriedPitch)
+		{
+			FRotator DeathImpulseRotation = InDeathImpulseOverried.Rotation();
+			DeathImpulseRotation.Pitch = InPitchOverried;
+			Params.DeathImpulse = DeathImpulseRotation.Vector() * DeathImpulseMagnitude;
+		}
 	}
 
 	// 방사형 데미지 관련 변수 설정
