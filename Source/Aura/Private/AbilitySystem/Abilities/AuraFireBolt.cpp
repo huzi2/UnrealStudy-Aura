@@ -8,7 +8,7 @@
 
 FString UAuraFireBolt::GetDescription(int32 Level) const
 {
-	// 파이어볼 스킬에 대한 설명
+	// 화염구 스킬에 대한 설명
 
 	// 레벨에 따라 변경되는 데미지(불속성만 얻어옴)
 	const int32 ScaledDamage = static_cast<int32>(Damage.GetValueAtLevel(static_cast<float>(Level)));
