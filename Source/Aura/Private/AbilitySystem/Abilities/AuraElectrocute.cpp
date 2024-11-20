@@ -14,7 +14,7 @@ FString UAuraElectrocute::GetDescription(int32 Level) const
 	// 쿨타임
 	const float Cooldown = GetCooldown(static_cast<float>(Level));
 
-	// 1레벨은 하나만 발사
+	// 1레벨은 하나만 연결
 	if (Level == 1)
 	{
 		return FString::Printf(TEXT(
@@ -32,7 +32,7 @@ FString UAuraElectrocute::GetDescription(int32 Level) const
 			" a chance to stun</>\n\n"),
 			Level, ManaCost, Cooldown, ScaledDamage);
 	}
-	// 그 후에는 레벨에 따라 발사체가 증가
+	// 그 후에는 레벨에 따라 타겟 갯수 증가
 	else
 	{
 		return FString::Printf(TEXT(
@@ -42,7 +42,7 @@ FString UAuraElectrocute::GetDescription(int32 Level) const
 			"<Small>Level: </><Level>%d</>\n"
 			"<Small>ManaCost: </><Manacost>%.1f</>\n"
 			"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-			// 설명(추가 타겟갯수)
+			// 설명(추가 타겟 갯수)
 			"<Default>Emits a beam of lightning, "
 			"propagating to %d additional targets nearby, causing </>"
 			// 데미지

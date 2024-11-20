@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystem/Abilities/AuraDamageGameplayAbility.h"
-#include "AuraArcaneShards.generated.h"
+#include "AuraFireBlast.generated.h"
 
 /**
- * 비전 파편 스킬 클래스
+ * 화염 폭발 스킬
  */
 UCLASS()
-class AURA_API UAuraArcaneShards : public UAuraDamageGameplayAbility
+class AURA_API UAuraFireBlast : public UAuraDamageGameplayAbility
 {
 	GENERATED_BODY()
 	
@@ -20,7 +20,7 @@ private:
 	virtual FString GetNextLevelDescription(int32 Level) const final;
 
 protected:
-	// 최대 파편 개수
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ArcaneShards")
-	int32 MaxNumShards = 11;
+	// 화염구 개수
+	UPROPERTY(EditDefaultsOnly, Category = "FireBlast")
+	int32 NumFireBolls = 12;
 };
