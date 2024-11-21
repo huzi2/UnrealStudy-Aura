@@ -19,21 +19,21 @@ class AURA_API AAuraProjectile : public AActor
 {
 	GENERATED_BODY()
 	
-private:
+protected:
 	AAuraProjectile();
 
-private:
-	virtual void BeginPlay() final;
-	virtual void Destroyed() final;
+protected:
+	virtual void BeginPlay() override;
+	virtual void Destroyed() override;
 
 public:
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 	USceneComponent* GetHomingTargetSceneComponent() const { return HomingTargetSceneComponent; }
 	void SetHomingTargetSceneComponent(USceneComponent* InHomingTargetSceneComponent) { HomingTargetSceneComponent = InHomingTargetSceneComponent; }
 
-private:
+protected:
 	UFUNCTION()
-	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	// 충돌했을 때 처리
 	void OnHit();

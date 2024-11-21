@@ -52,3 +52,8 @@ FString UAuraFireBlast::GetNextLevelDescription(int32 Level) const
 		" a chance to burn</>\n\n"),
 		Level, ManaCost, Cooldown, NumFireBolls, ScaledDamage);
 }
+
+TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBalls()
+{
+	return TArray<AAuraFireBall*>();
+}

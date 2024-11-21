@@ -6,6 +6,8 @@
 #include "AbilitySystem/Abilities/AuraDamageGameplayAbility.h"
 #include "AuraFireBlast.generated.h"
 
+class AAuraFireBall;
+
 /**
  * 화염 폭발 스킬
  */
@@ -20,7 +22,17 @@ private:
 	virtual FString GetNextLevelDescription(int32 Level) const final;
 
 protected:
+	// 화염구들을 발사
+	UFUNCTION(BlueprintCallable)
+	TArray<AAuraFireBall*> SpawnFireBalls();
+
+protected:
 	// 화염구 개수
 	UPROPERTY(EditDefaultsOnly, Category = "FireBlast")
 	int32 NumFireBolls = 12;
+
+private:
+	// 화염 폭발에서 사용할 발사체 클래스
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AAuraFireBall> FireBallClass;
 };
