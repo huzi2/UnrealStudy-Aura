@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraFireBlast.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "Actor/AuraFireBall.h"
 
 FString UAuraFireBlast::GetDescription(int32 Level) const
 {
@@ -55,5 +57,31 @@ FString UAuraFireBlast::GetNextLevelDescription(int32 Level) const
 
 TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBalls()
 {
-	return TArray<AAuraFireBall*>();
+	TArray<AAuraFireBall*> FireBalls;
+
+	if (!GetWorld()) return FireBalls;
+	if (!CurrentActorInfo) return FireBalls;
+	if (!GetAvatarActorFromActorInfo()) return FireBalls;
+
+	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
+
+	// 360도 전방향으로 퍼진 벡터들을 얻어옴
+	const FVector Foward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
+	const TArray<FRotator> Rotators = UAuraAbilitySystemLibrary::EvenlySpreadRotators(Foward, FVector::UpVector, 360.f, NumFireBolls);
+
+	// 방향마다 화염구를 생성
+	for (const FRotator& Rotator : Rotators)
+	{
+		FTransform SpawnTransform;
+		SpawnTransform.SetLocation(Location);
+		SpawnTransform.SetRotation(Rotator.Quaternion());
+
+		if (AAuraFireBall* FireBall = GetWorld()->SpawnActorDeferred<AAuraFireBall>(FireBallClass, SpawnTransform, GetOwningActorFromActorInfo(), CurrentActorInfo->PlayerController->GetPawn(), ESpawnActorCollisionHandlingMethod::AlwaysSpawn))
+		{
+			FireBall->DamageEffectParams = MakeDamageEffectParamsFromClassDefault();
+			FireBalls.Add(FireBall);
+			FireBall->FinishSpawning(SpawnTransform);
+		}
+	}
+	return FireBalls;
 }
