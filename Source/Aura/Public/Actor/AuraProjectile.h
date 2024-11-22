@@ -36,6 +36,7 @@ protected:
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	// 충돌했을 때 처리
+	UFUNCTION(BlueprintCallable)
 	void OnHit();
 
 public:
