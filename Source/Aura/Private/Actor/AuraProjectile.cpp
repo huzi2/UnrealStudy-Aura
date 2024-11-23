@@ -64,14 +64,7 @@ void AAuraProjectile::Destroyed()
 
 void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (!DamageEffectParams.SourceAbilitySystemComponent) return;
-
-	// 효과를 수행한 액터와 충돌액터가 같으면 리턴
-	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
-	if (SourceAvatarActor == OtherActor) return;
-
-	// 발사체 대상이 아군이면 리턴
-	if (!UAuraAbilitySystemLibrary::IsNotFriend(SourceAvatarActor, OtherActor)) return;
+	if (!IsValidOverlap(OtherActor)) return;
 
 	if (!bHit)
 	{
@@ -132,4 +125,18 @@ void AAuraProjectile::OnHit()
 	}
 
 	bHit = true;
+}
+
+bool AAuraProjectile::IsValidOverlap(AActor* OtherActor) const
+{
+	if (!DamageEffectParams.SourceAbilitySystemComponent) return false;
+
+	// 효과를 수행한 액터와 충돌액터가 같으면 리턴
+	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+	if (SourceAvatarActor == OtherActor) return false;
+
+	// 발사체 대상이 아군이면 리턴
+	if (!UAuraAbilitySystemLibrary::IsNotFriend(SourceAvatarActor, OtherActor)) return false;
+
+	return true;
 }

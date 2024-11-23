@@ -39,6 +39,8 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnHit();
 
+	bool IsValidOverlap(AActor* OtherActor) const;
+
 public:
 	// 액터 스폰 전에 세팅하기 위해 이 변수를 노출
 	// 데미지 정보를 가진 이펙트 파라미터 구조체
@@ -50,6 +52,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USphereComponent> Sphere;
 
+	// 충돌했는 지 확인
+	bool bHit = false;
+
 private:
 	// 생존 시간
 	UPROPERTY(EditDefaultsOnly)
@@ -59,8 +64,6 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
 
-	// 충돌했는 지 확인
-	bool bHit = false;
 	// 충돌 이펙트
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UNiagaraSystem> ImpactEffect;
