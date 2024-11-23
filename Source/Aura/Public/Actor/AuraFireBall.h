@@ -31,4 +31,8 @@ protected:
 	// 화염구가 되돌아올 타겟 액터(시전자)
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<AActor> ReturnToActor;
+
+	// 화염구가 폭발할 때 사용할 데미지 이펙트 파람
+	UPROPERTY(BlueprintReadWrite)
+	FDamageEffectParams ExplosionDamageEffectParams;
 };
