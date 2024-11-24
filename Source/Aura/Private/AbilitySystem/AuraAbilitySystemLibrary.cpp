@@ -525,6 +525,11 @@ int32 UAuraAbilitySystemLibrary::GetXPRewardForClassAndLevel(const UObject* Worl
 	return 0;
 }
 
+void UAuraAbilitySystemLibrary::SetTargetDamageEffectParams(UPARAM(ref)FDamageEffectParams& DamageEffectParams, UAbilitySystemComponent* TargetAbilitySystemComponent)
+{
+	DamageEffectParams.TargetAbilitySystemComponent = TargetAbilitySystemComponent;
+}
+
 void UAuraAbilitySystemLibrary::SetIsRadialDamageEffectParams(UPARAM(ref)FDamageEffectParams& DamageEffectParams, bool bIsRadial, float InnerRadius, float OuterRadius, const FVector& Origin)
 {
 	DamageEffectParams.bIsRadialDamage = bIsRadial;

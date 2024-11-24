@@ -135,6 +135,9 @@ public:
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level);
 
 	// 이미 생성된 데미지 이펙트에 추가 속성 부여
+	// 데미지 이펙트에 타겟 설정
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
+	static void SetTargetDamageEffectParams(UPARAM(ref)FDamageEffectParams& DamageEffectParams, UAbilitySystemComponent* TargetAbilitySystemComponent);
 	// 데미지 이펙트를 범위 데미지로 설정
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
 	static void SetIsRadialDamageEffectParams(UPARAM(ref)FDamageEffectParams& DamageEffectParams, bool bIsRadial, float InnerRadius, float OuterRadius, const FVector& Origin);
