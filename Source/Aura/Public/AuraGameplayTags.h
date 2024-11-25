@@ -129,6 +129,9 @@ public:
 	FGameplayTag Player_Block_InputReleased;
 	FGameplayTag Player_Block_CursorTrace;
 
+	// 게임플레이 큐
+	FGameplayTag GameplayCue_FireBlast;
+
 private:
 	static UAuraGameplayTags GameplayTags;
 };

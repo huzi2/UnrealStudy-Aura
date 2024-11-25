@@ -37,7 +37,7 @@ protected:
 
 	// 충돌했을 때 처리
 	UFUNCTION(BlueprintCallable)
-	void OnHit();
+	virtual void OnHit();
 
 	bool IsValidOverlap(AActor* OtherActor) const;
 
@@ -51,6 +51,10 @@ protected:
 	// 충돌 확인용 도형 컴포넌트
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USphereComponent> Sphere;
+
+	// 날아가는 동안 출력할 사운드 컴포넌트
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> LoopingSoundComponent;
 
 	// 충돌했는 지 확인
 	bool bHit = false;
@@ -74,9 +78,6 @@ private:
 	// 날아가는 동안 출력할 사운드
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> LoopingSound;
-	// 날아가는 동안 출력할 사운드 컴포넌트
-	UPROPERTY()
-	TObjectPtr<UAudioComponent> LoopingSoundComponent;
 
 	// 발사체가 타겟으로 잡은 컴포넌트
 	UPROPERTY()

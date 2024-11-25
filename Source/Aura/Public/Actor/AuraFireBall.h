@@ -19,6 +19,7 @@ private:
 
 	// AAuraProjectile에서 상속
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) final;
+	virtual void OnHit() final;
 
 public:
 	FORCEINLINE void SetReturnToActor(AActor* InReturnToActor) { ReturnToActor = InReturnToActor; }
