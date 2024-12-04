@@ -7,11 +7,14 @@
 #include "LoadScreenWidget.generated.h"
 
 /**
- * 
+ * 로드 메뉴 UI 클래스
  */
 UCLASS()
 class AURA_API ULoadScreenWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void BlueprintInitializeWidget();
 };
