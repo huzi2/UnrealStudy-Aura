@@ -6,6 +6,9 @@
 #include "MVVMViewModelBase.h"
 #include "MVVM_LoadSlot.generated.h"
 
+// 위젯 스위처 전환할 때 사용할 델리게이트
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSetWidgetSwitcherIndex, int32, WidgetSwitcherIndex);
+
 /**
  * 로드 메뉴에서 각각의 로드 슬롯과 연결된 뷰모델 클래스
  */
@@ -14,4 +17,11 @@ class AURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
 {
 	GENERATED_BODY()
 	
+public:
+	void InitializeSlot();
+
+public:
+	// 위젯 스위처 전환할 때 사용할 델리게이트
+	UPROPERTY(BlueprintAssignable)
+	FSetWidgetSwitcherIndex SetWidgetSwitcherIndexDelegate;
 };

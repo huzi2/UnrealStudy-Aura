@@ -24,6 +24,18 @@ public:
 	UFUNCTION(BlueprintPure)
 	UMVVM_LoadSlot* GetLoadSlotViewModelByIndex(int32 Index) const;
 
+	// 새 슬롯 버튼을 눌렀을 때
+	UFUNCTION(BlueprintCallable)
+	void NewSlotButtonPressed(int32 Slot, const FString& EnteredName);
+
+	// 새 게임 버튼을 눌렀을 때
+	UFUNCTION(BlueprintCallable)
+	void NewGameButtonPressed(int32 Slot);
+
+	// 슬롯 선택 버튼을 눌렀을 때
+	UFUNCTION(BlueprintCallable)
+	void SelectSlotButtonPressed(int32 Slot);
+
 private:
 	// 로드 슬롯 뷰모델 클래스
 	UPROPERTY(EditDefaultsOnly)
