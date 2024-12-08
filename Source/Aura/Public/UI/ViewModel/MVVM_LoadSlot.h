@@ -19,10 +19,10 @@ class AURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
 	
 public:
 	FORCEINLINE const FString& GetSlotName() const { return SlotName; }
-	FORCEINLINE const FString& GetPlayerName() const { return PlayerName; }
-
 	FORCEINLINE void SetSlotName(const FString& InSlotName) { SlotName = InSlotName; }
-	FORCEINLINE void SetPlayerName(const FString& InPlayerName) { PlayerName = InPlayerName; }
+
+	const FString& GetPlayerName() const { return PlayerName; }
+	void SetPlayerName(const FString& InPlayerName);
 
 	void InitializeSlot();
 
@@ -31,12 +31,14 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FSetWidgetSwitcherIndex SetWidgetSwitcherIndexDelegate;
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
+	FString PlayerName;
+
 private:
 	// 슬롯을 세이브할 때 사용할 변수들
 	UPROPERTY()
 	FString SlotName;
-	UPROPERTY()
-	FString PlayerName;
 	UPROPERTY()
 	int32 SlotIndex;
 };
