@@ -31,6 +31,7 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
 	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 	{
 		LoadSlots[Slot]->SetPlayerName(EnteredName);
+		LoadSlots[Slot]->SetSlotStatus(ESaveSlotStatus::Taken);
 		AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
 		LoadSlots[Slot]->InitializeSlot();
 	}
@@ -44,4 +45,24 @@ void UMVVM_LoadScreen::NewGameButtonPressed(int32 Slot)
 void UMVVM_LoadScreen::SelectSlotButtonPressed(int32 Slot)
 {
 
+}
+
+void UMVVM_LoadScreen::LoadData()
+{
+	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		for (const TTuple<int32, UMVVM_LoadSlot*>& LoadSlot : LoadSlots)
+		{
+			if (LoadSlot.Value)
+			{
+				// 각가 슬롯에 저장되어있는 세이브 게임 오브젝트를 가져와서 뷰모델에 세팅
+				if (ULoadScreenSaveGame* SaveObject = AuraGameMode->GetSaveLoadData(LoadSlot.Value->GetSlotName(), LoadSlot.Key))
+				{
+					LoadSlot.Value->SetPlayerName(SaveObject->PlayerName);
+					LoadSlot.Value->SetSlotStatus(SaveObject->SaveSlotStatus);
+					LoadSlot.Value->InitializeSlot();
+				}
+			}
+		}
+	}
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MVVMViewModelBase.h"
+#include "Game/LoadScreenSaveGame.h"
 #include "MVVM_LoadSlot.generated.h"
 
 // 위젯 스위처 전환할 때 사용할 델리게이트
@@ -21,6 +22,8 @@ public:
 	FORCEINLINE const FString& GetSlotName() const { return SlotName; }
 	FORCEINLINE void SetSlotName(const FString& InSlotName) { SlotName = InSlotName; }
 
+	FORCEINLINE void SetSlotStatus(ESaveSlotStatus InSlotStatus) { SlotStatus = InSlotStatus; }
+
 	const FString& GetPlayerName() const { return PlayerName; }
 	void SetPlayerName(const FString& InPlayerName);
 
@@ -32,6 +35,7 @@ public:
 	FSetWidgetSwitcherIndex SetWidgetSwitcherIndexDelegate;
 
 protected:
+	// UI와 바인딩할 변수
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	FString PlayerName;
 
@@ -41,4 +45,8 @@ private:
 	FString SlotName;
 	UPROPERTY()
 	int32 SlotIndex;
+
+	// 현재 로드 슬롯의 상태
+	UPROPERTY()
+	TEnumAsByte<ESaveSlotStatus> SlotStatus;
 };

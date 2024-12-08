@@ -11,14 +11,16 @@ void ALoadScreenHUD::BeginPlay()
 	if (!LoadScreenViewModelClass) return;
 	if (!LoadScreenWidgetClass) return;
 
-	if (LoadScreenViewModel = NewObject<UMVVM_LoadScreen>(this, LoadScreenViewModelClass))
-	{
-		LoadScreenViewModel->InitializeLoadSlot();
-	}
+	LoadScreenViewModel = NewObject<UMVVM_LoadScreen>(this, LoadScreenViewModelClass);
+	if (!LoadScreenViewModel) return;
 
-	if (LoadScreenWidget = CreateWidget<ULoadScreenWidget>(GetWorld(), LoadScreenWidgetClass))
-	{
-		LoadScreenWidget->AddToViewport();
-		LoadScreenWidget->BlueprintInitializeWidget();
-	}
+	LoadScreenWidget = CreateWidget<ULoadScreenWidget>(GetWorld(), LoadScreenWidgetClass);
+	if (!LoadScreenWidget) return;
+
+	LoadScreenViewModel->InitializeLoadSlot();
+	LoadScreenWidget->AddToViewport();
+	LoadScreenWidget->BlueprintInitializeWidget();
+
+	// 모든 슬롯에 저장된 값들 세팅
+	LoadScreenViewModel->LoadData();
 }

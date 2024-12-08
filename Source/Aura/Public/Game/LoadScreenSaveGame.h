@@ -6,6 +6,14 @@
 #include "GameFramework/SaveGame.h"
 #include "LoadScreenSaveGame.generated.h"
 
+UENUM(BlueprintType)
+enum ESaveSlotStatus
+{
+	Vacant,
+	EnterName,
+	Taken
+};
+
 /**
  * 저장할 게임 데이터
  */
@@ -21,4 +29,6 @@ public:
 	FString PlayerName = FString(TEXT("Default Nmae"));
 	UPROPERTY()
 	int32 SlotIndex = 0;
+	UPROPERTY()
+	TEnumAsByte<ESaveSlotStatus> SaveSlotStatus = ESaveSlotStatus::Vacant;
 };

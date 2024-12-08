@@ -26,6 +26,9 @@ public:
 	// 뷰모델을 통한 게임 데이터 저장
 	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
 
+	// 해당 슬롯에 저장된 세이브 게임오브젝트 확인
+	ULoadScreenSaveGame* GetSaveLoadData(const FString& SlotName, int32 SlotIndex) const;
+
 private:
 	// 모든 직업 정보를 가진 클래스
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
