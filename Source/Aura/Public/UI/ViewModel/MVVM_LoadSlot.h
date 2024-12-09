@@ -9,6 +9,8 @@
 
 // 위젯 스위처 전환할 때 사용할 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSetWidgetSwitcherIndex, int32, WidgetSwitcherIndex);
+// Taken의 슬롯 선택 버튼을 활성/비활성화할 때 사용할 델리게이트
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnableSelectSlotButton, bool, bEnable);
 
 /**
  * 로드 메뉴에서 각각의 로드 슬롯과 연결된 뷰모델 클래스
@@ -33,6 +35,9 @@ public:
 	// 위젯 스위처 전환할 때 사용할 델리게이트
 	UPROPERTY(BlueprintAssignable)
 	FSetWidgetSwitcherIndex SetWidgetSwitcherIndexDelegate;
+	// Taken의 슬롯 선택 버튼을 활성/비활성화할 때 사용할 델리게이트
+	UPROPERTY(BlueprintAssignable)
+	FEnableSelectSlotButton EnableSelectSlotButtonDelegate;
 
 protected:
 	// UI와 바인딩할 변수
