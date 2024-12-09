@@ -8,6 +8,9 @@
 
 class UMVVM_LoadSlot;
 
+// 슬롯이 선택될 때 알려줄 델리게이트
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSlotSelected);
+
 /**
  * 로드 메뉴와 연결된 뷰모델 클래스
  */
@@ -38,6 +41,11 @@ public:
 
 	// 모든 슬롯 내용 로드
 	void LoadData();
+
+public:
+	// 슬롯이 선택될 때 알려줄 델리게이트
+	UPROPERTY(BlueprintAssignable)
+	FSlotSelected SlotSelectedDelegate;
 
 private:
 	// 로드 슬롯 뷰모델 클래스
