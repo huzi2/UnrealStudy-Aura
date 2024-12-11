@@ -15,10 +15,7 @@ void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex)
 	if (!LoadScreenSaveGame) return;
 
 	// 세이브 슬롯이 중복될 경우 기존 걸 삭제
-	if (UGameplayStatics::DoesSaveGameExist(LoadSlot->GetSlotName(), SlotIndex))
-	{
-		UGameplayStatics::DeleteGameInSlot(LoadSlot->GetSlotName(), SlotIndex);
-	}
+	DeleteSlot(LoadSlot->GetSlotName(), SlotIndex);
 
 	// 데이터 저장
 	LoadScreenSaveGame->PlayerName = LoadSlot->GetPlayerName();
@@ -41,4 +38,12 @@ ULoadScreenSaveGame* AAuraGameModeBase::GetSaveLoadData(const FString& SlotName,
 		SaveGameObject = UGameplayStatics::CreateSaveGameObject(LoadScreenSaveGameClass);
 	}
 	return Cast<ULoadScreenSaveGame>(SaveGameObject);
+}
+
+void AAuraGameModeBase::DeleteSlot(const FString& SlotName, int32 SlotIndex)
+{
+	if (UGameplayStatics::DoesSaveGameExist(SlotName, SlotIndex))
+	{
+		UGameplayStatics::DeleteGameInSlot(SlotName, SlotIndex);
+	}
 }

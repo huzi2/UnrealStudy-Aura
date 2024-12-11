@@ -29,6 +29,9 @@ public:
 	// 해당 슬롯에 저장된 세이브 게임오브젝트 확인
 	ULoadScreenSaveGame* GetSaveLoadData(const FString& SlotName, int32 SlotIndex) const;
 
+	// 슬롯 삭제
+	static void DeleteSlot(const FString& SlotName, int32 SlotIndex);
+
 private:
 	// 모든 직업 정보를 가진 클래스
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")

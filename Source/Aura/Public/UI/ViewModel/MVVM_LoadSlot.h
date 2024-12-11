@@ -21,13 +21,14 @@ class AURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
 	GENERATED_BODY()
 	
 public:
-	FORCEINLINE const FString& GetSlotName() const { return SlotName; }
-	FORCEINLINE void SetSlotName(const FString& InSlotName) { SlotName = InSlotName; }
-
-	FORCEINLINE void SetSlotStatus(ESaveSlotStatus InSlotStatus) { SlotStatus = InSlotStatus; }
-
 	const FString& GetPlayerName() const { return PlayerName; }
+	FORCEINLINE const FString& GetSlotName() const { return SlotName; }
+	FORCEINLINE int32 GetSlotIndex() const { return SlotIndex; }
+
 	void SetPlayerName(const FString& InPlayerName);
+	FORCEINLINE void SetSlotName(const FString& InSlotName) { SlotName = InSlotName; }	
+	FORCEINLINE void SetSlotIndex(int32 InSlotIndex) { SlotIndex = InSlotIndex; }
+	FORCEINLINE void SetSlotStatus(ESaveSlotStatus InSlotStatus) { SlotStatus = InSlotStatus; }
 
 	void InitializeSlot();
 

@@ -39,6 +39,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SelectSlotButtonPressed(int32 Slot);
 
+	// 슬롯 삭제 버튼을 눌렀을 때
+	UFUNCTION(BlueprintCallable)
+	void DeleteButtonPressed();
+
 	// 모든 슬롯 내용 로드
 	void LoadData();
 
@@ -63,4 +67,8 @@ private:
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_1;
 	UPROPERTY()
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_2;
+
+	// 현재 선택하고 있는 슬롯
+	UPROPERTY()
+	TObjectPtr<UMVVM_LoadSlot> SelectedSlot;
 };

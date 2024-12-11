@@ -12,12 +12,17 @@ void UMVVM_LoadScreen::InitializeLoadSlot()
 	LoadSlots.Reserve(3);
 	LoadSlot_0 = NewObject<UMVVM_LoadSlot>(this, LoadSlotViewModelClass);
 	LoadSlot_0->SetSlotName(TEXT("LoadSlot_0"));
+	LoadSlot_0->SetSlotIndex(0);
 	LoadSlots.Add(0, LoadSlot_0);
+
 	LoadSlot_1 = NewObject<UMVVM_LoadSlot>(this, LoadSlotViewModelClass);
 	LoadSlot_1->SetSlotName(TEXT("LoadSlot_1"));
+	LoadSlot_1->SetSlotIndex(1);
 	LoadSlots.Add(1, LoadSlot_1);
+
 	LoadSlot_2 = NewObject<UMVVM_LoadSlot>(this, LoadSlotViewModelClass);
 	LoadSlot_2->SetSlotName(TEXT("LoadSlot_2"));
+	LoadSlot_2->SetSlotIndex(2);
 	LoadSlots.Add(2, LoadSlot_2);
 }
 
@@ -62,6 +67,20 @@ void UMVVM_LoadScreen::SelectSlotButtonPressed(int32 Slot)
 			}
 		}
 	}
+
+	SelectedSlot = LoadSlots[Slot];
+}
+
+void UMVVM_LoadScreen::DeleteButtonPressed()
+{
+	if (!IsValid(SelectedSlot)) return;
+
+	AAuraGameModeBase::DeleteSlot(SelectedSlot->GetSlotName(), SelectedSlot->GetSlotIndex());
+	SelectedSlot->SetSlotStatus(ESaveSlotStatus::Vacant);
+	// 슬롯 수정사항 업데이트
+	SelectedSlot->InitializeSlot();
+	// 선택 버튼은 다시 활성화
+	SelectedSlot->EnableSelectSlotButtonDelegate.Broadcast(true);
 }
 
 void UMVVM_LoadScreen::LoadData()
