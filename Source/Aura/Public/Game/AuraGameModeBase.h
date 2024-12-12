@@ -22,6 +22,7 @@ class AURA_API AAuraGameModeBase : public AGameModeBase
 public:
 	FORCEINLINE UCharacterClassInfo* GetCharacterClassInfo() const { return CharacterClassInfo; }
 	FORCEINLINE UAbilityInfo* GetAbilityInfo() const { return AbilityInfo; }
+	FORCEINLINE const FString& GetDefaultMapName() const { return DefaultMapName; }
 
 	// 뷰모델을 통한 게임 데이터 저장
 	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
@@ -31,6 +32,9 @@ public:
 
 	// 슬롯 삭제
 	static void DeleteSlot(const FString& SlotName, int32 SlotIndex);
+
+private:
+	virtual void BeginPlay() override;
 
 private:
 	// 모든 직업 정보를 가진 클래스
@@ -44,4 +48,14 @@ private:
 	// 세이브 게임 오브젝트 클래스
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ULoadScreenSaveGame> LoadScreenSaveGameClass;
+
+	// 게임 시작할 때 사용할 기본 맵 이름
+	UPROPERTY(EditDefaultsOnly)
+	FString DefaultMapName;
+	// 게임 시작할 때 사용할 기본 맵
+	UPROPERTY(EditDefaultsOnly)
+	TSoftObjectPtr<UWorld> DefaultMap;
+	// 게임에 사용할 모든 맵들
+	UPROPERTY(EditDefaultsOnly)
+	TMap<FString, TSoftObjectPtr<UWorld>> Maps;
 };
