@@ -43,6 +43,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DeleteButtonPressed();
 
+	// 시작 버튼을 눌렀을 때
+	UFUNCTION(BlueprintCallable)
+	void PlayButtonPressed();
+
 	// 모든 슬롯 내용 로드
 	void LoadData();
 

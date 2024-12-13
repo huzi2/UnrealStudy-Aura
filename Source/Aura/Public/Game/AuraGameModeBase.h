@@ -33,6 +33,9 @@ public:
 	// ΩΩ∑‘ ªË¡¶
 	static void DeleteSlot(const FString& SlotName, int32 SlotIndex);
 
+	// ΩΩ∑‘¿« ∏ ¿∏∑Œ ¿Ãµø
+	void TravelToMap(UMVVM_LoadSlot* Slot);
+
 private:
 	virtual void BeginPlay() override;
 
