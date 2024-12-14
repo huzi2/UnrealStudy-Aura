@@ -13,6 +13,16 @@ void UMVVM_LoadSlot::SetMapName(const FString& InMapName)
 	UE_MVVM_SET_PROPERTY_VALUE(MapName, InMapName);
 }
 
+void UMVVM_LoadSlot::SetSlotName(const FString& InSlotName)
+{
+	UE_MVVM_SET_PROPERTY_VALUE(SlotName, InSlotName);
+}
+
+void UMVVM_LoadSlot::SetPlayerLevel(int32 InPlayerLevel)
+{
+	UE_MVVM_SET_PROPERTY_VALUE(PlayerLevel, InPlayerLevel);
+}
+
 void UMVVM_LoadSlot::InitializeSlot()
 {
 	const int32 WidgetSwitcherIndex = SlotStatus.GetValue();

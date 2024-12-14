@@ -23,12 +23,14 @@ class AURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
 public:
 	const FString& GetPlayerName() const { return PlayerName; }
 	const FString& GetMapName() const { return MapName; }
-	FORCEINLINE const FString& GetSlotName() const { return SlotName; }
+	const FString& GetSlotName() const { return SlotName; }
+	int32 GetPlayerLevel() const { return PlayerLevel; }
 	FORCEINLINE int32 GetSlotIndex() const { return SlotIndex; }
 
 	void SetPlayerName(const FString& InPlayerName);
 	void SetMapName(const FString& InMapName);
-	FORCEINLINE void SetSlotName(const FString& InSlotName) { SlotName = InSlotName; }	
+	void SetSlotName(const FString& InSlotName);
+	void SetPlayerLevel(int32 InPlayerLevel);
 	FORCEINLINE void SetSlotIndex(int32 InSlotIndex) { SlotIndex = InSlotIndex; }
 	FORCEINLINE void SetSlotStatus(ESaveSlotStatus InSlotStatus) { SlotStatus = InSlotStatus; }
 
@@ -48,11 +50,13 @@ protected:
 	FString PlayerName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	FString MapName;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
+	FString SlotName;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
+	int32 PlayerLevel;
 
 private:
 	// 슬롯을 세이브할 때 사용할 변수들
-	UPROPERTY()
-	FString SlotName;
 	UPROPERTY()
 	int32 SlotIndex;
 
