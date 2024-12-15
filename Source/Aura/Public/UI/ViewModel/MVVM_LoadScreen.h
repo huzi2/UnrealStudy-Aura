@@ -20,6 +20,9 @@ class AURA_API UMVVM_LoadScreen : public UMVVMViewModelBase
 	GENERATED_BODY()
 
 public:
+	int32 GetNumLoadSlot() const { return NumLoadSlot; }
+	void SetNumLoadSlot(int32 InNumLoadSlot);
+
 	// 로드 슬롯 뷰모델들 생성
 	void InitializeLoadSlot();
 
@@ -54,6 +57,11 @@ public:
 	// 슬롯이 선택될 때 알려줄 델리게이트
 	UPROPERTY(BlueprintAssignable)
 	FSlotSelected SlotSelectedDelegate;
+
+protected:
+	// 뷰모델 생성하기 위한 필드 알림용 변수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
+	int32 NumLoadSlot;
 
 private:
 	// 로드 슬롯 뷰모델 클래스

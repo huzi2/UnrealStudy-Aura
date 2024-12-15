@@ -5,6 +5,11 @@
 #include "Game/AuraGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
+void UMVVM_LoadScreen::SetNumLoadSlot(int32 InNumLoadSlot)
+{
+	UE_MVVM_SET_PROPERTY_VALUE(NumLoadSlot, InNumLoadSlot);
+}
+
 void UMVVM_LoadScreen::InitializeLoadSlot()
 {
 	if (!LoadSlotViewModelClass) return;
@@ -24,6 +29,8 @@ void UMVVM_LoadScreen::InitializeLoadSlot()
 	LoadSlot_2->SetSlotName(TEXT("LoadSlot_2"));
 	LoadSlot_2->SetSlotIndex(2);
 	LoadSlots.Add(2, LoadSlot_2);
+
+	SetNumLoadSlot(LoadSlots.Num());
 }
 
 UMVVM_LoadSlot* UMVVM_LoadScreen::GetLoadSlotViewModelByIndex(int32 Index) const

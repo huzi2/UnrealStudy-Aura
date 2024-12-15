@@ -51,9 +51,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	FString MapName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
-	FString SlotName;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	int32 PlayerLevel;
+	// 뷰모델 생성하기 위한 필드 알림용 변수
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
+	FString SlotName;
 
 private:
 	// 슬롯을 세이브할 때 사용할 변수들
