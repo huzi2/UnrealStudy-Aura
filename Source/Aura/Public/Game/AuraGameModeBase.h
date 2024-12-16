@@ -38,6 +38,7 @@ public:
 
 private:
 	virtual void BeginPlay() override;
+	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
 
 private:
 	// 모든 직업 정보를 가진 클래스

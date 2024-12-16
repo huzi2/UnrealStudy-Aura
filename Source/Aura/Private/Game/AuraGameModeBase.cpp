@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "UI/ViewModel/MVVM_LoadSlot.h"
 #include "Game/LoadScreenSaveGame.h"
+#include "GameFramework/PlayerStart.h"
 
 void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex)
 {
@@ -64,4 +65,30 @@ void AAuraGameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	Maps.Add(DefaultMapName, DefaultMap);
+}
+
+AActor* AAuraGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
+{
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerStart::StaticClass(), Actors);
+
+	if (!Actors.IsEmpty())
+	{
+		// 기본값은 첫번째 객체 리턴
+		AActor* SelectedActor = Actors[0];
+		for (AActor* Actor : Actors)
+		{
+			if (APlayerStart* PlayerStart = Cast<APlayerStart>(Actor))
+			{
+				// 특정 태그를 가진 플레이어 스타트 객체를 찾음
+				if (PlayerStart->PlayerStartTag == FName(TEXT("TheTag")))
+				{
+					SelectedActor = PlayerStart;
+					break;
+				}
+			}
+		}
+		return SelectedActor;
+	}
+	return nullptr;
 }
