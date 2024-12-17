@@ -26,6 +26,7 @@ public:
 	const FString& GetSlotName() const { return SlotName; }
 	int32 GetPlayerLevel() const { return PlayerLevel; }
 	FORCEINLINE int32 GetSlotIndex() const { return SlotIndex; }
+	FORCEINLINE const FName& GetPlayerStartTag() const { return PlayerStartTag; }
 
 	void SetPlayerName(const FString& InPlayerName);
 	void SetMapName(const FString& InMapName);
@@ -33,6 +34,7 @@ public:
 	void SetPlayerLevel(int32 InPlayerLevel);
 	FORCEINLINE void SetSlotIndex(int32 InSlotIndex) { SlotIndex = InSlotIndex; }
 	FORCEINLINE void SetSlotStatus(ESaveSlotStatus InSlotStatus) { SlotStatus = InSlotStatus; }
+	FORCEINLINE void SetPlayerStartTag(const FName& InPlayerStartTag) { PlayerStartTag = InPlayerStartTag; }
 
 	void InitializeSlot();
 
@@ -64,4 +66,8 @@ private:
 	// 현재 로드 슬롯의 상태
 	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SlotStatus;
+
+	// 슬롯에서 마지막으로 사용한 플레이어 스타트 태그
+	UPROPERTY()
+	FName PlayerStartTag;
 };

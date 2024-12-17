@@ -47,6 +47,7 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
 		LoadSlots[Slot]->SetMapName(AuraGameMode->GetDefaultMapName());
 		LoadSlots[Slot]->SetPlayerLevel(1);
 		LoadSlots[Slot]->SetSlotStatus(ESaveSlotStatus::Taken);
+		LoadSlots[Slot]->SetPlayerStartTag(AuraGameMode->GetDefaultPlayerStartTag());
 		AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
 		LoadSlots[Slot]->InitializeSlot();
 
@@ -108,6 +109,13 @@ void UMVVM_LoadScreen::PlayButtonPressed()
 	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
 	if (!AuraGameMode) return;
 
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(AuraGameMode->GetGameInstance());
+	if (!AuraGameInstance) return;
+
+	// 마지막으로 선택한 슬롯의 플레이어 스타트 태그를 설정
+	AuraGameInstance->SetPlayerStartTag(SelectedSlot->GetPlayerStartTag());
+
+	// 해당 맵으로 이동
 	AuraGameMode->TravelToMap(SelectedSlot);
 }
 
@@ -125,6 +133,7 @@ void UMVVM_LoadScreen::LoadData()
 					LoadSlot.Value->SetPlayerName(SaveObject->PlayerName);
 					LoadSlot.Value->SetMapName(SaveObject->MapName);
 					LoadSlot.Value->SetSlotStatus(SaveObject->SaveSlotStatus);
+					LoadSlot.Value->SetPlayerStartTag(SaveObject->PlayerStartTag);
 					LoadSlot.Value->InitializeSlot();
 				}
 			}
