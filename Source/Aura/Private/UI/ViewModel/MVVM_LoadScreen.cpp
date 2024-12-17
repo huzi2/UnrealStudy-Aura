@@ -3,6 +3,7 @@
 #include "UI/ViewModel/MVVM_LoadScreen.h"
 #include "UI/ViewModel/MVVM_LoadSlot.h"
 #include "Game/AuraGameModeBase.h"
+#include "Game/AuraGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 void UMVVM_LoadScreen::SetNumLoadSlot(int32 InNumLoadSlot)
@@ -48,6 +49,14 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
 		LoadSlots[Slot]->SetSlotStatus(ESaveSlotStatus::Taken);
 		AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
 		LoadSlots[Slot]->InitializeSlot();
+
+		// 게임 인스턴스에 마지막에 추가한 슬롯의 정보를 기입
+		if (UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(AuraGameMode->GetGameInstance()))
+		{
+			AuraGameInstance->SetPlayerStartTag(AuraGameMode->GetDefaultPlayerStartTag());
+			AuraGameInstance->SetLoadSlotName(LoadSlots[Slot]->GetSlotName());
+			AuraGameInstance->SetLoadSlotIndex(LoadSlots[Slot]->GetSlotIndex());
+		}
 	}
 }
 

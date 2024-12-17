@@ -23,6 +23,7 @@ public:
 	FORCEINLINE UCharacterClassInfo* GetCharacterClassInfo() const { return CharacterClassInfo; }
 	FORCEINLINE UAbilityInfo* GetAbilityInfo() const { return AbilityInfo; }
 	FORCEINLINE const FString& GetDefaultMapName() const { return DefaultMapName; }
+	FORCEINLINE const FName& GetDefaultPlayerStartTag() const { return DefaultPlayerStartTag; }
 
 	// 뷰모델을 통한 게임 데이터 저장
 	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
@@ -59,6 +60,9 @@ private:
 	// 게임 시작할 때 사용할 기본 맵
 	UPROPERTY(EditDefaultsOnly)
 	TSoftObjectPtr<UWorld> DefaultMap;
+	// 게임 시작할 때 위치로 잡을 기본 플레이어 스타트의 태그
+	UPROPERTY(EditDefaultsOnly)
+	FName DefaultPlayerStartTag;
 	// 게임에 사용할 모든 맵들
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSoftObjectPtr<UWorld>> Maps;
