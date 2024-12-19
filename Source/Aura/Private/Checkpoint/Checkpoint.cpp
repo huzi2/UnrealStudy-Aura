@@ -2,6 +2,7 @@
 
 #include "Checkpoint/Checkpoint.h"
 #include "Components/SphereComponent.h"
+#include "Interaction/PlayerInterface.h"
 
 ACheckpoint::ACheckpoint(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -32,9 +33,12 @@ void ACheckpoint::BeginPlay()
 
 void ACheckpoint::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	// 플레이어와 충돌하면 메쉬의 머티리얼 변경
-	if (OtherActor && OtherActor->ActorHasTag(TEXT("Player")))
+	if (OtherActor && OtherActor->Implements<UPlayerInterface>())
 	{
+		// 최신 게임 진행상황 저장
+		IPlayerInterface::Execute_SaveProgress(OtherActor, PlayerStartTag);
+
+		// 메쉬의 머티리얼이 빛나도록 변경
 		HandleGlowEffects();
 	}
 }

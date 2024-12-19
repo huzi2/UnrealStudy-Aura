@@ -114,6 +114,8 @@ void UMVVM_LoadScreen::PlayButtonPressed()
 
 	// 마지막으로 선택한 슬롯의 플레이어 스타트 태그를 설정
 	AuraGameInstance->SetPlayerStartTag(SelectedSlot->GetPlayerStartTag());
+	AuraGameInstance->SetLoadSlotName(SelectedSlot->GetSlotName());
+	AuraGameInstance->SetLoadSlotIndex(SelectedSlot->GetSlotIndex());
 
 	// 해당 맵으로 이동
 	AuraGameMode->TravelToMap(SelectedSlot);

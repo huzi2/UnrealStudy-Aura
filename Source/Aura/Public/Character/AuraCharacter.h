@@ -49,6 +49,7 @@ private:
 	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) final;
 	virtual void ShowMagicCircle_Implementation(UMaterialInstance* DecalMaterial = nullptr) final;
 	virtual void HideMagicCircle_Implementation() final;
+	virtual void SaveProgress_Implementation(const FName& CheckpointTag) final;
 
 private:
 	// 다른 클라들도 이펙트를 볼 수 있도록 멀티캐스트 함수로 선언

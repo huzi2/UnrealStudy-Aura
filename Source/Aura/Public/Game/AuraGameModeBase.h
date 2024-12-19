@@ -37,6 +37,11 @@ public:
 	// 슬롯의 맵으로 이동
 	void TravelToMap(UMVVM_LoadSlot* Slot);
 
+	// 게임 인스턴스에 저장된 세이브 데이터 확인
+	ULoadScreenSaveGame* RetrieveInGameSaveData() const;
+	// 확인한 세이브 데이터에 현재 게임 상황을 저장
+	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
+
 private:
 	virtual void BeginPlay() override;
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;

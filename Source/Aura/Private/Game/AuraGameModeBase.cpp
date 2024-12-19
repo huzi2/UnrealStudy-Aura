@@ -62,6 +62,32 @@ void AAuraGameModeBase::TravelToMap(UMVVM_LoadSlot* Slot)
 	UGameplayStatics::OpenLevelBySoftObjectPtr(Slot, Maps.FindChecked(Slot->GetMapName()));
 }
 
+ULoadScreenSaveGame* AAuraGameModeBase::RetrieveInGameSaveData() const
+{
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(GetGameInstance());
+	if (!AuraGameInstance) return nullptr;
+
+	const FString& InGameLoadSlotName = AuraGameInstance->GetLoadSlotName();
+	const int32 InGameLoadSlotIndex = AuraGameInstance->GetLoadSlotIndex();
+	return GetSaveLoadData(InGameLoadSlotName, InGameLoadSlotIndex);
+}
+
+void AAuraGameModeBase::SaveInGameProgressData(ULoadScreenSaveGame* SaveObject)
+{
+	if (!SaveObject) return;
+
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(GetGameInstance());
+	if (!AuraGameInstance) return;
+
+	const FString& InGameLoadSlotName = AuraGameInstance->GetLoadSlotName();
+	const int32 InGameLoadSlotIndex = AuraGameInstance->GetLoadSlotIndex();
+
+	// 게임 인스턴스에도 최신 내용 적용
+	AuraGameInstance->SetPlayerStartTag(SaveObject->PlayerStartTag);
+
+	UGameplayStatics::SaveGameToSlot(SaveObject, InGameLoadSlotName, InGameLoadSlotIndex);
+}
+
 void AAuraGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();

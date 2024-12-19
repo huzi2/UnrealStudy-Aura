@@ -56,4 +56,8 @@ protected:
 	// 마법진 제거
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void HideMagicCircle();
+
+	// 체크포인트에서 플레이어의 상태 저장
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SaveProgress(const FName& CheckpointTag);
 };

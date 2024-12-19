@@ -12,6 +12,9 @@
 #include "Camera/CameraComponent.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Game/AuraGameModeBase.h"
+#include "Game/LoadScreenSaveGame.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -282,6 +285,20 @@ void AAuraCharacter::HideMagicCircle_Implementation()
 		AuraPlayerController->HideMagicCircle();
 		AuraPlayerController->bShowMouseCursor = true;
 	}
+}
+
+void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
+{
+	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (!AuraGameMode) return;
+
+	ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
+	if (!SaveData) return;
+
+	SaveData->PlayerStartTag = CheckpointTag;
+
+	// 최신화한 세이브 데이터 저장
+	AuraGameMode->SaveInGameProgressData(SaveData);
 }
 
 void AAuraCharacter::MulticastLevelUpParticles_Implementation() const

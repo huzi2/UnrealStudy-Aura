@@ -16,6 +16,8 @@ class AURA_API UAuraGameInstance : public UGameInstance
 	
 public:
 	FORCEINLINE const FName& GetPlayerStartTag() const { return PlayerStartTag; }
+	FORCEINLINE const FString& GetLoadSlotName() const { return LoadSlotName; }
+	FORCEINLINE int32 GetLoadSlotIndex() const { return LoadSlotIndex; }
 
 	FORCEINLINE void SetPlayerStartTag(const FName& InPlayerStartTag) { PlayerStartTag = InPlayerStartTag; }
 	FORCEINLINE void SetLoadSlotName(const FString& InLoadSlotName) { LoadSlotName = InLoadSlotName; }
