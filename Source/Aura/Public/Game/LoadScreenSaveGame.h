@@ -23,6 +23,7 @@ class AURA_API ULoadScreenSaveGame : public USaveGame
 	GENERATED_BODY()
 	
 public:
+	// 세이브 슬롯 관련 저장 내용
 	UPROPERTY()
 	FString SlotName = FString();
 	UPROPERTY()
@@ -35,4 +36,24 @@ public:
 	TEnumAsByte<ESaveSlotStatus> SaveSlotStatus = ESaveSlotStatus::Vacant;
 	UPROPERTY()
 	FName PlayerStartTag;
+
+	// 플레이어 관련 저장 내용
+	UPROPERTY()
+	int32 PlayerLevel = 0;
+	UPROPERTY()
+	int32 XP = 0;
+	UPROPERTY()
+	int32 SpellPoints = 0;
+	UPROPERTY()
+	int32 AttributePoints = 0;
+
+	// 플레이어 기본 능력치 저장 내용
+	UPROPERTY()
+	float Strength = 0.f;
+	UPROPERTY()
+	float Intelligence = 0.f;
+	UPROPERTY()
+	float Resilience = 0.f;
+	UPROPERTY()
+	float Vigor = 0.f;
 };
