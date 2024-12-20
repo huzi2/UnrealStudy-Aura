@@ -54,6 +54,9 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	// 서버에서 어빌리티 시스템 컴포넌트 초기화
 	InitAbilityActorInfo();
 
+	// 세이브 데이터에 저장된 능력치 로드
+	LoadProgress();
+
 	// 게임 시작부터 주어지는 어빌리티 
 	AddCharacterAbilities();
 }
@@ -99,9 +102,6 @@ void AAuraCharacter::InitAbilityActorInfo()
 			}
 		}
 	}
-
-	// 스탯 어트리뷰트 게임플레이 이펙트로 초기화
-	InitializeDefaultAttributes();
 }
 
 void AAuraCharacter::InitializeDefaultAttributes() const
@@ -298,6 +298,7 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 
 	// 세이브 데이터에 플레이어 정보 기입
 	SaveData->PlayerStartTag = CheckpointTag;
+	SaveData->bFirstTimeLoadIn = false;
 
 	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
 	{
@@ -328,5 +329,33 @@ void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
 		LevelUpNiagaraComponent->SetWorldRotation(ToCameraRotation);
 
 		LevelUpNiagaraComponent->Activate(true);
+	}
+}
+
+void AAuraCharacter::LoadProgress()
+{
+	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (!AuraGameMode) return;
+
+	ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
+	if (!SaveData) return;
+
+	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+	{
+		AuraPlayerState->SetLevel(SaveData->PlayerLevel);
+		AuraPlayerState->SetXP(SaveData->XP);
+		AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
+		AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
+	}
+
+	// 최초 로드라면 기존 데이터를 로드
+	if (SaveData->bFirstTimeLoadIn)
+	{
+		InitializeDefaultAttributes();
+		AddCharacterAbilities();
+	}
+	else
+	{
+
 	}
 }

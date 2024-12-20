@@ -51,10 +51,12 @@ private:
 	virtual void HideMagicCircle_Implementation() final;
 	virtual void SaveProgress_Implementation(const FName& CheckpointTag) final;
 
-private:
 	// 다른 클라들도 이펙트를 볼 수 있도록 멀티캐스트 함수로 선언
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastLevelUpParticles() const;
+
+	// 세이브 데이터에 저장된 능력치 로드
+	void LoadProgress();
 
 protected:
 	// 능력치 초기화에 사용할 게임플레이 이펙트들

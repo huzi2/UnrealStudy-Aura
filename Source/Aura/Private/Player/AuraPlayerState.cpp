@@ -61,11 +61,25 @@ void AAuraPlayerState::AddToXP(int32 InXP)
 	OnXPChangedDelegate.Broadcast(XP);
 }
 
+void AAuraPlayerState::SetAttributePoints(int32 InAttributePoints)
+{
+	AttributePoints = InAttributePoints;
+
+	OnAttributePointsChangedDelegate.Broadcast(AttributePoints);
+}
+
 void AAuraPlayerState::AddToAttributePoints(int32 InAttributePoints)
 {
 	AttributePoints += InAttributePoints;
 
 	OnAttributePointsChangedDelegate.Broadcast(AttributePoints);
+}
+
+void AAuraPlayerState::SetSpellPoints(int32 InSpellPoints)
+{
+	SpellPoints = InSpellPoints;
+
+	OnSpellPointsChangedDelegate.Broadcast(SpellPoints);
 }
 
 void AAuraPlayerState::AddToSpellPoints(int32 InSpellPoints)

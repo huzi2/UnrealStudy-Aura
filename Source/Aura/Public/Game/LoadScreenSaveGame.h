@@ -36,6 +36,8 @@ public:
 	TEnumAsByte<ESaveSlotStatus> SaveSlotStatus = ESaveSlotStatus::Vacant;
 	UPROPERTY()
 	FName PlayerStartTag;
+	UPROPERTY()
+	bool bFirstTimeLoadIn = true;
 
 	// 플레이어 관련 저장 내용
 	UPROPERTY()
@@ -43,9 +45,9 @@ public:
 	UPROPERTY()
 	int32 XP = 0;
 	UPROPERTY()
-	int32 SpellPoints = 0;
-	UPROPERTY()
 	int32 AttributePoints = 0;
+	UPROPERTY()
+	int32 SpellPoints = 0;
 
 	// 플레이어 기본 능력치 저장 내용
 	UPROPERTY()

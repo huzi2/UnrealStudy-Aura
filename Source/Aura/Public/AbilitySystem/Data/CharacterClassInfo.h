@@ -55,6 +55,9 @@ public:
 	const FCharacterClassDefaultInfo& GetClassDefaultInfo(ECharacterClass CharacterClass) const;
 
 public:
+	// 세이브 데이터로 세팅되는 기본 능력치
+	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
+	TSubclassOf<UGameplayEffect> PrimaryAttributes_SetByCaller;
 	// 2차 속성과 체력마나 능력치는 모든 클래스가 공유할 것
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;

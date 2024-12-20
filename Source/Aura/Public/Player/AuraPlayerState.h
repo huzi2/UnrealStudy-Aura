@@ -45,10 +45,10 @@ public:
 	void SetXP(int32 InXP);
 	void AddToXP(int32 InXP);
 
-	//void SetAttributePoints(int32 InAttributePoints);
+	void SetAttributePoints(int32 InAttributePoints);
 	void AddToAttributePoints(int32 InAttributePoints);
 
-	//void SetSpellPoints(int32 InSpellPoints);
+	void SetSpellPoints(int32 InSpellPoints);
 	void AddToSpellPoints(int32 InSpellPoints);
 
 public:
