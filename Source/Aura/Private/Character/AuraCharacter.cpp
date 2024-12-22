@@ -16,6 +16,7 @@
 #include "Game/AuraGameModeBase.h"
 #include "Game/LoadScreenSaveGame.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -56,9 +57,6 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 
 	// 세이브 데이터에 저장된 능력치 로드
 	LoadProgress();
-
-	// 게임 시작부터 주어지는 어빌리티 
-	AddCharacterAbilities();
 }
 
 void AAuraCharacter::OnRep_PlayerState()
@@ -340,22 +338,23 @@ void AAuraCharacter::LoadProgress()
 	ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
 	if (!SaveData) return;
 
-	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
-	{
-		AuraPlayerState->SetLevel(SaveData->PlayerLevel);
-		AuraPlayerState->SetXP(SaveData->XP);
-		AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
-		AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
-	}
-
 	// 최초 로드라면 기존 데이터를 로드
 	if (SaveData->bFirstTimeLoadIn)
 	{
 		InitializeDefaultAttributes();
 		AddCharacterAbilities();
 	}
+	// 최초 로드가 아니면 저장된 데이터에서 능력치를 세팅
 	else
 	{
+		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
+		{
+			AuraPlayerState->SetLevel(SaveData->PlayerLevel);
+			AuraPlayerState->SetXP(SaveData->XP);
+			AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
+			AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
+		}
 
+		UAuraAbilitySystemLibrary::InitializeDefaultAttributesFromSaveData(this, AbilitySystemComponent, SaveData);
 	}
 }

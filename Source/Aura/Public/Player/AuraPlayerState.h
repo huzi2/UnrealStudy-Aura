@@ -13,6 +13,8 @@ class ULevelUpInfo;
 
 // 플레이어 스테이트의 변수가 변경되었을 때 호출할 델리게이트
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStateChanged, int32);
+// 레벨만 변경되었을 때 호출할 델리게이트(데이터 로드로 레벨업 했을 경우 알림을 알리지 않기 위한 bool 값)
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnLevelChanged, int32, bool);
 
 /**
  * 레벨과 경험치를 관리하는 플레이어 스테이트 클래스
@@ -53,7 +55,7 @@ public:
 
 public:
 	// 레벨이 변경되었을 때 호출할 델리게이트
-	FOnPlayerStateChanged OnLevelChangedDelegate;
+	FOnLevelChanged OnLevelChangedDelegate;
 	// XP가 변경되었을 때 호출할 델리게이트
 	FOnPlayerStateChanged OnXPChangedDelegate;
 	// 능력치 포인트가 변경되었을 때 호출할 델리게이트

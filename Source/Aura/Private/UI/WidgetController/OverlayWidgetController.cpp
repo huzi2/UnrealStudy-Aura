@@ -20,9 +20,9 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
 	// 레벨이 변경됬을 때 함수 바인드
 	AuraPlayerState->OnLevelChangedDelegate.AddLambda(
-		[this](int32 NewLevel)
+		[this](int32 NewLevel, bool bLevelUp)
 		{
-			OnPlayerLevelChangedDelegate.Broadcast(NewLevel);
+			OnPlayerLevelChangedDelegate.Broadcast(NewLevel, bLevelUp);
 		}
 	);
 

@@ -37,14 +37,16 @@ void AAuraPlayerState::SetLevel(int32 InLevel)
 {
 	Level = InLevel;
 
-	OnLevelChangedDelegate.Broadcast(Level);
+	// bool을 false로 해서 UI가 알림을 띄우지 않도록 한다.(로드했는데 레벨업 알림 뜨는 거 방지)
+	OnLevelChangedDelegate.Broadcast(Level, false);
 }
 
 void AAuraPlayerState::AddToLevel(int32 InLevel)
 {
 	Level += InLevel;
 
-	OnLevelChangedDelegate.Broadcast(Level);
+	// AddToLevel은 게임 내에서 레벨업할 경우에 사용하기에 UI에 알림
+	OnLevelChangedDelegate.Broadcast(Level, true);
 }
 
 void AAuraPlayerState::SetXP(int32 InXP)
@@ -91,7 +93,7 @@ void AAuraPlayerState::AddToSpellPoints(int32 InSpellPoints)
 
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)
 {
-	OnLevelChangedDelegate.Broadcast(Level);
+	OnLevelChangedDelegate.Broadcast(Level, true);
 }
 
 void AAuraPlayerState::OnRep_XP(int32 OldXP)

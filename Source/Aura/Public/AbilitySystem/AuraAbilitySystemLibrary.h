@@ -13,6 +13,7 @@ class USpellMenuWidgetController;
 class UAbilitySystemComponent;
 class AAuraHUD;
 class UAbilityInfo;
+class ULoadScreenSaveGame;
 struct FWidgetControllerParams;
 struct FDamageEffectParams;
 
@@ -48,6 +49,10 @@ public:
 	// 적 캐릭터들의 클래스별로 능력치 초기화
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void InitializeDefaultAttributes(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* AbilitySystemComponent);
+	
+	// 기본 능력치를 세이브 데이터로 로드
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
+	static void InitializeDefaultAttributesFromSaveData(const UObject* WorldContextObject, UAbilitySystemComponent* AbilitySystemComponent, const ULoadScreenSaveGame* SaveGame);
 
 	// 적 캐릭터들의 기본 시작 어빌리티들 부여
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")

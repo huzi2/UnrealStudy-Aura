@@ -37,6 +37,8 @@ public:
 
 // 어트리뷰트 세트의 값이 변경될 때 위젯들에게 알려줄 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
+// 레벨이 변경되었을 때 위젯들에게 알려줄 델리게이트. bool 값은 알림을 띄울지 여부
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLevelChangedSignature, int32, NewValue, bool, bLevelUp);
 // 태그에 따른 메시지 위젯을 표시할 때 사용할 델리게이트
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
@@ -86,7 +88,7 @@ public:
 
 	// 레벨 업 시 레벨을 수정할 델리게이트
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Level")
-	FOnPlayerStatChangedSignature OnPlayerLevelChangedDelegate;
+	FOnLevelChangedSignature OnPlayerLevelChangedDelegate;
 
 protected:
 	// 메시지 관련 데이터 테이블
