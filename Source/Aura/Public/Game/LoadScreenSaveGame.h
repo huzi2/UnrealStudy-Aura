@@ -41,7 +41,7 @@ public:
 
 	// 플레이어 관련 저장 내용
 	UPROPERTY()
-	int32 PlayerLevel = 0;
+	int32 PlayerLevel = 1;
 	UPROPERTY()
 	int32 XP = 0;
 	UPROPERTY()

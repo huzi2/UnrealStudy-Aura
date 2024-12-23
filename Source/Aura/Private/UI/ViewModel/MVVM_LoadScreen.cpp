@@ -134,6 +134,7 @@ void UMVVM_LoadScreen::LoadData()
 				{
 					LoadSlot.Value->SetPlayerName(SaveObject->PlayerName);
 					LoadSlot.Value->SetMapName(SaveObject->MapName);
+					LoadSlot.Value->SetPlayerLevel(SaveObject->PlayerLevel);
 					LoadSlot.Value->SetSlotStatus(SaveObject->SaveSlotStatus);
 					LoadSlot.Value->SetPlayerStartTag(SaveObject->PlayerStartTag);
 					LoadSlot.Value->InitializeSlot();
