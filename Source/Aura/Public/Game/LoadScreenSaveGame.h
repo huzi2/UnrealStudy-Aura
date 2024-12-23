@@ -4,14 +4,39 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
+#include "GameplayTagContainer.h"
 #include "LoadScreenSaveGame.generated.h"
 
+class UGameplayAbility;
+
+// 활성화된 슬롯 종류
 UENUM(BlueprintType)
 enum ESaveSlotStatus
 {
 	Vacant,
 	EnterName,
 	Taken
+};
+
+// 어빌리티 저장을 위한 구조체
+USTRUCT(BlueprintType)
+struct FSavedAbility
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ClassDefaults")
+	TSubclassOf<UGameplayAbility> GameplayAbility;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	FGameplayTag AbilityTag = FGameplayTag();
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	FGameplayTag AbilityStatusTag = FGameplayTag();
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	FGameplayTag AbilityInputTag = FGameplayTag();
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	FGameplayTag AbilityTypeTag = FGameplayTag();
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	int32 AbilityLevel;
 };
 
 /**
@@ -58,4 +83,8 @@ public:
 	float Resilience = 0.f;
 	UPROPERTY()
 	float Vigor = 0.f;
+
+	// 플레이어가 가지고 있던 스킬들
+	UPROPERTY()
+	TArray<FSavedAbility> SavedAbilities;
 };

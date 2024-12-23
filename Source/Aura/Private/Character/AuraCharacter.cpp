@@ -17,6 +17,7 @@
 #include "Game/LoadScreenSaveGame.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "AbilitySystem/Data/AbilityInfo.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -294,9 +295,10 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 	ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
 	if (!SaveData) return;
 
+	SaveData->bFirstTimeLoadIn = false;
+
 	// 세이브 데이터에 플레이어 정보 기입
 	SaveData->PlayerStartTag = CheckpointTag;
-	SaveData->bFirstTimeLoadIn = false;
 
 	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
 	{
@@ -306,10 +308,41 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 		SaveData->SpellPoints = AuraPlayerState->GetSpellPoints();
 	}
 
+	// 능력치 저장
 	SaveData->Strength = UAuraAttributeSet::GetStrengthAttribute().GetNumericValue(GetAttributeSet());
 	SaveData->Intelligence = UAuraAttributeSet::GetIntelligenceAttribute().GetNumericValue(GetAttributeSet());
 	SaveData->Resilience = UAuraAttributeSet::GetResilienceAttribute().GetNumericValue(GetAttributeSet());
 	SaveData->Vigor = UAuraAttributeSet::GetVigorAttribute().GetNumericValue(GetAttributeSet());
+
+	// 스킬 저장은 서버만
+	if (HasAuthority())
+	{
+		// 가지고 있던 스킬들 저장하는 람다 생성
+		if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+		{
+			FForEachAbility SaveAbilityDelegate;
+			SaveAbilityDelegate.BindLambda([this, AuraAbilitySystemComponent, &SaveData](const FGameplayAbilitySpec& AbilitySpec)
+				{
+					const UAbilityInfo* AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo(this);
+					if (!AbilityInfo) return;
+
+					const FGameplayTag AbilityTag = AuraAbilitySystemComponent->GetAbilityTagFromSpec(AbilitySpec);
+					const FAuraAbilityInfo AuraAbilityInfo = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
+
+					FSavedAbility SavedAbility;
+					SavedAbility.GameplayAbility = AuraAbilityInfo.Ability;
+					SavedAbility.AbilityTag = AbilityTag;
+					SavedAbility.AbilityStatusTag = AuraAbilitySystemComponent->GetStatusFromAbilityTag(AbilityTag);
+					SavedAbility.AbilityInputTag = AuraAbilitySystemComponent->GetInputTagFromAbilityTag(AbilityTag);
+					SavedAbility.AbilityTypeTag = AuraAbilityInfo.AbilityTypeTag;
+					SavedAbility.AbilityLevel = AbilitySpec.Level;
+					SaveData->SavedAbilities.Add(SavedAbility);
+				});
+
+			// 모든 스킬 돌면서 스킬 저장
+			AuraAbilitySystemComponent->ForEachAbility(SaveAbilityDelegate);
+		}
+	}
 
 	// 최신화한 세이브 데이터 저장
 	AuraGameMode->SaveInGameProgressData(SaveData);
