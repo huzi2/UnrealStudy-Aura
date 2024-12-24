@@ -6,6 +6,8 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAbilitySystemComponent.generated.h"
 
+class ULoadScreenSaveGame;
+
 // 적용된 이펙트 자체의 에셋 태그를 확인해서 해당 태그에 대한 델리게이트
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer&)
 // 어빌리티가 적용 때마다 수행할 델리게이트
@@ -69,6 +71,8 @@ public:
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilites);
 	// 캐릭터에 패시브 어빌리티 추가
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilites);
+	// 세이브 데이터를 통해 어빌리티 추가
+	void AddCharacterAbilitiesFromSaveData(ULoadScreenSaveGame* SaveData);
 
 	// 입력이 눌렀을 때 연결된 태그 함수 호출
 	void AbilityInputTagPressed(const FGameplayTag& InputTag);

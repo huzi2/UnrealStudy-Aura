@@ -380,12 +380,19 @@ void AAuraCharacter::LoadProgress()
 	// 최초 로드가 아니면 저장된 데이터에서 능력치를 세팅
 	else
 	{
+		// 능력치 로드
 		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
 		{
 			AuraPlayerState->SetLevel(SaveData->PlayerLevel);
 			AuraPlayerState->SetXP(SaveData->XP);
 			AuraPlayerState->SetAttributePoints(SaveData->AttributePoints);
 			AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
+		}
+
+		// 스킬 로드
+		if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+		{
+			AuraAbilitySystemComponent->AddCharacterAbilitiesFromSaveData(SaveData);
 		}
 
 		UAuraAbilitySystemLibrary::InitializeDefaultAttributesFromSaveData(this, AbilitySystemComponent, SaveData);
