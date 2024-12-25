@@ -445,6 +445,10 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 					// 이펙트 활성화
 					MulticastActivatePassiveEffect(GetAbilityTagFromSpec(*AbilitySpec), true);
 				}
+
+				// 기존 상태 태그를 제거하고 장착된 태그로 설정
+				AbilitySpec->DynamicAbilityTags.RemoveTag(GetStatusFromSpec(*AbilitySpec));
+				AbilitySpec->DynamicAbilityTags.AddTag(GameplayTags.Abilities_Status_Equipped);
 			}
 
 			// 해당 슬롯에 스킬 등록

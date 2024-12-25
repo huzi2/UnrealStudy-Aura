@@ -336,9 +336,10 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 					SavedAbility.AbilityInputTag = AuraAbilitySystemComponent->GetInputTagFromAbilityTag(AbilityTag);
 					SavedAbility.AbilityTypeTag = AuraAbilityInfo.AbilityTypeTag;
 					SavedAbility.AbilityLevel = AbilitySpec.Level;
-					SaveData->SavedAbilities.Add(SavedAbility);
+					SaveData->SavedAbilities.AddUnique(SavedAbility);
 				});
 
+			SaveData->SavedAbilities.Empty();
 			// 모든 스킬 돌면서 스킬 저장
 			AuraAbilitySystemComponent->ForEachAbility(SaveAbilityDelegate);
 		}

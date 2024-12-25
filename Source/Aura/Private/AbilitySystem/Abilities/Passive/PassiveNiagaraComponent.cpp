@@ -4,6 +4,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Interaction/CombatInterface.h"
+#include "AuraGameplayTags.h"
 
 UPassiveNiagaraComponent::UPassiveNiagaraComponent()
 {
@@ -17,6 +18,8 @@ void UPassiveNiagaraComponent::BeginPlay()
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner())))
 	{
 		AuraAbilitySystemComponent->ActivatePassiveAbilityDelegate.AddUObject(this, &ThisClass::OnPassiveAbilityActivate);
+		
+		ActivateIfEquipped(AuraAbilitySystemComponent);
 	}
 	// 아직 AuraAbilitySystemComponent를 생성하지 못했다면
 	else if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetOwner()))
@@ -24,6 +27,8 @@ void UPassiveNiagaraComponent::BeginPlay()
 		CombatInterface->GetOnAbilitySystemComponentRegisteredDelegate().AddLambda([this](UAuraAbilitySystemComponent* AuraAbilitySystemComponent)
 			{
 				AuraAbilitySystemComponent->ActivatePassiveAbilityDelegate.AddUObject(this, &ThisClass::OnPassiveAbilityActivate);
+
+				ActivateIfEquipped(AuraAbilitySystemComponent);
 			});
 	}
 }
@@ -40,5 +45,14 @@ void UPassiveNiagaraComponent::OnPassiveAbilityActivate(const FGameplayTag& Abil
 		{
 			Deactivate();
 		}
+	}
+}
+
+void UPassiveNiagaraComponent::ActivateIfEquipped(UAuraAbilitySystemComponent* AuraAbilitySystemComponent)
+{
+	const bool bStartupAbilitiesActivated = AuraAbilitySystemComponent->bStartupAbilitiesGiven;
+	if (bStartupAbilitiesActivated && AuraAbilitySystemComponent->GetStatusFromAbilityTag(PassiveSpellTag) == UAuraGameplayTags::Get().Abilities_Status_Equipped)
+	{
+		Activate();
 	}
 }

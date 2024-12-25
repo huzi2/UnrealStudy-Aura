@@ -39,6 +39,12 @@ public:
 	int32 AbilityLevel;
 };
 
+// FSavedAbility가 같다는 조건. AddUnique를 위해 만들었음
+inline bool operator==(const FSavedAbility& a, const FSavedAbility& b)
+{
+	return a.AbilityTag.MatchesTagExact(b.AbilityTag);
+}
+
 /**
  * 저장할 게임 데이터
  */
