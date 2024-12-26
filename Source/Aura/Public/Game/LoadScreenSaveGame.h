@@ -18,6 +18,44 @@ enum ESaveSlotStatus
 	Taken
 };
 
+// 액터 상태를 저장하기 위한 구조체
+USTRUCT()
+struct FSavedActor
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FName ActorName = FName();
+
+	UPROPERTY()
+	FTransform Transform = FTransform();
+
+	// 액터에서 SaveGame으로 설정된 변수들을 직렬화로 저장하는 변수
+	UPROPERTY()
+	TArray<uint8> Bytes;
+};
+
+inline bool operator==(const FSavedActor& a, const FSavedActor& b)
+{
+	return a.ActorName == b.ActorName;
+}
+
+// 맵 상태를 저장하기 위한 구조체
+USTRUCT()
+struct FSavedMap
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FString MapAssetName = FString();
+
+	// 맵에 있던 모든 액터들 정보
+	UPROPERTY()
+	TArray<FSavedActor> SavedActors;
+};
+
 // 어빌리티 저장을 위한 구조체
 USTRUCT(BlueprintType)
 struct FSavedAbility
@@ -53,6 +91,10 @@ class AURA_API ULoadScreenSaveGame : public USaveGame
 {
 	GENERATED_BODY()
 	
+public:
+	FSavedMap GetSavedMapWithMapName(const FString& InMapName) const;
+	bool HasMap(const FString& InMapName) const;
+
 public:
 	// 세이브 슬롯 관련 저장 내용
 	UPROPERTY()
@@ -93,4 +135,8 @@ public:
 	// 플레이어가 가지고 있던 스킬들
 	UPROPERTY()
 	TArray<FSavedAbility> SavedAbilities;
+
+	// 게임에 있던 모든 맵 정보
+	UPROPERTY()
+	TArray<FSavedMap> SavedMaps;
 };
