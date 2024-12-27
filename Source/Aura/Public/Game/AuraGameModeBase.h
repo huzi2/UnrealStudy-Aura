@@ -39,8 +39,10 @@ public:
 
 	// 게임 인스턴스에 저장된 세이브 데이터 확인
 	ULoadScreenSaveGame* RetrieveInGameSaveData() const;
-	// 확인한 세이브 데이터에 현재 게임 상황을 저장
+	// 확인한 세이브 데이터에 현재 플레이어 게임 상황을 저장
 	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
+	// 전체 게임 상황을 저장
+	void SaveWorldState(UWorld* World);
 
 private:
 	virtual void BeginPlay() override;

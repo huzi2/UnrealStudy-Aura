@@ -31,7 +31,7 @@ public:
 	UPROPERTY()
 	FTransform Transform = FTransform();
 
-	// 액터에서 SaveGame으로 설정된 변수들을 직렬화로 저장하는 변수
+	// 액터에서 SaveGame으로 설정된 변수들을 직렬화로 저장하는 변수(FMemoryWriter에서 사용)
 	UPROPERTY()
 	TArray<uint8> Bytes;
 };

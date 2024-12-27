@@ -6,6 +6,9 @@
 #include "Game/LoadScreenSaveGame.h"
 #include "Game/AuraGameInstance.h"
 #include "GameFramework/PlayerStart.h"
+#include "EngineUtils.h"
+#include "Interaction/SaveInterface.h"
+#include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 
 void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex)
 {
@@ -86,6 +89,63 @@ void AAuraGameModeBase::SaveInGameProgressData(ULoadScreenSaveGame* SaveObject)
 	AuraGameInstance->SetPlayerStartTag(SaveObject->PlayerStartTag);
 
 	UGameplayStatics::SaveGameToSlot(SaveObject, InGameLoadSlotName, InGameLoadSlotIndex);
+}
+
+void AAuraGameModeBase::SaveWorldState(UWorld* World)
+{
+	if (!World) return;
+
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(GetGameInstance());
+	if (!AuraGameInstance) return;
+
+	ULoadScreenSaveGame* SaveObject = GetSaveLoadData(AuraGameInstance->GetLoadSlotName(), AuraGameInstance->GetLoadSlotIndex());
+	if (!SaveObject) return;
+
+	// 맵 저장
+	FString WorldName = World->GetMapName();
+	WorldName.RemoveFromStart(World->StreamingLevelsPrefix);
+
+	if (!SaveObject->HasMap(WorldName))
+	{
+		FSavedMap NewSavedMap;
+		NewSavedMap.MapAssetName = WorldName;
+		SaveObject->SavedMaps.Add(NewSavedMap);
+	}
+
+	// 맵의 액터들 저장
+	FSavedMap SavedMap = SaveObject->GetSavedMapWithMapName(WorldName);
+	SavedMap.SavedActors.Empty();
+
+	for (FActorIterator It(World); It; ++It)
+	{
+		AActor* Actor = *It;
+		if(!IsValid(Actor) || !Actor->Implements<USaveInterface>()) continue;
+
+		FSavedActor SavedActor;
+		SavedActor.ActorName = Actor->GetFName();
+		SavedActor.Transform = Actor->GetTransform();
+
+		// 메모리에 데이터를 직렬화하기 위한 클래스
+		FMemoryWriter MemoryWriter(SavedActor.Bytes);
+		// UObject 객체를 이름 기준으로 직렬화해주는 클래스
+		FObjectAndNameAsStringProxyArchive Archive(MemoryWriter, true);
+		Archive.ArIsSaveGame = true;
+
+		Actor->Serialize(Archive);
+
+		SavedMap.SavedActors.AddUnique(SavedActor);
+	}
+
+	for (FSavedMap& MapToReplace : SaveObject->SavedMaps)
+	{
+		if (MapToReplace.MapAssetName == WorldName)
+		{
+			MapToReplace = SavedMap;
+			break;
+		}
+	}
+
+	UGameplayStatics::SaveGameToSlot(SaveObject, AuraGameInstance->GetLoadSlotName(), AuraGameInstance->GetLoadSlotIndex());
 }
 
 void AAuraGameModeBase::BeginPlay()

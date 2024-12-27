@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerStart.h"
+#include "Interaction/SaveInterface.h"
 #include "Checkpoint.generated.h"
 
 class USphereComponent;
@@ -12,7 +13,7 @@ class USphereComponent;
  * 체크포인트 객체 클래스
  */
 UCLASS()
-class AURA_API ACheckpoint : public APlayerStart
+class AURA_API ACheckpoint : public APlayerStart, public ISaveInterface
 {
 	GENERATED_BODY()
 
@@ -21,6 +22,10 @@ private:
 
 private:
 	virtual void BeginPlay() final;
+
+public:
+	bool IsReached() const { return bReached; }
+	void SetIsReached(bool bInReached) { bReached = bInReached; }
 
 protected:
 	// 블루프린트에서 머티리얼과 타임라인을 연결하기위한 함수
@@ -34,6 +39,10 @@ private:
 
 	// 체크포인트에 캐릭터가 닿았을 때 메쉬의 머티리얼 변경
 	void HandleGlowEffects();
+
+protected:
+	UPROPERTY(BlueprintReadOnly, SaveGame)
+	bool bReached = false;
 
 private:
 	UPROPERTY(VisibleAnywhere)
