@@ -9,6 +9,7 @@
 #include "EngineUtils.h"
 #include "Interaction/SaveInterface.h"
 #include "Serialization/ObjectAndNameAsStringProxyArchive.h"
+#include "Aura/AuraLogChannels.h"
 
 void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex)
 {
@@ -91,7 +92,7 @@ void AAuraGameModeBase::SaveInGameProgressData(ULoadScreenSaveGame* SaveObject)
 	UGameplayStatics::SaveGameToSlot(SaveObject, InGameLoadSlotName, InGameLoadSlotIndex);
 }
 
-void AAuraGameModeBase::SaveWorldState(UWorld* World)
+void AAuraGameModeBase::SaveWorldState(UWorld* World) const
 {
 	if (!World) return;
 
@@ -146,6 +147,54 @@ void AAuraGameModeBase::SaveWorldState(UWorld* World)
 	}
 
 	UGameplayStatics::SaveGameToSlot(SaveObject, AuraGameInstance->GetLoadSlotName(), AuraGameInstance->GetLoadSlotIndex());
+}
+
+void AAuraGameModeBase::LoadWorldState(UWorld* World) const
+{
+	if (!World) return;
+
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(GetGameInstance());
+	if (!AuraGameInstance) return;
+
+	FString WorldName = World->GetMapName();
+	WorldName.RemoveFromStart(World->StreamingLevelsPrefix);
+
+	if (UGameplayStatics::DoesSaveGameExist(AuraGameInstance->GetLoadSlotName(), AuraGameInstance->GetLoadSlotIndex()))
+	{
+		ULoadScreenSaveGame* SaveObject = Cast<ULoadScreenSaveGame>(UGameplayStatics::LoadGameFromSlot(AuraGameInstance->GetLoadSlotName(), AuraGameInstance->GetLoadSlotIndex()));
+		if (!SaveObject)
+		{
+			UE_LOG(LogAura, Error, TEXT("Failed to load slot"));
+			return;
+		}
+
+		for (FActorIterator It(World); It; ++It)
+		{
+			AActor* Actor = *It;
+			if (!IsValid(Actor) || !Actor->Implements<USaveInterface>()) continue;
+
+			for (const FSavedActor& SavedActor : SaveObject->GetSavedMapWithMapName(WorldName).SavedActors)
+			{
+				if (SavedActor.ActorName == Actor->GetFName())
+				{
+					if (ISaveInterface::Execute_ShouldLoadTransform(Actor))
+					{
+						Actor->SetActorTransform(SavedActor.Transform);
+					}
+
+					FMemoryReader MemoryReader(SavedActor.Bytes);
+					FObjectAndNameAsStringProxyArchive Archive(MemoryReader, true);
+					Archive.ArIsSaveGame = true;
+
+					// 저장되어있던 직렬화 데이터를 역직렬화해서 액터에 세팅
+					Actor->Serialize(Archive);
+
+					// 로드되었으므로 체크포인트에 불을 킨다
+					ISaveInterface::Execute_LoadActor(Actor);
+				}
+			}
+		}
+	}
 }
 
 void AAuraGameModeBase::BeginPlay()

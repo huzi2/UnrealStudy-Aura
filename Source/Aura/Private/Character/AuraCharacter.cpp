@@ -58,6 +58,12 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 
 	// 세이브 데이터에 저장된 능력치 로드
 	LoadProgress();
+
+	// 게임 상태를 로드
+	if (AAuraGameModeBase* AuraGameModeBase = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		AuraGameModeBase->LoadWorldState(GetWorld());
+	}
 }
 
 void AAuraCharacter::OnRep_PlayerState()

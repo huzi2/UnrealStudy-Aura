@@ -23,6 +23,10 @@ private:
 private:
 	virtual void BeginPlay() final;
 
+	// ISaveInterface에서 상속
+	virtual bool ShouldLoadTransform_Implementation() const override { return false; };
+	virtual void LoadActor_Implementation() override;
+
 public:
 	bool IsReached() const { return bReached; }
 	void SetIsReached(bool bInReached) { bReached = bInReached; }

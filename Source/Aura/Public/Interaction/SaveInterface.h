@@ -14,12 +14,18 @@ class USaveInterface : public UInterface
 };
 
 /**
- * 
+ * 액터를 저장, 로드할 때 사용할 인터페이스
  */
 class AURA_API ISaveInterface
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	// 트랜스폼을 로드할 필요가 있는 객체인가?
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	bool ShouldLoadTransform() const;
+
+	// 로드 후 수생할 함수
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void LoadActor();
 };
