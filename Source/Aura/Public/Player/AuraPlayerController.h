@@ -10,7 +10,7 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
-class IEnemyInterface;
+class IHighlightInterface;
 class UAuraInputConfig;
 struct FGameplayTag;
 class UAuraAbilitySystemComponent;
@@ -96,9 +96,9 @@ private:
 
 	// 커서 선택 관련
 	// 이전 선택 액터
-	IEnemyInterface* LastActor;
+	IHighlightInterface* LastActor;
 	// 현재 선택 액터
-	IEnemyInterface* ThisActor;
+	IHighlightInterface* ThisActor;
 	// 커서의 라인트레이스 결과
 	FHitResult CursorHit;
 

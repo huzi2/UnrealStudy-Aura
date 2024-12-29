@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
+#include "Interaction/HighlightInterface.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "AuraEnemy.generated.h"
 
@@ -16,7 +17,7 @@ class AAuraAIController;
  * 몬스터 캐릭터 클래스
  */
 UCLASS()
-class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface
+class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface, public IHighlightInterface
 {
 	GENERATED_BODY()
 	
@@ -37,10 +38,12 @@ private:
 	virtual int32 GetPlayerLevel_Implementation() const final;
 
 	// IEnemyInterface에서 상속
-	virtual void HighlightActor() final;
-	virtual void UnHighlightActor() final;
 	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) final;
 	virtual AActor* GetCombatTarget_Implementation() const final;
+
+	// IHighlightInterface에서 상속
+	virtual void HighlightActor() final;
+	virtual void UnHighlightActor() final;
 
 private:
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
