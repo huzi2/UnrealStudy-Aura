@@ -19,6 +19,15 @@ class UDamageTextComponent;
 class UNiagaraSystem;
 class AMagicCircle;
 
+// 터겟 중인 대상
+UENUM()
+enum class ETargetingStatus : uint8
+{
+	TargetingEnemy,
+	TargetingNonEnemy,
+	NotTargeting
+};
+
 /**
  * 커스텀 플레이어 컨트롤러 클래스
  */
@@ -60,6 +69,10 @@ private:
 	
 	// 커서 아래 타겟 확인
 	void CursorTrace();
+	// 해당 액터를 하아라이트
+	static void HighlightActor(AActor* InActor);
+	// 액터 하이라이트 제거
+	static void UnHighlightActor(AActor* InActor);
 
 	// 자동 이동
 	void AutoRun();
@@ -96,9 +109,11 @@ private:
 
 	// 커서 선택 관련
 	// 이전 선택 액터
-	IHighlightInterface* LastActor;
+	UPROPERTY()
+	TObjectPtr<AActor> LastActor;
 	// 현재 선택 액터
-	IHighlightInterface* ThisActor;
+	UPROPERTY()
+	TObjectPtr<AActor> ThisActor;
 	// 커서의 라인트레이스 결과
 	FHitResult CursorHit;
 
@@ -125,10 +140,10 @@ private:
 	float ShortPressThreshold = 0.5f;
 	// 자동으로 이동 중인가?
 	bool bAutoRunning = false;
-	// 무언가를 타겟 중인가?
-	bool bTargeting = false;
 	// 쉬프트키를 누른 상태인가?
 	bool bShiftKeyDown = false;
+	// 타겟 중인 대상
+	ETargetingStatus TargetingStatus = ETargetingStatus::NotTargeting;
 
 	// 생성할 마법진 클래스
 	UPROPERTY(EditDefaultsOnly)

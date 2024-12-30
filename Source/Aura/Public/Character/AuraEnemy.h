@@ -42,8 +42,8 @@ private:
 	virtual AActor* GetCombatTarget_Implementation() const final;
 
 	// IHighlightInterface에서 상속
-	virtual void HighlightActor() final;
-	virtual void UnHighlightActor() final;
+	virtual void HighlightActor_Implementation() final;
+	virtual void UnHighlightActor_Implementation() final;
 
 private:
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);

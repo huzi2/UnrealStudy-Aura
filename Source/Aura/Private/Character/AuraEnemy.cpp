@@ -177,7 +177,7 @@ AActor* AAuraEnemy::GetCombatTarget_Implementation() const
 	return CombatTarget;
 }
 
-void AAuraEnemy::HighlightActor()
+void AAuraEnemy::HighlightActor_Implementation()
 {
 	if (!GetMesh()) return;
 
@@ -191,7 +191,7 @@ void AAuraEnemy::HighlightActor()
 	}
 }
 
-void AAuraEnemy::UnHighlightActor()
+void AAuraEnemy::UnHighlightActor_Implementation()
 {
 	if (!GetMesh()) return;
 
