@@ -33,6 +33,18 @@ AAuraEnemy::AAuraEnemy()
 
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBar"));
 	HealthBar->SetupAttachment(GetRootComponent());
+
+	// 하이라이트될 때 색깔 설정
+	if (GetMesh())
+	{
+		GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+		GetMesh()->MarkRenderStateDirty();
+	}
+	if (Weapon)
+	{
+		Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+		Weapon->MarkRenderStateDirty();
+	}
 }
 
 void AAuraEnemy::BeginPlay()
@@ -182,12 +194,10 @@ void AAuraEnemy::HighlightActor_Implementation()
 	if (!GetMesh()) return;
 
 	GetMesh()->SetRenderCustomDepth(true);
-	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 
 	if (Weapon)
 	{
 		Weapon->SetRenderCustomDepth(true);
-		Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 	}
 }
 
@@ -201,6 +211,11 @@ void AAuraEnemy::UnHighlightActor_Implementation()
 	{
 		Weapon->SetRenderCustomDepth(false);
 	}
+}
+
+void AAuraEnemy::SetMoveToLocation_Implementation(FVector& OutDestination)
+{
+	// 아무것도 안함. 하이라이트 된 대상에게 이동할 위치를 정하는건데 적 객체에게는 이동하지 않는다.
 }
 
 void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)

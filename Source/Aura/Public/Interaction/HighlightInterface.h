@@ -21,8 +21,13 @@ class AURA_API IHighlightInterface
 	GENERATED_BODY()
 
 public:
+	// 하이라이트
 	UFUNCTION(BlueprintNativeEvent)
 	void HighlightActor();
 	UFUNCTION(BlueprintNativeEvent)
 	void UnHighlightActor();
+
+	// 하이라이트된 대상에게서 이동 지점 얻어오기
+	UFUNCTION(BlueprintNativeEvent)
+	void SetMoveToLocation(FVector& OutDestination);
 };

@@ -274,6 +274,16 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 	{
 		if (FollowTime <= ShortPressThreshold)
 		{
+			// 하이라이트된 대상이면 이동할 위치를 얻어올 수 있음
+			if (IsValid(ThisActor) && ThisActor->Implements<UHighlightInterface>())
+			{
+				IHighlightInterface::Execute_SetMoveToLocation(ThisActor, CachedDestination);
+			}
+			else if (GetAuraAbilitySystemComponent() && !GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputPressed))
+			{
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
+			}
+
 			if (const APawn* ControllPawn = GetPawn())
 			{
 				if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControllPawn->GetActorLocation(), CachedDestination))
@@ -295,11 +305,6 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 						{
 							CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
 							bAutoRunning = true;
-
-							if (GetAuraAbilitySystemComponent() && !GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputPressed))
-							{
-								UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
-							}
 						}
 					}
 				}

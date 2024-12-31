@@ -44,6 +44,7 @@ private:
 	// IHighlightInterface에서 상속
 	virtual void HighlightActor_Implementation() final;
 	virtual void UnHighlightActor_Implementation() final;
+	virtual void SetMoveToLocation_Implementation(FVector& OutDestination) final;
 
 private:
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);

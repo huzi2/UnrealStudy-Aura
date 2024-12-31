@@ -21,6 +21,16 @@ ACheckpoint::ACheckpoint(const FObjectInitializer& ObjectInitializer)
 	Sphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Sphere->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	Sphere->SetCollisionResponseToChannel(ECC_Pawn, ECollisionResponse::ECR_Overlap);
+
+	MoveToComponent = CreateDefaultSubobject<USceneComponent>(TEXT("MoveToComponent"));
+	MoveToComponent->SetupAttachment(GetRootComponent());
+
+	// 하이라이트될 때 색깔 설정
+	if (CheckpointMesh)
+	{
+		CheckpointMesh->SetCustomDepthStencilValue(CustomDepthStencilOverride);
+		CheckpointMesh->MarkRenderStateDirty();
+	}
 }
 
 void ACheckpoint::BeginPlay()
@@ -40,6 +50,28 @@ void ACheckpoint::LoadActor_Implementation()
 	{
 		HandleGlowEffects();
 	}
+}
+
+void ACheckpoint::HighlightActor_Implementation()
+{
+	if (!CheckpointMesh) return;
+
+	CheckpointMesh->SetRenderCustomDepth(true);
+	CheckpointMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_TAN);
+}
+
+void ACheckpoint::UnHighlightActor_Implementation()
+{
+	if (!CheckpointMesh) return;
+
+	CheckpointMesh->SetRenderCustomDepth(false);
+}
+
+void ACheckpoint::SetMoveToLocation_Implementation(FVector& OutDestination)
+{
+	if (!MoveToComponent) return;
+
+	OutDestination = MoveToComponent->GetComponentLocation();
 }
 
 void ACheckpoint::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
