@@ -37,7 +37,7 @@ void ACheckpoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (Sphere)
+	if (bBindOverlapCallback && Sphere)
 	{
 		Sphere->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnSphereOverlap);
 	}
@@ -55,6 +55,7 @@ void ACheckpoint::LoadActor_Implementation()
 void ACheckpoint::HighlightActor_Implementation()
 {
 	if (!CheckpointMesh) return;
+	if (bReached) return;
 
 	CheckpointMesh->SetRenderCustomDepth(true);
 	CheckpointMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_TAN);

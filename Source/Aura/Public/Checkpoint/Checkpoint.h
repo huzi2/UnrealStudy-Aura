@@ -45,11 +45,12 @@ private:
 	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	// 체크포인트에 캐릭터가 닿았을 때 메쉬의 머티리얼 변경
+	UFUNCTION(BlueprintCallable)
 	void HandleGlowEffects();
 
 protected:
 	// 플레이어가 해당 체크 포인트에 닿았었는가?
-	UPROPERTY(BlueprintReadOnly, SaveGame)
+	UPROPERTY(BlueprintReadWrite, SaveGame)
 	bool bReached = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -66,4 +67,8 @@ private:
 	// 하이라이트에서 보여줄 색상
 	UPROPERTY(EditDefaultsOnly)
 	int32 CustomDepthStencilOverride = CUSTOM_DEPTH_TAN;
+
+	// 게임 상태 저장하는 기능을 사용할지?
+	UPROPERTY(EditAnywhere)
+	bool bBindOverlapCallback = true;
 };
