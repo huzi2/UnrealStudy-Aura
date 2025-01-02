@@ -92,7 +92,7 @@ void AAuraGameModeBase::SaveInGameProgressData(ULoadScreenSaveGame* SaveObject)
 	UGameplayStatics::SaveGameToSlot(SaveObject, InGameLoadSlotName, InGameLoadSlotIndex);
 }
 
-void AAuraGameModeBase::SaveWorldState(UWorld* World) const
+void AAuraGameModeBase::SaveWorldState(UWorld* World, const FString& DestinationMapAssetName) const
 {
 	if (!World) return;
 
@@ -105,6 +105,13 @@ void AAuraGameModeBase::SaveWorldState(UWorld* World) const
 	// 맵 저장
 	FString WorldName = World->GetMapName();
 	WorldName.RemoveFromStart(World->StreamingLevelsPrefix);
+
+	// 따로 설정한 맵 에셋이 있다면 저장
+	if (DestinationMapAssetName != FString(""))
+	{
+		SaveObject->MapAssetName = DestinationMapAssetName;
+		SaveObject->MapName = GetMapNameFromMapAssetName(DestinationMapAssetName);
+	}
 
 	if (!SaveObject->HasMap(WorldName))
 	{
@@ -231,4 +238,16 @@ AActor* AAuraGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
 		return SelectedActor;
 	}
 	return nullptr;
+}
+
+FString AAuraGameModeBase::GetMapNameFromMapAssetName(const FString& MapAssetName) const
+{
+	for (const TPair<FString, TSoftObjectPtr<UWorld>>& Map : Maps)
+	{
+		if (Map.Value.ToSoftObjectPath().GetAssetName() == MapAssetName)
+		{
+			return Map.Key;
+		}
+	}
+	return FString();
 }

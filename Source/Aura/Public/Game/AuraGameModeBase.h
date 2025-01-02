@@ -42,13 +42,17 @@ public:
 	// 확인한 세이브 데이터에 현재 플레이어 게임 상황을 저장
 	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
 	// 전체 게임 상황을 저장
-	void SaveWorldState(UWorld* World) const;
+	void SaveWorldState(UWorld* World, const FString& DestinationMapAssetName = FString("")) const;
 	// 게임 상황을 로드
 	void LoadWorldState(UWorld* World) const;
 
 private:
 	virtual void BeginPlay() override;
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
+
+private:
+	// 맵 에셋 이름으로 맵 이름 찾기
+	FString GetMapNameFromMapAssetName(const FString& MapAssetName) const;
 
 private:
 	// 모든 직업 정보를 가진 클래스

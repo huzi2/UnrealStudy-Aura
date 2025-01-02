@@ -58,7 +58,6 @@ void ACheckpoint::HighlightActor_Implementation()
 	if (bReached) return;
 
 	CheckpointMesh->SetRenderCustomDepth(true);
-	CheckpointMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_TAN);
 }
 
 void ACheckpoint::UnHighlightActor_Implementation()
@@ -73,6 +72,19 @@ void ACheckpoint::SetMoveToLocation_Implementation(FVector& OutDestination)
 	if (!MoveToComponent) return;
 
 	OutDestination = MoveToComponent->GetComponentLocation();
+}
+
+void ACheckpoint::HandleGlowEffects()
+{
+	if (!Sphere) return;
+	if (!CheckpointMesh) return;
+
+	Sphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	UMaterialInstanceDynamic* DynamicMaterialInstance = UMaterialInstanceDynamic::Create(CheckpointMesh->GetMaterial(0), this);
+	CheckpointMesh->SetMaterial(0, DynamicMaterialInstance);
+
+	CheckpointReached(DynamicMaterialInstance);
 }
 
 void ACheckpoint::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -93,17 +105,4 @@ void ACheckpoint::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		// 메쉬의 머티리얼이 빛나도록 변경
 		HandleGlowEffects();
 	}
-}
-
-void ACheckpoint::HandleGlowEffects()
-{
-	if (!Sphere) return;
-	if (!CheckpointMesh) return;
-
-	Sphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
-	UMaterialInstanceDynamic* DynamicMaterialInstance = UMaterialInstanceDynamic::Create(CheckpointMesh->GetMaterial(0), this);
-	CheckpointMesh->SetMaterial(0, DynamicMaterialInstance);
-
-	CheckpointReached(DynamicMaterialInstance);
 }

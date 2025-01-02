@@ -19,34 +19,34 @@ class AURA_API ACheckpoint : public APlayerStart, public ISaveInterface, public 
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	ACheckpoint(const FObjectInitializer& ObjectInitializer);
 
 private:
-	virtual void BeginPlay() final;
+	virtual void BeginPlay() override;
 
 	// ISaveInterface에서 상속
-	virtual bool ShouldLoadTransform_Implementation() const final { return false; };
-	virtual void LoadActor_Implementation() final;
+	virtual bool ShouldLoadTransform_Implementation() const override { return false; };
+	virtual void LoadActor_Implementation() override;
 
 	// IHighlightInterface에서 상속
-	virtual void HighlightActor_Implementation() final;
-	virtual void UnHighlightActor_Implementation() final;
-	virtual void SetMoveToLocation_Implementation(FVector& OutDestination) final;
+	virtual void HighlightActor_Implementation() override;
+	virtual void UnHighlightActor_Implementation() override;
+	virtual void SetMoveToLocation_Implementation(FVector& OutDestination) override;
 
 protected:
 	// 블루프린트에서 머티리얼과 타임라인을 연결하기위한 함수
 	UFUNCTION(BlueprintImplementableEvent)
 	void CheckpointReached(UMaterialInstanceDynamic* DynamicMaterialInstance);
 
-private:
-	// 충돌 처리
-	UFUNCTION()
-	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 	// 체크포인트에 캐릭터가 닿았을 때 메쉬의 머티리얼 변경
 	UFUNCTION(BlueprintCallable)
 	void HandleGlowEffects();
+
+private:
+	// 충돌 처리
+	UFUNCTION()
+	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
 	// 플레이어가 해당 체크 포인트에 닿았었는가?
