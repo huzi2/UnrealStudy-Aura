@@ -4,6 +4,16 @@
 #include "Interaction/PlayerInterface.h"
 #include "Game/AuraGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/SphereComponent.h"
+
+AMapEntrance::AMapEntrance(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	if (Sphere)
+	{
+		Sphere->SetupAttachment(MoveToComponent);
+	}
+}
 
 void AMapEntrance::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -14,14 +24,14 @@ void AMapEntrance::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 		// 현재 게임 상태를 저장
 		if (AAuraGameModeBase* AuraGameModeBase = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 		{
-			AuraGameModeBase->SaveWorldState(GetWorld());
+			AuraGameModeBase->SaveWorldState(GetWorld(), DestinationMap.ToSoftObjectPath().GetAssetName());
 		}
 
 		// 최신 게임 진행상황 저장
 		IPlayerInterface::Execute_SaveProgress(OtherActor, DestinationPlayerStartTag);
 
-		// 메쉬의 머티리얼이 빛나도록 변경
-		HandleGlowEffects();
+		// 해당 맵으로 이동
+		UGameplayStatics::OpenLevelBySoftObjectPtr(this, DestinationMap);
 	}
 }
 

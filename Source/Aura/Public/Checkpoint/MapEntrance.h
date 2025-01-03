@@ -7,13 +7,16 @@
 #include "MapEntrance.generated.h"
 
 /**
- * 맵의 입구 객체 클래스
+ * 다른 맵으로 이동하는 맵의 입구 객체 클래스
  */
 UCLASS()
 class AURA_API AMapEntrance : public ACheckpoint
 {
 	GENERATED_BODY()
 	
+private:
+	AMapEntrance(const FObjectInitializer& ObjectInitializer);
+
 private:
 	// ACheckpoint에서 상속
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) final;
