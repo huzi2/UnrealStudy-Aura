@@ -46,6 +46,9 @@ private:
 	virtual void UnHighlightActor_Implementation() final;
 	virtual void SetMoveToLocation_Implementation(FVector& OutDestination) final;
 
+public:
+	FORCEINLINE void SetLevel(int32 InLevel) { Level = InLevel; }
+
 private:
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 

@@ -66,6 +66,8 @@ private:
 public:
 	FORCEINLINE UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+	FORCEINLINE void SetCharacterClass(ECharacterClass InClass) { CharacterClass = InClass; }
+
 protected:
 	// 캐릭터에게 이펙트 적용
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
