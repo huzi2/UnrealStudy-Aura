@@ -3,7 +3,7 @@
 #include "Actor/AuraEnemySpawnPoint.h"
 #include "Character/AuraEnemy.h"
 
-void AAuraEnemySpawnPoint::SpawnEnemy()
+void AAuraEnemySpawnPoint::SpawnEnemy() const
 {
 	if (!EnemyClass) return;
 
@@ -15,5 +15,6 @@ void AAuraEnemySpawnPoint::SpawnEnemy()
 		Enemy->SetLevel(EnemyLevel);
 		Enemy->SetCharacterClass(CharacterClass);
 		Enemy->FinishSpawning(GetActorTransform());
+		Enemy->SpawnDefaultController();
 	}
 }

@@ -20,7 +20,7 @@ class AURA_API AAuraEnemySpawnPoint : public ATargetPoint
 public:
 	// 적 소환
 	UFUNCTION(BlueprintCallable)
-	void SpawnEnemy();
+	void SpawnEnemy() const;
 
 protected:
 	// 적 객체 클래스
