@@ -149,6 +149,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<USoundBase> DeathSound;
 
+	// 죽었는가
+	UPROPERTY(BlueprintReadOnly)
+	bool bDead = false;
 	// 자신이 죽었을 때 호출할 델리게이트
 	FOnDeath OnDeathDelegate;
 
@@ -190,9 +193,6 @@ private:
 	TObjectPtr<UPassiveNiagaraComponent> LifeSiphonNiagaraComponent;
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UPassiveNiagaraComponent> ManaSiphonNiagaraComponent;
-
-	// 죽었는가
-	bool bDead = false;
 
 	// 소환수 숫자
 	int32 MinionCount = 0;

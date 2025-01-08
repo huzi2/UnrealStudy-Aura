@@ -10,6 +10,7 @@
 #include "Interaction/SaveInterface.h"
 #include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 #include "Aura/AuraLogChannels.h"
+#include "GameFramework/Character.h"
 
 void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex)
 {
@@ -28,6 +29,7 @@ void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex)
 	LoadScreenSaveGame->MapName = LoadSlot->GetMapName();
 	LoadScreenSaveGame->SaveSlotStatus = ESaveSlotStatus::Taken;
 	LoadScreenSaveGame->PlayerStartTag = LoadSlot->GetPlayerStartTag();
+	LoadScreenSaveGame->MapAssetName = LoadSlot->GetMapAssetName();
 
 	UGameplayStatics::SaveGameToSlot(LoadScreenSaveGame, LoadSlot->GetSlotName(), SlotIndex);
 }
@@ -202,6 +204,17 @@ void AAuraGameModeBase::LoadWorldState(UWorld* World) const
 			}
 		}
 	}
+}
+
+void AAuraGameModeBase::PlayerDied(ACharacter* DeadCharacter)
+{
+	if (!DeadCharacter) return;
+
+	ULoadScreenSaveGame* SaveData = RetrieveInGameSaveData();
+	if (!IsValid(SaveData)) return;
+
+	// 마지막 세이브 지점으로 이동
+	UGameplayStatics::OpenLevel(DeadCharacter, FName(SaveData->MapAssetName));
 }
 
 void AAuraGameModeBase::BeginPlay()

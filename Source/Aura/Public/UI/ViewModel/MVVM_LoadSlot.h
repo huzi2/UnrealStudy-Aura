@@ -27,6 +27,7 @@ public:
 	int32 GetPlayerLevel() const { return PlayerLevel; }
 	FORCEINLINE int32 GetSlotIndex() const { return SlotIndex; }
 	FORCEINLINE const FName& GetPlayerStartTag() const { return PlayerStartTag; }
+	FORCEINLINE const FString& GetMapAssetName() const { return MapAssetName; }
 
 	void SetPlayerName(const FString& InPlayerName);
 	void SetMapName(const FString& InMapName);
@@ -35,6 +36,7 @@ public:
 	FORCEINLINE void SetSlotIndex(int32 InSlotIndex) { SlotIndex = InSlotIndex; }
 	FORCEINLINE void SetSlotStatus(ESaveSlotStatus InSlotStatus) { SlotStatus = InSlotStatus; }
 	FORCEINLINE void SetPlayerStartTag(const FName& InPlayerStartTag) { PlayerStartTag = InPlayerStartTag; }
+	FORCEINLINE void SetMapAssetName(const FString& InMapAssetName) { MapAssetName = InMapAssetName; }
 
 	void InitializeSlot();
 
@@ -70,4 +72,8 @@ private:
 	// 슬롯에서 마지막으로 사용한 플레이어 스타트 태그
 	UPROPERTY()
 	FName PlayerStartTag;
+
+	// 마지막으로 있었던 맵
+	UPROPERTY()
+	FString MapAssetName;
 };

@@ -34,6 +34,7 @@ private:
 
 	// ICombatInterface에서 상속
 	virtual int32 GetPlayerLevel_Implementation() const final;
+	virtual void Die(const FVector& DeathImpulse) final;
 
 	// IPlayerInterface에서 상속
 	virtual int32 FindLevelForXP_Implementation(int32 InXP) const final;
@@ -67,13 +68,20 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
+	// 레벨 업 이펙트
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
+
+private:
 	// 카메라 관련
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USpringArmComponent> CameraBoom;
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> TopDownCameraComponent;
 
-	// 레벨 업 이펙트
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
+	// 죽음 관련
+	// 죽은 뒤 레벨 로드까지 걸리는 시간
+	UPROPERTY(EditDefaultsOnly)
+	float DeathTime = 5.f;
+	FTimerHandle DeathTimer;
 };

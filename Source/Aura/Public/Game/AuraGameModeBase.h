@@ -24,6 +24,7 @@ public:
 	FORCEINLINE UAbilityInfo* GetAbilityInfo() const { return AbilityInfo; }
 	FORCEINLINE const FString& GetDefaultMapName() const { return DefaultMapName; }
 	FORCEINLINE const FName& GetDefaultPlayerStartTag() const { return DefaultPlayerStartTag; }
+	FORCEINLINE const TSoftObjectPtr<UWorld>& GetDefaultMap() const { return DefaultMap; }
 
 	// 뷰모델을 통한 게임 데이터 저장
 	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
@@ -45,6 +46,9 @@ public:
 	void SaveWorldState(UWorld* World, const FString& DestinationMapAssetName = FString("")) const;
 	// 게임 상황을 로드
 	void LoadWorldState(UWorld* World) const;
+
+	// 플레이어가 죽었을 때 처리
+	void PlayerDied(ACharacter* DeadCharacter);
 
 private:
 	virtual void BeginPlay() override;
