@@ -74,7 +74,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	FGameplayTag AbilityTypeTag = FGameplayTag();
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	int32 AbilityLevel;
+	int32 AbilityLevel = 1;
 };
 
 // FSavedAbility가 같다는 조건. AddUnique를 위해 만들었음

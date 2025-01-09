@@ -14,6 +14,7 @@ class UAbilitySystemComponent;
 class AAuraHUD;
 class UAbilityInfo;
 class ULoadScreenSaveGame;
+class ULootTiers;
 struct FWidgetControllerParams;
 struct FDamageEffectParams;
 
@@ -45,6 +46,10 @@ public:
 	// 플레이어의 스킬 정보를 가져오는 UAbilityInfo를 얻어옴
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
+
+	// 아이템 드롭 정보를 가져오는 ULootTiers를 얻어옴
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (DefaultToSelf = "WorldContextObject"))
+	static ULootTiers* GetLootTiers(const UObject* WorldContextObject);
 
 	// 적 캐릭터들의 클래스별로 능력치 초기화
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")

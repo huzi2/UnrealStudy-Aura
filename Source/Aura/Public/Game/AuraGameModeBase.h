@@ -10,6 +10,7 @@ class UCharacterClassInfo;
 class UAbilityInfo;
 class UMVVM_LoadSlot;
 class ULoadScreenSaveGame;
+class ULootTiers;
 
 /**
  * 게임모드 클래스
@@ -22,6 +23,7 @@ class AURA_API AAuraGameModeBase : public AGameModeBase
 public:
 	FORCEINLINE UCharacterClassInfo* GetCharacterClassInfo() const { return CharacterClassInfo; }
 	FORCEINLINE UAbilityInfo* GetAbilityInfo() const { return AbilityInfo; }
+	FORCEINLINE ULootTiers* GetLootTiers() const { return LootTiers; }
 	FORCEINLINE const FString& GetDefaultMapName() const { return DefaultMapName; }
 	FORCEINLINE const FName& GetDefaultPlayerStartTag() const { return DefaultPlayerStartTag; }
 	FORCEINLINE const TSoftObjectPtr<UWorld>& GetDefaultMap() const { return DefaultMap; }
@@ -66,6 +68,10 @@ private:
 	// 플레이어의 모든 스킬 정보를 가진 클래스
 	UPROPERTY(EditDefaultsOnly, Category = "Ability Info")
 	TObjectPtr<UAbilityInfo> AbilityInfo;
+
+	// 드롭 아이템 정보를 가진 클래스
+	UPROPERTY(EditDefaultsOnly, Category = "Loot Tiers")
+	TObjectPtr<ULootTiers> LootTiers;
 
 	// 세이브 게임 오브젝트 클래스
 	UPROPERTY(EditDefaultsOnly)

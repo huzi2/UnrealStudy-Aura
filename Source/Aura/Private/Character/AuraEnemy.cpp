@@ -163,8 +163,6 @@ void AAuraEnemy::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 
 void AAuraEnemy::Die(const FVector& DeathImpulse)
 {
-	Super::Die(DeathImpulse);
-
 	SetLifeSpan(5.f);
 
 	// 블랙보드에 죽었다고 체크
@@ -172,6 +170,11 @@ void AAuraEnemy::Die(const FVector& DeathImpulse)
 	{
 		AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("Dead"), true);
 	}
+
+	// 아이템 드롭
+	SpawnLoot();
+
+	Super::Die(DeathImpulse);
 }
 
 int32 AAuraEnemy::GetPlayerLevel_Implementation() const

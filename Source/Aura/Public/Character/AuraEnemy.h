@@ -49,6 +49,11 @@ private:
 public:
 	FORCEINLINE void SetLevel(int32 InLevel) { Level = InLevel; }
 
+protected:
+	// 아이템 드롭
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpawnLoot();
+
 private:
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
