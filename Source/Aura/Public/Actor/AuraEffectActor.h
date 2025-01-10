@@ -26,6 +26,9 @@ enum class EEffectRemovalPolicy
 	DoNotRemove
 };
 
+/**
+ * 이펙트 효과를 가지고 있는 액터 클래스
+ */
 UCLASS()
 class AURA_API AAuraEffectActor : public AActor
 {
@@ -75,7 +78,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
 	float ActorLevel;
 
 private:

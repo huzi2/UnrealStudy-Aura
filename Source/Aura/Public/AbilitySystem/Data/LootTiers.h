@@ -16,21 +16,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LootTiers|Spawning")
 	TSubclassOf<AActor> LootClass;
 
-	// 드롭 확률
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LootTiers|Spawning")
-	float ChanceToSpawn = 0.f;
-
-	// 최대 드롭 숫자
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LootTiers|Spawning")
-	int32 MaxNumberToSpawn = 0;
-
 	// 드롭 객체에 레벨을 설정할 것인가
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LootTiers|Spawning")
 	bool bLootLevelOverride = true;
+
+	// 드롭 확률
+	UPROPERTY(EditAnywhere, Category = "LootTiers|Spawning")
+	float ChanceToSpawn = 0.f;
+
+	// 최대 드롭 숫자
+	UPROPERTY(EditAnywhere, Category = "LootTiers|Spawning")
+	int32 MaxNumberToSpawn = 0;
 };
 
 /**
- * 
+ * 드롭 아이템들에 대한 정보를 가진 데이터 에셋
  */
 UCLASS()
 class AURA_API ULootTiers : public UDataAsset
