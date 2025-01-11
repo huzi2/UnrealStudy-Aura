@@ -3,6 +3,7 @@
 #include "Actor/AuraEffectActor.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 AAuraEffectActor::AAuraEffectActor()
 	: bDestroyOnEffectApplication(false)
@@ -13,9 +14,34 @@ AAuraEffectActor::AAuraEffectActor()
 	, InfiniteEffectRemovalPolicy(EEffectRemovalPolicy::RemoveOnEndOverlap)
 	, ActorLevel(1.f)
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	SetRootComponent(CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot")));
+}
+
+void AAuraEffectActor::BeginPlay()
+{
+	Super::BeginPlay();
+
+	InitialLocation = GetActorLocation();
+	CalculatedLocation = InitialLocation;
+	CalculatedRotation = GetActorRotation();
+}
+
+void AAuraEffectActor::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	RunningTime += DeltaTime;
+
+	const float SinePeriod = 2.f * PI / SinePeriodConstant;
+	// 위아래 주기마다 초기화
+	if (RunningTime > SinePeriod)
+	{
+		RunningTime = 0.f;
+	}
+
+	ItemMovement(DeltaTime);
 }
 
 void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
@@ -109,5 +135,35 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 		{
 			ActiveEffectHandles.FindAndRemoveChecked(Handle);
 		}
+	}
+}
+
+void AAuraEffectActor::StartRotation()
+{
+	bRotates = true;
+	CalculatedRotation = GetActorRotation();
+}
+
+void AAuraEffectActor::StartSinusoidalMovement()
+{
+	bSinusoidalMovement = true;
+	InitialLocation = GetActorLocation();
+	CalculatedLocation = InitialLocation;
+}
+
+void AAuraEffectActor::ItemMovement(float DeltaTime)
+{
+	// 회전
+	if (bRotates)
+	{
+		const FRotator DeltaRotation(0.f, DeltaTime * RotationRate, 0.f);
+		CalculatedRotation = UKismetMathLibrary::ComposeRotators(CalculatedRotation, DeltaRotation);
+	}
+
+	// 위아래 사인 파동 움직임
+	if (bSinusoidalMovement)
+	{
+		const float Sine = SineAmplitude * FMath::Sin(RunningTime * SinePeriodConstant);
+		CalculatedLocation = InitialLocation + FVector(0.f, 0.f, Sine);
 	}
 }

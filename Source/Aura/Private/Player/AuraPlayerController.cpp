@@ -227,13 +227,14 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 		if (IsValid(ThisActor))
 		{
 			TargetingStatus = ThisActor->Implements<UEnemyInterface>() ? ETargetingStatus::TargetingEnemy : ETargetingStatus::TargetingNonEnemy;
-			// 마우스 위에 타겟을 클릭했다면 자동 이동은 취소됨
-			bAutoRunning = false;
 		}
 		else
 		{
 			TargetingStatus = ETargetingStatus::NotTargeting;
 		}
+
+		// 자동 이동은 취소
+		bAutoRunning = false;
 	}
 
 	// 클릭 발동
