@@ -72,4 +72,5 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+Plugins/*
 정리할 수 있는 부분.txt
