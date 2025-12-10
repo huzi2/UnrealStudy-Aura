@@ -11,7 +11,7 @@ class UGameplayEffect;
 
 // 이펙트가 적용되는 규칙
 UENUM(BlueprintType)
-enum class EEffectApplicationPolicy
+enum class EEffectApplicationPolicy : uint8
 {
 	ApplyOnOverlap,
 	ApplyOnEndOverlap,
@@ -20,7 +20,7 @@ enum class EEffectApplicationPolicy
 
 // 이펙트가 제거되는 규칙
 UENUM(BlueprintType)
-enum class EEffectRemovalPolicy
+enum class EEffectRemovalPolicy : uint8
 {
 	RemoveOnEndOverlap,
 	DoNotRemove
