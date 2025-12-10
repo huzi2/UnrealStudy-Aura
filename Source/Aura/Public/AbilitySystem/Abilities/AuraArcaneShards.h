@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraArcaneShards.generated.h"
 
 /**
- * ºñÀü ÆÄÆí ½ºÅ³ Å¬·¡½º
+ * ë¹„ì „ íŒŒí¸ ìŠ¤í‚¬ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAuraArcaneShards : public UAuraDamageGameplayAbility
@@ -15,12 +15,12 @@ class AURA_API UAuraArcaneShards : public UAuraDamageGameplayAbility
 	GENERATED_BODY()
 	
 private:
-	// UAuraGameplayAbility¿¡¼­ »ó¼Ó
+	// UAuraGameplayAbilityì—ì„œ ìƒì†
 	virtual FString GetDescription(int32 Level) const final;
 	virtual FString GetNextLevelDescription(int32 Level) const final;
 
 protected:
-	// ÃÖ´ë ÆÄÆí °³¼ö
+	// ìµœëŒ€ íŒŒí¸ ê°œìˆ˜
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ArcaneShards")
 	int32 MaxNumShards = 11;
 };

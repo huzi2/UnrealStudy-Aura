@@ -1,11 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 
-// °ÔÀÓÇÃ·¹ÀÌ ÅÂ±×¸¦ º¯¼ö·Î °ü¸®ÇÏ´Â ½Ì±ÛÅæ Å¬·¡½º
+// ê²Œì„í”Œë ˆì´ íƒœê·¸ë¥¼ ë³€ìˆ˜ë¡œ ê´€ë¦¬í•˜ëŠ” ì‹±ê¸€í†¤ í´ë˜ìŠ¤
 class UAuraGameplayTags
 {
 public:
@@ -14,14 +14,14 @@ public:
 	static void InitializeNativeGameplayTags();
 
 public:
-	// ´É·ÂÄ¡ °ü·Ã ÅÂ±×
-	// ÁÖ¿ä ´É·Â
+	// ëŠ¥ë ¥ì¹˜ ê´€ë ¨ íƒœê·¸
+	// ì£¼ìš” ëŠ¥ë ¥
 	FGameplayTag Attribute_Primary_Strength;
 	FGameplayTag Attribute_Primary_Intelligence;
 	FGameplayTag Attribute_Primary_Resilience;
 	FGameplayTag Attribute_Primary_Vigor;
 
-	// º¸Á¶ ´É·Â
+	// ë³´ì¡° ëŠ¥ë ¥
 	FGameplayTag Attribute_Secondary_Armor;
 	FGameplayTag Attribute_Secondary_ArmorPenetration;
 	FGameplayTag Attribute_Secondary_BlockChance;
@@ -33,16 +33,16 @@ public:
 	FGameplayTag Attribute_Secondary_MaxHealth;
 	FGameplayTag Attribute_Secondary_MaxMana;
 
-	// ¼Ó¼º ÀúÇ×·Â
+	// ì†ì„± ì €í•­ë ¥
 	FGameplayTag Attribute_Resistance_Fire;
 	FGameplayTag Attribute_Resistance_Lightning;
 	FGameplayTag Attribute_Resistance_Arcane;
 	FGameplayTag Attribute_Resistance_Physical;
 
-	// ¸ŞÅ¸ ¾îÆ®¸®ºäÆ®
+	// ë©”íƒ€ ì–´íŠ¸ë¦¬ë·°íŠ¸
 	FGameplayTag Attribute_Meta_IncomingXP;
 
-	// ÀÎÇ² ÅÂ±×
+	// ì¸í’‹ íƒœê·¸
 	FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
 	FGameplayTag InputTag_1;
@@ -52,7 +52,7 @@ public:
 	FGameplayTag InputTag_Passive_1;
 	FGameplayTag InputTag_Passive_2;
 
-	// µ¥¹ÌÁö Á¾·ù
+	// ë°ë¯¸ì§€ ì¢…ë¥˜
 	FGameplayTag Damage;
 	FGameplayTag Damage_Fire;
 	FGameplayTag Damage_Lightning;
@@ -60,76 +60,76 @@ public:
 	FGameplayTag Damage_Physical;
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
-	// µğ¹öÇÁ
+	// ë””ë²„í”„
 	FGameplayTag Debuff_Burn;
 	FGameplayTag Debuff_Stun;
 	FGameplayTag Debuff_Arcane;
 	FGameplayTag Debuff_Physical;
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
 
-	// µğ¹öÇÁ º¯¼ö
+	// ë””ë²„í”„ ë³€ìˆ˜
 	FGameplayTag Debuff_Chance;
 	FGameplayTag Debuff_Damage;
 	FGameplayTag Debuff_Duration;
 	FGameplayTag Debuff_Frequency;
 
-	// ÀÌÆåÆ®
+	// ì´í™íŠ¸
 	FGameplayTag Effects_HitReact;
 
-	// ¾îºô¸®Æ¼ °ü·Ã ÅÂ±×
-	// ¾îºô¸®Æ¼
+	// ì–´ë¹Œë¦¬í‹° ê´€ë ¨ íƒœê·¸
+	// ì–´ë¹Œë¦¬í‹°
 	FGameplayTag Abilities_None;
 
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
 
-	// ÇÃ·¹ÀÌ¾î°¡ »ç¿ëÇÒ ¼Ó¼º ¾îºô¸®Æ¼
+	// í”Œë ˆì´ì–´ê°€ ì‚¬ìš©í•  ì†ì„± ì–´ë¹Œë¦¬í‹°
 	FGameplayTag Abilities_Fire_FireBolt;
 	FGameplayTag Abilities_Fire_FireBlast;
 	FGameplayTag Abilities_Lightning_Electrocute;
 	FGameplayTag Abilities_Arcane_ArcaneShards;
 
-	// ÆĞ½Ãºê ¾îºô¸®Æ¼
+	// íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°
 	FGameplayTag Abilities_Paasive_HaloOfProtection;
 	FGameplayTag Abilities_Paasive_LifeSiphon;
 	FGameplayTag Abilities_Paasive_ManaSiphon;
 
-	// ±âÅ¸ ¾îºô¸®Æ¼
+	// ê¸°íƒ€ ì–´ë¹Œë¦¬í‹°
 	FGameplayTag Abilities_HitReact;
 
-	// ¾îºô¸®Æ¼ »óÅÂ
+	// ì–´ë¹Œë¦¬í‹° ìƒíƒœ
 	FGameplayTag Abilities_Status_Locked;
 	FGameplayTag Abilities_Status_Eligible;
 	FGameplayTag Abilities_Status_Unlocked;
 	FGameplayTag Abilities_Status_Equipped;
 
-	// ¾îºô¸®Æ¼ Á¾·ù
+	// ì–´ë¹Œë¦¬í‹° ì¢…ë¥˜
 	FGameplayTag Abilities_Type_Offensive;
 	FGameplayTag Abilities_Type_Passive;
 	FGameplayTag Abilities_Type_None;
 
-	// ¾îºô¸®Æ¼ ÄğÅ¸ÀÓ
+	// ì–´ë¹Œë¦¬í‹° ì¿¨íƒ€ì„
 	FGameplayTag Cooldown_Fire_FireBolt;
 
-	// °ø°İ ¼ÒÄÏ
+	// ê³µê²© ì†Œì¼“
 	FGameplayTag CombatSocket_Weapon;
 	FGameplayTag CombatSocket_LeftHand;
 	FGameplayTag CombatSocket_RightHand;
 	FGameplayTag CombatSocket_Tail;
 
-	// ¸ó½ºÅÍ °ø°İ Á¾·ù
+	// ëª¬ìŠ¤í„° ê³µê²© ì¢…ë¥˜
 	FGameplayTag Montage_Attack1;
 	FGameplayTag Montage_Attack2;
 	FGameplayTag Montage_Attack3;
 	FGameplayTag Montage_Attack4;
 
-	// ÇØ´ç ÅÂ±×°¡ ÀÖÀ¸¸é ÇØ´ç ÀÔ·ÂÀ» ¸·À½
+	// í•´ë‹¹ íƒœê·¸ê°€ ìˆìœ¼ë©´ í•´ë‹¹ ì…ë ¥ì„ ë§‰ìŒ
 	FGameplayTag Player_Block_InputPressed;
 	FGameplayTag Player_Block_InputHeld;
 	FGameplayTag Player_Block_InputReleased;
 	FGameplayTag Player_Block_CursorTrace;
 
-	// °ÔÀÓÇÃ·¹ÀÌ Å¥
+	// ê²Œì„í”Œë ˆì´ í
 	FGameplayTag GameplayCue_FireBlast;
 
 private:

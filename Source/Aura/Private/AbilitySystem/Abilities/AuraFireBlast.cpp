@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraFireBlast.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
@@ -6,27 +6,27 @@
 
 FString UAuraFireBlast::GetDescription(int32 Level) const
 {
-	// È­¿° Æø¹ß ½ºÅ³¿¡ ´ëÇÑ ¼³¸í
+	// í™”ì—¼ í­ë°œ ìŠ¤í‚¬ì— ëŒ€í•œ ì„¤ëª…
 
-	// ·¹º§¿¡ µû¶ó º¯°æµÇ´Â µ¥¹ÌÁö(ºÒ¼Ó¼º¸¸ ¾ò¾î¿È)
+	// ë ˆë²¨ì— ë”°ë¼ ë³€ê²½ë˜ëŠ” ë°ë¯¸ì§€(ë¶ˆì†ì„±ë§Œ ì–»ì–´ì˜´)
 	const int32 ScaledDamage = static_cast<int32>(Damage.GetValueAtLevel(static_cast<float>(Level)));
-	// ¸¶³ª ÄÚ½ºÆ®
+	// ë§ˆë‚˜ ì½”ìŠ¤íŠ¸
 	const float ManaCost = FMath::Abs(GetManaCost(static_cast<float>(Level)));
-	// ÄğÅ¸ÀÓ
+	// ì¿¨íƒ€ì„
 	const float Cooldown = GetCooldown(static_cast<float>(Level));
 
 	return FString::Printf(TEXT(
-		// ½ºÅ³¸í
+		// ìŠ¤í‚¬ëª…
 		"<Title>FIRE BLAST</>\n\n"
-		// ½ºÅ³ ´É·ÂÄ¡
+		// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 		"<Small>Level: </><Level>%d</>\n"
 		"<Small>ManaCost: </><Manacost>%.1f</>\n"
 		"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-		// ¼³¸í
+		// ì„¤ëª…
 		"<Default>Launches %d</>"
 		"<Default>fire balls in all directions, each coming back and</>"
 		"<Default>exploding upon return, causing </>"
-		// µ¥¹ÌÁö
+		// ë°ë¯¸ì§€
 		"<Damage>%d</><Default> radial fire damage with"
 		" a chance to burn</>\n\n"),
 		Level, ManaCost, Cooldown, NumFireBolls, ScaledDamage);
@@ -39,17 +39,17 @@ FString UAuraFireBlast::GetNextLevelDescription(int32 Level) const
 	const float Cooldown = GetCooldown(static_cast<float>(Level));
 
 	return FString::Printf(TEXT(
-		// ½ºÅ³¸í
+		// ìŠ¤í‚¬ëª…
 		"<Title>NEXT LEVEL: </>\n\n"
-		// ½ºÅ³ ´É·ÂÄ¡
+		// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 		"<Small>Level: </><Level>%d</>\n"
 		"<Small>ManaCost: </><Manacost>%.1f</>\n"
 		"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-		// ¼³¸í
+		// ì„¤ëª…
 		"<Default>Launches %d</>"
 		"<Default>fire balls in all directions, each coming back and</>"
 		"<Default>exploding upon return, causing </>"
-		// µ¥¹ÌÁö
+		// ë°ë¯¸ì§€
 		"<Damage>%d</><Default> radial fire damage with"
 		" a chance to burn</>\n\n"),
 		Level, ManaCost, Cooldown, NumFireBolls, ScaledDamage);
@@ -65,11 +65,11 @@ TArray<AAuraFireBall*> UAuraFireBlast::SpawnFireBalls()
 
 	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
 
-	// 360µµ Àü¹æÇâÀ¸·Î ÆÛÁø º¤ÅÍµéÀ» ¾ò¾î¿È
+	// 360ë„ ì „ë°©í–¥ìœ¼ë¡œ í¼ì§„ ë²¡í„°ë“¤ì„ ì–»ì–´ì˜´
 	const FVector Foward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
 	const TArray<FRotator> Rotators = UAuraAbilitySystemLibrary::EvenlySpreadRotators(Foward, FVector::UpVector, 360.f, NumFireBolls);
 
-	// ¹æÇâ¸¶´Ù È­¿°±¸¸¦ »ı¼º
+	// ë°©í–¥ë§ˆë‹¤ í™”ì—¼êµ¬ë¥¼ ìƒì„±
 	for (const FRotator& Rotator : Rotators)
 	{
 		FTransform SpawnTransform;

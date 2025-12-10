@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraProjectileSpell.h"
 #include "Actor/AuraProjectile.h"
@@ -15,11 +15,11 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 {
 	if (!GetAvatarActorFromActorInfo()) return;
 
-	// ¹ß»çÃ¼ »ý¼ºÀº ¼­¹ö¿¡¼­¸¸ ÁøÇà
+	// ë°œì‚¬ì²´ ìƒì„±ì€ ì„œë²„ì—ì„œë§Œ ì§„í–‰
 	if (!GetAvatarActorFromActorInfo()->HasAuthority()) return;
 	if (!GetWorld()) return;
 
-	// ¾×ÅÍ °ü·Ã°ª ‹š¹®¿¡ ¾îºô¸®Æ¼°¡ ¾×ÅÍ Å¬·¡½º¿¡ Á¾¼ÓµÇÁö ¾Ê±â À§ÇØ¼­ ÀÎÅÍÆäÀÌ½º¸¦ »ç¿ëÇÑ´Ù.
+	// ì•¡í„° ê´€ë ¨ê°’ ë–„ë¬¸ì— ì–´ë¹Œë¦¬í‹°ê°€ ì•¡í„° í´ëž˜ìŠ¤ì— ì¢…ì†ë˜ì§€ ì•Šê¸° ìœ„í•´ì„œ ì¸í„°íŽ˜ì´ìŠ¤ë¥¼ ì‚¬ìš©í•œë‹¤.
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo(), SocketTag);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
 
@@ -32,12 +32,12 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	SpawnTransform.SetLocation(SocketLocation);
 	SpawnTransform.SetRotation(Rotation.Quaternion());
 
-	// °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ®¸¦ Àû¿ë½ÃÄÑ¾ß ÇÏ¹Ç·Î SpawnActorDeferred()·Î »ý¼ºÀ» ¹Ì·é´Ù.
+	// ê²Œìž„í”Œë ˆì´ ì´íŽ™íŠ¸ë¥¼ ì ìš©ì‹œì¼œì•¼ í•˜ë¯€ë¡œ SpawnActorDeferred()ë¡œ ìƒì„±ì„ ë¯¸ë£¬ë‹¤.
 	AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(ProjectileClass, SpawnTransform, GetOwningActorFromActorInfo(), Cast<APawn>(GetOwningActorFromActorInfo()), ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 	if (!Projectile) return;
 
 	Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefault();
 	
-	// ¹ß»çÃ¼ ÀÌÁ¦ »ý¼º
+	// ë°œì‚¬ì²´ ì´ì œ ìƒì„±
 	Projectile->FinishSpawning(SpawnTransform);
 }

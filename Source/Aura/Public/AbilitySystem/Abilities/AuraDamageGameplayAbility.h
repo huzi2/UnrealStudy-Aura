@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 #include "AuraDamageGameplayAbility.generated.h"
 
 /**
- * µ¥¹ÌÁö¸¦ °¡Áø ¾îºô¸®Æ¼
+ * ë°ë¯¸ì§€ë¥¼ ê°€ì§„ ì–´ë¹Œë¦¬í‹°
  */
 UCLASS()
 class AURA_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
@@ -17,7 +17,7 @@ class AURA_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
 	GENERATED_BODY()
 	
 public:
-	// µ¥¹ÌÁö ÀÌÆåÆ®¿¡¼­ »ç¿ëÇÒ ±¸Á¶Ã¼ »ı¼º
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ì—ì„œ ì‚¬ìš©í•  êµ¬ì¡°ì²´ ìƒì„±
 	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFromClassDefault(
 		AActor* TargetActor = nullptr, 
@@ -30,62 +30,62 @@ public:
 		float InPitchOverried = 0.f) const;
 
 private:
-	// Å¸°Ù¿¡°Ô µ¥¹ÌÁö Àû¿ë
+	// íƒ€ê²Ÿì—ê²Œ ë°ë¯¸ì§€ ì ìš©
 	UFUNCTION(BlueprintCallable)
 	void CauseDamage(AActor* TargetActor);
 
-	// ÅÂ±×¿Í ¿¬°áµÈ ¸ùÅ¸ÁÖ ·£´ı ¼±ÅÃ
+	// íƒœê·¸ì™€ ì—°ê²°ëœ ëª½íƒ€ì£¼ ëœë¤ ì„ íƒ
 	UFUNCTION(BlueprintPure)
 	FTaggedMontage GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages) const;
 
-	// ½ºÅ³ÀÇ ¼³Á¤µÈ µ¥¹ÌÁö °ªÀ» ¾ò¾î¿È
+	// ìŠ¤í‚¬ì˜ ì„¤ì •ëœ ë°ë¯¸ì§€ ê°’ì„ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintPure)
 	float GetDamageAtLevel() const;
 
 protected:
-	// µ¥¹ÌÁö¸¦ °¡ÇÏ´Â °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ® Å¬·¡½º
+	// ë°ë¯¸ì§€ë¥¼ ê°€í•˜ëŠ” ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	TSubclassOf<UGameplayEffect> DamageEffectClass;
 
-	// ½ºÅ³ÀÇ µ¥¹ÌÁö Å¸ÀÔ ÅÂ±×
+	// ìŠ¤í‚¬ì˜ ë°ë¯¸ì§€ íƒ€ì… íƒœê·¸
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FGameplayTag DamageTypeTag;
-	// ½ºÅ³ÀÇ µ¥¹ÌÁö Ä¿ºê Å×ÀÌºí °ª
+	// ìŠ¤í‚¬ì˜ ë°ë¯¸ì§€ ì»¤ë¸Œ í…Œì´ë¸” ê°’
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FScalableFloat Damage;
 	
-	// µğ¹öÇÁ È®·ü
+	// ë””ë²„í”„ í™•ë¥ 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DebuffChance = 20.f;
-	// µğ¹öÇÁ µ¥¹ÌÁö
+	// ë””ë²„í”„ ë°ë¯¸ì§€
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DebuffDamage = 5.f;
-	// µğ¹öÇÁ Áö¼Ó½Ã°£
+	// ë””ë²„í”„ ì§€ì†ì‹œê°„
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	float DebuffDuration = 5.f;
-	// µğ¹öÇÁ ÁÖ±â
+	// ë””ë²„í”„ ì£¼ê¸°
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DebuffFrequency = 1.f;
 
-	// Á×¾úÀ» ¶§ Ãæ°İ Á¤µµ
+	// ì£½ì—ˆì„ ë•Œ ì¶©ê²© ì •ë„
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DeathImpulseMagnitude = 1000.f;
 
-	// ³Ë¹é È®·ü
+	// ë„‰ë°± í™•ë¥ 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float KnockbackChance = 0.f;
-	// ³Ë¹é Ãæ°İ Á¤µµ
+	// ë„‰ë°± ì¶©ê²© ì •ë„
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float KnockbackForceMagnitude = 1000.f;
 
-	// ¹æ»çÇü µ¥¹ÌÁö °ü·Ã
-	// ¹æ»çÇü µ¥¹ÌÁöÀÎ°¡?
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ê´€ë ¨
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ì¸ê°€?
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	bool bIsRadialDamage = false;
-	// ¹æ»çÇü µ¥¹ÌÁö ³»°¢ Å©±â
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ë‚´ê° í¬ê¸°
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	float RadialDamageInnerRadius = 0.f;
-	// ¹æ»çÇü µ¥¹ÌÁö ¿Ü°û Å©±â
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ì™¸ê³½ í¬ê¸°
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	float RadialDamageOuterRadius = 0.f;
 };

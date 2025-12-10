@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,7 +10,7 @@ class ULoadScreenWidget;
 class UMVVM_LoadScreen;
 
 /**
- * ·Îµå ¸Ş´º¿¡¼­ »ç¿ëÇÒ HUD Å¬·¡½º
+ * ë¡œë“œ ë©”ë‰´ì—ì„œ ì‚¬ìš©í•  HUD í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API ALoadScreenHUD : public AHUD
@@ -21,20 +21,20 @@ private:
 	virtual void BeginPlay() final;
 
 protected:
-	// ·Îµå ¸Ş´º UI °´Ã¼
+	// ë¡œë“œ ë©”ë‰´ UI ê°ì²´
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<ULoadScreenWidget> LoadScreenWidget;
 
-	// ·Îµå ¸Ş´º ºä¸ğµ¨ °´Ã¼
+	// ë¡œë“œ ë©”ë‰´ ë·°ëª¨ë¸ ê°ì²´
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UMVVM_LoadScreen> LoadScreenViewModel;
 
 private:
-	// ·Îµå ¸Ş´º UI Å¬·¡½º
+	// ë¡œë“œ ë©”ë‰´ UI í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUserWidget> LoadScreenWidgetClass;
 
-	// ·Îµå ¸Ş´º ºä¸ğµ¨ Å¬·¡½º
+	// ë¡œë“œ ë©”ë‰´ ë·°ëª¨ë¸ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UMVVM_LoadScreen> LoadScreenViewModelClass;
 };

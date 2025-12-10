@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,7 +10,7 @@
 class UAuraAbilitySystemComponent;
 
 /**
- * ÆĞ½Ãºê ½ºÅ³ È°¼ºÈ­µÉ ¶§ º¸¿©ÁÙ ÀÌÆåÆ® ÄÄÆ÷³ÍÆ®
+ * íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ í™œì„±í™”ë  ë•Œ ë³´ì—¬ì¤„ ì´í™íŠ¸ ì»´í¬ë„ŒíŠ¸
  */
 UCLASS()
 class AURA_API UPassiveNiagaraComponent : public UNiagaraComponent
@@ -24,10 +24,10 @@ private:
 	virtual void BeginPlay() final;
 
 private:
-	// ÇØ´ç ÆĞ½Ãºê ½ºÅ³ÀÌ ¸ÂÀ¸¸é ÀÌÆåÆ® È°¼ºÈ­/ºñÈ°¼ºÈ­
+	// í•´ë‹¹ íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ì´ ë§ìœ¼ë©´ ì´í™íŠ¸ í™œì„±í™”/ë¹„í™œì„±í™”
 	void OnPassiveAbilityActivate(const FGameplayTag& AbilityTag, bool bActivate);
 
-	// ÀåÂøµÇ¾îÀÖ´ø ÆĞ½Ãºê ½ºÅ³ÀÌ¾úÀ¸¸é ÀÌÆåÆ® È°¼ºÈ­
+	// ì¥ì°©ë˜ì–´ìˆë˜ íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ì´ì—ˆìœ¼ë©´ ì´í™íŠ¸ í™œì„±í™”
 	void ActivateIfEquipped(UAuraAbilitySystemComponent* AuraAbilitySystemComponent);
 
 private:

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/AbilityTasks/TargetDataUnderMouse.h"
 #include "AbilitySystemComponent.h"
@@ -12,27 +12,27 @@ void UTargetDataUnderMouse::Activate()
 	if (!Ability->GetCurrentActorInfo()) return;
 	if (!AbilitySystemComponent.IsValid()) return;
 
-	// ·ÎÄÃ Å¬¶ó¿¡¼­¸¸ ¸¶¿ì½º Å¸°Ù ´ë»ó È®ÀÎ
+	// ë¡œì»¬ í´ë¼ì—ì„œë§Œ ë§ˆìš°ìŠ¤ íƒ€ê²Ÿ ëŒ€ìƒ í™•ì¸
 	if (Ability->GetCurrentActorInfo()->IsLocallyControlled())
 	{
-		// Å¬¶ó¿¡¼­ È®ÀÎÇÑ Å¸°Ù À§Ä¡¸¦ ¼­¹ö¿¡ Àü´Ş
+		// í´ë¼ì—ì„œ í™•ì¸í•œ íƒ€ê²Ÿ ìœ„ì¹˜ë¥¼ ì„œë²„ì— ì „ë‹¬
 		SendMouseCursorData();
 	}
-	// ¼­¹ö³ª ´Ù¸¥ Å¬¶óµéÀº º¹Á¦µÈ Å¸°Ù µ¥ÀÌÅÍ¸¦ »ç¿ë
+	// ì„œë²„ë‚˜ ë‹¤ë¥¸ í´ë¼ë“¤ì€ ë³µì œëœ íƒ€ê²Ÿ ë°ì´í„°ë¥¼ ì‚¬ìš©
 	else
 	{
 		const FGameplayAbilitySpecHandle SpecHandle = GetAbilitySpecHandle();
 		const FPredictionKey ActivationPredictionKey = GetActivationPredictionKey();
 		AbilitySystemComponent.Get()->AbilityTargetDataSetDelegate(SpecHandle, ActivationPredictionKey).AddUObject(this, &ThisClass::OnTargetDataReplicatedCallback);
 
-		// µ¨¸®°ÔÀÌÆ®°¡ È£ÃâµÉ ¶§±îÁö ´ë±â
+		// ë¸ë¦¬ê²Œì´íŠ¸ê°€ í˜¸ì¶œë  ë•Œê¹Œì§€ ëŒ€ê¸°
 		if (!AbilitySystemComponent.Get()->CallReplicatedTargetDataDelegatesIfSet(SpecHandle, ActivationPredictionKey))
 		{
 			SetWaitingOnRemotePlayerData();
 		}
 	}
 
-	// °á·ĞÀº Vaild Data¸¦ ÅëÇØ Å¬¶ó´Â Å¸°Ù µ¥ÀÌÅÍ¸¦ ¼­¹ö·Î º¸³»°í, ÇØ´ç À§Ä¡´Â ·ÎÄÃ Å¬¶ó¿Í ¼­¹ö°¡ ¾Ë°ÔµÈ´Ù.
+	// ê²°ë¡ ì€ Vaild Dataë¥¼ í†µí•´ í´ë¼ëŠ” íƒ€ê²Ÿ ë°ì´í„°ë¥¼ ì„œë²„ë¡œ ë³´ë‚´ê³ , í•´ë‹¹ ìœ„ì¹˜ëŠ” ë¡œì»¬ í´ë¼ì™€ ì„œë²„ê°€ ì•Œê²Œëœë‹¤.
 }
 
 UTargetDataUnderMouse* UTargetDataUnderMouse::CreateTargetDataUnderMouse(UGameplayAbility* OwningAbility)
@@ -51,17 +51,17 @@ void UTargetDataUnderMouse::SendMouseCursorData()
 	{
 		if (APlayerController* PlayerController = Ability->GetCurrentActorInfo()->PlayerController.Get())
 		{
-			// Å¸°Ù µ¥ÀÌÅÍ¿¡ Ä¿¼­ Ãæµ¹ Å¸°Ù À§Ä¡ Àü´Ş
+			// íƒ€ê²Ÿ ë°ì´í„°ì— ì»¤ì„œ ì¶©ëŒ íƒ€ê²Ÿ ìœ„ì¹˜ ì „ë‹¬
 			PlayerController->GetHitResultUnderCursor(ECC_Target, false, Data->HitResult);
 
 			FGameplayAbilityTargetDataHandle DataHandle;
 			DataHandle.Add(Data);
 
-			// Å¸°Ù µ¥ÀÌÅÍ¸¦ ¼­¹ö·Î Àü´Ş
+			// íƒ€ê²Ÿ ë°ì´í„°ë¥¼ ì„œë²„ë¡œ ì „ë‹¬
 			AbilitySystemComponent->ServerSetReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey(), DataHandle, FGameplayTag(), AbilitySystemComponent->ScopedPredictionKey);
 
-			// ¾îºô¸®Æ¼°¡ È°¼ºÈ­µÇ¾î ÀÖ¾î¼­ ºê·ÎµåÄ³½ºÆ®°¡ °¡´ÉÇÒ ¶§ ºí·çÇÁ¸°Æ®·Î ºê·ÎµåÄ³½ºÆ®
-			// ·ÎÄÃ Å¬¶ó°¡ ½º½º·Î À§Ä¡¸¦ ¾È´Ù.
+			// ì–´ë¹Œë¦¬í‹°ê°€ í™œì„±í™”ë˜ì–´ ìˆì–´ì„œ ë¸Œë¡œë“œìºìŠ¤íŠ¸ê°€ ê°€ëŠ¥í•  ë•Œ ë¸”ë£¨í”„ë¦°íŠ¸ë¡œ ë¸Œë¡œë“œìºìŠ¤íŠ¸
+			// ë¡œì»¬ í´ë¼ê°€ ìŠ¤ìŠ¤ë¡œ ìœ„ì¹˜ë¥¼ ì•ˆë‹¤.
 			if (ShouldBroadcastAbilityTaskDelegates())
 			{
 				ValidData.Broadcast(DataHandle);
@@ -74,13 +74,13 @@ void UTargetDataUnderMouse::OnTargetDataReplicatedCallback(const FGameplayAbilit
 {
 	if (!AbilitySystemComponent.IsValid()) return;
 
-	// Å¸°Ù µ¥ÀÌÅÍ°¡ º¹»ç‰çÀ» ¶§ È£Ãâ
+	// íƒ€ê²Ÿ ë°ì´í„°ê°€ ë³µì‚¬ë¬ì„ ë•Œ í˜¸ì¶œ
 
-	// Å¬¶ó¿¡¼­ º¹Á¦µÈ Å¸°Ù µ¥ÀÌÅÍ¸¦ Ã³¸®. ³×Æ®¿öÅ©¸¦ ÅëÇØ µ¥ÀÌÅÍ°¡ Å¬¶ó·Î ¿Ô´Ù´Â °ÍÀÌ°í, ·ÎÁ÷¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖÀ½
+	// í´ë¼ì—ì„œ ë³µì œëœ íƒ€ê²Ÿ ë°ì´í„°ë¥¼ ì²˜ë¦¬. ë„¤íŠ¸ì›Œí¬ë¥¼ í†µí•´ ë°ì´í„°ê°€ í´ë¼ë¡œ ì™”ë‹¤ëŠ” ê²ƒì´ê³ , ë¡œì§ì—ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆìŒ
 	AbilitySystemComponent->ConsumeClientReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey());
 
-	// º¹Á¦µÈ µ¥ÀÌÅÍ¸¦ º¸¸£µåÄ³½ºÆ®
-	// ¼­¹ö°¡ Å¬¶ó¿¡¼­ º¹Á¦µÈ À§Ä¡¸¦ ¾Ë ¼ö ÀÖ°ÔµÈ´Ù.
+	// ë³µì œëœ ë°ì´í„°ë¥¼ ë³´ë¥´ë“œìºìŠ¤íŠ¸
+	// ì„œë²„ê°€ í´ë¼ì—ì„œ ë³µì œëœ ìœ„ì¹˜ë¥¼ ì•Œ ìˆ˜ ìˆê²Œëœë‹¤.
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
 		ValidData.Broadcast(DataHandle);

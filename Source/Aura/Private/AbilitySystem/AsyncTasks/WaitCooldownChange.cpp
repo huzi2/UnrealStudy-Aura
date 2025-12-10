@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/AsyncTasks/WaitCooldownChange.h"
 #include "AbilitySystemComponent.h"
@@ -17,10 +17,10 @@ UWaitCooldownChange* UWaitCooldownChange::WaitForCooldownChange(UAbilitySystemCo
 		WaitCooldownChange->AbilitySystemComponent = InAbilitySystemComponent;
 		WaitCooldownChange->CooldownTag = InCooldownTag;
 
-		// ÄğÅ¸ÀÓÀÌ ½ÃÀÛµÉ ¶§ »ç¿ëÇÒ ÇÔ¼ö¸¦ ¹ÙÀÎµå
+		// ì¿¨íƒ€ì„ì´ ì‹œì‘ë  ë•Œ ì‚¬ìš©í•  í•¨ìˆ˜ë¥¼ ë°”ì¸ë“œ
 		InAbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(WaitCooldownChange, &ThisClass::OnActiveEffectAdded);
 
-		// ÄğÅ¸ÀÓÀÌ ³¡³µÀ» ¶§(Á¦°ÅµÉ ¶§) »ç¿ëÇÒ ÇÔ¼ö¸¦ ¹ÙÀÎµå
+		// ì¿¨íƒ€ì„ì´ ëë‚¬ì„ ë•Œ(ì œê±°ë  ë•Œ) ì‚¬ìš©í•  í•¨ìˆ˜ë¥¼ ë°”ì¸ë“œ
 		InAbilitySystemComponent->RegisterGameplayTagEvent(InCooldownTag, EGameplayTagEventType::NewOrRemoved).AddUObject(WaitCooldownChange, &ThisClass::CooldownTagChanged);
 	}
 	return WaitCooldownChange;
@@ -30,12 +30,12 @@ void UWaitCooldownChange::EndTask()
 {
 	if (IsValid(AbilitySystemComponent))
 	{
-		// Äİ¹é Á¦°Å
+		// ì½œë°± ì œê±°
 		AbilitySystemComponent->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 
-		// °´Ã¼°¡ ÆÄ±« ÁØºñµÇ¾úÀ½À» ¾Ë¸²
+		// ê°ì²´ê°€ íŒŒê´´ ì¤€ë¹„ë˜ì—ˆìŒì„ ì•Œë¦¼
 		SetReadyToDestroy();
-		// °¡ºñÁö ÄÃ·º¼Ç ´ë»óÀÓÀ» ¾Ë¸²
+		// ê°€ë¹„ì§€ ì»¬ë ‰ì…˜ ëŒ€ìƒì„ì„ ì•Œë¦¼
 		MarkAsGarbage();
 	}
 }
@@ -44,24 +44,24 @@ void UWaitCooldownChange::OnActiveEffectAdded(UAbilitySystemComponent* TargetAbi
 {
 	if (!AbilitySystemComponent) return;
 
-	// ÀÌÆåÆ®ÀÇ ¸ğµç ¿¡¼Â ÅÂ±×¸¦ °¡Á®¿È
+	// ì´í™íŠ¸ì˜ ëª¨ë“  ì—ì…‹ íƒœê·¸ë¥¼ ê°€ì ¸ì˜´
 	FGameplayTagContainer AssetTags;
 	SpecApplied.GetAllAssetTags(AssetTags);
 
-	// ÀÌÆåÆ®ÀÇ ¸ğµç ºÎ¿©µÈ ÅÂ±×¸¦ °¡Á®¿È
+	// ì´í™íŠ¸ì˜ ëª¨ë“  ë¶€ì—¬ëœ íƒœê·¸ë¥¼ ê°€ì ¸ì˜´
 	FGameplayTagContainer GrantedTags;
 	SpecApplied.GetAllGrantedTags(GrantedTags);
 
-	// À§ ÅÂ±×µé Áß¿¡ Äğ´Ù¿î ÅÂ±×°¡ Æ÷ÇÔµÇ¾ú´Ù¸é
+	// ìœ„ íƒœê·¸ë“¤ ì¤‘ì— ì¿¨ë‹¤ìš´ íƒœê·¸ê°€ í¬í•¨ë˜ì—ˆë‹¤ë©´
 	if (AssetTags.HasTagExact(CooldownTag) || GrantedTags.HasTagExact(CooldownTag))
 	{
-		// Äğ´Ù¿î ÅÂ±×¸¦ Æ÷ÇÔÇÏ´Â Äõ¸®¸¦ »ı¼º
+		// ì¿¨ë‹¤ìš´ íƒœê·¸ë¥¼ í¬í•¨í•˜ëŠ” ì¿¼ë¦¬ë¥¼ ìƒì„±
 		const FGameplayEffectQuery GameplayEffectQuery = FGameplayEffectQuery::MakeQuery_MatchAnyOwningTags(CooldownTag.GetSingleTagContainer());
-		// Äõ¸®¿¡ ¸Â´Â ¸ğµç ÀÌÆåÆ®ÀÇ ³²Àº ½Ã°£À» °¡Á®¿Â´Ù.
+		// ì¿¼ë¦¬ì— ë§ëŠ” ëª¨ë“  ì´í™íŠ¸ì˜ ë‚¨ì€ ì‹œê°„ì„ ê°€ì ¸ì˜¨ë‹¤.
 		const TArray<float> TimesRemaining = AbilitySystemComponent->GetActiveEffectsTimeRemaining(GameplayEffectQuery);
 		if (TimesRemaining.Num() > 0)
 		{
-			// ¸ğµç ÀÌÆåÆ®ÀÇ ½Ã°£ Áß °¡Àå ±ä ½Ã°£À» ±âÁØÀ¸·Î(¸¸¾à ÄğÅ¸ÀÓÀ» ¿©·¯°³ ÇØ³ù´Ù¸é)
+			// ëª¨ë“  ì´í™íŠ¸ì˜ ì‹œê°„ ì¤‘ ê°€ì¥ ê¸´ ì‹œê°„ì„ ê¸°ì¤€ìœ¼ë¡œ(ë§Œì•½ ì¿¨íƒ€ì„ì„ ì—¬ëŸ¬ê°œ í•´ë†¨ë‹¤ë©´)
 			const float TimeRemaining = FMath::Max(TimesRemaining);
 			CooldownStart.Broadcast(TimeRemaining);
 		}

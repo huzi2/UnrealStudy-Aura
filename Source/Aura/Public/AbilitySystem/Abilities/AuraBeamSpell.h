@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraBeamSpell.generated.h"
 
 /**
- * °¨Àü ½ºÅ³¿¡¼­ »ç¿ëÇÒ ¾îºô¸®Æ¼ Å¬·¡½º
+ * ê°ì „ ìŠ¤í‚¬ì—ì„œ ì‚¬ìš©í•  ì–´ë¹Œë¦¬í‹° í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAuraBeamSpell : public UAuraDamageGameplayAbility
@@ -15,19 +15,19 @@ class AURA_API UAuraBeamSpell : public UAuraDamageGameplayAbility
 	GENERATED_BODY()
 	
 public:
-	// ¸¶¿ì½º Å¸°Ù ´ë»ó Á¤º¸¸¦ ÀúÀå
+	// ë§ˆìš°ìŠ¤ íƒ€ê²Ÿ ëŒ€ìƒ ì •ë³´ë¥¼ ì €ì¥
 	UFUNCTION(BlueprintCallable)
 	void StoreMouseDataInfo(const FHitResult& HitResult);
 
-	// ¼ÒÀ¯ÀÚ °ü·Ã º¯¼öµéÀ» ÀúÀå
+	// ì†Œìœ ì ê´€ë ¨ ë³€ìˆ˜ë“¤ì„ ì €ì¥
 	UFUNCTION(BlueprintCallable)
 	void StoreOwnerVariables();
 
-	// Ã¹¹øÂ° Å¸°Ù ÀÚµ¿ Á¶ÁØ
+	// ì²«ë²ˆì§¸ íƒ€ê²Ÿ ìë™ ì¡°ì¤€
 	UFUNCTION(BlueprintCallable)
 	void TraceFirstTarget(const FVector& BeamTargetLocation);
 
-	// °¨Àü °ø°İÀÌ ÀÌ¾îÁú Ãß°¡ Å¸°Ùµé ¼³Á¤
+	// ê°ì „ ê³µê²©ì´ ì´ì–´ì§ˆ ì¶”ê°€ íƒ€ê²Ÿë“¤ ì„¤ì •
 	UFUNCTION(BlueprintCallable)
 	void StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTargets);
 
@@ -38,18 +38,18 @@ public:
 	void AdditionalTargetDied(AActor* DeadActor);
 
 protected:
-	// ÃÖ´ë ¿¬°áµÉ Å¸°Ù °³¼ö
+	// ìµœëŒ€ ì—°ê²°ë  íƒ€ê²Ÿ ê°œìˆ˜
 	UPROPERTY(EditDefaultsOnly, Category = "Beam")
 	int32 MaxNumShockTargets = 5;
 
-	// Å¸°ÙÀÌ ¾øÀ» ¶§ ÂïÀ» ¶¥ À§Ä¡
+	// íƒ€ê²Ÿì´ ì—†ì„ ë•Œ ì°ì„ ë•… ìœ„ì¹˜
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
 	FVector MouseHitLocation;
-	// Å¸°ÙÀÌ ÀÖÀ» ¶§ Å¸°Ù ¾×ÅÍ
+	// íƒ€ê²Ÿì´ ìˆì„ ë•Œ íƒ€ê²Ÿ ì•¡í„°
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
 	TObjectPtr<AActor> MouseHitActor;
 
-	// ÀÓ½Ã º¯¼öµé
+	// ì„ì‹œ ë³€ìˆ˜ë“¤
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
 	TObjectPtr<APlayerController> OwnerPlayerController;
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")

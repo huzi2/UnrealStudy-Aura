@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 
 class UGameplayEffect;
 
-// ÀÌÆåÆ®°¡ Àû¿ëµÇ´Â ±ÔÄ¢
+// ì´í™íŠ¸ê°€ ì ìš©ë˜ëŠ” ê·œì¹™
 UENUM(BlueprintType)
 enum class EEffectApplicationPolicy
 {
@@ -18,7 +18,7 @@ enum class EEffectApplicationPolicy
 	DoNotApply
 };
 
-// ÀÌÆåÆ®°¡ Á¦°ÅµÇ´Â ±ÔÄ¢
+// ì´í™íŠ¸ê°€ ì œê±°ë˜ëŠ” ê·œì¹™
 UENUM(BlueprintType)
 enum class EEffectRemovalPolicy
 {
@@ -27,7 +27,7 @@ enum class EEffectRemovalPolicy
 };
 
 /**
- * ÀÌÆåÆ® È¿°ú¸¦ °¡Áö°í ÀÖ´Â ¾×ÅÍ Å¬·¡½º
+ * ì´í™íŠ¸ íš¨ê³¼ë¥¼ ê°€ì§€ê³  ìˆëŠ” ì•¡í„° í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraEffectActor : public AActor
@@ -45,30 +45,30 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 
-	// ºí·çÇÁ¸°Æ®¿¡¼­ Äİ¸®ÀüµéÀÇ Begin Overlap, End Overlap¿¡¼­ Á÷Á¢ ¿¬°áÇÒ ÇÔ¼öµé
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì½œë¦¬ì „ë“¤ì˜ Begin Overlap, End Overlapì—ì„œ ì§ì ‘ ì—°ê²°í•  í•¨ìˆ˜ë“¤
 	UFUNCTION(BlueprintCallable)
 	void OnOverlap(AActor* TargetActor);
 
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
 
-	// È¸ÀüÇÏ±â ½ÃÀÛ ÃÊ±âÈ­
+	// íšŒì „í•˜ê¸° ì‹œì‘ ì´ˆê¸°í™”
 	UFUNCTION(BlueprintCallable)
 	void StartRotation();
 
-	// À§¾Æ·¡·Î ¿òÁ÷ÀÌ±â ½ÃÀÛ ÃÊ±âÈ­
+	// ìœ„ì•„ë˜ë¡œ ì›€ì§ì´ê¸° ì‹œì‘ ì´ˆê¸°í™”
 	UFUNCTION(BlueprintCallable)
 	void StartSinusoidalMovement();
 
-	// µå¶ø ¾ÆÀÌÅÛÀÇ ¿òÁ÷ÀÓ ±¸Çö
+	// ë“œë ì•„ì´í…œì˜ ì›€ì§ì„ êµ¬í˜„
 	void ItemMovement(float DeltaTime);
 
 protected:
-	// ÀÌÆåÆ® Àû¿ë ÈÄ ¾×ÅÍ¸¦ Á¦°ÅÇÒ °ÍÀÎÁö
+	// ì´í™íŠ¸ ì ìš© í›„ ì•¡í„°ë¥¼ ì œê±°í•  ê²ƒì¸ì§€
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
 	bool bDestroyOnEffectApplication;
 
-	// Àû¿¡°Ôµµ ÀÌÆåÆ®¸¦ Àû¿ëÇÒ °ÍÀÎÁö
+	// ì ì—ê²Œë„ ì´í™íŠ¸ë¥¼ ì ìš©í•  ê²ƒì¸ì§€
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
 	bool bApplyEffectsToEnemies;
 
@@ -93,29 +93,29 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy;
 
-	// ¾ÆÀÌÅÛ ·¹º§
+	// ì•„ì´í…œ ë ˆë²¨
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
 	float ActorLevel;
 
-	// È¸Àü È¿°ú¸¦ Å³ °ÍÀÎ°¡
+	// íšŒì „ íš¨ê³¼ë¥¼ í‚¬ ê²ƒì¸ê°€
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Movement")
 	bool bRotates = false;
-	// È¸Àü ¼Óµµ
+	// íšŒì „ ì†ë„
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Movement")
 	float RotationRate = 45.f;
-	// À§¾Æ·¡·Î ¿òÁ÷ÀÏ °ÍÀÎ°¡
+	// ìœ„ì•„ë˜ë¡œ ì›€ì§ì¼ ê²ƒì¸ê°€
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Movement")
 	bool bSinusoidalMovement = false;
-	// À§¾Æ·¡ ¿òÁ÷ÀÌ´Â Á¤µµ
+	// ìœ„ì•„ë˜ ì›€ì§ì´ëŠ” ì •ë„
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Movement")
 	float SineAmplitude = 8.f;
-	// ÁÖ±â
+	// ì£¼ê¸°
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Movement")
 	float SinePeriodConstant = 4.f;
-	// ¿òÁ÷ÀÓÀ» »ç¿ëÇÒ ¶§ ¼³Á¤ÇØ³õÀ» ÃÊ±â º¤ÅÍ
+	// ì›€ì§ì„ì„ ì‚¬ìš©í•  ë•Œ ì„¤ì •í•´ë†“ì„ ì´ˆê¸° ë²¡í„°
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup Movement")
 	FVector InitialLocation;
-	// ºí·çÇÁ¸°Æ®¿¡¼­ »ç¿ëÇÒ ¿òÁ÷ÀÓ ²¾»ê°ª
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì‚¬ìš©í•  ì›€ì§ì„ ê¼ì‚°ê°’
 	UPROPERTY(BlueprintReadWrite)
 	FVector CalculatedLocation;
 	UPROPERTY(BlueprintReadWrite)
@@ -124,6 +124,6 @@ protected:
 private:
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 
-	// À§¾Æ·¡ ¿òÁ÷ÀÏ ¶§ »ç¿ëÇÒ ½Ã°£°ª
+	// ìœ„ì•„ë˜ ì›€ì§ì¼ ë•Œ ì‚¬ìš©í•  ì‹œê°„ê°’
 	float RunningTime = 0.f;
 };

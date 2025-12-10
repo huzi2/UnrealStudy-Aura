@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraGameplayAbility.generated.h"
 
 /**
- * Ä¿½ºÅÒ ¾îºô¸®Æ¼ Å¬·¡½º
+ * ì»¤ìŠ¤í…€ ì–´ë¹Œë¦¬í‹° í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAuraGameplayAbility : public UGameplayAbility
@@ -15,18 +15,18 @@ class AURA_API UAuraGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 	
 public:
-	// ·¹º§¿¡ µû¸¥ ¾îºô¸®Æ¼ÀÇ ¼³¸í ¾ò±â
+	// ë ˆë²¨ì— ë”°ë¥¸ ì–´ë¹Œë¦¬í‹°ì˜ ì„¤ëª… ì–»ê¸°
 	virtual FString GetDescription(int32 Level) const;
 	virtual FString GetNextLevelDescription(int32 Level) const;
 	static FString GetLockedDescription(int32 Level);
 
 protected:
-	// ½ºÅ³ ¼³¸í¿¡ »ç¿ëÇÏ±â À§ÇÑ ¸¶³ª¿Í ÄğÅ¸ÀÓ È®ÀÎ
+	// ìŠ¤í‚¬ ì„¤ëª…ì— ì‚¬ìš©í•˜ê¸° ìœ„í•œ ë§ˆë‚˜ì™€ ì¿¨íƒ€ì„ í™•ì¸
 	float GetManaCost(float InLevel = 1.f) const;
 	float GetCooldown(float InLevel = 1.f) const;
 
 public:
-	// ¾îºô¸®Æ¼ÀÇ ÀÔ·Â °ü·Ã ÅÂ±×
+	// ì–´ë¹Œë¦¬í‹°ì˜ ì…ë ¥ ê´€ë ¨ íƒœê·¸
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	FGameplayTag StartupInputTag;
 };

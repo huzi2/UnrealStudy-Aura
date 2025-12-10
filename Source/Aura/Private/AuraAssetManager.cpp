@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AuraAssetManager.h"
 #include "AuraGameplayTags.h"
@@ -17,9 +17,9 @@ void UAuraAssetManager::StartInitialLoading()
 {
 	Super::StartInitialLoading();
 
-	// °ÔÀÓ ÅÂ±× °ü¸®ÇÏ´Â ½Ì±ÛÅæ Å¬·¡½ºÀÇ ÃÊ±âÈ­(ÇÊ¿äÇÑ ÅÂ±×¸¦ ÅÂ±×¸Å´ÏÀú¿¡ ±âÀÔ)
+	// ê²Œì„ íƒœê·¸ ê´€ë¦¬í•˜ëŠ” ì‹±ê¸€í†¤ í´ë˜ìŠ¤ì˜ ì´ˆê¸°í™”(í•„ìš”í•œ íƒœê·¸ë¥¼ íƒœê·¸ë§¤ë‹ˆì €ì— ê¸°ì…)
 	UAuraGameplayTags::InitializeNativeGameplayTags();
 
-	// Å¸°Ù µ¥ÀÌÅÍ¿Í °°Àº µ¥ÀÌÅÍ ÃÊ±âÈ­. Å¸°Ù µ¥ÀÌÅÍ ¾²·Á¸é ¹İµå½Ã ÇØ¾ßÇÔ
+	// íƒ€ê²Ÿ ë°ì´í„°ì™€ ê°™ì€ ë°ì´í„° ì´ˆê¸°í™”. íƒ€ê²Ÿ ë°ì´í„° ì“°ë ¤ë©´ ë°˜ë“œì‹œ í•´ì•¼í•¨
 	UAbilitySystemGlobals::Get().InitGlobalData();
 }

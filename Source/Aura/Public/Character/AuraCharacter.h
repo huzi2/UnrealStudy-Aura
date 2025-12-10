@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,7 +12,7 @@ class UCameraComponent;
 class USpringArmComponent;
 
 /**
- * ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ Å¬·¡½º
+ * í”Œë ˆì´ì–´ ìºë¦­í„° í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraCharacter : public AAuraCharacterBase, public IPlayerInterface
@@ -26,17 +26,17 @@ private:
 	virtual void PossessedBy(AController* NewController) final;
 	virtual void OnRep_PlayerState() final;
 
-	// AAuraCharacterBase¿¡¼­ »ó¼Ó
+	// AAuraCharacterBaseì—ì„œ ìƒì†
 	virtual void InitAbilityActorInfo() final;
 	virtual void InitializeDefaultAttributes() const final;
 	virtual void OnRep_Burned() final;
 	virtual void OnRep_Stunned() final;
 
-	// ICombatInterface¿¡¼­ »ó¼Ó
+	// ICombatInterfaceì—ì„œ ìƒì†
 	virtual int32 GetPlayerLevel_Implementation() const final;
 	virtual void Die(const FVector& DeathImpulse) final;
 
-	// IPlayerInterface¿¡¼­ »ó¼Ó
+	// IPlayerInterfaceì—ì„œ ìƒì†
 	virtual int32 FindLevelForXP_Implementation(int32 InXP) const final;
 	virtual int32 GetXP_Implementation() const final;
 	virtual void AddToXP_Implementation(int32 InXP) final;
@@ -52,15 +52,15 @@ private:
 	virtual void HideMagicCircle_Implementation() final;
 	virtual void SaveProgress_Implementation(const FName& CheckpointTag) final;
 
-	// ´Ù¸¥ Å¬¶óµéµµ ÀÌÆåÆ®¸¦ º¼ ¼ö ÀÖµµ·Ï ¸ÖÆ¼Ä³½ºÆ® ÇÔ¼ö·Î ¼±¾ğ
+	// ë‹¤ë¥¸ í´ë¼ë“¤ë„ ì´í™íŠ¸ë¥¼ ë³¼ ìˆ˜ ìˆë„ë¡ ë©€í‹°ìºìŠ¤íŠ¸ í•¨ìˆ˜ë¡œ ì„ ì–¸
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastLevelUpParticles() const;
 
-	// ¼¼ÀÌºê µ¥ÀÌÅÍ¿¡ ÀúÀåµÈ ´É·ÂÄ¡ ·Îµå
+	// ì„¸ì´ë¸Œ ë°ì´í„°ì— ì €ì¥ëœ ëŠ¥ë ¥ì¹˜ ë¡œë“œ
 	void LoadProgress();
 
 protected:
-	// ´É·ÂÄ¡ ÃÊ±âÈ­¿¡ »ç¿ëÇÒ °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ®µé
+	// ëŠ¥ë ¥ì¹˜ ì´ˆê¸°í™”ì— ì‚¬ìš©í•  ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ë“¤
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
@@ -68,19 +68,19 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
-	// ·¹º§ ¾÷ ÀÌÆåÆ®
+	// ë ˆë²¨ ì—… ì´í™íŠ¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
 
 private:
-	// Ä«¸Ş¶ó °ü·Ã
+	// ì¹´ë©”ë¼ ê´€ë ¨
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USpringArmComponent> CameraBoom;
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> TopDownCameraComponent;
 
-	// Á×À½ °ü·Ã
-	// Á×Àº µÚ ·¹º§ ·Îµå±îÁö °É¸®´Â ½Ã°£
+	// ì£½ìŒ ê´€ë ¨
+	// ì£½ì€ ë’¤ ë ˆë²¨ ë¡œë“œê¹Œì§€ ê±¸ë¦¬ëŠ” ì‹œê°„
 	UPROPERTY(EditDefaultsOnly)
 	float DeathTime = 5.f;
 	FTimerHandle DeathTimer;

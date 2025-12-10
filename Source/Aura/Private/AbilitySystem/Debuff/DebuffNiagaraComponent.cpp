@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Interaction/CombatInterface.h"
@@ -18,13 +18,13 @@ void UDebuffNiagaraComponent::BeginPlay()
 
 	if (UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner()))
 	{
-		// µğ¹öÇÁ ÅÂ±×°¡ º¯°æµÇ¾úÀ» ¶§ ÀÌº¥Æ® ¹ÙÀÎµå
+		// ë””ë²„í”„ íƒœê·¸ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ ì´ë²¤íŠ¸ ë°”ì¸ë“œ
 		AbilitySystemComponent->RegisterGameplayTagEvent(DebuffTag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UDebuffNiagaraComponent::DebuffTagChanged);
 	}
-	// ¸¸¾à ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®°¡ ¾ÆÁ÷ µî·ÏµÇ¾îÀÖÁö ¾Ê¾ÒÀ» °æ¿ì
+	// ë§Œì•½ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ê°€ ì•„ì§ ë“±ë¡ë˜ì–´ìˆì§€ ì•Šì•˜ì„ ê²½ìš°
 	else if (CombatInterface)
 	{
-		// ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®°¡ µî·ÏµÉ ¶§ È£ÃâµÇ´Â µ¨¸®°ÔÀÌÆ®¿¡ ÇÔ¼ö ¿¬°á
+		// ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ê°€ ë“±ë¡ë  ë•Œ í˜¸ì¶œë˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸ì— í•¨ìˆ˜ ì—°ê²°
 		CombatInterface->GetOnAbilitySystemComponentRegisteredDelegate().AddWeakLambda(this, [this](UAbilitySystemComponent* InAbilitySystemComponent)
 			{
 				if (InAbilitySystemComponent)
@@ -35,7 +35,7 @@ void UDebuffNiagaraComponent::BeginPlay()
 		);
 	}
 
-	// Ä³¸¯ÅÍ°¡ Á×¾úÀ» ¶§ ºñÈ°¼ºÈ­ µÇµµ·Ï ¹ÙÀÎµå
+	// ìºë¦­í„°ê°€ ì£½ì—ˆì„ ë•Œ ë¹„í™œì„±í™” ë˜ë„ë¡ ë°”ì¸ë“œ
 	if (CombatInterface)
 	{
 		CombatInterface->GetOnDeathDelegate().AddDynamic(this, &UDebuffNiagaraComponent::OnOwnerDeath);
@@ -46,12 +46,12 @@ void UDebuffNiagaraComponent::DebuffTagChanged(const FGameplayTag CallbackTag, i
 {
 	const bool bOwnerAlibe = IsValid(GetOwner()) && GetOwner()->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsDead(GetOwner());
 
-	// µğ¹öÇÁ °¹¼ö°¡ 1°³ ÀÌ»óÀÏ ¶§ È°¼ºÈ­
+	// ë””ë²„í”„ ê°¯ìˆ˜ê°€ 1ê°œ ì´ìƒì¼ ë•Œ í™œì„±í™”
 	if (NewCount > 0 && bOwnerAlibe)
 	{
 		Activate();
 	}
-	// 0°³¸é ºñÈ°¼ºÈ­
+	// 0ê°œë©´ ë¹„í™œì„±í™”
 	else
 	{
 		Deactivate();
@@ -60,6 +60,6 @@ void UDebuffNiagaraComponent::DebuffTagChanged(const FGameplayTag CallbackTag, i
 
 void UDebuffNiagaraComponent::OnOwnerDeath(AActor* DeadActor)
 {
-	// ÄÄÆ÷³ÍÆ® ºñÈ°¼ºÈ­
+	// ì»´í¬ë„ŒíŠ¸ ë¹„í™œì„±í™”
 	Deactivate();
 }

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
@@ -14,8 +14,8 @@ void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 {
 	Super::OnRep_ActivateAbilities();
 
-	// ¼­¹ö¿¡¼­¸¸ ÇÏ´ø°É Å¬¶ó¿¡¼­µµ ¼öÇà
-	// ¹İº¹ÇÏÁö ¾Êµµ·Ï ÇÔ
+	// ì„œë²„ì—ì„œë§Œ í•˜ë˜ê±¸ í´ë¼ì—ì„œë„ ìˆ˜í–‰
+	// ë°˜ë³µí•˜ì§€ ì•Šë„ë¡ í•¨
 	if (!bStartupAbilitiesGiven)
 	{
 		bStartupAbilitiesGiven = true;
@@ -64,7 +64,7 @@ FGameplayTag UAuraAbilitySystemComponent::GetStatusFromSpec(const FGameplayAbili
 
 void UAuraAbilitySystemComponent::ClearSlot(FGameplayAbilitySpec& AbilitySpec)
 {
-	// ½ºÅ³ÀÇ ÇöÀç ÀÎÇ² ÅÂ±×¸¦ »èÁ¦
+	// ìŠ¤í‚¬ì˜ í˜„ì¬ ì¸í’‹ íƒœê·¸ë¥¼ ì‚­ì œ
 	const FGameplayTag InputTag = GetInputTagFromSpec(AbilitySpec);
 	AbilitySpec.DynamicAbilityTags.RemoveTag(InputTag);
 }
@@ -87,15 +87,15 @@ void UAuraAbilitySystemComponent::AssignSlotToAbility(FGameplayAbilitySpec& Abil
 
 FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const FGameplayTag& AbilityTag)
 {
-	// ¾îºô¸®Æ¼ÀÇ µ¨¸®°ÔÀÌÆ®¸¦ ¼öÇàÇÏ±âÀü¿¡ ¾îºô¸®Æ¼¸¦ Àá±İ(±× »çÀÌ¿¡ Á¦°ÅµÇ°Å³ª Ãß°¡µÇÁö ¾Ê´Â´Ù)
+	// ì–´ë¹Œë¦¬í‹°ì˜ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ìˆ˜í–‰í•˜ê¸°ì „ì— ì–´ë¹Œë¦¬í‹°ë¥¼ ì ê¸ˆ(ê·¸ ì‚¬ì´ì— ì œê±°ë˜ê±°ë‚˜ ì¶”ê°€ë˜ì§€ ì•ŠëŠ”ë‹¤)
 	FScopedAbilityListLock ActiveScopeLock(*this);
 
-	// ¸ğµç È°¼ºÈ­µÈ ¾îºô¸®Æ¼µéÀ» È®ÀÎ
+	// ëª¨ë“  í™œì„±í™”ëœ ì–´ë¹Œë¦¬í‹°ë“¤ì„ í™•ì¸
 	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
 		for (const FGameplayTag& Tag : AbilitySpec.Ability.Get()->AbilityTags)
 		{
-			// ¾îºô¸®Æ¼ ÅÂ±×°¡ ÀÏÄ¡ÇÏ´Â ÅÂ±×°¡ ÀÖÀ» °æ¿ì ¸®ÅÏ
+			// ì–´ë¹Œë¦¬í‹° íƒœê·¸ê°€ ì¼ì¹˜í•˜ëŠ” íƒœê·¸ê°€ ìˆì„ ê²½ìš° ë¦¬í„´
 			if (Tag.MatchesTag(AbilityTag))
 			{
 				return &AbilitySpec;
@@ -125,7 +125,7 @@ FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromAbilityTag(const FGamep
 
 bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription)
 {
-	// È°¼ºÈ­µÈ ¾îºô¸®Æ¼°¡ ÀÖÀ¸¸é ÇØ´ç ¾îºô¸®Æ¼¿¡¼­ ¼³¸í ¾ò¾î¿È
+	// í™œì„±í™”ëœ ì–´ë¹Œë¦¬í‹°ê°€ ìˆìœ¼ë©´ í•´ë‹¹ ì–´ë¹Œë¦¬í‹°ì—ì„œ ì„¤ëª… ì–»ì–´ì˜´
 	if (const FGameplayAbilitySpec* AbilitySpec = GetSpecFromAbilityTag(AbilityTag))
 	{
 		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(AbilitySpec->Ability))
@@ -136,17 +136,17 @@ bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag(const FGameplayTag
 		return true;
 	}
 
-	// È°¼ºÈ­µÈ ¾îºô¸®Æ¼¿¡¼­ ÇØ´ç ¾îºô¸®Æ¼°¡ ¾øÀ¸´Ï ¾îºô¸®Æ¼ Á¤º¸µé¿¡¼­ Å½»ö
+	// í™œì„±í™”ëœ ì–´ë¹Œë¦¬í‹°ì—ì„œ í•´ë‹¹ ì–´ë¹Œë¦¬í‹°ê°€ ì—†ìœ¼ë‹ˆ ì–´ë¹Œë¦¬í‹° ì •ë³´ë“¤ì—ì„œ íƒìƒ‰
 	if (const UAbilityInfo* AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo(GetAvatarActor()))
 	{
-		// ¾îºô¸®Æ¼ ÅÂ±×°¡ À¯È¿ÇÏÁö ¾Ê°Å³ª None »óÅÂ¸é ¼³¸íÀº ºñ¿öµÒ
+		// ì–´ë¹Œë¦¬í‹° íƒœê·¸ê°€ ìœ íš¨í•˜ì§€ ì•Šê±°ë‚˜ None ìƒíƒœë©´ ì„¤ëª…ì€ ë¹„ì›Œë‘ 
 		if (!AbilityTag.IsValid() || AbilityTag.MatchesTagExact(UAuraGameplayTags::Get().Abilities_None))
 		{
 			OutDescription = FString();
 		}
 		else
 		{
-			// ÇØ´ç ·¹º§¿¡¼­ È°¼ºÈ­ÇÒ ¼ö ÀÖÀ½À» ¼³¸í¿¡ ±âÀÔ
+			// í•´ë‹¹ ë ˆë²¨ì—ì„œ í™œì„±í™”í•  ìˆ˜ ìˆìŒì„ ì„¤ëª…ì— ê¸°ì…
 			OutDescription = UAuraGameplayAbility::GetLockedDescription(AbilityInfo->FindAbilityInfoForTag(AbilityTag).LevelRequirement);
 		}
 		
@@ -158,33 +158,33 @@ bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag(const FGameplayTag
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
-	// ÀÌÆåÆ®°¡ Àû¿ëµÉ ¶§ µ¨¸®°ÔÀÌÆ®
+	// ì´í™íŠ¸ê°€ ì ìš©ë  ë•Œ ë¸ë¦¬ê²Œì´íŠ¸
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &ThisClass::ClientEffectApplied);
 }
 
 void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilites)
 {
-	// Ä³¸¯ÅÍ°¡ Ã³À½ºÎÅÍ °¡Áö°í ÀÖ´Â ¾îºô¸®Æ¼µéÀ» ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®¿¡ µî·Ï
+	// ìºë¦­í„°ê°€ ì²˜ìŒë¶€í„° ê°€ì§€ê³  ìˆëŠ” ì–´ë¹Œë¦¬í‹°ë“¤ì„ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ì— ë“±ë¡
 	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilites)
 	{
-		// ¾îºô¸®Æ¼ ½ºÆåÀ» »ı¼º. ÀÌ´Â Å¬¶óµé¿¡°Ô ·¹ÇÃ¸®ÄÉÀÌ¼ÇµÊ
+		// ì–´ë¹Œë¦¬í‹° ìŠ¤í™ì„ ìƒì„±. ì´ëŠ” í´ë¼ë“¤ì—ê²Œ ë ˆí”Œë¦¬ì¼€ì´ì…˜ë¨
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 
-		// Ä¿½ºÅÒ ¾îºô¸®Æ¼ Å¬·¡½º·Î Ä³½ºÆ®
+		// ì»¤ìŠ¤í…€ ì–´ë¹Œë¦¬í‹° í´ë˜ìŠ¤ë¡œ ìºìŠ¤íŠ¸
 		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(AbilitySpec.Ability))
 		{
-			// ¾îºô¸®Æ¼ÀÇ ÀÎÇ² ÅÂ±×¸¦ ¾îºô¸®Æ¼ ½ºÆå¿¡ µî·Ï
+			// ì–´ë¹Œë¦¬í‹°ì˜ ì¸í’‹ íƒœê·¸ë¥¼ ì–´ë¹Œë¦¬í‹° ìŠ¤í™ì— ë“±ë¡
 			AbilitySpec.DynamicAbilityTags.AddTag(AuraAbility->StartupInputTag);
-			// ¾îºô¸®Æ¼¸¦ ¾ò¾úÀ¸¸é Equipped ÅÂ±×¸¦ Ãß°¡
+			// ì–´ë¹Œë¦¬í‹°ë¥¼ ì–»ì—ˆìœ¼ë©´ Equipped íƒœê·¸ë¥¼ ì¶”ê°€
 			AbilitySpec.DynamicAbilityTags.AddTag(UAuraGameplayTags::Get().Abilities_Status_Equipped);
 
-			// ¾îºô¸®Æ¼ ºÎ¿©. ºÎ¿©¿Í µ¿½Ã¿¡ ¼öÇà(GiveAbilityAndActivateOnce)µµ °¡´É
+			// ì–´ë¹Œë¦¬í‹° ë¶€ì—¬. ë¶€ì—¬ì™€ ë™ì‹œì— ìˆ˜í–‰(GiveAbilityAndActivateOnce)ë„ ê°€ëŠ¥
 			GiveAbility(AbilitySpec);
 		}
 	}
 
 	bStartupAbilitiesGiven = true;
-	// ÀÌ ÇÔ¼ö´Â ¼­¹ö¿¡¼­¸¸ ¼öÇàµÊ. Å¬¶ó´Â OnRep_ActivateAbilities()À» ÅëÇØ¼­ ¼öÇà
+	// ì´ í•¨ìˆ˜ëŠ” ì„œë²„ì—ì„œë§Œ ìˆ˜í–‰ë¨. í´ë¼ëŠ” OnRep_ActivateAbilities()ì„ í†µí•´ì„œ ìˆ˜í–‰
 	AbilitiesGivenDelegate.Broadcast();
 }
 
@@ -192,7 +192,7 @@ void UAuraAbilitySystemComponent::AddCharacterPassiveAbilities(const TArray<TSub
 {
 	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartupPassiveAbilites)
 	{
-		// ÆĞ½Ãºê ¾îºô¸®Æ¼´Â ÀÎÇ² ÅÂ±×°¡ ÇÊ¿ä¾øÀ½. ¾îºô¸®Æ¼¸¦ ºÎ¿©ÇÏÀÚ¸¶ÀÚ È°¼ºÈ­
+		// íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°ëŠ” ì¸í’‹ íƒœê·¸ê°€ í•„ìš”ì—†ìŒ. ì–´ë¹Œë¦¬í‹°ë¥¼ ë¶€ì—¬í•˜ìë§ˆì í™œì„±í™”
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 		GiveAbilityAndActivateOnce(AbilitySpec);
 		AbilitySpec.DynamicAbilityTags.AddTag(UAuraGameplayTags::Get().Abilities_Status_Equipped);
@@ -214,7 +214,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilitiesFromSaveData(ULoadScreenS
 		{
 			GiveAbility(LoadedAbilitySpec);
 		}
-		// ÆĞ½Ãºê¸é¼­ ÀåÂøµÇ¾îÀÖ´ø ½ºÅ³ÀÌ¸é ¹Ù·Î Àû¿ë
+		// íŒ¨ì‹œë¸Œë©´ì„œ ì¥ì°©ë˜ì–´ìˆë˜ ìŠ¤í‚¬ì´ë©´ ë°”ë¡œ ì ìš©
 		else if (Data.AbilityTypeTag == UAuraGameplayTags::Get().Abilities_Type_Passive)
 		{
 			if (Data.AbilityStatusTag.MatchesTagExact(UAuraGameplayTags::Get().Abilities_Status_Equipped))
@@ -242,13 +242,13 @@ void UAuraAbilitySystemComponent::AbilityInputTagPressed(const FGameplayTag& Inp
 	{
 		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
 		{
-			// ¾îºô¸®Æ¼°¡ ´­·¯Á³À½À» ¾Ë·ÁÁÜ. ¹öÆ° À¯Áö´Ï±î °è¼Ó È£ÃâµÇµµ·ÏÇÔ
+			// ì–´ë¹Œë¦¬í‹°ê°€ ëˆŒëŸ¬ì¡ŒìŒì„ ì•Œë ¤ì¤Œ. ë²„íŠ¼ ìœ ì§€ë‹ˆê¹Œ ê³„ì† í˜¸ì¶œë˜ë„ë¡í•¨
 			AbilitySpecInputPressed(AbilitySpec);
 
-			// ¾îºô¸®Æ¼°¡ ºñÈ°¼ºÈ­ »óÅÂÀÏ ¶§¸¸ È°¼ºÈ­ÇÏµµ·Ï ÇÑ´Ù.
+			// ì–´ë¹Œë¦¬í‹°ê°€ ë¹„í™œì„±í™” ìƒíƒœì¼ ë•Œë§Œ í™œì„±í™”í•˜ë„ë¡ í•œë‹¤.
 			if (AbilitySpec.IsActive())
 			{
-				// ÇÁ·¹½º Çß´Ù´Â °ÍÀ» ¼­¹ö¿¡°Ô ¾Ë¸²
+				// í”„ë ˆìŠ¤ í–ˆë‹¤ëŠ” ê²ƒì„ ì„œë²„ì—ê²Œ ì•Œë¦¼
 				InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, AbilitySpec.Handle, AbilitySpec.ActivationInfo.GetActivationPredictionKey());
 			}
 		}
@@ -261,15 +261,15 @@ void UAuraAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 
 	FScopedAbilityListLock ActiveScopeLock(*this);
 
-	// ÇöÀç È°¼ºÈ­ÇÒ ¼ö ÀÖ´Â ¸ğµç ¾îºô¸®Æ¼ Áß
+	// í˜„ì¬ í™œì„±í™”í•  ìˆ˜ ìˆëŠ” ëª¨ë“  ì–´ë¹Œë¦¬í‹° ì¤‘
 	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		// ÅÂ±×°¡ ¸Â´Â ¾îºô¸®Æ¼¸¦ °¡Á®¿Â´Ù.
+		// íƒœê·¸ê°€ ë§ëŠ” ì–´ë¹Œë¦¬í‹°ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag) && AbilitySpec.IsActive())
 		{
-			// ¾îºô¸®Æ¼°¡ ¸±¸®Áî‰çÀ½À» ¾Ë¸²
+			// ì–´ë¹Œë¦¬í‹°ê°€ ë¦´ë¦¬ì¦ˆë¬ìŒì„ ì•Œë¦¼
 			AbilitySpecInputReleased(AbilitySpec);
-			// ¸±¸®Áî Çß´Ù´Â °ÍÀ» ¼­¹ö¿¡°Ô ¾Ë¸²
+			// ë¦´ë¦¬ì¦ˆ í–ˆë‹¤ëŠ” ê²ƒì„ ì„œë²„ì—ê²Œ ì•Œë¦¼
 			InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, AbilitySpec.Handle, AbilitySpec.ActivationInfo.GetActivationPredictionKey());
 		}
 	}
@@ -285,10 +285,10 @@ void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputT
 	{
 		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
 		{
-			// ¾îºô¸®Æ¼°¡ ´­·¯Á³À½À» ¾Ë·ÁÁÜ. ¹öÆ° À¯Áö´Ï±î °è¼Ó È£ÃâµÇµµ·ÏÇÔ
+			// ì–´ë¹Œë¦¬í‹°ê°€ ëˆŒëŸ¬ì¡ŒìŒì„ ì•Œë ¤ì¤Œ. ë²„íŠ¼ ìœ ì§€ë‹ˆê¹Œ ê³„ì† í˜¸ì¶œë˜ë„ë¡í•¨
 			AbilitySpecInputPressed(AbilitySpec);
 
-			// ¾îºô¸®Æ¼°¡ ºñÈ°¼ºÈ­ »óÅÂÀÏ ¶§¸¸ È°¼ºÈ­ÇÏµµ·Ï ÇÑ´Ù.
+			// ì–´ë¹Œë¦¬í‹°ê°€ ë¹„í™œì„±í™” ìƒíƒœì¼ ë•Œë§Œ í™œì„±í™”í•˜ë„ë¡ í•œë‹¤.
 			if (!AbilitySpec.IsActive())
 			{
 				TryActivateAbility(AbilitySpec.Handle);
@@ -299,15 +299,15 @@ void UAuraAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputT
 
 void UAuraAbilitySystemComponent::ForEachAbility(const FForEachAbility& Delegate)
 {
-	// ¾îºô¸®Æ¼ÀÇ µ¨¸®°ÔÀÌÆ®¸¦ ¼öÇàÇÏ±âÀü¿¡ ¾îºô¸®Æ¼¸¦ Àá±İ(±× »çÀÌ¿¡ Á¦°ÅµÇ°Å³ª Ãß°¡µÇÁö ¾Ê´Â´Ù)
+	// ì–´ë¹Œë¦¬í‹°ì˜ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ìˆ˜í–‰í•˜ê¸°ì „ì— ì–´ë¹Œë¦¬í‹°ë¥¼ ì ê¸ˆ(ê·¸ ì‚¬ì´ì— ì œê±°ë˜ê±°ë‚˜ ì¶”ê°€ë˜ì§€ ì•ŠëŠ”ë‹¤)
 	FScopedAbilityListLock ActiveScopeLock(*this);
 
 	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
-		// ¾îºô¸®Æ¼¿¡ ¿¬°áµÈ µ¨¸®°ÔÀÌÆ®¸¦ ½ÇÇà
+		// ì–´ë¹Œë¦¬í‹°ì— ì—°ê²°ëœ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ì‹¤í–‰
 		if (!Delegate.ExecuteIfBound(AbilitySpec))
 		{
-			// ¾îºô¸®Æ¼¿¡ µî·ÏµÈ µ¨¸®°ÔÀÌÆ®°¡ ¾øÀ½
+			// ì–´ë¹Œë¦¬í‹°ì— ë“±ë¡ëœ ë¸ë¦¬ê²Œì´íŠ¸ê°€ ì—†ìŒ
 			UE_LOG(LogAura, Error, TEXT("Failed to execute delegate in %hs"), __FUNCTION__);
 		}
 	}
@@ -317,10 +317,10 @@ void UAuraAbilitySystemComponent::UpgradeAttribute(const FGameplayTag& Attribute
 {
 	if (GetAvatarActor() && GetAvatarActor()->Implements<UPlayerInterface>())
 	{
-		// ´É·ÂÄ¡ Æ÷ÀÎÆ®°¡ ÀÖÀ» ¶§
+		// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸ê°€ ìˆì„ ë•Œ
 		if (IPlayerInterface::Execute_GetAttributePoints(GetAvatarActor()) > 0)
 		{
-			// ¼­¹ö¿¡°Ô ÇØ´ç ´É·ÂÄ¡ »ó½Â ¿äÃ»
+			// ì„œë²„ì—ê²Œ í•´ë‹¹ ëŠ¥ë ¥ì¹˜ ìƒìŠ¹ ìš”ì²­
 			ServerUpgradeAttribute(AttributeTag);
 		}
 	}
@@ -330,25 +330,25 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
 {
 	if (const UAbilityInfo* AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo(GetAvatarActor()))
 	{
-		// ¸ğµç ½ºÅ³ Á¤º¸¿¡ ´ëÇØ¼­ È®ÀÎ
+		// ëª¨ë“  ìŠ¤í‚¬ ì •ë³´ì— ëŒ€í•´ì„œ í™•ì¸
 		for (const FAuraAbilityInfo& Info : AbilityInfo->GetAbilityInformation())
 		{
 			if (!Info.AbilityTag.IsValid()) continue;
-			// ·¹º§¿¡ ¸ÂÁö ¾Ê´Â ½ºÅ³Àº ³Ñ¾î°¨
+			// ë ˆë²¨ì— ë§ì§€ ì•ŠëŠ” ìŠ¤í‚¬ì€ ë„˜ì–´ê°
 			if (Level < Info.LevelRequirement) continue;
 
-			// ÇöÀç È°¼ºÈ­µÇÁö ¾ÊÀº ½ºÅ³µéÀº »ı¼ºÇØ¼­ È°¼ºÈ­
+			// í˜„ì¬ í™œì„±í™”ë˜ì§€ ì•Šì€ ìŠ¤í‚¬ë“¤ì€ ìƒì„±í•´ì„œ í™œì„±í™”
 			if (!GetSpecFromAbilityTag(Info.AbilityTag))
 			{
 				FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Info.Ability, 1);
-				// ½ºÅ³ÀÇ »óÅÂ¸¦ »ç¿ëÇÒ ¼ö ÀÖ´Â »óÅÂ·Î º¯°æ
+				// ìŠ¤í‚¬ì˜ ìƒíƒœë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” ìƒíƒœë¡œ ë³€ê²½
 				AbilitySpec.DynamicAbilityTags.AddTag(UAuraGameplayTags::Get().Abilities_Status_Eligible);
 
-				// ½ºÅ³ ¾îºô¸®Æ¼ È°¼ºÈ­
+				// ìŠ¤í‚¬ ì–´ë¹Œë¦¬í‹° í™œì„±í™”
 				GiveAbility(AbilitySpec);
-				// ÇØ´ç ¾îºô¸®Æ¼°¡ º¯°æµÇ¾úÀ½À» ¾Ë¸²(¼­¹ö)
+				// í•´ë‹¹ ì–´ë¹Œë¦¬í‹°ê°€ ë³€ê²½ë˜ì—ˆìŒì„ ì•Œë¦¼(ì„œë²„)
 				MarkAbilitySpecDirty(AbilitySpec);
-				// ÇØ´ç ¾îºô¸®Æ¼°¡ º¯°æµÇ¾úÀ½À» ¾Ë¸²(Å¬¶óÀÌ¾ğÆ®)
+				// í•´ë‹¹ ì–´ë¹Œë¦¬í‹°ê°€ ë³€ê²½ë˜ì—ˆìŒì„ ì•Œë¦¼(í´ë¼ì´ì–¸íŠ¸)
 				ClientUpdateAbilityStatus(Info.AbilityTag, UAuraGameplayTags::Get().Abilities_Status_Eligible, 1);
 			}
 		}
@@ -366,7 +366,7 @@ void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGa
 
 	if (FGameplayAbilitySpec* AbilitySpec = GetSpecFromAbilityTag(AbilityTag))
 	{
-		// ½ºÅ³ Æ÷ÀÎÆ® »ç¿ë
+		// ìŠ¤í‚¬ í¬ì¸íŠ¸ ì‚¬ìš©
 		if (GetAvatarActor()->Implements<UPlayerInterface>())
 		{
 			IPlayerInterface::Execute_AddToSpellPoints(GetAvatarActor(), -1);
@@ -375,22 +375,22 @@ void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGa
 		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
 		FGameplayTag StatusTag = GetStatusFromSpec(*AbilitySpec);
-		// ½ºÅ³ÀÇ »óÅÂ°¡ »ç¿ë °¡´É »óÅÂ¶ó¸é ¾ğ¶ô »óÅÂ·Î º¯°æ
+		// ìŠ¤í‚¬ì˜ ìƒíƒœê°€ ì‚¬ìš© ê°€ëŠ¥ ìƒíƒœë¼ë©´ ì–¸ë½ ìƒíƒœë¡œ ë³€ê²½
 		if (StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Eligible))
 		{
 			AbilitySpec->DynamicAbilityTags.RemoveTag(GameplayTags.Abilities_Status_Eligible);
 			AbilitySpec->DynamicAbilityTags.AddTag(GameplayTags.Abilities_Status_Unlocked);
 			StatusTag = GameplayTags.Abilities_Status_Unlocked;
 		}
-		// ½ºÅ³ÀÇ »óÅÂ°¡ ÀåÂøÇÏ°Å³ª ¾ğ¶ôµÈ »óÅÂ¶ó¸é ½ºÅ³ÀÇ ·¹º§¾÷
+		// ìŠ¤í‚¬ì˜ ìƒíƒœê°€ ì¥ì°©í•˜ê±°ë‚˜ ì–¸ë½ëœ ìƒíƒœë¼ë©´ ìŠ¤í‚¬ì˜ ë ˆë²¨ì—…
 		else if (StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Equipped) || StatusTag.MatchesTagExact(GameplayTags.Abilities_Status_Unlocked))
 		{
 			++AbilitySpec->Level;
 		}
 
-		// ¼­¹ö¿¡°Ô ½ºÅ³ÀÇ »óÅÂ°¡ º¯°æµÇ¾úÀ½À» ¾Ë¸²
+		// ì„œë²„ì—ê²Œ ìŠ¤í‚¬ì˜ ìƒíƒœê°€ ë³€ê²½ë˜ì—ˆìŒì„ ì•Œë¦¼
 		MarkAbilitySpecDirty(*AbilitySpec);
-		// Å¬¶óÀÌ¾ğÆ®¿¡°Ô ½ºÅ³ÀÇ »óÅÂ°¡ º¯°æµÇ¾úÀ½À» ¾Ë¸²
+		// í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ìŠ¤í‚¬ì˜ ìƒíƒœê°€ ë³€ê²½ë˜ì—ˆìŒì„ ì•Œë¦¼
 		ClientUpdateAbilityStatus(AbilityTag, StatusTag, AbilitySpec->Level);
 	}
 }
@@ -401,60 +401,60 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 	{
 		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
-		// »õ·Î º¯°æµÇ±â Àü ÀÎÇ² ÅÂ±×¸¦ ±â¾ï
+		// ìƒˆë¡œ ë³€ê²½ë˜ê¸° ì „ ì¸í’‹ íƒœê·¸ë¥¼ ê¸°ì–µ
 		const FGameplayTag& PrevInputTag = GetInputTagFromSpec(*AbilitySpec);
 		const FGameplayTag& StatusTag = GetStatusFromSpec(*AbilitySpec);
 
-		// ½ºÅ³ »óÅÂ°¡ ÀÌ¹Ì ÀåÂøµÇ¾ú°Å³ª ¾ğ¶ôµÈ »óÅÂ¸¸ ÀåÂø °¡´É
+		// ìŠ¤í‚¬ ìƒíƒœê°€ ì´ë¯¸ ì¥ì°©ë˜ì—ˆê±°ë‚˜ ì–¸ë½ëœ ìƒíƒœë§Œ ì¥ì°© ê°€ëŠ¥
 		if (StatusTag == GameplayTags.Abilities_Status_Equipped || StatusTag == GameplayTags.Abilities_Status_Unlocked)
 		{
-			// ÇØ´ç ½½·ÔÀÌ ºñ¾îÀÖÁö ¾ÊÀº °æ¿ì
+			// í•´ë‹¹ ìŠ¬ë¡¯ì´ ë¹„ì–´ìˆì§€ ì•Šì€ ê²½ìš°
 			if (!SlotIsEmpty(InputTag))
 			{
 				if (FGameplayAbilitySpec* SpecWithSlot = GetSpecWithSlot(InputTag))
 				{
-					// ½½·Ô¿¡ ÀåÂøµÈ ½ºÅ³°ú ÀåÂøÇÏ·Á´Â ½ºÅ³ÀÍ °°À¸¸é ±×³É ÀåÂøÇÏ°í ³¡³¿
+					// ìŠ¬ë¡¯ì— ì¥ì°©ëœ ìŠ¤í‚¬ê³¼ ì¥ì°©í•˜ë ¤ëŠ” ìŠ¤í‚¬ìµ ê°™ìœ¼ë©´ ê·¸ëƒ¥ ì¥ì°©í•˜ê³  ëëƒ„
 					if (AbilityTag.MatchesTagExact(GetAbilityTagFromSpec(*AbilitySpec)))
 					{
 						ClientEquipAbility(AbilityTag, GameplayTags.Abilities_Status_Equipped, InputTag, PrevInputTag);
 						return;
 					}
 
-					// ÆĞ½Ãºê ½ºÅ³ÀÎ °æ¿ì ºñÈ°¼ºÈ­ÇÔ
+					// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ì¸ ê²½ìš° ë¹„í™œì„±í™”í•¨
 					if (IsPassiveAbility(*SpecWithSlot))
 					{
-						// ÀÌÆåÆ® ºñÈ°¼ºÈ­
+						// ì´í™íŠ¸ ë¹„í™œì„±í™”
 						MulticastActivatePassiveEffect(GetAbilityTagFromSpec(*SpecWithSlot), false);
-						// ½ºÅ³ ºñÈ°¼ºÈ­
+						// ìŠ¤í‚¬ ë¹„í™œì„±í™”
 						DeactivatePassiveAbilityDelegate.Broadcast(GetAbilityTagFromSpec(*SpecWithSlot));
 					}
 
-					// ¼±ÅÃÇÑ ½ºÅ³ÀÇ ½½·Ô¿¡¼­ ½ºÅ³ Á¦°Å
+					// ì„ íƒí•œ ìŠ¤í‚¬ì˜ ìŠ¬ë¡¯ì—ì„œ ìŠ¤í‚¬ ì œê±°
 					ClearSlot(*SpecWithSlot);
 				}
 			}
 
-			// ÇØ´ç ½ºÅ³ÀÌ ¾î¶² ½½·Ô¿¡µµ ÀÖÁö ¾Ê´Ù¸é, Áï È°¼ºÈ­µÈ »óÅÂ°¡ ¾Æ´Ï¶ó¸é
+			// í•´ë‹¹ ìŠ¤í‚¬ì´ ì–´ë–¤ ìŠ¬ë¡¯ì—ë„ ìˆì§€ ì•Šë‹¤ë©´, ì¦‰ í™œì„±í™”ëœ ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´
 			if (!AbilityHasAnySlot(*AbilitySpec))
 			{
-				// ÆĞ½Ãºê ½ºÅ³ÀÌ¶ó¸é È°¼ºÈ­
+				// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ì´ë¼ë©´ í™œì„±í™”
 				if (IsPassiveAbility(*AbilitySpec))
 				{
-					// ½ºÅ³ È°¼ºÈ­
+					// ìŠ¤í‚¬ í™œì„±í™”
 					TryActivateAbility(AbilitySpec->Handle);
-					// ÀÌÆåÆ® È°¼ºÈ­
+					// ì´í™íŠ¸ í™œì„±í™”
 					MulticastActivatePassiveEffect(GetAbilityTagFromSpec(*AbilitySpec), true);
 				}
 
-				// ±âÁ¸ »óÅÂ ÅÂ±×¸¦ Á¦°ÅÇÏ°í ÀåÂøµÈ ÅÂ±×·Î ¼³Á¤
+				// ê¸°ì¡´ ìƒíƒœ íƒœê·¸ë¥¼ ì œê±°í•˜ê³  ì¥ì°©ëœ íƒœê·¸ë¡œ ì„¤ì •
 				AbilitySpec->DynamicAbilityTags.RemoveTag(GetStatusFromSpec(*AbilitySpec));
 				AbilitySpec->DynamicAbilityTags.AddTag(GameplayTags.Abilities_Status_Equipped);
 			}
 
-			// ÇØ´ç ½½·Ô¿¡ ½ºÅ³ µî·Ï
+			// í•´ë‹¹ ìŠ¬ë¡¯ì— ìŠ¤í‚¬ ë“±ë¡
 			AssignSlotToAbility(*AbilitySpec, InputTag);
 
-			// ¾îºô¸®Æ¼°¡ º¯°æµÇ¾úÀ½À» ¼­¹ö¿¡ ¾Ë¸²
+			// ì–´ë¹Œë¦¬í‹°ê°€ ë³€ê²½ë˜ì—ˆìŒì„ ì„œë²„ì— ì•Œë¦¼
 			MarkAbilitySpecDirty(*AbilitySpec);
 		}
 
@@ -470,12 +470,12 @@ void UAuraAbilitySystemComponent::ServerUpgradeAttribute_Implementation(const FG
 	Payload.EventTag = AttributeTag;
 	Payload.EventMagnitude = 1.f;
 
-	// ½º½º·Î¿¡°Ô ÀÌº¥Æ®¸¦ Àü´Ş. ¾îºô¸®Æ¼ Áß ÀÌº¥Æ®¸¦ Ã³¸®ÇÏ´Â ÆĞ½Ãºê ¾îºô¸®Æ¼ GA_ListenForEvent¿¡¼­ Ã³¸® ¿¹Á¤
+	// ìŠ¤ìŠ¤ë¡œì—ê²Œ ì´ë²¤íŠ¸ë¥¼ ì „ë‹¬. ì–´ë¹Œë¦¬í‹° ì¤‘ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í•˜ëŠ” íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹° GA_ListenForEventì—ì„œ ì²˜ë¦¬ ì˜ˆì •
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetAvatarActor(), AttributeTag, Payload);
 
 	if (GetAvatarActor()->Implements<UPlayerInterface>())
 	{
-		// ´É·ÂÄ¡ Æ÷ÀÎÆ®¸¦ ¿Ã·ÈÀ¸¹Ç·Î ÇÏ³ª Á¦°Å
+		// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸ë¥¼ ì˜¬ë ¸ìœ¼ë¯€ë¡œ í•˜ë‚˜ ì œê±°
 		IPlayerInterface::Execute_AddToAttributePoints(GetAvatarActor(), -1);
 	}
 }
@@ -485,19 +485,19 @@ void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySys
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);
 
-	// ÀÌÆåÆ®¿¡ Àû¿ëµÈ ÅÂ±× °ü·Ã ºê·ÎµåÄ³½ºÆ®
+	// ì´í™íŠ¸ì— ì ìš©ëœ íƒœê·¸ ê´€ë ¨ ë¸Œë¡œë“œìºìŠ¤íŠ¸
 	EffectAssetTagsDelegate.Broadcast(TagContainer);
 }
 
 void UAuraAbilitySystemComponent::ClientUpdateAbilityStatus_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel)
 {
-	// µ¨¸®°ÔÀÌÆ®·Î º¯°æµÇ¾úÀ½À» ¾Ë¸²
+	// ë¸ë¦¬ê²Œì´íŠ¸ë¡œ ë³€ê²½ë˜ì—ˆìŒì„ ì•Œë¦¼
 	AbilityStatusChangedDelegate.Broadcast(AbilityTag, StatusTag, AbilityLevel);
 }
 
 void UAuraAbilitySystemComponent::ClientEquipAbility_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag)
 {
-	// µ¨¸®°ÔÀÌÆ®·Î ½ºÅ³ÀÌ ÀåÂøµÇ¾úÀ½À» ¾Ë¸²
+	// ë¸ë¦¬ê²Œì´íŠ¸ë¡œ ìŠ¤í‚¬ì´ ì¥ì°©ë˜ì—ˆìŒì„ ì•Œë¦¼
 	AbilityEquippedDelegate.Broadcast(AbilityTag, StatusTag, InputTag, PrevInputTag);
 }
 

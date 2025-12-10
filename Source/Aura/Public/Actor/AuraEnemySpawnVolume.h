@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -11,7 +11,7 @@ class UBoxComponent;
 class AAuraEnemySpawnPoint;
 
 /**
- * ÇÃ·¹ÀÌ¾î°¡ ´êÀ¸¸é ÀûÀ» ¼ÒÈ¯ÇÏ´Â º¼·ı Å¬·¡½º
+ * í”Œë ˆì´ì–´ê°€ ë‹¿ìœ¼ë©´ ì ì„ ì†Œí™˜í•˜ëŠ” ë³¼ë¥¨ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraEnemySpawnVolume : public AActor, public ISaveInterface
@@ -24,22 +24,22 @@ private:
 private:
 	virtual void BeginPlay() final;
 
-	// ISaveInterface¿¡¼­ »ó¼Ó
+	// ISaveInterfaceì—ì„œ ìƒì†
 	virtual bool ShouldLoadTransform_Implementation() const final { return false; };
 	virtual void LoadActor_Implementation() final;
 
 private:
-	// Ãæµ¹ Ã³¸®
+	// ì¶©ëŒ ì²˜ë¦¬
 	UFUNCTION()
 	virtual void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
-	// ÇÃ·¹ÀÌ¾î°¡ ´ê¾Ò¾ú´Â Áö ±â¾ïÇÏ±âÀ§ÇØ ÀúÀå
+	// í”Œë ˆì´ì–´ê°€ ë‹¿ì•˜ì—ˆëŠ” ì§€ ê¸°ì–µí•˜ê¸°ìœ„í•´ ì €ì¥
 	UPROPERTY(BlueprintReadOnly, SaveGame)
 	bool bReached = false;
 
 private:
-	// Ãæµ¹ Ã¼Å© È®ÀÎÇÒ ¹Ú½º ÄÄÆ÷³ÍÆ®
+	// ì¶©ëŒ ì²´í¬ í™•ì¸í•  ë°•ìŠ¤ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UBoxComponent> Box;
 

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Actor/AuraProjectile.h"
 #include "Components/SphereComponent.h"
@@ -15,7 +15,7 @@ AAuraProjectile::AAuraProjectile()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	// »ı¼ºÀ» ¼­¹ö¿¡¼­¸¸ ÇÒ °Å¶ó Å¬¶óµéÀ» À§ÇØ¼­ ·¹ÇÃ¸®ÄÉÀÌ¼Ç
+	// ìƒì„±ì„ ì„œë²„ì—ì„œë§Œ í•  ê±°ë¼ í´ë¼ë“¤ì„ ìœ„í•´ì„œ ë ˆí”Œë¦¬ì¼€ì´ì…˜
 	bReplicates = true;
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
@@ -53,7 +53,7 @@ void AAuraProjectile::BeginPlay()
 
 void AAuraProjectile::Destroyed()
 {
-	// Å¬¶óÀÌ¾ğÆ®¿¡¼­ ¼­¹ö°¡ ¹ß»çÃ¼¸¦ Á¦°ÅÇÏ¶ó°í ·¹ÇÃ¸®ÄÉÀÌ¼Ç Çß´Âµ¥, »ç¿îµå¿Í ÀÌÆåÆ®¸¦ Ãâ·ÂÇÏÁö ¸øÇÑ °æ¿ì
+	// í´ë¼ì´ì–¸íŠ¸ì—ì„œ ì„œë²„ê°€ ë°œì‚¬ì²´ë¥¼ ì œê±°í•˜ë¼ê³  ë ˆí”Œë¦¬ì¼€ì´ì…˜ í–ˆëŠ”ë°, ì‚¬ìš´ë“œì™€ ì´í™íŠ¸ë¥¼ ì¶œë ¥í•˜ì§€ ëª»í•œ ê²½ìš°
 	if (!bHit && !HasAuthority())
 	{
 		OnHit();
@@ -71,21 +71,21 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		OnHit();
 	}
 
-	// ¼­¹ö¿¡¼­ Á¦°ÅÇÏ´Âµ¥ Å¬¶ó´Â ·¹ÇÃ¸®ÄÉÀÌ¼ÇµÇ¼­ Á¦°ÅµÈ´Ù.
+	// ì„œë²„ì—ì„œ ì œê±°í•˜ëŠ”ë° í´ë¼ëŠ” ë ˆí”Œë¦¬ì¼€ì´ì…˜ë˜ì„œ ì œê±°ëœë‹¤.
 	if (HasAuthority())
 	{
-		// Å¸°Ù¿¡°Ô µ¥¹ÌÁö ÀÌÆåÆ®¸¦ Àû¿ë
+		// íƒ€ê²Ÿì—ê²Œ ë°ë¯¸ì§€ ì´í™íŠ¸ë¥¼ ì ìš©
 		if (UAbilitySystemComponent* TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
-			// Ãæ°İ º¤ÅÍ Àû¿ë
+			// ì¶©ê²© ë²¡í„° ì ìš©
 			const FVector DeathImpulse = GetActorForwardVector() * DamageEffectParams.DeathImpulseMagnitude;
 			DamageEffectParams.DeathImpulse = DeathImpulse;
 
-			// ³Ë¹é µÇ¾ú´Â Áö È®ÀÎ
+			// ë„‰ë°± ë˜ì—ˆëŠ” ì§€ í™•ì¸
 			const bool bKnockback = FMath::RandRange(1.f, 100.f) < DamageEffectParams.KnockbackChance;
 			if (bKnockback)
 			{
-				// ³Ë¹é º¤ÅÍ Àû¿ë. À­ ¹æÇâÀ¸·Î 45µµ Àû¿ë ½ÃÅ²´Ù.
+				// ë„‰ë°± ë²¡í„° ì ìš©. ìœ— ë°©í–¥ìœ¼ë¡œ 45ë„ ì ìš© ì‹œí‚¨ë‹¤.
 				FRotator Rotation = GetActorRotation();
 				Rotation.Pitch = 45.f;
 				const FVector KnockbackDirection = Rotation.Vector();
@@ -99,7 +99,7 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 
 		Destroy();
 	}
-	// ±Ùµ¥ Å¬¶ó¿¡¼­´Â ·¹ÇÃ¸®ÄÉÀÌ¼ÇµÇ¼­ Á¦°ÅµÉ ¶§ »ç¿îµå³ª ÀÌÆåÆ®·Ñ Àç»ı¸øÇÏ°í ¼­¹ö¿¡¼­ Á¦°ÅÇÏ¶ó°í ÇØ¼­ Á¦°ÅµÉ ¼ö ÀÖ´Ù.
+	// ê·¼ë° í´ë¼ì—ì„œëŠ” ë ˆí”Œë¦¬ì¼€ì´ì…˜ë˜ì„œ ì œê±°ë  ë•Œ ì‚¬ìš´ë“œë‚˜ ì´í™íŠ¸ë¡¤ ì¬ìƒëª»í•˜ê³  ì„œë²„ì—ì„œ ì œê±°í•˜ë¼ê³  í•´ì„œ ì œê±°ë  ìˆ˜ ìˆë‹¤.
 	else
 	{
 		bHit = true;
@@ -131,11 +131,11 @@ bool AAuraProjectile::IsValidOverlap(AActor* OtherActor) const
 {
 	if (!DamageEffectParams.SourceAbilitySystemComponent) return false;
 
-	// È¿°ú¸¦ ¼öÇàÇÑ ¾×ÅÍ¿Í Ãæµ¹¾×ÅÍ°¡ °°À¸¸é ¸®ÅÏ
+	// íš¨ê³¼ë¥¼ ìˆ˜í–‰í•œ ì•¡í„°ì™€ ì¶©ëŒì•¡í„°ê°€ ê°™ìœ¼ë©´ ë¦¬í„´
 	AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
 	if (SourceAvatarActor == OtherActor) return false;
 
-	// ¹ß»çÃ¼ ´ë»óÀÌ ¾Æ±ºÀÌ¸é ¸®ÅÏ
+	// ë°œì‚¬ì²´ ëŒ€ìƒì´ ì•„êµ°ì´ë©´ ë¦¬í„´
 	if (!UAuraAbilitySystemLibrary::IsNotFriend(SourceAvatarActor, OtherActor)) return false;
 
 	return true;

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "MapEntrance.generated.h"
 
 /**
- * ´Ù¸¥ ¸ÊÀ¸·Î ÀÌµ¿ÇÏ´Â ¸ÊÀÇ ÀÔ±¸ °´Ã¼ Å¬·¡½º
+ * ë‹¤ë¥¸ ë§µìœ¼ë¡œ ì´ë™í•˜ëŠ” ë§µì˜ ì…êµ¬ ê°ì²´ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AMapEntrance : public ACheckpoint
@@ -18,21 +18,21 @@ private:
 	AMapEntrance(const FObjectInitializer& ObjectInitializer);
 
 private:
-	// ACheckpoint¿¡¼­ »ó¼Ó
+	// ACheckpointì—ì„œ ìƒì†
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) final;
 
-	// ISaveInterface¿¡¼­ »ó¼Ó
+	// ISaveInterfaceì—ì„œ ìƒì†
 	virtual void LoadActor_Implementation() final;
 
-	// IHighlightInterface¿¡¼­ »ó¼Ó
+	// IHighlightInterfaceì—ì„œ ìƒì†
 	virtual void HighlightActor_Implementation() final;
 
 private:
-	// ³Ñ¾î°¥ ¸Ê
+	// ë„˜ì–´ê°ˆ ë§µ
 	UPROPERTY(EditAnywhere)
 	TSoftObjectPtr<UWorld> DestinationMap;
 
-	// ¸Ê¿¡¼­ ½ÃÀÛÇÒ ÇÃ·¹ÀÌ¾î ½ºÅ¸Æ® °´Ã¼ÀÇ ÅÂ±×
+	// ë§µì—ì„œ ì‹œì‘í•  í”Œë ˆì´ì–´ ìŠ¤íƒ€íŠ¸ ê°ì²´ì˜ íƒœê·¸
 	UPROPERTY(EditAnywhere)
 	FName DestinationPlayerStartTag;
 };

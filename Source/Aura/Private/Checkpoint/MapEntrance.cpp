@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Checkpoint/MapEntrance.h"
 #include "Interaction/PlayerInterface.h"
@@ -21,23 +21,23 @@ void AMapEntrance::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 	{
 		bReached = true;
 
-		// ÇöÀç °ÔÀÓ »óÅÂ¸¦ ÀúÀå
+		// í˜„ì¬ ê²Œì„ ìƒíƒœë¥¼ ì €ì¥
 		if (AAuraGameModeBase* AuraGameModeBase = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 		{
 			AuraGameModeBase->SaveWorldState(GetWorld(), DestinationMap.ToSoftObjectPath().GetAssetName());
 		}
 
-		// ÃÖ½Å °ÔÀÓ ÁøÇà»óÈ² ÀúÀå
+		// ìµœì‹  ê²Œì„ ì§„í–‰ìƒí™© ì €ì¥
 		IPlayerInterface::Execute_SaveProgress(OtherActor, DestinationPlayerStartTag);
 
-		// ÇØ´ç ¸ÊÀ¸·Î ÀÌµ¿
+		// í•´ë‹¹ ë§µìœ¼ë¡œ ì´ë™
 		UGameplayStatics::OpenLevelBySoftObjectPtr(this, DestinationMap);
 	}
 }
 
 void AMapEntrance::LoadActor_Implementation()
 {
-	// ·ÎµåÇØµµ ¾Æ¹«°Íµµ ¾ÈÇÔ
+	// ë¡œë“œí•´ë„ ì•„ë¬´ê²ƒë„ ì•ˆí•¨
 }
 
 void AMapEntrance::HighlightActor_Implementation()

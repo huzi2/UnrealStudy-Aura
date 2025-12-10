@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 class AAuraFireBall;
 
 /**
- * È­¿° Æø¹ß ½ºÅ³
+ * í™”ì—¼ í­ë°œ ìŠ¤í‚¬
  */
 UCLASS()
 class AURA_API UAuraFireBlast : public UAuraDamageGameplayAbility
@@ -17,22 +17,22 @@ class AURA_API UAuraFireBlast : public UAuraDamageGameplayAbility
 	GENERATED_BODY()
 	
 private:
-	// UAuraGameplayAbility¿¡¼­ »ó¼Ó
+	// UAuraGameplayAbilityì—ì„œ ìƒì†
 	virtual FString GetDescription(int32 Level) const final;
 	virtual FString GetNextLevelDescription(int32 Level) const final;
 
 protected:
-	// È­¿°±¸µéÀ» ¹ß»ç
+	// í™”ì—¼êµ¬ë“¤ì„ ë°œì‚¬
 	UFUNCTION(BlueprintCallable)
 	TArray<AAuraFireBall*> SpawnFireBalls();
 
 protected:
-	// È­¿°±¸ °³¼ö
+	// í™”ì—¼êµ¬ ê°œìˆ˜
 	UPROPERTY(EditDefaultsOnly, Category = "FireBlast")
 	int32 NumFireBolls = 12;
 
 private:
-	// È­¿° Æø¹ß¿¡¼­ »ç¿ëÇÒ ¹ß»çÃ¼ Å¬·¡½º
+	// í™”ì—¼ í­ë°œì—ì„œ ì‚¬ìš©í•  ë°œì‚¬ì²´ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AAuraFireBall> FireBallClass;
 };

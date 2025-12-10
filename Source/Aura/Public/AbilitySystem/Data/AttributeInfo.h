@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "AttributeInfo.generated.h"
 
-// À§Á¬¿¡¼­ »ç¿ëÇÒ Á¤º¸. À§Á¬ ÄÁÆ®·Ñ·¯¸¦ ÅëÇØ À§Á¬¿¡´Ù ±¸Á¶Ã¼¿¡ ¼³Á¤ÇÑ °ªÀ» °¡Á®´Ù ¼¼ÆÃ
+// ìœ„ì ¯ì—ì„œ ì‚¬ìš©í•  ì •ë³´. ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ í†µí•´ ìœ„ì ¯ì—ë‹¤ êµ¬ì¡°ì²´ì— ì„¤ì •í•œ ê°’ì„ ê°€ì ¸ë‹¤ ì„¸íŒ…
 USTRUCT(BlueprintType)
 struct FAuraAttributeInfo
 {
@@ -23,7 +23,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FText AttributeDescription = FText();
 
-	// °ªÀº À§Á¬ ÄÁÆ®·Ñ·¯¿¡¼­ Á÷Á¢ ÃÊ±âÈ­
+	// ê°’ì€ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ì§ì ‘ ì´ˆê¸°í™”
 	UPROPERTY(BlueprintReadOnly)
 	float AttributeValue = 0.f;
 };

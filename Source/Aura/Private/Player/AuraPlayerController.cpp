@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
@@ -54,7 +54,7 @@ void AAuraPlayerController::SetupInputComponent()
 	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &ThisClass::ShiftPressed);
 	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &ThisClass::ShiftReleased);
 
-	// ÀÎÇ² ÄÁÇÇ±×¿¡¼­ ¼³Á¤ÇÑ ÀÔ·Â ¾×¼Ç°ú ÅÂ±×¸¦ ÄÁÆ®·Ñ·¯ÀÇ ÇÔ¼ö¿Í ¿¬°áÇØ¼­, ÀÔ·Â ¾×¼ÇÀ» ÇÏ¸é ÇØ´ç ÀÔ·Â¿¡ ¸Â´Â ÅÂ±×¸¦ ¾ò¾î¿Ã ¼ö ÀÖ´Ù.
+	// ì¸í’‹ ì»¨í”¼ê·¸ì—ì„œ ì„¤ì •í•œ ì…ë ¥ ì•¡ì…˜ê³¼ íƒœê·¸ë¥¼ ì»¨íŠ¸ë¡¤ëŸ¬ì˜ í•¨ìˆ˜ì™€ ì—°ê²°í•´ì„œ, ì…ë ¥ ì•¡ì…˜ì„ í•˜ë©´ í•´ë‹¹ ì…ë ¥ì— ë§ëŠ” íƒœê·¸ë¥¼ ì–»ì–´ì˜¬ ìˆ˜ ìˆë‹¤.
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
@@ -74,15 +74,15 @@ void AAuraPlayerController::ClientShowDamageNumber_Implementation(float DamageAm
 	if (!IsValid(TargetCharacter)) return;
 	if (!DamageTextComponentClass) return;
 
-	// ·ÎÄÃ ÇÃ·¹ÀÌ¾î¸¸ ÇØ´ç µ¥¹ÌÁö¸¦ º¸¸éµÊ
+	// ë¡œì»¬ í”Œë ˆì´ì–´ë§Œ í•´ë‹¹ ë°ë¯¸ì§€ë¥¼ ë³´ë©´ë¨
 	if (!IsLocalController()) return;
 
 	if (UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass))
 	{
 		DamageText->RegisterComponent();
-		// ¾îÅÂÄ¡·Î ºÙÀÌÀÚ¸¶ÀÚ ºí·çÇÁ¸°Æ®¸¦ ÅëÇØ¼­ À§Á¬ ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Àç»ıµÉ °Í
+		// ì–´íƒœì¹˜ë¡œ ë¶™ì´ìë§ˆì ë¸”ë£¨í”„ë¦°íŠ¸ë¥¼ í†µí•´ì„œ ìœ„ì ¯ ì• ë‹ˆë©”ì´ì…˜ì´ ì¬ìƒë  ê²ƒ
 		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
-		// ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Àç»ı‰çÀ¸¸é Ä³¸¯ÅÍ¿¡ ºÙ¾îÀÖÀ» ÇÊ¿ä°¡ ¾øÀ¸´Ï ¹Ù·Î µğÅÂÄ¡
+		// ì• ë‹ˆë©”ì´ì…˜ì´ ì¬ìƒë¬ìœ¼ë©´ ìºë¦­í„°ì— ë¶™ì–´ìˆì„ í•„ìš”ê°€ ì—†ìœ¼ë‹ˆ ë°”ë¡œ ë””íƒœì¹˜
 		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 		DamageText->SetDamageText(DamageAmount, bBlockedHit, bCriticalHit);
 	}
@@ -95,7 +95,7 @@ void AAuraPlayerController::ShowMagicCircle(UMaterialInstance* DecalMaterial)
 
 	MagicCircle = GetWorld()->SpawnActor<AMagicCircle>(MagicCircleClass);
 
-	// »õ µ¥Ä®À» ÁöÁ¤Çß´Ù¸é Àû¿ë
+	// ìƒˆ ë°ì¹¼ì„ ì§€ì •í–ˆë‹¤ë©´ ì ìš©
 	if (DecalMaterial && MagicCircle && MagicCircle->GetMagicCircleDecal())
 	{
 		MagicCircle->GetMagicCircleDecal()->SetMaterial(0, DecalMaterial);
@@ -120,7 +120,7 @@ UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraAbilitySystemComponen
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	// Player_Block_InputPressed ÅÂ±×¸¦ °¡Áö°í ÀÖ´Â »óÅÂ¶ó¸é ÀÎÇ²À» ¸·À½
+	// Player_Block_InputPressed íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ” ìƒíƒœë¼ë©´ ì¸í’‹ì„ ë§‰ìŒ
 	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputPressed))
 	{
 		return;
@@ -142,7 +142,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAuraPlayerController::CursorTrace()
 {
-	// Player_Block_CursorTrace ÅÂ±×¸¦ °¡Áö°í ÀÖ´Â »óÅÂ¶ó¸é Ä¿¼­ Æ®·¹ÀÌ½º¸¦ ¸·°í ¸ğµç ÇÏÀÌ¶óÀÌÆ® Á¦°Å
+	// Player_Block_CursorTrace íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ” ìƒíƒœë¼ë©´ ì»¤ì„œ íŠ¸ë ˆì´ìŠ¤ë¥¼ ë§‰ê³  ëª¨ë“  í•˜ì´ë¼ì´íŠ¸ ì œê±°
 	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_CursorTrace))
 	{
 		UnHighlightActor(LastActor);
@@ -152,7 +152,7 @@ void AAuraPlayerController::CursorTrace()
 		return;
 	}
 
-	// ¸¶¹ıÁøÀÌ È°¼ºÈ­µÇ¾îÀÖÀ¸¸é Ä¿¼­¿¡¼­ ÇÃ·¹ÀÌ¾î¿Í ¸ó½ºÅÍ¸¦ ¹«½ÃÇÏ´Â Æ®·¹ÀÌ½º¸¦ ½ğ´Ù(¸¶¹ıÁøÀÌ Ä³¸¯ÅÍ À§·Î ¿Ã¶ó°¡´Â ¹®Á¦ ¹æÁö)
+	// ë§ˆë²•ì§„ì´ í™œì„±í™”ë˜ì–´ìˆìœ¼ë©´ ì»¤ì„œì—ì„œ í”Œë ˆì´ì–´ì™€ ëª¬ìŠ¤í„°ë¥¼ ë¬´ì‹œí•˜ëŠ” íŠ¸ë ˆì´ìŠ¤ë¥¼ ìœë‹¤(ë§ˆë²•ì§„ì´ ìºë¦­í„° ìœ„ë¡œ ì˜¬ë¼ê°€ëŠ” ë¬¸ì œ ë°©ì§€)
 	const ECollisionChannel TraceChannel = IsValid(MagicCircle) ? ECC_ExcludePlayers : ECC_Visibility;
 	GetHitResultUnderCursor(TraceChannel, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
@@ -194,7 +194,7 @@ void AAuraPlayerController::AutoRun()
 {
 	if (!bAutoRunning) return;
 
-	// ½ºÇÃ¶óÀÎ¿¡ ÀúÀåµÈ À§Ä¡´ë·Î ÀÌµ¿
+	// ìŠ¤í”Œë¼ì¸ì— ì €ì¥ëœ ìœ„ì¹˜ëŒ€ë¡œ ì´ë™
 	if (APawn* ControllerPawn = GetPawn())
 	{
 		if (Spline)
@@ -215,7 +215,7 @@ void AAuraPlayerController::AutoRun()
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	// Player_Block_InputPressed ÅÂ±×¸¦ °¡Áö°í ÀÖ´Â »óÅÂ¶ó¸é ÀÎÇ²À» ¸·À½
+	// Player_Block_InputPressed íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ” ìƒíƒœë¼ë©´ ì¸í’‹ì„ ë§‰ìŒ
 	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputPressed))
 	{
 		return;
@@ -223,7 +223,7 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 	if (InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
 	{
-		// Å¸°ÙÆÃ »ó´ë°¡ ÀûÀÎÁö ¾Æ´ÑÁö È®ÀÎ
+		// íƒ€ê²ŸíŒ… ìƒëŒ€ê°€ ì ì¸ì§€ ì•„ë‹Œì§€ í™•ì¸
 		if (IsValid(ThisActor))
 		{
 			TargetingStatus = ThisActor->Implements<UEnemyInterface>() ? ETargetingStatus::TargetingEnemy : ETargetingStatus::TargetingNonEnemy;
@@ -233,11 +233,11 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 			TargetingStatus = ETargetingStatus::NotTargeting;
 		}
 
-		// ÀÚµ¿ ÀÌµ¿Àº Ãë¼Ò
+		// ìë™ ì´ë™ì€ ì·¨ì†Œ
 		bAutoRunning = false;
 	}
 
-	// Å¬¸¯ ¹ßµ¿
+	// í´ë¦­ ë°œë™
 	if (GetAuraAbilitySystemComponent())
 	{
 		GetAuraAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
@@ -246,7 +246,7 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	// Player_Block_InputReleased ÅÂ±×¸¦ °¡Áö°í ÀÖ´Â »óÅÂ¶ó¸é ÀÎÇ²À» ¸·À½
+	// Player_Block_InputReleased íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ” ìƒíƒœë¼ë©´ ì¸í’‹ì„ ë§‰ìŒ
 	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputReleased))
 	{
 		return;
@@ -254,7 +254,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 	if (!GetAuraAbilitySystemComponent()) return;
 
-	// ¸¶¿ì½º Å¬¸¯ ¿Ü ¹ßµ¿
+	// ë§ˆìš°ìŠ¤ í´ë¦­ ì™¸ ë°œë™
 	if (!InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
 	{
 		if (GetAuraAbilitySystemComponent())
@@ -264,18 +264,18 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		return;
 	}
 
-	// ¶®À» ¶§ ´É·Â ¹ßµ¿
+	// ë• ì„ ë•Œ ëŠ¥ë ¥ ë°œë™
 	if (GetAuraAbilitySystemComponent())
 	{
 		GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
 	}
 
-	// ¸¶¿ì½º¸¦ ¶®À» ¶§ Âª°Ô ´­·¶À¸¸é ¸ñÇ¥ À§Ä¡·Î ³×ºñ°ÔÀÌ¼Ç ÅëÇØ¼­ ÀÚµ¿ ÀÌµ¿
+	// ë§ˆìš°ìŠ¤ë¥¼ ë• ì„ ë•Œ ì§§ê²Œ ëˆŒë €ìœ¼ë©´ ëª©í‘œ ìœ„ì¹˜ë¡œ ë„¤ë¹„ê²Œì´ì…˜ í†µí•´ì„œ ìë™ ì´ë™
 	if (TargetingStatus != ETargetingStatus::TargetingEnemy && !bShiftKeyDown)
 	{
 		if (FollowTime <= ShortPressThreshold)
 		{
-			// ÇÏÀÌ¶óÀÌÆ®µÈ ´ë»óÀÌ¸é ÀÌµ¿ÇÒ À§Ä¡¸¦ ¾ò¾î¿Ã ¼ö ÀÖÀ½
+			// í•˜ì´ë¼ì´íŠ¸ëœ ëŒ€ìƒì´ë©´ ì´ë™í•  ìœ„ì¹˜ë¥¼ ì–»ì–´ì˜¬ ìˆ˜ ìˆìŒ
 			if (IsValid(ThisActor) && ThisActor->Implements<UHighlightInterface>())
 			{
 				IHighlightInterface::Execute_SetMoveToLocation(ThisActor, CachedDestination);
@@ -293,7 +293,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					{
 						Spline->ClearSplinePoints();
 
-						// ±æÃ£±â·Î Ã£Àº °æ·ÎµéÀ» ½ºÇÃ¶óÀÎÀ¸·Î °î¼± ÇüÅÂ·Î ¼öÁ¤
+						// ê¸¸ì°¾ê¸°ë¡œ ì°¾ì€ ê²½ë¡œë“¤ì„ ìŠ¤í”Œë¼ì¸ìœ¼ë¡œ ê³¡ì„  í˜•íƒœë¡œ ìˆ˜ì •
 						for (const FVector& PointLoc : NavPath->PathPoints)
 						{
 							Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
@@ -301,7 +301,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 							//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
 						}
 
-						// µµÂø ÁöÁ¡À» ³×ºñ¸Ş½Ã »ó µµ´ŞÇÒ ¼ö ÀÖ´Â ÁöÁ¡À¸·Î ¼³Á¤
+						// ë„ì°© ì§€ì ì„ ë„¤ë¹„ë©”ì‹œ ìƒ ë„ë‹¬í•  ìˆ˜ ìˆëŠ” ì§€ì ìœ¼ë¡œ ì„¤ì •
 						if (NavPath->PathPoints.Num() > 0)
 						{
 							CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
@@ -318,13 +318,13 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	// Player_Block_InputHeld ÅÂ±×¸¦ °¡Áö°í ÀÖ´Â »óÅÂ¶ó¸é ÀÎÇ²À» ¸·À½
+	// Player_Block_InputHeld íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ” ìƒíƒœë¼ë©´ ì¸í’‹ì„ ë§‰ìŒ
 	if (GetAuraAbilitySystemComponent() && GetAuraAbilitySystemComponent()->HasMatchingGameplayTag(UAuraGameplayTags::Get().Player_Block_InputHeld))
 	{
 		return;
 	}
 
-	// ¸¶¿ì½º Å¬¸¯ ¿Ü ¹ßµ¿
+	// ë§ˆìš°ìŠ¤ í´ë¦­ ì™¸ ë°œë™
 	if (!InputTag.MatchesTagExact(UAuraGameplayTags::Get().InputTag_LMB))
 	{
 		if (GetAuraAbilitySystemComponent())
@@ -334,7 +334,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		return;
 	}
 
-	// Å¬¸¯ ÁßÀÌ¸é Å¸°ÙÆÃÀÏ ¶§ ´É·Â ¹ßµ¿. ¶Ç´Â ½¬ÇÁÆ®Å° ´©¸¥ »óÅÂ¸é ¸Ç ¶¥¿¡ ¹ßµ¿
+	// í´ë¦­ ì¤‘ì´ë©´ íƒ€ê²ŸíŒ…ì¼ ë•Œ ëŠ¥ë ¥ ë°œë™. ë˜ëŠ” ì‰¬í”„íŠ¸í‚¤ ëˆ„ë¥¸ ìƒíƒœë©´ ë§¨ ë•…ì— ë°œë™
 	if (TargetingStatus == ETargetingStatus::TargetingEnemy || bShiftKeyDown)
 	{
 		if (GetAuraAbilitySystemComponent())
@@ -342,26 +342,26 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 			GetAuraAbilitySystemComponent()->AbilityInputTagHeld(InputTag);
 		}
 	}
-	// ¸¶¿ì½º Å¬¸¯ ÀÌµ¿
+	// ë§ˆìš°ìŠ¤ í´ë¦­ ì´ë™
 	else
 	{
 		if (!GetWorld()) return;
 
-		// Å¬¸¯À» ´©¸£´Â ½Ã°£À» ´©Àû ±â·Ï
+		// í´ë¦­ì„ ëˆ„ë¥´ëŠ” ì‹œê°„ì„ ëˆ„ì  ê¸°ë¡
 		FollowTime += GetWorld()->GetDeltaSeconds();
 
-		// ¸¶¿ì½º Ä¿¼­¿Í Áö¸é Ãæµ¹ Ã¼Å©
+		// ë§ˆìš°ìŠ¤ ì»¤ì„œì™€ ì§€ë©´ ì¶©ëŒ ì²´í¬
 		if (CursorHit.bBlockingHit)
 		{
-			// ¸ñÇ¥ ÁöÁ¡Àº Å¬¸¯ÇÑ °÷
+			// ëª©í‘œ ì§€ì ì€ í´ë¦­í•œ ê³³
 			CachedDestination = CursorHit.ImpactPoint;
 		}
 
 		if (APawn* ControllerPawn = GetPawn())
 		{
-			// ¸ñÇ¥ ÁöÁ¡À¸·Î ¹æÇâÀ» ¼³Á¤
+			// ëª©í‘œ ì§€ì ìœ¼ë¡œ ë°©í–¥ì„ ì„¤ì •
 			const FVector WorldDirection = (CachedDestination - ControllerPawn->GetActorLocation()).GetSafeNormal();
-			// ÇØ´ç ¹æÇâÀ¸·Î ÀÌµ¿
+			// í•´ë‹¹ ë°©í–¥ìœ¼ë¡œ ì´ë™
 			ControllerPawn->AddMovementInput(WorldDirection);
 		}
 	}

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -25,23 +25,23 @@ inline void UAuraInputComponent::BindAbilityActions(const UAuraInputConfig* Inpu
 {
 	check(InputConfig);
 
-	// ÀÎÇ² ¾×¼Ç-ÅÂ±×¿Í ÇÔ¼öµéÀ» ¹ÙÀÎµå
-	// ÀÎÇ² ÄÁÇÇ±×¿¡¼­ ¼³Á¤ÇØ³õÀº ÀÎÇ² ¾×¼Ç°ú ÅÂ±×¸¦ °¢°¢ ÀÔ·Â ÀÌº¥Æ®µé°ú ¿¬°áµÇ¼­ ÄÁÆ®·Ñ·¯¿¡¼­ ¹ÙÀÎµåÇÑ ¾×¼ÇÀ» ´©¸£¸é ÅÂ±×¸¦ ¾ò¾î¿Ã ¼ö ÀÖ´Ù.
+	// ì¸í’‹ ì•¡ì…˜-íƒœê·¸ì™€ í•¨ìˆ˜ë“¤ì„ ë°”ì¸ë“œ
+	// ì¸í’‹ ì»¨í”¼ê·¸ì—ì„œ ì„¤ì •í•´ë†“ì€ ì¸í’‹ ì•¡ì…˜ê³¼ íƒœê·¸ë¥¼ ê°ê° ì…ë ¥ ì´ë²¤íŠ¸ë“¤ê³¼ ì—°ê²°ë˜ì„œ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ë°”ì¸ë“œí•œ ì•¡ì…˜ì„ ëˆ„ë¥´ë©´ íƒœê·¸ë¥¼ ì–»ì–´ì˜¬ ìˆ˜ ìˆë‹¤.
 	for(const FAuraInputAction& Action : InputConfig->AbilityInputActions)
 	{
 		if (Action.InputAction && Action.InputTag.IsValid())
 		{
-			// Å° ´©¸£ÀÚ¸¶ÀÚ ÀÌº¥Æ®
+			// í‚¤ ëˆ„ë¥´ìë§ˆì ì´ë²¤íŠ¸
 			if (PressedFunc)
 			{
 				BindAction(Action.InputAction, ETriggerEvent::Started, Object, PressedFunc, Action.InputTag);
 			}
-			// Å° ¶®À» ¶§ ÀÌº¥Æ®
+			// í‚¤ ë• ì„ ë•Œ ì´ë²¤íŠ¸
 			if (ReleasedFunc)
 			{
 				BindAction(Action.InputAction, ETriggerEvent::Completed, Object, ReleasedFunc, Action.InputTag);
 			}
-			// Å° À¯Áö ÀÌº¥Æ®
+			// í‚¤ ìœ ì§€ ì´ë²¤íŠ¸
 			if (HeldFunc)
 			{
 				BindAction(Action.InputAction, ETriggerEvent::Triggered, Object, HeldFunc, Action.InputTag);

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraGameInstance.generated.h"
 
 /**
- * °ÔÀÓ ÀÎ½ºÅÏ½º Å¬·¡½º
+ * ê²Œì„ ì¸ìŠ¤í„´ìŠ¤ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAuraGameInstance : public UGameInstance
@@ -24,7 +24,7 @@ public:
 	FORCEINLINE void SetLoadSlotIndex(int32 InLoadSlotIndex) { LoadSlotIndex = InLoadSlotIndex; }
 
 private:
-	// »ı¼ºÇÑ ½½·Ô¿¡¼­ ¾ò¾î¿Â Á¤º¸µé
+	// ìƒì„±í•œ ìŠ¬ë¡¯ì—ì„œ ì–»ì–´ì˜¨ ì •ë³´ë“¤
 	UPROPERTY()
 	FName PlayerStartTag = FName();
 	UPROPERTY()

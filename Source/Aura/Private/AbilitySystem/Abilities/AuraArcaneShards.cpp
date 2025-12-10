@@ -1,51 +1,51 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "AbilitySystem/Abilities/AuraArcaneShards.h"
 
 FString UAuraArcaneShards::GetDescription(int32 Level) const
 {
-	// ºñÀü ÆÄÆí ½ºÅ³¿¡ ´ëÇÑ ¼³¸í
+	// ë¹„ì „ íŒŒí¸ ìŠ¤í‚¬ì— ëŒ€í•œ ì„¤ëª…
 
-	// ·¹º§¿¡ µû¶ó º¯°æµÇ´Â µ¥¹ÌÁö
+	// ë ˆë²¨ì— ë”°ë¼ ë³€ê²½ë˜ëŠ” ë°ë¯¸ì§€
 	const int32 ScaledDamage = static_cast<int32>(Damage.GetValueAtLevel(static_cast<float>(Level)));
-	// ¸¶³ª ÄÚ½ºÆ®
+	// ë§ˆë‚˜ ì½”ìŠ¤íŠ¸
 	const float ManaCost = FMath::Abs(GetManaCost(static_cast<float>(Level)));
-	// ÄğÅ¸ÀÓ
+	// ì¿¨íƒ€ì„
 	const float Cooldown = GetCooldown(static_cast<float>(Level));
 
-	// 1·¹º§Àº ÇÏ³ª¸¸ ¹ß»ç
+	// 1ë ˆë²¨ì€ í•˜ë‚˜ë§Œ ë°œì‚¬
 	if (Level == 1)
 	{
 		return FString::Printf(TEXT(
-			// ½ºÅ³¸í
+			// ìŠ¤í‚¬ëª…
 			"<Title>ARCANE SHARDS</>\n\n"
-			// ½ºÅ³ ´É·ÂÄ¡
+			// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 			"<Small>Level: </><Level>%d</>\n"
 			"<Small>ManaCost: </><Manacost>%.1f</>\n"
 			"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-			// ¼³¸í
+			// ì„¤ëª…
 			"<Default>Summon a shard of arcane energy, "
 			"causing radial damage of </>"
-			// µ¥¹ÌÁö
+			// ë°ë¯¸ì§€
 			"<Damage>%d</><Default>"
 			" at the shard origin</>\n\n"),
 			Level, ManaCost, Cooldown, ScaledDamage);
 	}
-	// ±× ÈÄ¿¡´Â ·¹º§¿¡ µû¶ó ¹ß»çÃ¼°¡ Áõ°¡
+	// ê·¸ í›„ì—ëŠ” ë ˆë²¨ì— ë”°ë¼ ë°œì‚¬ì²´ê°€ ì¦ê°€
 	else
 	{
 		return FString::Printf(TEXT(
-			// ½ºÅ³¸í
+			// ìŠ¤í‚¬ëª…
 			"<Title>ARCANE SHARDS</>\n\n"
-			// ½ºÅ³ ´É·ÂÄ¡
+			// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 			"<Small>Level: </><Level>%d</>\n"
 			"<Small>ManaCost: </><Manacost>%.1f</>\n"
 			"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-			// ¼³¸í(¹ß»ç°¹¼ö)
+			// ì„¤ëª…(ë°œì‚¬ê°¯ìˆ˜)
 			"<Default>Summon %d shards of arcane energy, "
 			"causing radial damage of </>"
-			// µ¥¹ÌÁö
+			// ë°ë¯¸ì§€
 			"<Damage>%d</><Default>"
 			" at the shard origin</>\n\n"),
 			Level, ManaCost, Cooldown, FMath::Min(Level, MaxNumShards), ScaledDamage);
@@ -60,14 +60,14 @@ FString UAuraArcaneShards::GetNextLevelDescription(int32 Level) const
 
 	return FString::Printf(TEXT(
 		"<Title>NEXT LEVEL: </>\n\n"
-		// ½ºÅ³ ´É·ÂÄ¡
+		// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 		"<Small>Level: </><Level>%d</>\n"
 		"<Small>ManaCost: </><Manacost>%.1f</>\n"
 		"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-		// ¼³¸í(¹ß»ç°¹¼ö)
+		// ì„¤ëª…(ë°œì‚¬ê°¯ìˆ˜)
 		"<Default>Summon %d shards of arcane energy, "
 		"causing radial damage of </>"
-		// µ¥¹ÌÁö
+		// ë°ë¯¸ì§€
 		"<Damage>%d</><Default>"
 		" at the shard origin</>\n\n"),
 		Level, ManaCost, Cooldown, FMath::Min(Level, MaxNumShards), ScaledDamage);

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -16,7 +16,7 @@ class UDebuffNiagaraComponent;
 class UPassiveNiagaraComponent;
 
 /**
- * Ä³¸¯ÅÍ¿Í Àû Ä³¸¯ÅÍ º£ÀÌ½º Å¬·¡½º
+ * ìºë¦­í„°ì™€ ì  ìºë¦­í„° ë² ì´ìŠ¤ í´ë˜ìŠ¤
  */
 UCLASS(Abstract)
 class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -31,24 +31,24 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-	// IAbilitySystemInterface¿¡¼­ »ó¼Ó
+	// IAbilitySystemInterfaceì—ì„œ ìƒì†
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 protected:
-	// ICombatInterface¿¡¼­ »ó¼Ó
+	// ICombatInterfaceì—ì„œ ìƒì†
 	virtual void Die(const FVector& DeathImpulse) override;
 	virtual FOnAbilitySystemComponentRegistered& GetOnAbilitySystemComponentRegisteredDelegate() override;
 	virtual FOnDeath& GetOnDeathDelegate() override;
 	virtual FOnDamageSignature& GetOnDamageSignatureDelegate() override;
 
-	// ±âÀı ÅÂ±×°¡ º¯°æµÇ¾úÀ» ¶§ È£ÃâÇÒ Äİ¹é ÇÔ¼ö
+	// ê¸°ì ˆ íƒœê·¸ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ì½œë°± í•¨ìˆ˜
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
 private:
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeDefaultAttributes() const;
 
-	// ICombatInterface¿¡¼­ »ó¼Ó
+	// ICombatInterfaceì—ì„œ ìƒì†
 	virtual UAnimMontage* GetHitReactMontage_Implementation() const override;
 	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) const override;
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() const override;
@@ -69,102 +69,102 @@ public:
 	FORCEINLINE void SetCharacterClass(ECharacterClass InClass) { CharacterClass = InClass; }
 
 protected:
-	// Ä³¸¯ÅÍ¿¡°Ô ÀÌÆåÆ® Àû¿ë
+	// ìºë¦­í„°ì—ê²Œ ì´í™íŠ¸ ì ìš©
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 
-	// Ä³¸¯ÅÍ¿¡°Ô ¾îºô¸®Æ¼ ºÎ¿©
+	// ìºë¦­í„°ì—ê²Œ ì–´ë¹Œë¦¬í‹° ë¶€ì—¬
 	void AddCharacterAbilities();
 
-	// ¼Ò¸ê ÀÌÆåÆ® Àç»ı(ºí·çÇÁ¸°Æ®¿¡¼­ ÀÛ¾÷)
+	// ì†Œë©¸ ì´í™íŠ¸ ì¬ìƒ(ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì‘ì—…)
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartWeaponDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
 
 private:
-	// ¼Ò¸ê ÀÌÆåÆ® Àç»ı
+	// ì†Œë©¸ ì´í™íŠ¸ ì¬ìƒ
 	void Dissolve();
 
-	// Ä³¸¯ÅÍ°¡ Á×¾úÀ» ¶§ ¼­¹ö¿Í Å¬¶ó ¸ğµÎ ¼öÇàÇÒ ÇÔ¼ö
+	// ìºë¦­í„°ê°€ ì£½ì—ˆì„ ë•Œ ì„œë²„ì™€ í´ë¼ ëª¨ë‘ ìˆ˜í–‰í•  í•¨ìˆ˜
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath(const FVector& DeathImpulse);
 
 protected:
-	// °ÔÀÓÇÃ·¹ÀÌ ¾îºô¸®Æ¼ ½Ã½ºÅÛÀÇ ÇÙ½É ÄÄÆ÷³ÍÆ®
+	// ê²Œì„í”Œë ˆì´ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œì˜ í•µì‹¬ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-	// ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®°¡ µî·ÏµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ê°€ ë“±ë¡ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	FOnAbilitySystemComponentRegistered OnAbilitySystemComponentRegisteredDelegate;
 
-	// Ä³¸¯ÅÍ°¡ °¡Áö°í ÀÖ´Â ¾îÆ®¸®ºäÆ® ¼¼Æ®µé(´É·ÂÄ¡)
+	// ìºë¦­í„°ê°€ ê°€ì§€ê³  ìˆëŠ” ì–´íŠ¸ë¦¬ë·°íŠ¸ ì„¸íŠ¸ë“¤(ëŠ¥ë ¥ì¹˜)
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	// Ä³¸¯ÅÍÀÇ Á÷¾÷
+	// ìºë¦­í„°ì˜ ì§ì—…
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
-	// ÀÌµ¿ ¼Óµµ
+	// ì´ë™ ì†ë„
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float BaseWalkSpeed = 600.f;
 
-	// ºÒÅ¸´Â »óÅÂÀÎ°¡
+	// ë¶ˆíƒ€ëŠ” ìƒíƒœì¸ê°€
 	UPROPERTY(ReplicatedUsing=OnRep_Burned, BlueprintReadOnly)
 	bool bIsBurned = false;
 	UFUNCTION()
 	virtual void OnRep_Burned() {};
-	// ±âÀı »óÅÂÀÎ°¡
+	// ê¸°ì ˆ ìƒíƒœì¸ê°€
 	UPROPERTY(ReplicatedUsing=OnRep_Stunned, BlueprintReadOnly)
 	bool bIsStunned = false;
 	UFUNCTION()
 	virtual void OnRep_Stunned() {};
-	// °¨Àü °ø°İ ¹Ş´Â »óÅÂÀÎ°¡
+	// ê°ì „ ê³µê²© ë°›ëŠ” ìƒíƒœì¸ê°€
 	UPROPERTY(Replicated, BlueprintReadOnly)
 	bool bIsBeInShocked = false;
 
-	// ¹«±â ÄÄÆ÷³ÍÆ®
+	// ë¬´ê¸° ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
-	// ºÒÅ» ¶§ »ç¿ëÇÒ µğ¹öÇÁ ÀÌÆåÆ® ÄÄÆ÷³ÍÆ®
+	// ë¶ˆíƒˆ ë•Œ ì‚¬ìš©í•  ë””ë²„í”„ ì´í™íŠ¸ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere, Category = "Debuff")
 	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
 
-	// ±âÀıµÉ ¶§ »ç¿ëÇÒ µğ¹öÇÁ ÀÌÆåÆ® ÄÄÆ÷³ÍÆ®
+	// ê¸°ì ˆë  ë•Œ ì‚¬ìš©í•  ë””ë²„í”„ ì´í™íŠ¸ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere, Category = "Debuff")
 	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
 
-	// ÀÌÆåÆ®
-	// ¼Ò¸ê ÀÌÆåÆ®
+	// ì´í™íŠ¸
+	// ì†Œë©¸ ì´í™íŠ¸
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
-	// ÇÇ°İ½Ã ÇÇ Æ¢±â´Â ÀÌÆåÆ®
+	// í”¼ê²©ì‹œ í”¼ íŠ€ê¸°ëŠ” ì´í™íŠ¸
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UNiagaraSystem> BloodEffect;
 
-	// »ç¿îµå
-	// Á×À½ »ç¿îµå
+	// ì‚¬ìš´ë“œ
+	// ì£½ìŒ ì‚¬ìš´ë“œ
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<USoundBase> DeathSound;
 
-	// Á×¾ú´Â°¡
+	// ì£½ì—ˆëŠ”ê°€
 	UPROPERTY(BlueprintReadOnly)
 	bool bDead = false;
-	// ÀÚ½ÅÀÌ Á×¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ìì‹ ì´ ì£½ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	FOnDeath OnDeathDelegate;
 
 private:
-	// °ÔÀÓ ÇÃ·¹ÀÌ ¾îºô¸®Æ¼
-	// °ÔÀÓ ½ÃÀÛºÎÅÍ ÁÖ¾îÁö´Â ¾îºô¸®Æ¼(´É·Â)
+	// ê²Œì„ í”Œë ˆì´ ì–´ë¹Œë¦¬í‹°
+	// ê²Œì„ ì‹œì‘ë¶€í„° ì£¼ì–´ì§€ëŠ” ì–´ë¹Œë¦¬í‹°(ëŠ¥ë ¥)
 	UPROPERTY(EditAnywhere, Category = "Abilites")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilites;
-	// °ÔÀÓ ½ÃÀÛºÎÅÍ ÁÖ¾îÁö´Â ÆĞ½Ãºê ¾îºô¸®Æ¼
+	// ê²Œì„ ì‹œì‘ë¶€í„° ì£¼ì–´ì§€ëŠ” íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°
 	UPROPERTY(EditAnywhere, Category = "Abilites")
 	TArray<TSubclassOf<UGameplayAbility>> StartupPassiveAbilites;
 
-	// °ø°İ ¼ÒÄÏµé
+	// ê³µê²© ì†Œì¼“ë“¤
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
 	UPROPERTY(EditAnywhere, Category = "Combat")
@@ -174,19 +174,19 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName TailSocketName;
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç
-	// ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç
+	// ì• ë‹ˆë©”ì´ì…˜
+	// í”¼ê²© ì• ë‹ˆë©”ì´ì…˜
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
-	// °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç
+	// ê³µê²© ì• ë‹ˆë©”ì´ì…˜
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
 
-	// ÆĞ½Ãºê ½ºÅ³ ÀÌÆåÆ®°¡ ºÙÀ» °÷
+	// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ ì´í™íŠ¸ê°€ ë¶™ì„ ê³³
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> EffectAttachComponent;
 
-	// ÆĞ½Ãºê ½ºÅ³ ÀÌÆåÆ®
+	// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ ì´í™íŠ¸
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UPassiveNiagaraComponent> HaloOfProtectionNiagaraComponent;
 	UPROPERTY(VisibleAnywhere)
@@ -194,9 +194,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UPassiveNiagaraComponent> ManaSiphonNiagaraComponent;
 
-	// ¼ÒÈ¯¼ö ¼ıÀÚ
+	// ì†Œí™˜ìˆ˜ ìˆ«ì
 	int32 MinionCount = 0;
 
-	// µ¥¹ÌÁö¸¦ ¹Ş¾ÒÀ» ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// ë°ë¯¸ì§€ë¥¼ ë°›ì•˜ì„ ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	FOnDamageSignature OnDamageSignatureDelegate;
 };

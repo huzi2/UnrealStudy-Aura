@@ -1,11 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 
 FString UAuraGameplayAbility::GetDescription(int32 Level) const
 {
-    // RichText ¼­½ÄÀ» ÅëÇØ¼­ ¾îºô¸®Æ¼ÀÇ ¼³¸íÀ» »ı¼º
+    // RichText ì„œì‹ì„ í†µí•´ì„œ ì–´ë¹Œë¦¬í‹°ì˜ ì„¤ëª…ì„ ìƒì„±
     return FString::Printf(TEXT("<Default>%s, </><Level>%d</>"), TEXT("Default Ability Nmae - LoremIpusm LoremIpusm LoremIpusm LoremIpusm LoremIpusm LoremIpusm LoremIpusm"), Level);
 }
 
@@ -23,12 +23,12 @@ float UAuraGameplayAbility::GetManaCost(float InLevel) const
 {
     float ManaCost = 0.f;
 
-    // ¾îºô¸®Æ¼¿¡ ¼¼ÆÃµÈ ÄÚ½ºÆ® ÀÌÆåÆ®¿¡¼­ ¸¶³ª °ü·Ã ¾îÆ®¸®ºäÆ®¸¦ ¾ò¾î¿Â´Ù
+    // ì–´ë¹Œë¦¬í‹°ì— ì„¸íŒ…ëœ ì½”ìŠ¤íŠ¸ ì´í™íŠ¸ì—ì„œ ë§ˆë‚˜ ê´€ë ¨ ì–´íŠ¸ë¦¬ë·°íŠ¸ë¥¼ ì–»ì–´ì˜¨ë‹¤
     if (const UGameplayEffect* CostEffect = GetCostGameplayEffect())
     {
         for (const FGameplayModifierInfo& Mod : CostEffect->Modifiers)
         {
-            // ¸¶³ª ¾îÆ®¸®ºäÆ®¿¡¼­ ¸¶³ª ¸Å±×´ÏÆ©µå°ªÀ» ¾ò¾î¿Â´Ù
+            // ë§ˆë‚˜ ì–´íŠ¸ë¦¬ë·°íŠ¸ì—ì„œ ë§ˆë‚˜ ë§¤ê·¸ë‹ˆíŠœë“œê°’ì„ ì–»ì–´ì˜¨ë‹¤
             if (Mod.Attribute == UAuraAttributeSet::GetManaAttribute())
             {
                 Mod.ModifierMagnitude.GetStaticMagnitudeIfPossible(InLevel, ManaCost);
@@ -43,7 +43,7 @@ float UAuraGameplayAbility::GetCooldown(float InLevel) const
 {
     float Cooldown = 0.f;
 
-    // ¾îºô¸®Æ¼¿¡ ¼¼ÆÃµÈ ÄğÅ¸ÀÓ ÀÌÆåÆ®¿¡¼­ DurationMagnitudeÀÇ °ªÀ» ¾òÀ¸¸é ±×°Ô ÄğÅ¸ÀÓ
+    // ì–´ë¹Œë¦¬í‹°ì— ì„¸íŒ…ëœ ì¿¨íƒ€ì„ ì´í™íŠ¸ì—ì„œ DurationMagnitudeì˜ ê°’ì„ ì–»ìœ¼ë©´ ê·¸ê²Œ ì¿¨íƒ€ì„
     if (const UGameplayEffect* CooldownEffect = GetCooldownGameplayEffect())
     {
         CooldownEffect->DurationMagnitude.GetStaticMagnitudeIfPossible(InLevel, Cooldown);

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,8 +19,8 @@ public:
 	void SetWidgetController(UObject* InWidgetController);
 
 protected:
-	// ÀÌ ÇÔ¼ö¸¦ BlueprintImplementableEvent·Î ÁöÁ¤ÇØ¼­ ½ÇÁ¦ ºí·çÇÁ¸°Æ®¿¡¼­ Event Widget Controller Set ÀÌº¥Æ®·Î ±¸ÇöÇÑ´Ù.
-	// ÇØ´ç ÇÔ¼ö·Î °¡Àå À§Á¬µé¿¡°Ô À§Á¬ÄÁÆ®·Ñ·¯¸¦ ºÎ¿©ÇÏ°í, ¹ÙÀÎµåÇÒ ÇÔ¼öµéÀ» ¹ÙÀÎµåÇÑ´Ù.
+	// ì´ í•¨ìˆ˜ë¥¼ BlueprintImplementableEventë¡œ ì§€ì •í•´ì„œ ì‹¤ì œ ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ Event Widget Controller Set ì´ë²¤íŠ¸ë¡œ êµ¬í˜„í•œë‹¤.
+	// í•´ë‹¹ í•¨ìˆ˜ë¡œ ê°€ì¥ ìœ„ì ¯ë“¤ì—ê²Œ ìœ„ì ¯ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë¶€ì—¬í•˜ê³ , ë°”ì¸ë“œí•  í•¨ìˆ˜ë“¤ì„ ë°”ì¸ë“œí•œë‹¤.
 	UFUNCTION(BlueprintImplementableEvent)
 	void WidgetControllerSet();
 

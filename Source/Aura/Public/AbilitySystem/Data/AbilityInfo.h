@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,7 +10,7 @@
 class UGameplayAbility;
 
 /**
- * Ä³¸¯ÅÍÀÇ ÀÔ·Â°ú ¿¬°áµÉ ½ºÅ³
+ * ìºë¦­í„°ì˜ ì…ë ¥ê³¼ ì—°ê²°ë  ìŠ¤í‚¬
  */
 USTRUCT(BlueprintType)
 struct FAuraAbilityInfo
@@ -18,7 +18,7 @@ struct FAuraAbilityInfo
 	GENERATED_BODY()
 
 public:
-	// °ü·Ã ÅÂ±×
+	// ê´€ë ¨ íƒœê·¸
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag AbilityTag = FGameplayTag();
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
@@ -30,23 +30,23 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	FGameplayTag StatusTag = FGameplayTag();
 
-	// UI¿¡ Ç¥½ÃµÉ ¾ÆÀÌÄÜ°ú ¹è°æ
+	// UIì— í‘œì‹œë  ì•„ì´ì½˜ê³¼ ë°°ê²½
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<const UTexture2D> Icon = nullptr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<const UMaterialInterface> BackgroundMaterial = nullptr;
 
-	// ½ºÅ³À» ¹è¿ì±â À§ÇÑ ÇÊ¿ä ·¹º§
+	// ìŠ¤í‚¬ì„ ë°°ìš°ê¸° ìœ„í•œ í•„ìš” ë ˆë²¨
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 LevelRequirement = 1;
 
-	// ½ºÅ³ ¾îºô¸®Æ¼ Å¬·¡½º
+	// ìŠ¤í‚¬ ì–´ë¹Œë¦¬í‹° í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayAbility> Ability;
 };
 
 /**
- * ¾îºô¸®Æ¼¿Í ¾îºô¸®Æ¼ Á¤º¸¸¦ ¿¬°áÇÏ´Â µ¥ÀÌÅÍ ¿¡¼Â Å¬·¡½º
+ * ì–´ë¹Œë¦¬í‹°ì™€ ì–´ë¹Œë¦¬í‹° ì •ë³´ë¥¼ ì—°ê²°í•˜ëŠ” ë°ì´í„° ì—ì…‹ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAbilityInfo : public UDataAsset

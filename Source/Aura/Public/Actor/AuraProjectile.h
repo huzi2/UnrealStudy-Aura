@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,7 +12,7 @@ class UProjectileMovementComponent;
 class UNiagaraSystem;
 
 /**
- * ¹ß»çÃ¼ ¾×ÅÍ Å¬·¡½º
+ * ë°œì‚¬ì²´ ì•¡í„° í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraProjectile : public AActor
@@ -35,51 +35,51 @@ protected:
 	UFUNCTION()
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	// Ãæµ¹ÇßÀ» ¶§ Ã³¸®
+	// ì¶©ëŒí–ˆì„ ë•Œ ì²˜ë¦¬
 	UFUNCTION(BlueprintCallable)
 	virtual void OnHit();
 
 	bool IsValidOverlap(AActor* OtherActor) const;
 
 public:
-	// ¾×ÅÍ ½ºÆù Àü¿¡ ¼¼ÆÃÇÏ±â À§ÇØ ÀÌ º¯¼ö¸¦ ³ëÃâ
-	// µ¥¹ÌÁö Á¤º¸¸¦ °¡Áø ÀÌÆåÆ® ÆÄ¶ó¹ÌÅÍ ±¸Á¶Ã¼
+	// ì•¡í„° ìŠ¤í° ì „ì— ì„¸íŒ…í•˜ê¸° ìœ„í•´ ì´ ë³€ìˆ˜ë¥¼ ë…¸ì¶œ
+	// ë°ë¯¸ì§€ ì •ë³´ë¥¼ ê°€ì§„ ì´í™íŠ¸ íŒŒë¼ë¯¸í„° êµ¬ì¡°ì²´
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = "true"))
 	FDamageEffectParams DamageEffectParams;
 
 protected:
-	// Ãæµ¹ È®ÀÎ¿ë µµÇü ÄÄÆ÷³ÍÆ®
+	// ì¶©ëŒ í™•ì¸ìš© ë„í˜• ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USphereComponent> Sphere;
 
-	// ³¯¾Æ°¡´Â µ¿¾È Ãâ·ÂÇÒ »ç¿îµå ÄÄÆ÷³ÍÆ®
+	// ë‚ ì•„ê°€ëŠ” ë™ì•ˆ ì¶œë ¥í•  ì‚¬ìš´ë“œ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> LoopingSoundComponent;
 
-	// Ãæµ¹Çß´Â Áö È®ÀÎ
+	// ì¶©ëŒí–ˆëŠ” ì§€ í™•ì¸
 	bool bHit = false;
 
 private:
-	// »ıÁ¸ ½Ã°£
+	// ìƒì¡´ ì‹œê°„
 	UPROPERTY(EditDefaultsOnly)
 	float LifeSpan = 15.f;
 
-	// ÀÌµ¿ ÄÄÆ÷³ÍÆ®
+	// ì´ë™ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
 
-	// Ãæµ¹ ÀÌÆåÆ®
+	// ì¶©ëŒ ì´í™íŠ¸
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UNiagaraSystem> ImpactEffect;
-	// Ãæµ¹ »ç¿îµå
+	// ì¶©ëŒ ì‚¬ìš´ë“œ
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> ImpactSound;
 
-	// ³¯¾Æ°¡´Â µ¿¾È Ãâ·ÂÇÒ »ç¿îµå
+	// ë‚ ì•„ê°€ëŠ” ë™ì•ˆ ì¶œë ¥í•  ì‚¬ìš´ë“œ
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> LoopingSound;
 
-	// ¹ß»çÃ¼°¡ Å¸°ÙÀ¸·Î ÀâÀº ÄÄÆ÷³ÍÆ®
+	// ë°œì‚¬ì²´ê°€ íƒ€ê²Ÿìœ¼ë¡œ ì¡ì€ ì»´í¬ë„ŒíŠ¸
 	UPROPERTY()
 	TObjectPtr<USceneComponent> HomingTargetSceneComponent;
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -11,13 +11,13 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 class ULevelUpInfo;
 
-// ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÆ®ÀÇ º¯¼ö°¡ º¯°æµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+// í”Œë ˆì´ì–´ ìŠ¤í…Œì´íŠ¸ì˜ ë³€ìˆ˜ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStateChanged, int32);
-// ·¹º§¸¸ º¯°æµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®(µ¥ÀÌÅÍ ·Îµå·Î ·¹º§¾÷ ÇßÀ» °æ¿ì ¾Ë¸²À» ¾Ë¸®Áö ¾Ê±â À§ÇÑ bool °ª)
+// ë ˆë²¨ë§Œ ë³€ê²½ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸(ë°ì´í„° ë¡œë“œë¡œ ë ˆë²¨ì—… í–ˆì„ ê²½ìš° ì•Œë¦¼ì„ ì•Œë¦¬ì§€ ì•Šê¸° ìœ„í•œ bool ê°’)
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnLevelChanged, int32, bool);
 
 /**
- * ·¹º§°ú °æÇèÄ¡¸¦ °ü¸®ÇÏ´Â ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÆ® Å¬·¡½º
+ * ë ˆë²¨ê³¼ ê²½í—˜ì¹˜ë¥¼ ê´€ë¦¬í•˜ëŠ” í”Œë ˆì´ì–´ ìŠ¤í…Œì´íŠ¸ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInterface
@@ -54,47 +54,47 @@ public:
 	void AddToSpellPoints(int32 InSpellPoints);
 
 public:
-	// ·¹º§ÀÌ º¯°æµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ë ˆë²¨ì´ ë³€ê²½ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	FOnLevelChanged OnLevelChangedDelegate;
-	// XP°¡ º¯°æµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// XPê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	FOnPlayerStateChanged OnXPChangedDelegate;
-	// ´É·ÂÄ¡ Æ÷ÀÎÆ®°¡ º¯°æµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	FOnPlayerStateChanged OnAttributePointsChangedDelegate;
-	// ½ºÅ³ Æ÷ÀÎÆ®°¡ º¯°æµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	FOnPlayerStateChanged OnSpellPointsChangedDelegate;
 
 private:
-	// ·¹º§Àº º¹ÀâÇÑ ¾îÆ®¸®ºäÆ® ±â´ÉÀÌ ÇÊ¿ä¾ø°í, float¿Í ¾î¿ï¸®Áö ¾Ê¾Æ¼­ ¾îÆ®¸®ºäÆ®·Î ¼³Á¤ÇÏÁö ¾Ê°í Á÷Á¢ »ç¿ëÇÑ´Ù.
-	// ·¹º§
+	// ë ˆë²¨ì€ ë³µì¡í•œ ì–´íŠ¸ë¦¬ë·°íŠ¸ ê¸°ëŠ¥ì´ í•„ìš”ì—†ê³ , floatì™€ ì–´ìš¸ë¦¬ì§€ ì•Šì•„ì„œ ì–´íŠ¸ë¦¬ë·°íŠ¸ë¡œ ì„¤ì •í•˜ì§€ ì•Šê³  ì§ì ‘ ì‚¬ìš©í•œë‹¤.
+	// ë ˆë²¨
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
 	int32 Level = 1;
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);
-	// °æÇèÄ¡
+	// ê²½í—˜ì¹˜
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_XP)
 	int32 XP = 1;
 	UFUNCTION()
 	void OnRep_XP(int32 OldXP);
-	// ´É·ÂÄ¡ Æ÷ÀÎÆ®
+	// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_AttributePoints)
 	int32 AttributePoints = 0;
 	UFUNCTION()
 	void OnRep_AttributePoints(int32 OldAttributePoints);
-	// ½ºÆç Æ÷ÀÎÆ®
+	// ìŠ¤í  í¬ì¸íŠ¸
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_SpellPoints)
 	int32 SpellPoints = 0;
 	UFUNCTION()
 	void OnRep_SpellPoints(int32 OldSpellPoints);
 
-	// ·¹º§ ¾÷ Á¤º¸
+	// ë ˆë²¨ ì—… ì •ë³´
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<ULevelUpInfo> LevelUpInfo;
 
-	// ÇÃ·¹ÀÌ¾î´Â PlayerState¿¡¼­ ¾îºô¸®Æ¼¿Í ¾îÆ®¸®ºäÆ®¸¦ °¡Áü
+	// í”Œë ˆì´ì–´ëŠ” PlayerStateì—ì„œ ì–´ë¹Œë¦¬í‹°ì™€ ì–´íŠ¸ë¦¬ë·°íŠ¸ë¥¼ ê°€ì§
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	// ÂüÁ¶ º¯¼ö
+	// ì°¸ì¡° ë³€ìˆ˜
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

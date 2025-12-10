@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -11,15 +11,15 @@
 class UNiagaraSystem;
 class UAuraAbilitySystemComponent;
 
-// ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®°¡ µî·ÏµÇ¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+// ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ê°€ ë“±ë¡ë˜ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAbilitySystemComponentRegistered, UAuraAbilitySystemComponent*);
-// Ä³¸¯ÅÍ°¡ Á×¾úÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+// ìºë¦­í„°ê°€ ì£½ì—ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeath, AActor*, DeadActor);
-// µ¥¹ÌÁö¸¦ ¹Ş¾ÒÀ» ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®, µ¥¹ÌÁö ·®
+// ë°ë¯¸ì§€ë¥¼ ë°›ì•˜ì„ ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸, ë°ë¯¸ì§€ ëŸ‰
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnDamageSignature, float);
 
 /**
- * ÅÂ±×¿Í ¾Ö´Ô ¸ùÅ¸ÁÖ¸¦ ¿¬°á
+ * íƒœê·¸ì™€ ì• ë‹˜ ëª½íƒ€ì£¼ë¥¼ ì—°ê²°
  */
 USTRUCT(BlueprintType)
 struct FTaggedMontage
@@ -27,19 +27,19 @@ struct FTaggedMontage
 	GENERATED_BODY()
 
 public:
-	// ¸ùÅ¸ÁÖ º¯¼ö
+	// ëª½íƒ€ì£¼ ë³€ìˆ˜
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UAnimMontage* Montage = nullptr;
 
-	// °ø°İ ¸ùÅ¸ÁÖ °íÀ¯ÀÇ ÅÂ±×
+	// ê³µê²© ëª½íƒ€ì£¼ ê³ ìœ ì˜ íƒœê·¸
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag MontageTag;
 
-	// °ø°İ ¸ùÅ¸ÁÖ°¡ »ç¿ëÇÒ ¼ÒÄÏÀÇ ÅÂ±×
+	// ê³µê²© ëª½íƒ€ì£¼ê°€ ì‚¬ìš©í•  ì†Œì¼“ì˜ íƒœê·¸
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag SocketTag;
 
-	// ÇØ´ç °ø°İÀ¸·Î Àç»ıÇÒ »ç¿îµå
+	// í•´ë‹¹ ê³µê²©ìœ¼ë¡œ ì¬ìƒí•  ì‚¬ìš´ë“œ
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	USoundBase* ImpactSound = nullptr;
 };
@@ -51,7 +51,7 @@ class UCombatInterface : public UInterface
 };
 
 /**
- * ÀüÅõ¿Í °ü·ÃµÈ º¯¼ö¸¦ ¾ò°Å³ª Çàµ¿À» ÇÏ´Â ÀÎÅÍÆäÀÌ½º
+ * ì „íˆ¬ì™€ ê´€ë ¨ëœ ë³€ìˆ˜ë¥¼ ì–»ê±°ë‚˜ í–‰ë™ì„ í•˜ëŠ” ì¸í„°í˜ì´ìŠ¤
  */
 class AURA_API ICombatInterface
 {
@@ -64,69 +64,69 @@ public:
 	virtual FOnDamageSignature& GetOnDamageSignatureDelegate() = 0;
 
 protected:
-	// Ä³¸¯ÅÍÀÇ ·¹º§À» ¾ò¾î¿Â´Ù.
+	// ìºë¦­í„°ì˜ ë ˆë²¨ì„ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetPlayerLevel() const;
 
-	// ¸ğ¼Ç¿öÇÎ ÄÄÆ÷³ÍÆ®¸¦ ÅëÇØ °´Ã¼°¡ Å¸°ÙÀ» ÇâÇÏµµ·Ï ÇÑ´Ù.
-	// ¾îºô¸®Æ¼ÀÇ ºí·çÇÁ¸°Æ®°¡ ¾×ÅÍ¿¡ Á¾¼ÓµÇÁö¾Êµµ·Ï ÀÎÅÍÆäÀÌ½º¿¡¼­ ±¸Çö
-	// ¸ğ¼Ç¿öÇÎ ÄÄÆ÷³ÍÆ®¸¦ ÄÚµå°¡ ¾Æ´Ï¶ó ºí·çÇÁ¸°Æ®¿¡¼­ Á÷Á¢ Ãß°¡ÇßÀ¸¹Ç·Î ÇÔ¼ö³»¿ëµµ ºí·çÇÁ¸°Æ®¿¡¼­ ±¸Çö
+	// ëª¨ì…˜ì›Œí•‘ ì»´í¬ë„ŒíŠ¸ë¥¼ í†µí•´ ê°ì²´ê°€ íƒ€ê²Ÿì„ í–¥í•˜ë„ë¡ í•œë‹¤.
+	// ì–´ë¹Œë¦¬í‹°ì˜ ë¸”ë£¨í”„ë¦°íŠ¸ê°€ ì•¡í„°ì— ì¢…ì†ë˜ì§€ì•Šë„ë¡ ì¸í„°í˜ì´ìŠ¤ì—ì„œ êµ¬í˜„
+	// ëª¨ì…˜ì›Œí•‘ ì»´í¬ë„ŒíŠ¸ë¥¼ ì½”ë“œê°€ ì•„ë‹ˆë¼ ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì§ì ‘ ì¶”ê°€í–ˆìœ¼ë¯€ë¡œ í•¨ìˆ˜ë‚´ìš©ë„ ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ êµ¬í˜„
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void UpdateFacingTarget(const FVector& Target);
 
-	// Àü±â Ãæ°İ °ø°İ »óÅÂ·Î ¼³Á¤ÇÑ´Ù.
+	// ì „ê¸° ì¶©ê²© ê³µê²© ìƒíƒœë¡œ ì„¤ì •í•œë‹¤.
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetInShockLoop(bool bInShockLoop);
 
-	// ÇÇ°İ ¹İÀÀ ¾×¼ÇÀ» ¾ò¾î¿Â´Ù.
-	// BlueprintNativeEvent·Î ºí·çÇÁ¸°Æ®¿¡¼­µµ ±¸ÇöÀÌ °¡´ÉÇÏ°í C++¿¡¼­ ±¸ÇöÀÌ °¡´ÉÇÏ´Ù. ±×¸®°í ÀÚµ¿ÀûÀ¸·Î virtual ¼Ó¼ºÀÌ ºÙ°ÔµÊ
+	// í”¼ê²© ë°˜ì‘ ì•¡ì…˜ì„ ì–»ì–´ì˜¨ë‹¤.
+	// BlueprintNativeEventë¡œ ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œë„ êµ¬í˜„ì´ ê°€ëŠ¥í•˜ê³  C++ì—ì„œ êµ¬í˜„ì´ ê°€ëŠ¥í•˜ë‹¤. ê·¸ë¦¬ê³  ìë™ì ìœ¼ë¡œ virtual ì†ì„±ì´ ë¶™ê²Œë¨
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	UAnimMontage* GetHitReactMontage() const;
 
-	// ¸ğµç °ø°İ ¸ğ¼ÇÀ» ¾ò¾î¿Â´Ù.
+	// ëª¨ë“  ê³µê²© ëª¨ì…˜ì„ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	TArray<FTaggedMontage> GetAttackMontages() const;
 
-	// °ø°İ ¸ğ¼Ç¿¡ µû¶ó °ø°İ ÁöÁ¡À» ¾ò¾î¿Â´Ù.
+	// ê³µê²© ëª¨ì…˜ì— ë”°ë¼ ê³µê²© ì§€ì ì„ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FVector GetCombatSocketLocation(const FGameplayTag& MontageTag) const;
 
-	// ¹«±âÀÇ ¸Ş½¬ ÄÄÆ÷³ÍÆ®¸¦ ¾ò¾î¿Â´Ù.
+	// ë¬´ê¸°ì˜ ë©”ì‰¬ ì»´í¬ë„ŒíŠ¸ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	USkeletalMeshComponent* GetWeapon() const;
 
-	// Á×¾ú´Â Áö È®ÀÎ
+	// ì£½ì—ˆëŠ” ì§€ í™•ì¸
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool IsDead() const;
 
-	// ¾Æ¹ÙÅ¸ ¾×ÅÍ¸¦ ¾ò¾î¿Â´Ù.
+	// ì•„ë°”íƒ€ ì•¡í„°ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	AActor* GetAvatar();
 
-	// ÇÇ°İ ÀÌÆåÆ®¸¦ ¾ò¾î¿Â´Ù.
+	// í”¼ê²© ì´í™íŠ¸ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	UNiagaraSystem* GetBloodEffect() const;
 
-	// ÅÂ±×¿¡ µû¸¥ ¸ùÅ¸ÁÖ Á¤º¸¸¦ ¾ò¾î¿Â´Ù.
+	// íƒœê·¸ì— ë”°ë¥¸ ëª½íƒ€ì£¼ ì •ë³´ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FTaggedMontage GetTaggedMontageByTag(const FGameplayTag& MontageTag) const;
 
-	// ¼ÒÈ¯¼ö À¯´Ö ¼ö¸¦ ¾ò¾î¿Â´Ù.
+	// ì†Œí™˜ìˆ˜ ìœ ë‹› ìˆ˜ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	int32 GetMinionCount() const;
 
-	// ¼ÒÈ¯¼ö À¯´Ö ¼ö¸¦ Áõ°¡
+	// ì†Œí™˜ìˆ˜ ìœ ë‹› ìˆ˜ë¥¼ ì¦ê°€
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void IncrementMinionCount(int32 Amount);
 
-	// °´Ã¼ÀÇ Á÷¾÷À» ¾ò¾î¿Â´Ù.
+	// ê°ì²´ì˜ ì§ì—…ì„ ì–»ì–´ì˜¨ë‹¤.
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	ECharacterClass GetCharacterClass() const;
 
-	// °¨Àü °ø°İ ¹Ş´Â »óÅÂÀÎ°¡
+	// ê°ì „ ê³µê²© ë°›ëŠ” ìƒíƒœì¸ê°€
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool IsBeInShocked() const;
-	// °¨Àü °ø°İ ¹Ş´Â »óÅÂ ¼³Á¤
+	// ê°ì „ ê³µê²© ë°›ëŠ” ìƒíƒœ ì„¤ì •
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SetIsBeInShocked(bool bInShock);
 };

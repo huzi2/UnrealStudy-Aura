@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/Passive/PassiveNiagaraComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
@@ -21,7 +21,7 @@ void UPassiveNiagaraComponent::BeginPlay()
 		
 		ActivateIfEquipped(AuraAbilitySystemComponent);
 	}
-	// ¾ÆÁ÷ AuraAbilitySystemComponent¸¦ »ı¼ºÇÏÁö ¸øÇß´Ù¸é
+	// ì•„ì§ AuraAbilitySystemComponentë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆë‹¤ë©´
 	else if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetOwner()))
 	{
 		CombatInterface->GetOnAbilitySystemComponentRegisteredDelegate().AddLambda([this](UAuraAbilitySystemComponent* AuraAbilitySystemComponent)

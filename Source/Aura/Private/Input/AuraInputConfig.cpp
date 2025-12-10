@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Input/AuraInputConfig.h"
 #include "Aura/AuraLogChannels.h"
@@ -7,7 +7,7 @@ const UInputAction* UAuraInputConfig::FindAbilityInputActionForTag(const FGamepl
 {
 	for (const FAuraInputAction& Action : AbilityInputActions)
 	{
-		// ÅÂ±×°¡ ¿Ïº®ÇÏ°Ô µ¿ÀÏÇÏ¸é
+		// íƒœê·¸ê°€ ì™„ë²½í•˜ê²Œ ë™ì¼í•˜ë©´
 		if (Action.InputTag.MatchesTagExact(InputTag))
 		{
 			return Action.InputAction;

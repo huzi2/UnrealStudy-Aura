@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraFireBolt.h"
 #include "AuraGameplayTags.h"
@@ -8,47 +8,47 @@
 
 FString UAuraFireBolt::GetDescription(int32 Level) const
 {
-	// È­¿°±¸ ½ºÅ³¿¡ ´ëÇÑ ¼³¸í
+	// í™”ì—¼êµ¬ ìŠ¤í‚¬ì— ëŒ€í•œ ì„¤ëª…
 
-	// ·¹º§¿¡ µû¶ó º¯°æµÇ´Â µ¥¹ÌÁö(ºÒ¼Ó¼º¸¸ ¾ò¾î¿È)
+	// ë ˆë²¨ì— ë”°ë¼ ë³€ê²½ë˜ëŠ” ë°ë¯¸ì§€(ë¶ˆì†ì„±ë§Œ ì–»ì–´ì˜´)
 	const int32 ScaledDamage = static_cast<int32>(Damage.GetValueAtLevel(static_cast<float>(Level)));
-	// ¸¶³ª ÄÚ½ºÆ®
+	// ë§ˆë‚˜ ì½”ìŠ¤íŠ¸
 	const float ManaCost = FMath::Abs(GetManaCost(static_cast<float>(Level)));
-	// ÄğÅ¸ÀÓ
+	// ì¿¨íƒ€ì„
 	const float Cooldown = GetCooldown(static_cast<float>(Level));
 
-	// 1·¹º§Àº ÇÏ³ª¸¸ ¹ß»ç
+	// 1ë ˆë²¨ì€ í•˜ë‚˜ë§Œ ë°œì‚¬
 	if (Level == 1)
 	{
 		return FString::Printf(TEXT(
-			// ½ºÅ³¸í
+			// ìŠ¤í‚¬ëª…
 			"<Title>FIRE BOLT</>\n\n"
-			// ½ºÅ³ ´É·ÂÄ¡
+			// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 			"<Small>Level: </><Level>%d</>\n"
 			"<Small>ManaCost: </><Manacost>%.1f</>\n"
 			"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-			// ¼³¸í
+			// ì„¤ëª…
 			"<Default>Launches a bolt of fire, "
 			"exploding on impact and dealing: </>"
-			// µ¥¹ÌÁö
+			// ë°ë¯¸ì§€
 			"<Damage>%d</><Default> fire damage with"
 			" a chance to burn</>\n\n"), 
 			Level, ManaCost, Cooldown, ScaledDamage);
 	}
-	// ±× ÈÄ¿¡´Â ·¹º§¿¡ µû¶ó ¹ß»çÃ¼°¡ Áõ°¡
+	// ê·¸ í›„ì—ëŠ” ë ˆë²¨ì— ë”°ë¼ ë°œì‚¬ì²´ê°€ ì¦ê°€
 	else
 	{
 		return FString::Printf(TEXT(
-			// ½ºÅ³¸í
+			// ìŠ¤í‚¬ëª…
 			"<Title>FIRE BOLT</>\n\n"
-			// ½ºÅ³ ´É·ÂÄ¡
+			// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 			"<Small>Level: </><Level>%d</>\n"
 			"<Small>ManaCost: </><Manacost>%.1f</>\n"
 			"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-			// ¼³¸í(¹ß»ç°¹¼ö)
+			// ì„¤ëª…(ë°œì‚¬ê°¯ìˆ˜)
 			"<Default>Launches %d bolts of fire, "
 			"exploding on impact and dealing: </>"
-			// µ¥¹ÌÁö
+			// ë°ë¯¸ì§€
 			"<Damage>%d</><Default> fire damage with"
 			" a chance to burn</>\n\n"),
 			Level, ManaCost, Cooldown, FMath::Min(Level, MaxNumProjectiles), ScaledDamage);
@@ -63,14 +63,14 @@ FString UAuraFireBolt::GetNextLevelDescription(int32 Level) const
 
 	return FString::Printf(TEXT(
 		"<Title>NEXT LEVEL: </>\n\n"
-		// ½ºÅ³ ´É·ÂÄ¡
+		// ìŠ¤í‚¬ ëŠ¥ë ¥ì¹˜
 		"<Small>Level: </><Level>%d</>\n"
 		"<Small>ManaCost: </><Manacost>%.1f</>\n"
 		"<Small>Cooldown: </><Cooldown>%.1f</>\n\n"
-		// ¼³¸í(¹ß»ç°¹¼ö)
+		// ì„¤ëª…(ë°œì‚¬ê°¯ìˆ˜)
 		"<Default>Launches %d bolts of fire, "
 		"exploding on impact and dealing: </>"
-		// µ¥¹ÌÁö
+		// ë°ë¯¸ì§€
 		"<Damage>%d</><Default> fire damage with"
 		" a chance to burn</>\n\n"),
 		Level, ManaCost, Cooldown, FMath::Min(Level, MaxNumProjectiles), ScaledDamage);
@@ -80,7 +80,7 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 {
 	if (!GetAvatarActorFromActorInfo()) return;
 
-	// ¹ß»çÃ¼ »ı¼ºÀº ¼­¹ö¿¡¼­¸¸ ÁøÇà
+	// ë°œì‚¬ì²´ ìƒì„±ì€ ì„œë²„ì—ì„œë§Œ ì§„í–‰
 	if (!GetAvatarActorFromActorInfo()->HasAuthority()) return;
 	if (!GetWorld()) return;
 
@@ -94,7 +94,7 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 
 	const FVector Forward = Rotation.Vector();
 
-	// ¹ß»çÃ¼ °³¼ö´Â ·¹º§ ~ MaxNumProjectiles
+	// ë°œì‚¬ì²´ ê°œìˆ˜ëŠ” ë ˆë²¨ ~ MaxNumProjectiles
 	 NumProjectiles = FMath::Min(GetAbilityLevel(), MaxNumProjectiles);
 
 	const TArray<FRotator> Rotations = UAuraAbilitySystemLibrary::EvenlySpreadRotators(Forward, FVector::UpVector, ProjectileSpread, NumProjectiles);
@@ -104,7 +104,7 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 		SpawnTransform.SetLocation(SocketLocation);
 		SpawnTransform.SetRotation(Direction.Quaternion());
 
-		// °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ®¸¦ Àû¿ë½ÃÄÑ¾ß ÇÏ¹Ç·Î SpawnActorDeferred()·Î »ı¼ºÀ» ¹Ì·é´Ù.
+		// ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ë¥¼ ì ìš©ì‹œì¼œì•¼ í•˜ë¯€ë¡œ SpawnActorDeferred()ë¡œ ìƒì„±ì„ ë¯¸ë£¬ë‹¤.
 		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(ProjectileClass, SpawnTransform, GetOwningActorFromActorInfo(), Cast<APawn>(GetOwningActorFromActorInfo()), ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		if (!Projectile) return;
 
@@ -114,12 +114,12 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 		{
 			if (HomingTarget && HomingTarget->Implements<UCombatInterface>())
 			{
-				// Å¸°Ù ¼³Á¤
+				// íƒ€ê²Ÿ ì„¤ì •
 				Projectile->GetProjectileMovement()->HomingTargetComponent = HomingTarget->GetRootComponent();
 			}
 			else
 			{
-				// Å¸°ÙÀÌ ¾øÀ¸¸é ºñ¾îÀÖ´Â ÀÓ½Ã ÄÄÆ÷³ÍÆ®·Î ¼³Á¤
+				// íƒ€ê²Ÿì´ ì—†ìœ¼ë©´ ë¹„ì–´ìˆëŠ” ì„ì‹œ ì»´í¬ë„ŒíŠ¸ë¡œ ì„¤ì •
 				Projectile->SetHomingTargetSceneComponent(NewObject<USceneComponent>(USceneComponent::StaticClass()));
 				Projectile->GetHomingTargetSceneComponent()->SetWorldLocation(ProjectileTargetLocation);
 				Projectile->GetProjectileMovement()->HomingTargetComponent = Projectile->GetHomingTargetSceneComponent();
@@ -129,7 +129,7 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 			Projectile->GetProjectileMovement()->bIsHomingProjectile = bLaunchHomingProjectiles;
 		}
 
-		// ¹ß»çÃ¼ ÀÌÁ¦ »ı¼º
+		// ë°œì‚¬ì²´ ì´ì œ ìƒì„±
 		Projectile->FinishSpawning(SpawnTransform);
 	}
 }

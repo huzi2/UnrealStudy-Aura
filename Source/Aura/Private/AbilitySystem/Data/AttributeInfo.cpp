@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Data/AttributeInfo.h"
 #include "Aura/AuraLogChannels.h"
@@ -7,7 +7,7 @@ FAuraAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag& A
 {
 	for (const FAuraAttributeInfo& Info : AttributeInfomation)
 	{
-		// ÅÂ±×°¡ ¿Ïº®ÇÏ°Ô µ¿ÀÏÇÏ¸é
+		// íƒœê·¸ê°€ ì™„ë²½í•˜ê²Œ ë™ì¼í•˜ë©´
 		if (Info.AttributeTag.MatchesTagExact(AttributeTag))
 		{
 			return Info;

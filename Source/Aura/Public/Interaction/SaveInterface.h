@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -14,18 +14,18 @@ class USaveInterface : public UInterface
 };
 
 /**
- * ¾×ÅÍ¸¦ ÀúÀå, ·ÎµåÇÒ ¶§ »ç¿ëÇÒ ÀÎÅÍÆäÀÌ½º
+ * ì•¡í„°ë¥¼ ì €ì¥, ë¡œë“œí•  ë•Œ ì‚¬ìš©í•  ì¸í„°í˜ì´ìŠ¤
  */
 class AURA_API ISaveInterface
 {
 	GENERATED_BODY()
 
 public:
-	// Æ®·£½ºÆûÀ» ·ÎµåÇÒ ÇÊ¿ä°¡ ÀÖ´Â °´Ã¼ÀÎ°¡?
+	// íŠ¸ëœìŠ¤í¼ì„ ë¡œë“œí•  í•„ìš”ê°€ ìˆëŠ” ê°ì²´ì¸ê°€?
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	bool ShouldLoadTransform() const;
 
-	// ·Îµå ÈÄ ¼ö»ıÇÒ ÇÔ¼ö
+	// ë¡œë“œ í›„ ìˆ˜ìƒí•  í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void LoadActor();
 };

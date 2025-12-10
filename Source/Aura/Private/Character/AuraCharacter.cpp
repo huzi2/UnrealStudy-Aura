@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/AuraCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -53,13 +53,13 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	// ¼­¹ö¿¡¼­ ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+	// ì„œë²„ì—ì„œ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
 	InitAbilityActorInfo();
 
-	// ¼¼ÀÌºê µ¥ÀÌÅÍ¿¡ ÀúÀåµÈ ´É·ÂÄ¡ ·Îµå
+	// ì„¸ì´ë¸Œ ë°ì´í„°ì— ì €ì¥ëœ ëŠ¥ë ¥ì¹˜ ë¡œë“œ
 	LoadProgress();
 
-	// °ÔÀÓ »óÅÂ¸¦ ·Îµå
+	// ê²Œì„ ìƒíƒœë¥¼ ë¡œë“œ
 	if (AAuraGameModeBase* AuraGameModeBase = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 	{
 		AuraGameModeBase->LoadWorldState(GetWorld());
@@ -70,13 +70,13 @@ void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 
-	// Å¬¶ó¿¡¼­ ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+	// í´ë¼ì—ì„œ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
 	InitAbilityActorInfo();
 }
 
 void AAuraCharacter::InitAbilityActorInfo()
 {
-	// ÇÃ·¹ÀÌ¾îÀÇ ¿À³Ê ¾×ÅÍ´Â ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÆ®, ¾Æ¹ÙÅ¸ ¾×ÅÍ´Â Ä³¸¯ÅÍ°¡ µÈ´Ù.
+	// í”Œë ˆì´ì–´ì˜ ì˜¤ë„ˆ ì•¡í„°ëŠ” í”Œë ˆì´ì–´ ìŠ¤í…Œì´íŠ¸, ì•„ë°”íƒ€ ì•¡í„°ëŠ” ìºë¦­í„°ê°€ ëœë‹¤.
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check(AuraPlayerState);
 
@@ -84,10 +84,10 @@ void AAuraCharacter::InitAbilityActorInfo()
 	{
 		AuraAbilitySystemComponent->AbilityActorInfoSet();
 
-		// ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®°¡ ¿¬°áµÇ¾ú´Ù´Â µ¨¸®°ÔÀÌÆ® È£Ãâ
+		// ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ê°€ ì—°ê²°ë˜ì—ˆë‹¤ëŠ” ë¸ë¦¬ê²Œì´íŠ¸ í˜¸ì¶œ
 		OnAbilitySystemComponentRegisteredDelegate.Broadcast(AuraAbilitySystemComponent);
 
-		// ±âÀı ÅÂ±×¿¡ ´ëÇÑ Äİ¹é ÇÔ¼ö ¼³Á¤
+		// ê¸°ì ˆ íƒœê·¸ì— ëŒ€í•œ ì½œë°± í•¨ìˆ˜ ì„¤ì •
 		AuraAbilitySystemComponent->RegisterGameplayTagEvent(UAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::StunTagChanged);
 	}
 
@@ -98,7 +98,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 
 		AttributeSet = AuraPlayerState->GetAttributeSet();
 
-		// À§Á¬ ÄÁÆ®·Ñ·¯ ÃÊ±âÈ­. ¾Æ·¡ 4°¡Áö º¯¼ö¸¦ ¸ğµÎ ¾òÀ» ¼ö ÀÖ´Â °÷ÀÌ¹Ç·Î ¿©±â¼­ ÃÊ±âÈ­ÇÔ
+		// ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ ì´ˆê¸°í™”. ì•„ë˜ 4ê°€ì§€ ë³€ìˆ˜ë¥¼ ëª¨ë‘ ì–»ì„ ìˆ˜ ìˆëŠ” ê³³ì´ë¯€ë¡œ ì—¬ê¸°ì„œ ì´ˆê¸°í™”í•¨
 		if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
 		{
 			if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
@@ -118,7 +118,7 @@ void AAuraCharacter::InitializeDefaultAttributes() const
 
 void AAuraCharacter::OnRep_Burned()
 {
-	// Å¬¶ó¿¡µµ ºÒÅ¸´Â ÀÌÆåÆ® Àû¿ë
+	// í´ë¼ì—ë„ ë¶ˆíƒ€ëŠ” ì´í™íŠ¸ ì ìš©
 	if (bIsBurned)
 	{
 		if (BurnDebuffComponent)
@@ -137,7 +137,7 @@ void AAuraCharacter::OnRep_Burned()
 
 void AAuraCharacter::OnRep_Stunned()
 {
-	// ½ºÅÏ ÅÂ±×°¡ µé¾î¿ÔÀ» ¶§ Å¬¶ó¿¡¼­µµ ÀÔ·Â ¸·´Â ÅÂ±×¸¦ Àû¿ë. ÀÌÆåÆ®µµ Àû¿ë
+	// ìŠ¤í„´ íƒœê·¸ê°€ ë“¤ì–´ì™”ì„ ë•Œ í´ë¼ì—ì„œë„ ì…ë ¥ ë§‰ëŠ” íƒœê·¸ë¥¼ ì ìš©. ì´í™íŠ¸ë„ ì ìš©
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
 	{
 		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
@@ -180,7 +180,7 @@ void AAuraCharacter::Die(const FVector& DeathImpulse)
 {
 	Super::Die(DeathImpulse);
 
-	// Á×Àº µÚ Æ¯Á¤ ½Ã°£ ÈÄ ¸¶Áö¸· ÀúÀå Àå¼Ò·Î ·ÎµåÇÏ´Â Ã³¸®
+	// ì£½ì€ ë’¤ íŠ¹ì • ì‹œê°„ í›„ ë§ˆì§€ë§‰ ì €ì¥ ì¥ì†Œë¡œ ë¡œë“œí•˜ëŠ” ì²˜ë¦¬
 	FTimerDelegate DeathTimerDelegate;
 	DeathTimerDelegate.BindLambda([this]()
 		{
@@ -236,7 +236,7 @@ void AAuraCharacter::AddToPlayerLevel_Implementation(int32 InPlayerLevel)
 
 	AuraPlayerState->AddToLevel(InPlayerLevel);
 
-	// ·¹º§¾÷ÇÏ¸é¼­ È°¼ºÈ­½ÃÅ³ ¼ö ÀÖ´Â ½ºÅ³ È®ÀÎÇØ¼­ È°¼ºÈ­
+	// ë ˆë²¨ì—…í•˜ë©´ì„œ í™œì„±í™”ì‹œí‚¬ ìˆ˜ ìˆëŠ” ìŠ¤í‚¬ í™•ì¸í•´ì„œ í™œì„±í™”
 	if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent()))
 	{
 		AuraAbilitySystemComponent->UpdateAbilityStatuses(AuraPlayerState->GetPlayerLevel());
@@ -325,7 +325,7 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 
 	SaveData->bFirstTimeLoadIn = false;
 
-	// ¼¼ÀÌºê µ¥ÀÌÅÍ¿¡ ÇÃ·¹ÀÌ¾î Á¤º¸ ±âÀÔ
+	// ì„¸ì´ë¸Œ ë°ì´í„°ì— í”Œë ˆì´ì–´ ì •ë³´ ê¸°ì…
 	SaveData->PlayerStartTag = CheckpointTag;
 
 	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
@@ -336,16 +336,16 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 		SaveData->SpellPoints = AuraPlayerState->GetSpellPoints();
 	}
 
-	// ´É·ÂÄ¡ ÀúÀå
+	// ëŠ¥ë ¥ì¹˜ ì €ì¥
 	SaveData->Strength = UAuraAttributeSet::GetStrengthAttribute().GetNumericValue(GetAttributeSet());
 	SaveData->Intelligence = UAuraAttributeSet::GetIntelligenceAttribute().GetNumericValue(GetAttributeSet());
 	SaveData->Resilience = UAuraAttributeSet::GetResilienceAttribute().GetNumericValue(GetAttributeSet());
 	SaveData->Vigor = UAuraAttributeSet::GetVigorAttribute().GetNumericValue(GetAttributeSet());
 
-	// ½ºÅ³ ÀúÀåÀº ¼­¹ö¸¸
+	// ìŠ¤í‚¬ ì €ì¥ì€ ì„œë²„ë§Œ
 	if (HasAuthority())
 	{
-		// °¡Áö°í ÀÖ´ø ½ºÅ³µé ÀúÀåÇÏ´Â ¶÷´Ù »ı¼º
+		// ê°€ì§€ê³  ìˆë˜ ìŠ¤í‚¬ë“¤ ì €ì¥í•˜ëŠ” ëŒë‹¤ ìƒì„±
 		if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
 		{
 			FForEachAbility SaveAbilityDelegate;
@@ -368,21 +368,21 @@ void AAuraCharacter::SaveProgress_Implementation(const FName& CheckpointTag)
 				});
 
 			SaveData->SavedAbilities.Empty();
-			// ¸ğµç ½ºÅ³ µ¹¸é¼­ ½ºÅ³ ÀúÀå
+			// ëª¨ë“  ìŠ¤í‚¬ ëŒë©´ì„œ ìŠ¤í‚¬ ì €ì¥
 			AuraAbilitySystemComponent->ForEachAbility(SaveAbilityDelegate);
 		}
 	}
 
-	// ÃÖ½ÅÈ­ÇÑ ¼¼ÀÌºê µ¥ÀÌÅÍ ÀúÀå
+	// ìµœì‹ í™”í•œ ì„¸ì´ë¸Œ ë°ì´í„° ì €ì¥
 	AuraGameMode->SaveInGameProgressData(SaveData);
 }
 
 void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
 {
-	// ·¹º§ ¾÷ ÀÌÆåÆ® Àç»ı
+	// ë ˆë²¨ ì—… ì´í™íŠ¸ ì¬ìƒ
 	if (IsValid(LevelUpNiagaraComponent) && IsValid(TopDownCameraComponent))
 	{
-		// ·¹º§ ¾÷ ÀÌÆåÆ®°¡ Ä«¸Ş¶ó ÂÊÀ¸·Î º¸¿©Áöµµ·Ï ¹æÇâ ¼öÁ¤
+		// ë ˆë²¨ ì—… ì´í™íŠ¸ê°€ ì¹´ë©”ë¼ ìª½ìœ¼ë¡œ ë³´ì—¬ì§€ë„ë¡ ë°©í–¥ ìˆ˜ì •
 		const FVector CameraLocation = TopDownCameraComponent->GetComponentLocation();
 		const FVector NiagaraSystemLocation = LevelUpNiagaraComponent->GetComponentLocation();
 		const FRotator ToCameraRotation = (CameraLocation - NiagaraSystemLocation).Rotation();
@@ -400,16 +400,16 @@ void AAuraCharacter::LoadProgress()
 	ULoadScreenSaveGame* SaveData = AuraGameMode->RetrieveInGameSaveData();
 	if (!SaveData) return;
 
-	// ÃÖÃÊ ·Îµå¶ó¸é ±âÁ¸ µ¥ÀÌÅÍ¸¦ ·Îµå
+	// ìµœì´ˆ ë¡œë“œë¼ë©´ ê¸°ì¡´ ë°ì´í„°ë¥¼ ë¡œë“œ
 	if (SaveData->bFirstTimeLoadIn)
 	{
 		InitializeDefaultAttributes();
 		AddCharacterAbilities();
 	}
-	// ÃÖÃÊ ·Îµå°¡ ¾Æ´Ï¸é ÀúÀåµÈ µ¥ÀÌÅÍ¿¡¼­ ´É·ÂÄ¡¸¦ ¼¼ÆÃ
+	// ìµœì´ˆ ë¡œë“œê°€ ì•„ë‹ˆë©´ ì €ì¥ëœ ë°ì´í„°ì—ì„œ ëŠ¥ë ¥ì¹˜ë¥¼ ì„¸íŒ…
 	else
 	{
-		// ´É·ÂÄ¡ ·Îµå
+		// ëŠ¥ë ¥ì¹˜ ë¡œë“œ
 		if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState()))
 		{
 			AuraPlayerState->SetLevel(SaveData->PlayerLevel);
@@ -418,7 +418,7 @@ void AAuraCharacter::LoadProgress()
 			AuraPlayerState->SetSpellPoints(SaveData->SpellPoints);
 		}
 
-		// ½ºÅ³ ·Îµå
+		// ìŠ¤í‚¬ ë¡œë“œ
 		if (UAuraAbilitySystemComponent* AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
 		{
 			AuraAbilitySystemComponent->AddCharacterAbilitiesFromSaveData(SaveData);

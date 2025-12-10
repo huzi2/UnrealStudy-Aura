@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraElectrocute.generated.h"
 
 /**
- * °¨Àü ½ºÅ³ Å¬·¡½º
+ * ê°ì „ ìŠ¤í‚¬ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAuraElectrocute : public UAuraBeamSpell
@@ -15,7 +15,7 @@ class AURA_API UAuraElectrocute : public UAuraBeamSpell
 	GENERATED_BODY()
 	
 private:
-	// UAuraGameplayAbility¿¡¼­ »ó¼Ó
+	// UAuraGameplayAbilityì—ì„œ ìƒì†
 	virtual FString GetDescription(int32 Level) const final;
 	virtual FString GetNextLevelDescription(int32 Level) const final;
 };

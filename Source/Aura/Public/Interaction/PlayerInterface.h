@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -13,14 +13,14 @@ class UPlayerInterface : public UInterface
 };
 
 /**
- * ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ »ç¿ëÇÒ ÀÎÅÍÆäÀÌ½º
+ * í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ì‚¬ìš©í•  ì¸í„°í˜ì´ìŠ¤
  */
 class AURA_API IPlayerInterface
 {
 	GENERATED_BODY()
 
 protected:
-	// °æÇèÄ¡ °ü·Ã
+	// ê²½í—˜ì¹˜ ê´€ë ¨
 	UFUNCTION(BlueprintNativeEvent)
 	int32 FindLevelForXP(int32 InXP) const;
 	UFUNCTION(BlueprintNativeEvent)
@@ -28,13 +28,13 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToXP(int32 InXP);
 
-	// ·¹º§ °ü·Ã
+	// ë ˆë²¨ ê´€ë ¨
 	UFUNCTION(BlueprintNativeEvent)
 	void LevelUp();
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToPlayerLevel(int32 InPlayerLevel);
 
-	// ´É·ÂÄ¡ Æ÷ÀÎÆ® °ü·Ã
+	// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸ ê´€ë ¨
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetAttributePoints() const;
 	UFUNCTION(BlueprintNativeEvent)
@@ -42,7 +42,7 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToAttributePoints(int32 InAttributePoints);
 
-	// ½ºÅ³ Æ÷ÀÎÆ® °ü·Ã
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸ ê´€ë ¨
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetSpellPoints() const;
 	UFUNCTION(BlueprintNativeEvent)
@@ -50,14 +50,14 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void AddToSpellPoints(int32 InSpellPoints);
 
-	// ¸¶¹ıÁø »ı¼º
+	// ë§ˆë²•ì§„ ìƒì„±
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ShowMagicCircle(UMaterialInstance* DecalMaterial = nullptr);
-	// ¸¶¹ıÁø Á¦°Å
+	// ë§ˆë²•ì§„ ì œê±°
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void HideMagicCircle();
 
-	// Ã¼Å©Æ÷ÀÎÆ®¿¡¼­ ÇÃ·¹ÀÌ¾îÀÇ »óÅÂ ÀúÀå
+	// ì²´í¬í¬ì¸íŠ¸ì—ì„œ í”Œë ˆì´ì–´ì˜ ìƒíƒœ ì €ì¥
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SaveProgress(const FName& CheckpointTag);
 };

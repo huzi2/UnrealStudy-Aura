@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/HUD/LoadScreenHUD.h"
 #include "UI/Widget/LoadScreenWidget.h"
@@ -21,6 +21,6 @@ void ALoadScreenHUD::BeginPlay()
 	LoadScreenWidget->AddToViewport();
 	LoadScreenWidget->BlueprintInitializeWidget();
 
-	// ¸ðµç ½½·Ô¿¡ ÀúÀåµÈ °ªµé ¼¼ÆÃ
+	// ëª¨ë“  ìŠ¬ë¡¯ì— ì €ìž¥ëœ ê°’ë“¤ ì„¸íŒ…
 	LoadScreenViewModel->LoadData();
 }

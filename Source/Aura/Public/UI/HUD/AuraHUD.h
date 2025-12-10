@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,7 +15,7 @@ class UAttributeSet;
 struct FWidgetControllerParams;
 
 /**
- * Ä¿½ºÅÒ HUD Å¬·¡½º
+ * ì»¤ìŠ¤í…€ HUD í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraHUD : public AHUD
@@ -23,16 +23,16 @@ class AURA_API AAuraHUD : public AHUD
 	GENERATED_BODY()
 	
 public:
-	// À§Á¬ ÄÁÆ®·Ñ·¯ ¾ò±â(¾øÀ¸¸é »ı¼º)
+	// ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ ì–»ê¸°(ì—†ìœ¼ë©´ ìƒì„±)
 	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
 	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams);
 	USpellMenuWidgetController* GetSpellMenuWidgetController(const FWidgetControllerParams& WCParams);
 
-	// ¿À¹ö·¹ÀÌ UI »ı¼º°ú ¿À¹ö·¹ÀÌ À§Á¬ ÄÁÆ®·Ñ·¯ »ı¼º ÈÄ º¯¼öµé ¼¼ÆÃ
+	// ì˜¤ë²„ë ˆì´ UI ìƒì„±ê³¼ ì˜¤ë²„ë ˆì´ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ ìƒì„± í›„ ë³€ìˆ˜ë“¤ ì„¸íŒ…
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 
 private:
-	// ±âº» ¿À¹ö·¹ÀÌ UI
+	// ê¸°ë³¸ ì˜¤ë²„ë ˆì´ UI
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAuraUserWidget> OverlayWidgetClass;
 	UPROPERTY()
@@ -42,13 +42,13 @@ private:
 	UPROPERTY()
 	TObjectPtr<UOverlayWidgetController> OverlayWidgetController;
 
-	// ´É·ÂÄ¡ ¸Ş´º UI
+	// ëŠ¥ë ¥ì¹˜ ë©”ë‰´ UI
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 	UPROPERTY()
 	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
 
-	// ½ºÅ³ ¸Ş´º UI
+	// ìŠ¤í‚¬ ë©”ë‰´ UI
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<USpellMenuWidgetController> SpellMenuWidgetControllerClass;
 	UPROPERTY()

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/ModMagCalc/MMC_MaxMana.h"
 #include "AbilitySystem/AuraAttributeSet.h"
@@ -26,7 +26,7 @@ float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectS
 	GetCapturedAttributeMagnitude(IntelligenceDef, Spec, EvaluationParameters, Intelligence);
 	Intelligence = FMath::Max<float>(Intelligence, 0.f);
 
-	// ÀÎÅÍÆäÀÌ½º¸¦ ÅëÇØ ·¹º§À» ¾ò¾î¿Â´Ù.
+	// ì¸í„°íŽ˜ì´ìŠ¤ë¥¼ í†µí•´ ë ˆë²¨ì„ ì–»ì–´ì˜¨ë‹¤.
 	int32 PlayerLevel = 1;
 	if (Spec.GetContext().GetSourceObject()->Implements<UCombatInterface>())
 	{

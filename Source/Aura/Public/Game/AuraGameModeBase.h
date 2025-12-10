@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -13,7 +13,7 @@ class ULoadScreenSaveGame;
 class ULootTiers;
 
 /**
- * °ÔÀÓ¸ğµå Å¬·¡½º
+ * ê²Œì„ëª¨ë“œ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraGameModeBase : public AGameModeBase
@@ -28,28 +28,28 @@ public:
 	FORCEINLINE const FName& GetDefaultPlayerStartTag() const { return DefaultPlayerStartTag; }
 	FORCEINLINE const TSoftObjectPtr<UWorld>& GetDefaultMap() const { return DefaultMap; }
 
-	// ºä¸ğµ¨À» ÅëÇÑ °ÔÀÓ µ¥ÀÌÅÍ ÀúÀå
+	// ë·°ëª¨ë¸ì„ í†µí•œ ê²Œì„ ë°ì´í„° ì €ì¥
 	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
 
-	// ÇØ´ç ½½·Ô¿¡ ÀúÀåµÈ ¼¼ÀÌºê °ÔÀÓ¿ÀºêÁ§Æ® È®ÀÎ
+	// í•´ë‹¹ ìŠ¬ë¡¯ì— ì €ì¥ëœ ì„¸ì´ë¸Œ ê²Œì„ì˜¤ë¸Œì íŠ¸ í™•ì¸
 	ULoadScreenSaveGame* GetSaveLoadData(const FString& SlotName, int32 SlotIndex) const;
 
-	// ½½·Ô »èÁ¦
+	// ìŠ¬ë¡¯ ì‚­ì œ
 	static void DeleteSlot(const FString& SlotName, int32 SlotIndex);
 
-	// ½½·ÔÀÇ ¸ÊÀ¸·Î ÀÌµ¿
+	// ìŠ¬ë¡¯ì˜ ë§µìœ¼ë¡œ ì´ë™
 	void TravelToMap(UMVVM_LoadSlot* Slot);
 
-	// °ÔÀÓ ÀÎ½ºÅÏ½º¿¡ ÀúÀåµÈ ¼¼ÀÌºê µ¥ÀÌÅÍ È®ÀÎ
+	// ê²Œì„ ì¸ìŠ¤í„´ìŠ¤ì— ì €ì¥ëœ ì„¸ì´ë¸Œ ë°ì´í„° í™•ì¸
 	ULoadScreenSaveGame* RetrieveInGameSaveData() const;
-	// È®ÀÎÇÑ ¼¼ÀÌºê µ¥ÀÌÅÍ¿¡ ÇöÀç ÇÃ·¹ÀÌ¾î °ÔÀÓ »óÈ²À» ÀúÀå
+	// í™•ì¸í•œ ì„¸ì´ë¸Œ ë°ì´í„°ì— í˜„ì¬ í”Œë ˆì´ì–´ ê²Œì„ ìƒí™©ì„ ì €ì¥
 	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
-	// ÀüÃ¼ °ÔÀÓ »óÈ²À» ÀúÀå
+	// ì „ì²´ ê²Œì„ ìƒí™©ì„ ì €ì¥
 	void SaveWorldState(UWorld* World, const FString& DestinationMapAssetName = FString("")) const;
-	// °ÔÀÓ »óÈ²À» ·Îµå
+	// ê²Œì„ ìƒí™©ì„ ë¡œë“œ
 	void LoadWorldState(UWorld* World) const;
 
-	// ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ» ¶§ Ã³¸®
+	// í”Œë ˆì´ì–´ê°€ ì£½ì—ˆì„ ë•Œ ì²˜ë¦¬
 	void PlayerDied(ACharacter* DeadCharacter);
 
 private:
@@ -57,36 +57,36 @@ private:
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
 
 private:
-	// ¸Ê ¿¡¼Â ÀÌ¸§À¸·Î ¸Ê ÀÌ¸§ Ã£±â
+	// ë§µ ì—ì…‹ ì´ë¦„ìœ¼ë¡œ ë§µ ì´ë¦„ ì°¾ê¸°
 	FString GetMapNameFromMapAssetName(const FString& MapAssetName) const;
 
 private:
-	// ¸ğµç Á÷¾÷ Á¤º¸¸¦ °¡Áø Å¬·¡½º
+	// ëª¨ë“  ì§ì—… ì •ë³´ë¥¼ ê°€ì§„ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
 	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
 
-	// ÇÃ·¹ÀÌ¾îÀÇ ¸ğµç ½ºÅ³ Á¤º¸¸¦ °¡Áø Å¬·¡½º
+	// í”Œë ˆì´ì–´ì˜ ëª¨ë“  ìŠ¤í‚¬ ì •ë³´ë¥¼ ê°€ì§„ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly, Category = "Ability Info")
 	TObjectPtr<UAbilityInfo> AbilityInfo;
 
-	// µå·Ó ¾ÆÀÌÅÛ Á¤º¸¸¦ °¡Áø Å¬·¡½º
+	// ë“œë¡­ ì•„ì´í…œ ì •ë³´ë¥¼ ê°€ì§„ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly, Category = "Loot Tiers")
 	TObjectPtr<ULootTiers> LootTiers;
 
-	// ¼¼ÀÌºê °ÔÀÓ ¿ÀºêÁ§Æ® Å¬·¡½º
+	// ì„¸ì´ë¸Œ ê²Œì„ ì˜¤ë¸Œì íŠ¸ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ULoadScreenSaveGame> LoadScreenSaveGameClass;
 
-	// °ÔÀÓ ½ÃÀÛÇÒ ¶§ »ç¿ëÇÒ ±âº» ¸Ê ÀÌ¸§
+	// ê²Œì„ ì‹œì‘í•  ë•Œ ì‚¬ìš©í•  ê¸°ë³¸ ë§µ ì´ë¦„
 	UPROPERTY(EditDefaultsOnly)
 	FString DefaultMapName;
-	// °ÔÀÓ ½ÃÀÛÇÒ ¶§ »ç¿ëÇÒ ±âº» ¸Ê
+	// ê²Œì„ ì‹œì‘í•  ë•Œ ì‚¬ìš©í•  ê¸°ë³¸ ë§µ
 	UPROPERTY(EditDefaultsOnly)
 	TSoftObjectPtr<UWorld> DefaultMap;
-	// °ÔÀÓ ½ÃÀÛÇÒ ¶§ À§Ä¡·Î ÀâÀ» ±âº» ÇÃ·¹ÀÌ¾î ½ºÅ¸Æ®ÀÇ ÅÂ±×
+	// ê²Œì„ ì‹œì‘í•  ë•Œ ìœ„ì¹˜ë¡œ ì¡ì„ ê¸°ë³¸ í”Œë ˆì´ì–´ ìŠ¤íƒ€íŠ¸ì˜ íƒœê·¸
 	UPROPERTY(EditDefaultsOnly)
 	FName DefaultPlayerStartTag;
-	// °ÔÀÓ¿¡ »ç¿ëÇÒ ¸ğµç ¸Êµé
+	// ê²Œì„ì— ì‚¬ìš©í•  ëª¨ë“  ë§µë“¤
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSoftObjectPtr<UWorld>> Maps;
 };

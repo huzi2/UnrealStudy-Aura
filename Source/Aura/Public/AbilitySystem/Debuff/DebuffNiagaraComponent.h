@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -8,7 +8,7 @@
 #include "DebuffNiagaraComponent.generated.h"
 
 /**
- * µğ¹öÇÁ ÀÌÆåÆ® Ãâ·ÂÇÏ´Â ÄÄÆ÷³ÍÆ®
+ * ë””ë²„í”„ ì´í™íŠ¸ ì¶œë ¥í•˜ëŠ” ì»´í¬ë„ŒíŠ¸
  */
 UCLASS()
 class AURA_API UDebuffNiagaraComponent : public UNiagaraComponent
@@ -25,10 +25,10 @@ public:
 	FORCEINLINE void SetDebuffTag(const FGameplayTag& InDebuffTag) { DebuffTag = InDebuffTag; }
 
 private:
-	// µğ¹öÇÁ ÅÂ±×°¡ º¯°æµÇ¾úÀ» ¶§
+	// ë””ë²„í”„ íƒœê·¸ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ
 	void DebuffTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
-	// ¿À³Ê°¡ Á×¾úÀ» ¶§
+	// ì˜¤ë„ˆê°€ ì£½ì—ˆì„ ë•Œ
 	UFUNCTION()
 	void OnOwnerDeath(AActor* DeadActor);
 

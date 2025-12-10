@@ -1,9 +1,9 @@
-#include "AuraAbilityTypes.h"
+ï»¿#include "AuraAbilityTypes.h"
 
-// Ãß°¡µÈ bool º¯¼ö¸¦ Á÷·ÄÈ­·Î ÀúÀåÇÏ±â À§ÇØ NetSerialize()¸¦ Ä¿½ºÅÒ
+// ì¶”ê°€ëœ bool ë³€ìˆ˜ë¥¼ ì§ë ¬í™”ë¡œ ì €ì¥í•˜ê¸° ìœ„í•´ NetSerialize()ë¥¼ ì»¤ìŠ¤í…€
 bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bool& bOutSuccess)
 {
-	// ±âÁ¸ÀÇ NetSerialize()¿Í µ¿ÀÏÇÏ°Ô ÁøÇàÇÏµÇ, RepBits Å©±â¸¦ 32ºñÆ®·Î ³ôÀÌ°í ³»°¡ ¼³Á¤ÇÑ bool º¯¼ö¸¦ ÀúÀå
+	// ê¸°ì¡´ì˜ NetSerialize()ì™€ ë™ì¼í•˜ê²Œ ì§„í–‰í•˜ë˜, RepBits í¬ê¸°ë¥¼ 32ë¹„íŠ¸ë¡œ ë†’ì´ê³  ë‚´ê°€ ì„¤ì •í•œ bool ë³€ìˆ˜ë¥¼ ì €ì¥
 	uint32 RepBits = 0;
 	if (Ar.IsSaving())
 	{
@@ -35,7 +35,7 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 		{
 			RepBits |= 1 << 6;
 		}
-		// ¿©±â À§±îÁö´Â ±âÁ¸ÀÇ NetSerialize()¿Í °°´Ù. ¾Æ·¡·Î´Â ³»°¡ ¼³Á¤ÇÑ bool º¯¼ö¸¦ ÀúÀå
+		// ì—¬ê¸° ìœ„ê¹Œì§€ëŠ” ê¸°ì¡´ì˜ NetSerialize()ì™€ ê°™ë‹¤. ì•„ë˜ë¡œëŠ” ë‚´ê°€ ì„¤ì •í•œ bool ë³€ìˆ˜ë¥¼ ì €ì¥
 		if (bIsBlockedHit)
 		{
 			RepBits |= 1 << 7;
@@ -91,7 +91,7 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 		}
 	}
 
-	// ±âÁ¸¿¡ 7¸¦ ÀúÀåÇßÁö¸¸ bool º¯¼ö°¡ 2°³ ´õ ´Ã¾î³µÀ¸¹Ç·Î 9·Î ÀúÀå
+	// ê¸°ì¡´ì— 7ë¥¼ ì €ì¥í–ˆì§€ë§Œ bool ë³€ìˆ˜ê°€ 2ê°œ ë” ëŠ˜ì–´ë‚¬ìœ¼ë¯€ë¡œ 9ë¡œ ì €ì¥
 	Ar.SerializeBits(&RepBits, 19);
 
 	if (RepBits & (1 << 0))
@@ -135,8 +135,8 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 		bHasWorldOrigin = false;
 	}
 
-	// ¿©±â±îÁö ÄÚµåµµ ±âÁ¸°ú µ¿ÀÏ
-	// »õ·Î Ãß°¡ÇÑ bool º¯¼ö¸¦ Ar¿¡ ÀúÀå
+	// ì—¬ê¸°ê¹Œì§€ ì½”ë“œë„ ê¸°ì¡´ê³¼ ë™ì¼
+	// ìƒˆë¡œ ì¶”ê°€í•œ bool ë³€ìˆ˜ë¥¼ Arì— ì €ì¥
 	if (RepBits & (1 << 7))
 	{
 		Ar << bIsBlockedHit;

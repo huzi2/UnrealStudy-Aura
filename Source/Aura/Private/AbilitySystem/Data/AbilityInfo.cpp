@@ -1,11 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Data/AbilityInfo.h"
 #include "Aura/AuraLogChannels.h"
 
 FAuraAbilityInfo UAbilityInfo::FindAbilityInfoForTag(const FGameplayTag& AbilityTag, bool bNotLogFound) const
 {
-	// ¾îºô¸®Æ¼¿¡ ¼³Á¤ÇÑ AbilityTag¿Í ¸ÅÄªµÇ´Â ¾îºô¸®Æ¼ ÀÎÆ÷¸¦ ¸®ÅÏ
+	// ì–´ë¹Œë¦¬í‹°ì— ì„¤ì •í•œ AbilityTagì™€ ë§¤ì¹­ë˜ëŠ” ì–´ë¹Œë¦¬í‹° ì¸í¬ë¥¼ ë¦¬í„´
 	for (const FAuraAbilityInfo& Info : AbilityInformation)
 	{
 		if (Info.AbilityTag == AbilityTag) return Info;

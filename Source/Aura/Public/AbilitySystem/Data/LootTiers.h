@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,25 +12,25 @@ struct FLootItem
 	GENERATED_BODY()
 
 public:
-	// µå·ÓÇÒ °´Ã¼ Å¬·¡½º
+	// ë“œë¡­í•  ê°ì²´ í´ë˜ìŠ¤
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LootTiers|Spawning")
 	TSubclassOf<AActor> LootClass;
 
-	// µå·Ó °´Ã¼¿¡ ·¹º§À» ¼³Á¤ÇÒ °ÍÀÎ°¡
+	// ë“œë¡­ ê°ì²´ì— ë ˆë²¨ì„ ì„¤ì •í•  ê²ƒì¸ê°€
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LootTiers|Spawning")
 	bool bLootLevelOverride = true;
 
-	// µå·Ó È®·ü
+	// ë“œë¡­ í™•ë¥ 
 	UPROPERTY(EditAnywhere, Category = "LootTiers|Spawning")
 	float ChanceToSpawn = 0.f;
 
-	// ÃÖ´ë µå·Ó ¼ıÀÚ
+	// ìµœëŒ€ ë“œë¡­ ìˆ«ì
 	UPROPERTY(EditAnywhere, Category = "LootTiers|Spawning")
 	int32 MaxNumberToSpawn = 0;
 };
 
 /**
- * µå·Ó ¾ÆÀÌÅÛµé¿¡ ´ëÇÑ Á¤º¸¸¦ °¡Áø µ¥ÀÌÅÍ ¿¡¼Â
+ * ë“œë¡­ ì•„ì´í…œë“¤ì— ëŒ€í•œ ì •ë³´ë¥¼ ê°€ì§„ ë°ì´í„° ì—ì…‹
  */
 UCLASS()
 class AURA_API ULootTiers : public UDataAsset
@@ -38,7 +38,7 @@ class AURA_API ULootTiers : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	// È®·ü°ú °³¼ö¸¦ °è»êÇØ¼­ µå·ÓÇÒ ¾ÆÀÌÅÛµéÀ» ¾ò¾î¿È
+	// í™•ë¥ ê³¼ ê°œìˆ˜ë¥¼ ê³„ì‚°í•´ì„œ ë“œë¡­í•  ì•„ì´í…œë“¤ì„ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintPure)
 	TArray<FLootItem> GeLootItems() const;
 	

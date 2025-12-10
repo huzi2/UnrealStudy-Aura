@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Net/UnrealNetwork.h"
@@ -17,8 +17,8 @@ UAuraAttributeSet::UAuraAttributeSet()
 {
 	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
-	// °ÔÀÓÇÃ·¹ÀÌ ÅÂ±×¿¡ ¸Â´Â GetAttribute() ÇÔ¼ö¸¦ ¸ÅÇÎ
-	// À§Á¬ ÄÁÆ®·Ñ·¯¿¡¼­ ÅÂ±×¿¡ µû¸¥ ÇÔ¼ö¸¦ ¹ÙÀÎµåÇÒ ¶§ ¹İº¹ÀÛ¾÷À» ÆíÇÏ°Ô ÇÏ±â À§ÇÔ
+	// ê²Œì„í”Œë ˆì´ íƒœê·¸ì— ë§ëŠ” GetAttribute() í•¨ìˆ˜ë¥¼ ë§¤í•‘
+	// ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ íƒœê·¸ì— ë”°ë¥¸ í•¨ìˆ˜ë¥¼ ë°”ì¸ë“œí•  ë•Œ ë°˜ë³µì‘ì—…ì„ í¸í•˜ê²Œ í•˜ê¸° ìœ„í•¨
 	TagsToAttribute.Add(GameplayTags.Attribute_Primary_Strength, GetStrengthAttribute);
 	TagsToAttribute.Add(GameplayTags.Attribute_Primary_Intelligence, GetIntelligenceAttribute);
 	TagsToAttribute.Add(GameplayTags.Attribute_Primary_Resilience, GetResilienceAttribute);
@@ -45,7 +45,7 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	// ¿©±â ¼ø¼­´Â Â÷·Ê´ë·Î ÇØ¾ßÇÔ. ¿¹¸¦ µé¾î ArmorÀº Resilience¿¡ ¿µÇâÀ» ¹ŞÀ¸¹Ç·Î ³ªÁß¿¡ ¼³Á¤µÇ¾úÀ½
+	// ì—¬ê¸° ìˆœì„œëŠ” ì°¨ë¡€ëŒ€ë¡œ í•´ì•¼í•¨. ì˜ˆë¥¼ ë“¤ì–´ Armorì€ Resilienceì— ì˜í–¥ì„ ë°›ìœ¼ë¯€ë¡œ ë‚˜ì¤‘ì— ì„¤ì •ë˜ì—ˆìŒ
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Strength, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
@@ -75,9 +75,9 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 {
 	Super::PreAttributeChange(Attribute, NewValue);
 
-	// ÀÌÆåÆ®·Î º¯¼ö°¡ º¯°æµÇ±â Àü¿¡ ½ÇÇà. º¯¼öµéÀ» ¿Ã¹Ù¸¥ °ªÀ¸·Î Å¬·¥ÇÎÇÑ´Ù.
-	// ÇÏÁö¸¸ ½ÇÁ¦ °ªÀ» Å¬·¥ÇÎÇÏÁö´Â ¾Ê°í, Äõ¸®µÇ¼­ ¹İÈ¯ÇÏ´Â °ªÀ» Å¬·¥ÇÎÇÑ´Ù.
-	// ±×·¡¼­ ½ÇÁ¦·Î Å¬·¥ÇÎÀº PostGameplayEffectExecute()¿¡¼­ Àû¿ëÇØ¾ßÇÑ´Ù.
+	// ì´í™íŠ¸ë¡œ ë³€ìˆ˜ê°€ ë³€ê²½ë˜ê¸° ì „ì— ì‹¤í–‰. ë³€ìˆ˜ë“¤ì„ ì˜¬ë°”ë¥¸ ê°’ìœ¼ë¡œ í´ë¨í•‘í•œë‹¤.
+	// í•˜ì§€ë§Œ ì‹¤ì œ ê°’ì„ í´ë¨í•‘í•˜ì§€ëŠ” ì•Šê³ , ì¿¼ë¦¬ë˜ì„œ ë°˜í™˜í•˜ëŠ” ê°’ì„ í´ë¨í•‘í•œë‹¤.
+	// ê·¸ë˜ì„œ ì‹¤ì œë¡œ í´ë¨í•‘ì€ PostGameplayEffectExecute()ì—ì„œ ì ìš©í•´ì•¼í•œë‹¤.
 	if (Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
@@ -92,11 +92,11 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 {
 	Super::PostGameplayEffectExecute(Data);
 
-	// ÀÌÆåÆ®·Î º¯¼ö°¡ º¯°æµÈ ÈÄ¿¡ ½ÇÇà. ¼Ò½º¿Í Å¸°Ù °ü·Ã º¯¼ö¸¦ ¾ò¾î¼­ ÈÄÃ³¸®¸¦ ÇÒ ¼ö ÀÖ´Ù.
+	// ì´í™íŠ¸ë¡œ ë³€ìˆ˜ê°€ ë³€ê²½ëœ í›„ì— ì‹¤í–‰. ì†ŒìŠ¤ì™€ íƒ€ê²Ÿ ê´€ë ¨ ë³€ìˆ˜ë¥¼ ì–»ì–´ì„œ í›„ì²˜ë¦¬ë¥¼ í•  ìˆ˜ ìˆë‹¤.
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
-	// Å¸°Ù Ä³¸¯ÅÍ°¡ Á×¾îÀÖ´Ù¸é ¸®ÅÏ
+	// íƒ€ê²Ÿ ìºë¦­í„°ê°€ ì£½ì–´ìˆë‹¤ë©´ ë¦¬í„´
 	if (Props.TargetCharacter && Props.TargetCharacter->Implements<UCombatInterface>())
 	{
 		if (ICombatInterface::Execute_IsDead(Props.TargetCharacter))
@@ -105,7 +105,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 	}
 
-	// PreAttributeChange()¿¡¼­ Çß´ø Å¬·¥ÇÎÀ» ¿©±â¼­µµ ÇØ¼­ ¿©±â¼­´Â ½ÇÁ¦ °ªÀ» Å¬·¥ÇÎÇØÁØ´Ù.
+	// PreAttributeChange()ì—ì„œ í–ˆë˜ í´ë¨í•‘ì„ ì—¬ê¸°ì„œë„ í•´ì„œ ì—¬ê¸°ì„œëŠ” ì‹¤ì œ ê°’ì„ í´ë¨í•‘í•´ì¤€ë‹¤.
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
@@ -114,12 +114,12 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	{
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
-	// µ¥¹ÌÁöÀÇ Ã³¸®. ¸ŞÅ¸ µ¥ÀÌÅÍ(·¹ÇÃ¸®ÄÉÀÌÆ®µÇÁö¾ÊÀ½)ÀÌ¹Ç·Î ¼­¹ö¿¡¼­¸¸ Ã³¸®µÈ´Ù
+	// ë°ë¯¸ì§€ì˜ ì²˜ë¦¬. ë©”íƒ€ ë°ì´í„°(ë ˆí”Œë¦¬ì¼€ì´íŠ¸ë˜ì§€ì•ŠìŒ)ì´ë¯€ë¡œ ì„œë²„ì—ì„œë§Œ ì²˜ë¦¬ëœë‹¤
 	else if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 	{
 		HandleIncomingDamage(Props);
 	}
-	// °æÇèÄ¡ÀÇ Ã³¸®
+	// ê²½í—˜ì¹˜ì˜ ì²˜ë¦¬
 	else if (Data.EvaluatedData.Attribute == GetIncomingXPAttribute())
 	{
 		HandleIncomingXP(Props);
@@ -130,9 +130,9 @@ void UAuraAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute,
 {
 	Super::PostAttributeChange(Attribute, OldValue, NewValue);
 
-	// ´É·ÂÄ¡ º¯È­ ÈÄÃ³¸®
+	// ëŠ¥ë ¥ì¹˜ ë³€í™” í›„ì²˜ë¦¬
 
-	// ·¹º§¾÷ÇßÀ» ¶§ Ã¼·Â°ú ¸¶³ª¸¦ ÃÖ´ë·Î È¸º¹
+	// ë ˆë²¨ì—…í–ˆì„ ë•Œ ì²´ë ¥ê³¼ ë§ˆë‚˜ë¥¼ ìµœëŒ€ë¡œ íšŒë³µ
 	if (Attribute == GetMaxHealthAttribute() && bTopOffHelath)
 	{
 		SetHealth(GetMaxHealth());
@@ -147,7 +147,7 @@ void UAuraAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute,
 
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
-	// ¼Ò½º(ÀÌÆåÆ®¸¦ ÀÏÀ¸Å² Æ÷¼Ç, È­¿°Áö´ë °°Àº ¾×ÅÍ) °ü·Ã º¯¼ö °¡Á®¿À±â
+	// ì†ŒìŠ¤(ì´í™íŠ¸ë¥¼ ì¼ìœ¼í‚¨ í¬ì…˜, í™”ì—¼ì§€ëŒ€ ê°™ì€ ì•¡í„°) ê´€ë ¨ ë³€ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	Props.EffectContextHandle = Data.EffectSpec.GetContext();
 	Props.SourceASC = Props.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
 
@@ -168,7 +168,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		}
 	}
 
-	// Å¸°Ù(ÀÌÆåÆ®¸¦ ´çÇÑ ÇÃ·¹ÀÌ¾î °°Àº ¾×ÅÍ) °ü·Ã º¯¼ö °¡Á®¿À±â
+	// íƒ€ê²Ÿ(ì´í™íŠ¸ë¥¼ ë‹¹í•œ í”Œë ˆì´ì–´ ê°™ì€ ì•¡í„°) ê´€ë ¨ ë³€ìˆ˜ ê°€ì ¸ì˜¤ê¸°
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
 	{
 		Props.TargetAvatarActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
@@ -187,48 +187,48 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 		const float NewHealth = GetHealth() - LocalIncomingDamage;
 		SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
 
-		// ÇØ´ç Å¬¶óÀÌ¾ğÆ®¿¡°Ô Å¸°Ù ¸Ó¸® À§¿¡ µ¥¹ÌÁö UI Ç¥½Ã
-		// Ä¿½ºÅÒ °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ® ÄÁÅØ½ºÆ®¿¡¼­ ºí·Ï°ú Ä¡¸íÅ¸ È®ÀÎ
+		// í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ íƒ€ê²Ÿ ë¨¸ë¦¬ ìœ„ì— ë°ë¯¸ì§€ UI í‘œì‹œ
+		// ì»¤ìŠ¤í…€ ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ ì»¨í…ìŠ¤íŠ¸ì—ì„œ ë¸”ë¡ê³¼ ì¹˜ëª…íƒ€ í™•ì¸
 		const bool bBlockedHit = UAuraAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
 		const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(Props.EffectContextHandle);
 		ShowFloatingText(Props, LocalIncomingDamage, bBlockedHit, bCriticalHit);
 
-		// µğ¹öÇÁ¿¡ °É·È´Ù¸é
+		// ë””ë²„í”„ì— ê±¸ë ¸ë‹¤ë©´
 		if (UAuraAbilitySystemLibrary::IsSuccessfulDebuff(Props.EffectContextHandle))
 		{
 			Debuff(Props);
 		}
 
 		const bool bFatal = NewHealth <= 0.f;
-		// Á×Áö ¾Ê¾ÒÀ¸¸é ÇÇ°İ ¾îºô¸®Æ¼ È°¼ºÈ­
+		// ì£½ì§€ ì•Šì•˜ìœ¼ë©´ í”¼ê²© ì–´ë¹Œë¦¬í‹° í™œì„±í™”
 		if (!bFatal)
 		{
-			// Ä³¸¯ÅÍ°¡ ÇöÀç °¨Àü ·çÇÁ »óÅÂÀÎ Áö È®ÀÎ
+			// ìºë¦­í„°ê°€ í˜„ì¬ ê°ì „ ë£¨í”„ ìƒíƒœì¸ ì§€ í™•ì¸
 			if (Props.TargetCharacter->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsBeInShocked(Props.TargetCharacter))
 			{
-				// Effect.HitReact ÅÂ±×°¡ ºÙÀº ¾îºô¸®Æ¼¸¦ È°¼ºÈ­
+				// Effect.HitReact íƒœê·¸ê°€ ë¶™ì€ ì–´ë¹Œë¦¬í‹°ë¥¼ í™œì„±í™”
 				FGameplayTagContainer TagContainer;
 				TagContainer.AddTag(UAuraGameplayTags::Get().Effects_HitReact);
 				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
 			}
 
-			// ³Ë¹é Àû¿ë
+			// ë„‰ë°± ì ìš©
 			const FVector KnockbackForce = UAuraAbilitySystemLibrary::GetKnockbackForce(Props.EffectContextHandle);
 			if (!KnockbackForce.IsNearlyZero(10.f))
 			{
-				// Å¸°Ù Ä³¸¯ÅÍ¿¡°Ô ³Ë¹é º¤ÅÍ Àû¿ë
+				// íƒ€ê²Ÿ ìºë¦­í„°ì—ê²Œ ë„‰ë°± ë²¡í„° ì ìš©
 				Props.TargetCharacter->LaunchCharacter(KnockbackForce, true, true);
 			}
 		}
 		else
 		{
-			// ÀÎÅÍÆäÀÌ½º¸¦ ÅëÇÑ Á×À½ Ã³¸®(·¡±×µ¹·Î º¯°æ)
+			// ì¸í„°í˜ì´ìŠ¤ë¥¼ í†µí•œ ì£½ìŒ ì²˜ë¦¬(ë˜ê·¸ëŒë¡œ ë³€ê²½)
 			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
 			{
 				CombatInterface->Die(UAuraAbilitySystemLibrary::GetDeathImpulse(Props.EffectContextHandle));
 			}
 
-			// Á×¿´´Ù¸é °æÇèÄ¡¸¦ ¾òÀ½
+			// ì£½ì˜€ë‹¤ë©´ ê²½í—˜ì¹˜ë¥¼ ì–»ìŒ
 			SendXPEvent(Props);
 		}
 	}
@@ -238,37 +238,37 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 {
 	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
-	// ÀÌÆåÆ® ÇÚµé °´Ã¼ »ı¼º
+	// ì´í™íŠ¸ í•¸ë“¤ ê°ì²´ ìƒì„±
 	FGameplayEffectContextHandle EffectContextHandle = Props.SourceASC->MakeEffectContext();
-	// ÀÌÆåÆ® ÇÚµé¿¡ »ç¿ë ÁÖÃ¼ ¼³Á¤
+	// ì´í™íŠ¸ í•¸ë“¤ì— ì‚¬ìš© ì£¼ì²´ ì„¤ì •
 	EffectContextHandle.AddSourceObject(Props.SourceAvatarActor);
 
-	// ÀÌÆåÆ® ÄÁÅØ½ºÆ® ÇÚµé¿¡¼­ µğºêÆÛ °ü·Ã Á¤º¸µé ¾ò¾î¿À±â
+	// ì´í™íŠ¸ ì»¨í…ìŠ¤íŠ¸ í•¸ë“¤ì—ì„œ ë””ë¸Œí¼ ê´€ë ¨ ì •ë³´ë“¤ ì–»ì–´ì˜¤ê¸°
 	const FGameplayTag DamageTypeTag = UAuraAbilitySystemLibrary::GetDamageType(Props.EffectContextHandle);
 	const FString DebuffName = FString::Printf(TEXT("DynamicDebuff_%s"), *DamageTypeTag.ToString());
 	const float DebuffDamage = UAuraAbilitySystemLibrary::GetDebuffDamage(Props.EffectContextHandle);
 	const float DebuffDuration = UAuraAbilitySystemLibrary::GetDebuffDuration(Props.EffectContextHandle);
 	const float DebuffFrequency = UAuraAbilitySystemLibrary::GetDebuffFrequency(Props.EffectContextHandle);
 
-	// µğ¹öÇÁ ³×ÀÓÀ» ºÙ¿©¼­ ÀÌÆåÆ® °´Ã¼ »ı¼º
+	// ë””ë²„í”„ ë„¤ì„ì„ ë¶™ì—¬ì„œ ì´í™íŠ¸ ê°ì²´ ìƒì„±
 	if (UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName(DebuffName)))
 	{
-		// µğ¹öÇÁ´Â Áö¼ÓµÊ
+		// ë””ë²„í”„ëŠ” ì§€ì†ë¨
 		Effect->DurationPolicy = EGameplayEffectDurationType::HasDuration;
-		// µğ¹öÇÁ Áö¼Ó½Ã°£
+		// ë””ë²„í”„ ì§€ì†ì‹œê°„
 		Effect->DurationMagnitude = FScalableFloat(DebuffDuration);
-		// µğ¹öÇÁ ÁÖ±â
+		// ë””ë²„í”„ ì£¼ê¸°
 		Effect->Period = DebuffFrequency;
 
-		// UE 5.3ºÎÅÍ´Â UTargetTagsGameplayEffectComponent¸¦ ÀÌÆåÆ®¿¡ Ãß°¡ÇÏ´Â ÇüÅÂ·Î ÅÂ±×¸¦ Àû¿ë½ÃÄÑ¾ßÇÔ
-		// µ¥¹ÌÁö Å¸ÀÔ¿¡ µû¸¥ µğ¹öÇÁ ÅÂ±×¸¦ ³Ö¾î¼­ µğ¹öÇÁ°¡ Áßº¹µÇÁö ¾Êµµ·Ï ¹æÁö
-		// µğ¹öÇÁ ÅÂ±×·Î µğ¹öÇÁ ÀÌÆåÆ® ÄÄÆ÷³ÍÆ®µµ È°¼ºÈ­µÊ
+		// UE 5.3ë¶€í„°ëŠ” UTargetTagsGameplayEffectComponentë¥¼ ì´í™íŠ¸ì— ì¶”ê°€í•˜ëŠ” í˜•íƒœë¡œ íƒœê·¸ë¥¼ ì ìš©ì‹œì¼œì•¼í•¨
+		// ë°ë¯¸ì§€ íƒ€ì…ì— ë”°ë¥¸ ë””ë²„í”„ íƒœê·¸ë¥¼ ë„£ì–´ì„œ ë””ë²„í”„ê°€ ì¤‘ë³µë˜ì§€ ì•Šë„ë¡ ë°©ì§€
+		// ë””ë²„í”„ íƒœê·¸ë¡œ ë””ë²„í”„ ì´í™íŠ¸ ì»´í¬ë„ŒíŠ¸ë„ í™œì„±í™”ë¨
 		const FGameplayTag DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageTypeTag];
 		UTargetTagsGameplayEffectComponent& AssetTagsComponent = Effect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
 		FInheritedTagContainer InheritedTagContainer;
 		InheritedTagContainer.Added.AddTag(DebuffTag);
 
-		// µğ¹öÇÁ°¡ ½ºÅÏÀÌ¸é ÇÃ·¹ÀÌ¾î ÀÔ·Â ¸·´Â ÅÂ±×µµ °°ÀÌ Àû¿ë
+		// ë””ë²„í”„ê°€ ìŠ¤í„´ì´ë©´ í”Œë ˆì´ì–´ ì…ë ¥ ë§‰ëŠ” íƒœê·¸ë„ ê°™ì´ ì ìš©
 		if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
 		{
 			InheritedTagContainer.Added.AddTag(GameplayTags.Player_Block_CursorTrace);
@@ -279,32 +279,32 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 
 		AssetTagsComponent.SetAndApplyTargetTagChanges(InheritedTagContainer);
 
-		// ÀÌÆåÆ® ÁÖÃ¼ÀÚ ±âÁØÀ¸·Î ½ºÅÃ
+		// ì´í™íŠ¸ ì£¼ì²´ì ê¸°ì¤€ìœ¼ë¡œ ìŠ¤íƒ
 		Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;
-		// µğ¹öÇÁ´Â ÇÏ³ª¸¸ Àû¿ë
+		// ë””ë²„í”„ëŠ” í•˜ë‚˜ë§Œ ì ìš©
 		Effect->StackLimitCount = 1;
 
-		// ÀÌÆåÆ®ÀÇ ¸ğµğÆÄÀÌ¾î ¼¼ÆÃ
+		// ì´í™íŠ¸ì˜ ëª¨ë””íŒŒì´ì–´ ì„¸íŒ…
 		const int32 Index = Effect->Modifiers.Num();
 		Effect->Modifiers.Add(FGameplayModifierInfo());
 		FGameplayModifierInfo& ModifierInfo = Effect->Modifiers[Index];
 
-		// ¸ğµğÆÄÀÌ¾î¿¡ µğ¹öÇÁ µ¥¹ÌÁö ¼¼ÆÃ
+		// ëª¨ë””íŒŒì´ì–´ì— ë””ë²„í”„ ë°ë¯¸ì§€ ì„¸íŒ…
 		ModifierInfo.ModifierMagnitude = FScalableFloat(DebuffDamage);
 		ModifierInfo.ModifierOp = EGameplayModOp::Additive;
 		ModifierInfo.Attribute = UAuraAttributeSet::GetIncomingDamageAttribute();
 
-		// 1·¹º§ÀÇ ÀÌÆåÆ® ½ºÆå »ı¼º
+		// 1ë ˆë²¨ì˜ ì´í™íŠ¸ ìŠ¤í™ ìƒì„±
 		if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContextHandle, 1.f))
 		{
 			if (FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get()))
 			{
-				// ÅÂ±× ¼³Á¤
+				// íƒœê·¸ ì„¤ì •
 				TSharedPtr<FGameplayTag> DebuffDamageTypeTag = MakeShareable(new FGameplayTag(DamageTypeTag));
 				AuraContext->SetDamageType(DebuffDamageTypeTag);
 			}
 			
-			// Å¸°Ù¿¡°Ô ÀÌÆåÆ® Àû¿ë
+			// íƒ€ê²Ÿì—ê²Œ ì´í™íŠ¸ ì ìš©
 			Props.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 		}
 	}
@@ -315,19 +315,19 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 	const float LocalIncomingXP = GetIncomingXP();
 	SetIncomingXP(0.f);
 
-	// ÀÎÅÍÆäÀÌ½º¸¦ ÅëÇØ ÇÃ·¹ÀÌ¾î¿¡°Ô °æÇèÄ¡ Àû¿ë
+	// ì¸í„°í˜ì´ìŠ¤ë¥¼ í†µí•´ í”Œë ˆì´ì–´ì—ê²Œ ê²½í—˜ì¹˜ ì ìš©
 	if (Props.SourceCharacter->Implements<UPlayerInterface>() && Props.SourceCharacter->Implements<UCombatInterface>())
 	{
 		const int32 CurrentLevel = ICombatInterface::Execute_GetPlayerLevel(Props.SourceCharacter);
 		const int32 CurrentXP = IPlayerInterface::Execute_GetXP(Props.SourceCharacter);
 
-		// °æÇèÄ¡°¡ ´õÇØÁ³À» ¶§ ·¹º§
+		// ê²½í—˜ì¹˜ê°€ ë”í•´ì¡Œì„ ë•Œ ë ˆë²¨
 		const int32 NewLevel = IPlayerInterface::Execute_FindLevelForXP(Props.SourceCharacter, CurrentXP + LocalIncomingXP);
 		const int32 NumLevelUps = NewLevel - CurrentLevel;
-		// ·¹º§¾÷À» Çß´Ù¸é
+		// ë ˆë²¨ì—…ì„ í–ˆë‹¤ë©´
 		if (NumLevelUps > 0)
 		{
-			// ·¹º§¾÷ÇÏ¸é¼­ ·¹º§, ´É·ÂÄ¡, ½ºÅ³Æ÷ÀÎÆ®¸¦ »ó½Â
+			// ë ˆë²¨ì—…í•˜ë©´ì„œ ë ˆë²¨, ëŠ¥ë ¥ì¹˜, ìŠ¤í‚¬í¬ì¸íŠ¸ë¥¼ ìƒìŠ¹
 			IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, NumLevelUps);
 
 			int32 AttributePointsReward = 0;
@@ -335,7 +335,7 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 
 			for (int32 i = 0; i < NumLevelUps; ++i)
 			{
-				// ·¹º§¾÷ ½Ã ¾ò¾î¿Ã ´É·ÂÄ¡¿Í ½ºÅ³Æ÷ÀÎÆ®¸¦ °¡Á®¿Â´Ù.
+				// ë ˆë²¨ì—… ì‹œ ì–»ì–´ì˜¬ ëŠ¥ë ¥ì¹˜ì™€ ìŠ¤í‚¬í¬ì¸íŠ¸ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 				AttributePointsReward += IPlayerInterface::Execute_GetAttributePointReward(Props.SourceCharacter, CurrentLevel + i);
 				SpellPointsReward = +IPlayerInterface::Execute_GetSpellPointReward(Props.SourceCharacter, CurrentLevel + i);
 			}
@@ -343,7 +343,7 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 			IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
 			IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
 
-			// Ã¼·Â°ú ¸¶³ª È¸º¹(·¹º§¿¡ µû¶ó Max°¡ ´Ş¶óÁö¹Ç·Î ÈÄÃ³¸®¿¡¼­ ÁøÇà)
+			// ì²´ë ¥ê³¼ ë§ˆë‚˜ íšŒë³µ(ë ˆë²¨ì— ë”°ë¼ Maxê°€ ë‹¬ë¼ì§€ë¯€ë¡œ í›„ì²˜ë¦¬ì—ì„œ ì§„í–‰)
 			bTopOffHelath = true;
 			bTopOffMana = true;
 
@@ -358,13 +358,13 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float D
 {
 	if (Props.SourceCharacter != Props.TargetCharacter)
 	{
-		// ÇÃ·¹ÀÌ¾î°¡ ¶§·ÈÀ» ¶§ µ¥¹ÌÁö ÆË¾÷
+		// í”Œë ˆì´ì–´ê°€ ë•Œë ¸ì„ ë•Œ ë°ë¯¸ì§€ íŒì—…
 		if (AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(Props.SourceCharacter->Controller))
 		{
 			PlayerController->ClientShowDamageNumber(Damage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
 			return;
 		}
-		// ÀûÀÌ ³ª¸¦ ¶§·ÈÀ» ¶§ µ¥¹ÌÁö ÆË¾÷
+		// ì ì´ ë‚˜ë¥¼ ë•Œë ¸ì„ ë•Œ ë°ë¯¸ì§€ íŒì—…
 		if (AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(Props.TargetCharacter->Controller))
 		{
 			PlayerController->ClientShowDamageNumber(Damage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
@@ -376,19 +376,19 @@ void UAuraAttributeSet::SendXPEvent(const FEffectProperties& Props)
 {
 	if (Props.TargetCharacter->Implements<UCombatInterface>())
 	{
-		// Å¸°ÙÀÇ ·¹º§°ú Á÷¾÷À» ¾ò°í °æÇèÄ¡ º¸»óÀ» È®ÀÎ
+		// íƒ€ê²Ÿì˜ ë ˆë²¨ê³¼ ì§ì—…ì„ ì–»ê³  ê²½í—˜ì¹˜ ë³´ìƒì„ í™•ì¸
 		const int32 TargetLevel = ICombatInterface::Execute_GetPlayerLevel(Props.TargetCharacter);
 		const ECharacterClass TargetClass = ICombatInterface::Execute_GetCharacterClass(Props.TargetCharacter);
 		const int32 XPReward = UAuraAbilitySystemLibrary::GetXPRewardForClassAndLevel(Props.TargetCharacter, TargetClass, static_cast<float>(TargetLevel));
 
-		// ÆĞ½Ãºê ¾îºô¸®Æ¼°¡ ¹İÀÀÇÏµµ·Ï ÅÂ±×¸¦ ¼³Á¤
+		// íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°ê°€ ë°˜ì‘í•˜ë„ë¡ íƒœê·¸ë¥¼ ì„¤ì •
 		const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
-		// ÆĞ½Ãºê ¾îºô¸®Æ¼¿¡¼­ È®ÀÎÇÒ ÅÂ±×¿Í ¼öÄ¡¸¦ ÀúÀåÇØ¼­ º¸³½´Ù.
+		// íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°ì—ì„œ í™•ì¸í•  íƒœê·¸ì™€ ìˆ˜ì¹˜ë¥¼ ì €ì¥í•´ì„œ ë³´ë‚¸ë‹¤.
 		FGameplayEventData Payload;
 		Payload.EventTag = GameplayTags.Attribute_Meta_IncomingXP;
 		Payload.EventMagnitude = static_cast<float>(XPReward);
 
-		// ¼Ò½º ¾×ÅÍ¿¡°Ô °ÔÀÓÇÃ·¹ÀÌ ÀÌº¥Æ®¸¦ Àü¼Û(ÆĞ½Ãºê ¾îºô¸®Æ¼¿¡¼­ ¹İÀÀÇÒ °Í)
+		// ì†ŒìŠ¤ ì•¡í„°ì—ê²Œ ê²Œì„í”Œë ˆì´ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡(íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°ì—ì„œ ë°˜ì‘í•  ê²ƒ)
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Props.SourceCharacter, GameplayTags.Attribute_Meta_IncomingXP, Payload);
 	}
 }

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/Widget/AuraUserWidget.h"
 
@@ -6,6 +6,6 @@ void UAuraUserWidget::SetWidgetController(UObject* InWidgetController)
 {
 	WidgetController = InWidgetController;
 
-	// ¾Æ·¡ ÇÔ¼ö´Â ºí·çÇÁ¸°Æ®¿¡¼­ ¼öÇàµÇ¸ç, ÇÏÀ§ À§Á¬µé¿¡°Ô À§Á¬ ÄÁÆ®·Ñ·¯¸¦ ºÎ¿©ÇÏ°í °ª º¯°æ¿¡ ´ëÇÑ ÇÔ¼ö ¹ÙÀÎµå
+	// ì•„ë˜ í•¨ìˆ˜ëŠ” ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ìˆ˜í–‰ë˜ë©°, í•˜ìœ„ ìœ„ì ¯ë“¤ì—ê²Œ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë¶€ì—¬í•˜ê³  ê°’ ë³€ê²½ì— ëŒ€í•œ í•¨ìˆ˜ ë°”ì¸ë“œ
 	WidgetControllerSet();
 }

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -11,11 +11,11 @@ struct FAuraAttributeInfo;
 struct FGameplayTag;
 struct FGameplayAttribute;
 
-// ´É·ÂÄ¡ ¸Ş´º°¡ º¯°æµÉ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+// ëŠ¥ë ¥ì¹˜ ë©”ë‰´ê°€ ë³€ê²½ë  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FAuraAttributeInfo&, Info);
 
 /**
- * ´É·ÂÄ¡ ¸Ş´ºÀÇ À§Á¬ ÄÁÆ®·Ñ·¯
+ * ëŠ¥ë ¥ì¹˜ ë©”ë‰´ì˜ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬
  */
 UCLASS(BlueprintType, Blueprintable)
 class AURA_API UAttributeMenuWidgetController : public UAuraWidgetController
@@ -33,20 +33,20 @@ private:
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
 
 public:
-	// ´É·ÂÄ¡ ¸Ş´º°¡ º¯°æµÉ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// ëŠ¥ë ¥ì¹˜ ë©”ë‰´ê°€ ë³€ê²½ë  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FAttributeInfoSignature AttributeInfoDelegate;
 
-	// ´É·ÂÄ¡ Æ÷ÀÎÆ®°¡ º¯°æµÉ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸ê°€ ë³€ê²½ë  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnPlayerStatChangedSignature AttributePointsChangedDelegate;
 
-	// ½ºÅ³ Æ÷ÀÎÆ®°¡ º¯°æµÉ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸ê°€ ë³€ê²½ë  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnPlayerStatChangedSignature SpellPointsChangedDelegate;
 
 private:
-	// ÀÌ À§Á¬ÄÁÆ®·Ñ·¯°¡ »ç¿ëÇÒ ÅÂ±× Á¤º¸¸¦ ¸ğÀº µ¥ÀÌÅÍ¿¡¼Â
+	// ì´ ìœ„ì ¯ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì‚¬ìš©í•  íƒœê·¸ ì •ë³´ë¥¼ ëª¨ì€ ë°ì´í„°ì—ì…‹
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UAttributeInfo> AttributeInfo;
 };

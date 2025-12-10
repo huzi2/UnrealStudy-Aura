@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "AbilitySystem/AuraAttributeSet.h"
@@ -13,7 +13,7 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 	if (!GetAuraAttributeSet()) return;
 	if (!GetAuraPlayerState()) return;
 
-	// ÅÂ±×¿Í ¾îÆ®¸®ºäÆ® ÀÎÆ÷¸¦ ¿¬°áÇØ¼­ µ¨¸®°ÔÀÌÆ®¿¡ ¹ÙÀÎµå
+	// íƒœê·¸ì™€ ì–´íŠ¸ë¦¬ë·°íŠ¸ ì¸í¬ë¥¼ ì—°ê²°í•´ì„œ ë¸ë¦¬ê²Œì´íŠ¸ì— ë°”ì¸ë“œ
 	for (const auto& Pair : AuraAttributeSet->TagsToAttribute)
 	{
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
@@ -24,7 +24,7 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 		);
 	}
 
-	// ´É·ÂÄ¡ Æ÷ÀÎÆ®¸¦ ¹ÙÀÎµå
+	// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸ë¥¼ ë°”ì¸ë“œ
 	AuraPlayerState->OnAttributePointsChangedDelegate.AddLambda(
 		[this](int32 AttributePoints)
 		{
@@ -32,7 +32,7 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 		}
 	);
 
-	// ½ºÅ³ Æ÷ÀÎÆ®¸¦ ¹ÙÀÎµå
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸ë¥¼ ë°”ì¸ë“œ
 	AuraPlayerState->OnSpellPointsChangedDelegate.AddLambda(
 		[this](int32 SpellPoints)
 		{
@@ -47,13 +47,13 @@ void UAttributeMenuWidgetController::BroadcastInitialValue()
 	if (!GetAuraAttributeSet()) return;
 	if (!GetAuraPlayerState()) return;
 
-	// µ¥ÀÌÅÍ¿¡¼ÂÀ» »ç¿ëÇØ¼­ ¿¡¼Âµé¿¡°Ô ÃÊ±â°ªÀ» ºê·ÎµåÄ³½ºÆ®
+	// ë°ì´í„°ì—ì…‹ì„ ì‚¬ìš©í•´ì„œ ì—ì…‹ë“¤ì—ê²Œ ì´ˆê¸°ê°’ì„ ë¸Œë¡œë“œìºìŠ¤íŠ¸
 	for (const auto& Pair : AuraAttributeSet->TagsToAttribute)
 	{
 		BroadcastAttributeInfo(Pair.Key, Pair.Value());
 	}
 
-	// ´É·ÂÄ¡ Æ÷ÀÎÆ®¿Í ½ºÅ³ Æ÷ÀÎÆ® ÃÊ±â°ªÀ» ºê·ÎµåÄ³½ºÆ®
+	// ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸ì™€ ìŠ¤í‚¬ í¬ì¸íŠ¸ ì´ˆê¸°ê°’ì„ ë¸Œë¡œë“œìºìŠ¤íŠ¸
 	AttributePointsChangedDelegate.Broadcast(AuraPlayerState->GetAttributePoints());
 	SpellPointsChangedDelegate.Broadcast(AuraPlayerState->GetSpellPoints());
 }
@@ -61,7 +61,7 @@ void UAttributeMenuWidgetController::BroadcastInitialValue()
 void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
 {
 	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
-	// FGameplayAttribute¿¡¼­ °ª ¾ò¾î¿À±â
+	// FGameplayAttributeì—ì„œ ê°’ ì–»ì–´ì˜¤ê¸°
 	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
 	AttributeInfoDelegate.Broadcast(Info);
 }

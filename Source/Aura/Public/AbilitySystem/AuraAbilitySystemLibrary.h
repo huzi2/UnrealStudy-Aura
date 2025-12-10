@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,7 +19,7 @@ struct FWidgetControllerParams;
 struct FDamageEffectParams;
 
 /**
- * °ÔÀÓ Á¦ÀÛ¿¡ µµ¿òÀÌ µÇ´Â ¶óÀÌºê·¯¸® ÇÔ¼ö. ºí·çÇÁ¸°Æ®¿¡¼­µµ »ç¿ë °¡´É
+ * ê²Œì„ ì œì‘ì— ë„ì›€ì´ ë˜ëŠ” ë¼ì´ë¸ŒëŸ¬ë¦¬ í•¨ìˆ˜. ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œë„ ì‚¬ìš© ê°€ëŠ¥
  */
 UCLASS()
 class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
@@ -27,43 +27,43 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 	
 public:
-	// ¿À¹ö·¹ÀÌ À§Á¬ ÄÁÆ®·Ñ·¯¸¦ ¾ò¾î¿È. ¾øÀ» °æ¿ì »õ·Î »ı¼º
+	// ì˜¤ë²„ë ˆì´ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì–»ì–´ì˜´. ì—†ì„ ê²½ìš° ìƒˆë¡œ ìƒì„±
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
 
-	// ´É·ÂÄ¡ ¸Ş´º Ã¢ÀÇ À§Á¬ ÄÁÆ®·Ñ·¯¸¦ ¾ò¾î¿È
+	// ëŠ¥ë ¥ì¹˜ ë©”ë‰´ ì°½ì˜ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
 	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
 
-	// ½ºÅ³ ¸Ş´º Ã¢ÀÇ À§Á¬ ÄÁÆ®·Ñ·¯¸¦ ¾ò¾î¿È
+	// ìŠ¤í‚¬ ë©”ë‰´ ì°½ì˜ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
 	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 
-	// Å¬·¡½ºÀÇ ´É·ÂÄ¡³ª ¾îºô¸®Æ¼¸¦ °¡Á®¿À´Â UCharacterClassInfo¸¦ ¾ò¾î¿È
+	// í´ë˜ìŠ¤ì˜ ëŠ¥ë ¥ì¹˜ë‚˜ ì–´ë¹Œë¦¬í‹°ë¥¼ ê°€ì ¸ì˜¤ëŠ” UCharacterClassInfoë¥¼ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
 
-	// ÇÃ·¹ÀÌ¾îÀÇ ½ºÅ³ Á¤º¸¸¦ °¡Á®¿À´Â UAbilityInfo¸¦ ¾ò¾î¿È
+	// í”Œë ˆì´ì–´ì˜ ìŠ¤í‚¬ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” UAbilityInfoë¥¼ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
 
-	// ¾ÆÀÌÅÛ µå·Ó Á¤º¸¸¦ °¡Á®¿À´Â ULootTiers¸¦ ¾ò¾î¿È
+	// ì•„ì´í…œ ë“œë¡­ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” ULootTiersë¥¼ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (DefaultToSelf = "WorldContextObject"))
 	static ULootTiers* GetLootTiers(const UObject* WorldContextObject);
 
-	// Àû Ä³¸¯ÅÍµéÀÇ Å¬·¡½ºº°·Î ´É·ÂÄ¡ ÃÊ±âÈ­
+	// ì  ìºë¦­í„°ë“¤ì˜ í´ë˜ìŠ¤ë³„ë¡œ ëŠ¥ë ¥ì¹˜ ì´ˆê¸°í™”
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void InitializeDefaultAttributes(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* AbilitySystemComponent);
 	
-	// ±âº» ´É·ÂÄ¡¸¦ ¼¼ÀÌºê µ¥ÀÌÅÍ·Î ·Îµå
+	// ê¸°ë³¸ ëŠ¥ë ¥ì¹˜ë¥¼ ì„¸ì´ë¸Œ ë°ì´í„°ë¡œ ë¡œë“œ
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void InitializeDefaultAttributesFromSaveData(const UObject* WorldContextObject, UAbilitySystemComponent* AbilitySystemComponent, const ULoadScreenSaveGame* SaveGame);
 
-	// Àû Ä³¸¯ÅÍµéÀÇ ±âº» ½ÃÀÛ ¾îºô¸®Æ¼µé ºÎ¿©
+	// ì  ìºë¦­í„°ë“¤ì˜ ê¸°ë³¸ ì‹œì‘ ì–´ë¹Œë¦¬í‹°ë“¤ ë¶€ì—¬
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* AbilitySystemComponent, ECharacterClass CharacterClass);
 
-	// Ä¿½ºÅÒ °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ® ÄÁÅØ½ºÆ®¿¡¼­ º¯¼ö¸¦ ¼¼ÆÃÇÏ°í ¾ò¾î¿À´Â ÇÔ¼öµé. µ¥¹ÌÁö Ã³¸®¿¡¼­ »ç¿ë
+	// ì»¤ìŠ¤í…€ ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ ì»¨í…ìŠ¤íŠ¸ì—ì„œ ë³€ìˆ˜ë¥¼ ì„¸íŒ…í•˜ê³  ì–»ì–´ì˜¤ëŠ” í•¨ìˆ˜ë“¤. ë°ë¯¸ì§€ ì²˜ë¦¬ì—ì„œ ì‚¬ìš©
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static void SetIsBlockedHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsBlockedHit);
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffects")
@@ -118,48 +118,48 @@ public:
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static FVector GetRadialDamageOrigin(const FGameplayEffectContextHandle& EffectContextHandle);
 
-	// ¹üÀ§ ¾ÈÀÇ ÇÃ·¹ÀÌ¾î °´Ã¼µéÀ» ¾ò¾î¿È
+	// ë²”ìœ„ ì•ˆì˜ í”Œë ˆì´ì–´ ê°ì²´ë“¤ì„ ì–»ì–´ì˜´
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
 	static void GetLivePlayersWithRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& SphereOrigin);
 
-	// °¡±î¿î ¼øÀ¸·Î Å¸°ÙµéÀ» ¼±Á¤
+	// ê°€ê¹Œìš´ ìˆœìœ¼ë¡œ íƒ€ê²Ÿë“¤ì„ ì„ ì •
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
 	static void GetClosestTargets(int32 MaxTargets, const TArray<AActor*>& Actors, TArray<AActor*>& OutClosestTargets, const FVector& Origin);
 
-	// ¾Æ±ºÀÎÁö Àû±ºÀÎÁö È®ÀÎ
+	// ì•„êµ°ì¸ì§€ ì êµ°ì¸ì§€ í™•ì¸
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
 	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
 
-	// ÀÏÁ¤ °£°İÀ¸·Î ÆÛÁø ·ÎÅ×ÀÌÅÍµé »ı¼º
+	// ì¼ì • ê°„ê²©ìœ¼ë¡œ í¼ì§„ ë¡œí…Œì´í„°ë“¤ ìƒì„±
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
 	static TArray<FRotator> EvenlySpreadRotators(const FVector& Forward, const FVector& Axis, float Spread, int32 NumRotators);
-	// ÀÏÁ¤ °£°İÀ¸·Î ÆÛÁø º¤ÅÍµé »ı¼º
+	// ì¼ì • ê°„ê²©ìœ¼ë¡œ í¼ì§„ ë²¡í„°ë“¤ ìƒì„±
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMachanics")
 	static TArray<FVector> EvenlyRotatedVectors(const FVector& Forward, const FVector& Axis, float Spread, int32 NumVectors);
 
-	// µ¥¹ÌÁö ÀÌÆåÆ®¸¦ Àû¿ë
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ë¥¼ ì ìš©
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
 	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
 
-	// Àû Á¾·ù¿Í ·¹º§¿¡ µû¸¥ È¹µæ °æÇèÄ¡
+	// ì  ì¢…ë¥˜ì™€ ë ˆë²¨ì— ë”°ë¥¸ íšë“ ê²½í—˜ì¹˜
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level);
 
-	// ÀÌ¹Ì »ı¼ºµÈ µ¥¹ÌÁö ÀÌÆåÆ®¿¡ Ãß°¡ ¼Ó¼º ºÎ¿©
-	// µ¥¹ÌÁö ÀÌÆåÆ®¿¡ Å¸°Ù ¼³Á¤
+	// ì´ë¯¸ ìƒì„±ëœ ë°ë¯¸ì§€ ì´í™íŠ¸ì— ì¶”ê°€ ì†ì„± ë¶€ì—¬
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ì— íƒ€ê²Ÿ ì„¤ì •
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
 	static void SetTargetDamageEffectParams(UPARAM(ref)FDamageEffectParams& DamageEffectParams, UAbilitySystemComponent* TargetAbilitySystemComponent);
-	// µ¥¹ÌÁö ÀÌÆåÆ®¸¦ ¹üÀ§ µ¥¹ÌÁö·Î ¼³Á¤
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ë¥¼ ë²”ìœ„ ë°ë¯¸ì§€ë¡œ ì„¤ì •
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
 	static void SetIsRadialDamageEffectParams(UPARAM(ref)FDamageEffectParams& DamageEffectParams, bool bIsRadial, float InnerRadius, float OuterRadius, const FVector& Origin);
-	// µ¥¹ÌÁö ÀÌÆåÆ®¿¡ ³Ë¹éÀ» ¼³Á¤
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ì— ë„‰ë°±ì„ ì„¤ì •
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
 	static void SetKnockbackDirection(UPARAM(ref)FDamageEffectParams& DamageEffectParams, FVector KnockbackDirection, float Magnitude = 0.f);
-	// µ¥¹ÌÁö ÀÌÆåÆ®¿¡ Á×¾úÀ» ¶§ ³¯¾Æ°¥ ¹æÇâ ¼³Á¤
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ì— ì£½ì—ˆì„ ë•Œ ë‚ ì•„ê°ˆ ë°©í–¥ ì„¤ì •
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect")
 	static void SetDeathImpluseDirection(UPARAM(ref)FDamageEffectParams& DamageEffectParams, FVector DeathImpulseDirection, float Magnitude = 0.f);
 
 private:
-	// À§Á¬ ÄÁÆ®·Ñ·¯¿¡¼­ »ç¿ëµÇ´Â º¯¼öµé ¼¼ÆÃ
+	// ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ì‚¬ìš©ë˜ëŠ” ë³€ìˆ˜ë“¤ ì„¸íŒ…
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (DefaultToSelf = "WorldContextObject"))
 	static bool MakeWidgetControllerParams(const UObject* WorldContextObject, FWidgetControllerParams& OutWidgetControllerParams, AAuraHUD*& OutAuraHUD);
 };

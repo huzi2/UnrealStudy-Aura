@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Actor/PointCollection.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
@@ -71,13 +71,13 @@ TArray<USceneComponent*> APointCollection::GetGroundPoints(const FVector& Ground
 
 		if (Pt != Pt_0)
 		{
-			// Æ÷ÀÎÆ® È¸Àü
+			// í¬ì¸íŠ¸ íšŒì „
 			FVector ToPoint = Pt->GetComponentLocation() - Pt_0->GetComponentLocation();
 			ToPoint = ToPoint.RotateAngleAxis(YawOverride, FVector::UpVector);
 			Pt->SetWorldLocation(Pt_0->GetComponentLocation() + ToPoint);
 		}
 
-		// Ãæµ¹ Ã¼Å©·Î ¹Ù´Ú¿¡ ´ê´Â À§Ä¡ È®ÀÎ
+		// ì¶©ëŒ ì²´í¬ë¡œ ë°”ë‹¥ì— ë‹¿ëŠ” ìœ„ì¹˜ í™•ì¸
 		const FVector RaisedLocation = FVector(Pt->GetComponentLocation().X, Pt->GetComponentLocation().Y, Pt->GetComponentLocation().Z + 500.f);
 		const FVector LoweredLocation = FVector(Pt->GetComponentLocation().X, Pt->GetComponentLocation().Y, Pt->GetComponentLocation().Z - 500.f);
 

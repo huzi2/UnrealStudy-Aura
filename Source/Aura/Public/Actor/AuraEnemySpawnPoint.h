@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,7 +10,7 @@
 class AAuraEnemy;
 
 /**
- * Àû °´Ã¼¸¦ ¼ÒÈ¯ÇÏ´Â ½ºÆù Æ÷ÀÎÆ® °´Ã¼
+ * ì  ê°ì²´ë¥¼ ì†Œí™˜í•˜ëŠ” ìŠ¤í° í¬ì¸íŠ¸ ê°ì²´
  */
 UCLASS()
 class AURA_API AAuraEnemySpawnPoint : public ATargetPoint
@@ -18,20 +18,20 @@ class AURA_API AAuraEnemySpawnPoint : public ATargetPoint
 	GENERATED_BODY()
 
 public:
-	// Àû ¼ÒÈ¯
+	// ì  ì†Œí™˜
 	UFUNCTION(BlueprintCallable)
 	void SpawnEnemy() const;
 
 protected:
-	// Àû °´Ã¼ Å¬·¡½º
+	// ì  ê°ì²´ í´ë˜ìŠ¤
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy Class")
 	TSubclassOf<AAuraEnemy> EnemyClass;
 	
-	// ¼ÒÈ¯µÉ ÀûÀÇ ·¹º§
+	// ì†Œí™˜ë  ì ì˜ ë ˆë²¨
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy Class")
 	int32 EnemyLevel = 1;
 
-	// ¼ÒÈ¯µÉ ÀûÀÇ Å¸ÀÔ
+	// ì†Œí™˜ë  ì ì˜ íƒ€ì…
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Enemy Class")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 };

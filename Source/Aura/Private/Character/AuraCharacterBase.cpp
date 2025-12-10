@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/AuraCharacterBase.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
@@ -14,7 +14,7 @@ AAuraCharacterBase::AAuraCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	// Ãæµ¹Ã¼Å©´Â ¸Ş½¬¿¡¼­ ´Ù·ë
+	// ì¶©ëŒì²´í¬ëŠ” ë©”ì‰¬ì—ì„œ ë‹¤ë£¸
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECollisionResponse::ECR_Ignore);
@@ -81,9 +81,9 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 
 void AAuraCharacterBase::Die(const FVector& DeathImpulse)
 {
-	// Ä³¸¯ÅÍ°¡ Á×¾úÀ» ¶§ ¼­¹ö¿¡¼­¸¸ ¼öÇàÇÒ ÀÏ
+	// ìºë¦­í„°ê°€ ì£½ì—ˆì„ ë•Œ ì„œë²„ì—ì„œë§Œ ìˆ˜í–‰í•  ì¼
 
-	// ¹«±â¸¦ ¶³¾î¶ß¸®´Â°Ç ·¹ÇÃ¸®ÄÉÀÌ¼ÇµÇ¹Ç·Î ¸ÖÆ¼Ä³½ºÆ®¿¡¼­ ¾ÈÇØµµµÊ
+	// ë¬´ê¸°ë¥¼ ë–¨ì–´ëœ¨ë¦¬ëŠ”ê±´ ë ˆí”Œë¦¬ì¼€ì´ì…˜ë˜ë¯€ë¡œ ë©€í‹°ìºìŠ¤íŠ¸ì—ì„œ ì•ˆí•´ë„ë¨
 	if (Weapon)
 	{
 		Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
@@ -132,7 +132,7 @@ UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation() const
 
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) const
 {
-	// ÅÂ±×¿Í ¸Â´Â ¼ÒÄÏÀ» ¸®ÅÏÇÔ. ÀÌ °ÔÀÓ¿¡¼­´Â µü 3°³¸¸ »ç¿ëÇÒ °Å¶ó ÀÌ·¸°Ô ¸¸µê
+	// íƒœê·¸ì™€ ë§ëŠ” ì†Œì¼“ì„ ë¦¬í„´í•¨. ì´ ê²Œì„ì—ì„œëŠ” ë”± 3ê°œë§Œ ì‚¬ìš©í•  ê±°ë¼ ì´ë ‡ê²Œ ë§Œë“¦
 	const UAuraGameplayTags& GameplayTags = UAuraGameplayTags::Get();
 
 	if (IsValid(Weapon) && MontageTag.MatchesTagExact(GameplayTags.CombatSocket_Weapon))
@@ -224,10 +224,10 @@ void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Gameplay
 	check(GetAbilitySystemComponent());
 	check(GameplayEffectClass);
 
-	// °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ®¸¦ È°¿ëÇÑ ¾îÆ®¸®ºäÆ® ¼¼Æ® ÃÊ±âÈ­
-	// ÃÊ±âÈ­´Â ¼­¹ö¿¡¼­¸¸ ÇÏ¸éµÈ´Ù. ¾îÆ®¸®ºäÆ® ¼¼Æ®´Â ÀÚµ¿ÀûÀ¸·Î ·¹ÇÃ¸®ÄÉÀÌ¼Ç µÈ´Ù.
+	// ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ë¥¼ í™œìš©í•œ ì–´íŠ¸ë¦¬ë·°íŠ¸ ì„¸íŠ¸ ì´ˆê¸°í™”
+	// ì´ˆê¸°í™”ëŠ” ì„œë²„ì—ì„œë§Œ í•˜ë©´ëœë‹¤. ì–´íŠ¸ë¦¬ë·°íŠ¸ ì„¸íŠ¸ëŠ” ìë™ì ìœ¼ë¡œ ë ˆí”Œë¦¬ì¼€ì´ì…˜ ëœë‹¤.
 	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
-	// ÀÌÆåÆ®¸¦ ÀÏÀ¸Å² °´Ã¼ µî·Ï
+	// ì´í™íŠ¸ë¥¼ ì¼ìœ¼í‚¨ ê°ì²´ ë“±ë¡
 	ContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, Level, ContextHandle);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
@@ -237,18 +237,18 @@ void AAuraCharacterBase::AddCharacterAbilities()
 {
 	UAuraAbilitySystemComponent* AuraAbilitySystemComponent = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent);
 
-	// ¾îºô¸®Æ¼ÀÇ ºÎ¿©´Â ¼­¹ö¸¸ ÇØ¾ßÇÑ´Ù. Å¬¶óµéÀº ·¹ÇÃ¸®ÄÉÀÌ¼ÇµÈ Á¤º¸¸¦ »ç¿ë
+	// ì–´ë¹Œë¦¬í‹°ì˜ ë¶€ì—¬ëŠ” ì„œë²„ë§Œ í•´ì•¼í•œë‹¤. í´ë¼ë“¤ì€ ë ˆí”Œë¦¬ì¼€ì´ì…˜ëœ ì •ë³´ë¥¼ ì‚¬ìš©
 	if (!HasAuthority()) return;
 
-	// ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®¿¡ ¾îºô¸®Æ¼ ºÎ¿©
+	// ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ì— ì–´ë¹Œë¦¬í‹° ë¶€ì—¬
 	AuraAbilitySystemComponent->AddCharacterAbilities(StartupAbilites);
-	// ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®¿¡ ÆĞ½Ãºê ¾îºô¸®Æ¼ ºÎ¿©
+	// ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ì— íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹° ë¶€ì—¬
 	AuraAbilitySystemComponent->AddCharacterPassiveAbilities(StartupPassiveAbilites);
 }
 
 void AAuraCharacterBase::Dissolve()
 {
-	// ¸Ş½Ã¿Í ¹«±â¿¡ »ç¶óÁö´Â µíÇÑ µğÁ¹ºê ¸ÓÆ¼¸®¾ó È¿°ú¸¦ ºÎ¿©
+	// ë©”ì‹œì™€ ë¬´ê¸°ì— ì‚¬ë¼ì§€ëŠ” ë“¯í•œ ë””ì¡¸ë¸Œ ë¨¸í‹°ë¦¬ì–¼ íš¨ê³¼ë¥¼ ë¶€ì—¬
 	if (GetMesh() && IsValid(DissolveMaterialInstance))
 	{
 		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(DissolveMaterialInstance, this);
@@ -268,7 +268,7 @@ void AAuraCharacterBase::Dissolve()
 
 void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& DeathImpulse)
 {
-	// ¹«±â¸¦ ·¡±×µ¹·Î ¹Ù²Û´Ù.
+	// ë¬´ê¸°ë¥¼ ë˜ê·¸ëŒë¡œ ë°”ê¾¼ë‹¤.
 	if (Weapon)
 	{
 		Weapon->SetSimulatePhysics(true);
@@ -277,7 +277,7 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 		Weapon->AddImpulse(DeathImpulse * 0.1f, NAME_None, true);
 	}
 
-	// º»Ã¼¸¦ ·¡±×µ¹
+	// ë³¸ì²´ë¥¼ ë˜ê·¸ëŒ
 	if (GetMesh())
 	{
 		GetMesh()->SetSimulatePhysics(true);
@@ -287,16 +287,16 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 		GetMesh()->AddImpulse(DeathImpulse, NAME_None, true);
 	}
 
-	// Ãæµ¹Ã³¸® Á¦°Å
+	// ì¶©ëŒì²˜ë¦¬ ì œê±°
 	if (GetCapsuleComponent())
 	{
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 
-	// ¸ÓÆ¼¸®¾ó·Î ¸Ş½Ã¿Í ¹«±â°¡ »ç¶óÁö´Â È¿°ú
+	// ë¨¸í‹°ë¦¬ì–¼ë¡œ ë©”ì‹œì™€ ë¬´ê¸°ê°€ ì‚¬ë¼ì§€ëŠ” íš¨ê³¼
 	Dissolve();
 
-	// Á×À½ »ç¿îµå Àç»ı
+	// ì£½ìŒ ì‚¬ìš´ë“œ ì¬ìƒ
 	if (DeathSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), GetActorRotation());
@@ -304,18 +304,18 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 
 	bDead = true;
 
-	// ºÒÅ¸´Â ÀÌÆåÆ® Ãë¼Ò
+	// ë¶ˆíƒ€ëŠ” ì´í™íŠ¸ ì·¨ì†Œ
 	if (BurnDebuffComponent)
 	{
 		BurnDebuffComponent->Deactivate();
 	}
 
-	// ±âÀı ÀÌÆåÆ® Ãë¼Ò
+	// ê¸°ì ˆ ì´í™íŠ¸ ì·¨ì†Œ
 	if (StunDebuffComponent)
 	{
 		StunDebuffComponent->Deactivate();
 	}
 
-	// Á×¾úÀ½À» ¾Ë¸®´Â µ¨¸®°ÔÀÌÆ® È£Ãâ
+	// ì£½ì—ˆìŒì„ ì•Œë¦¬ëŠ” ë¸ë¦¬ê²Œì´íŠ¸ í˜¸ì¶œ
 	OnDeathDelegate.Broadcast(this);
 }

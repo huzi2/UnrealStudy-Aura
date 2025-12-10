@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "PointCollection.generated.h"
 
 /**
- * Æ¯Á¤ Æ÷ÀÎÆ® ÁöÁ¡µéÀ» »ı¼ºÇÏ´Â ¾×ÅÍ(ºñÀü ÆÄÆíÀÇ °ø°İ ÁöÁ¡ÀÌ µÊ)
+ * íŠ¹ì • í¬ì¸íŠ¸ ì§€ì ë“¤ì„ ìƒì„±í•˜ëŠ” ì•¡í„°(ë¹„ì „ íŒŒí¸ì˜ ê³µê²© ì§€ì ì´ ë¨)
  */
 UCLASS()
 class AURA_API APointCollection : public AActor
@@ -25,11 +25,11 @@ public:
 	TArray<USceneComponent*> GetGroundPoints(const FVector& GroundLocation, int32 NumPoints, float YawOverride = 0.f) const;
 
 protected:
-	// Æ÷ÀÎÆ® ÁöÁ¡µéÀ» °¡Áø ¹è¿­
+	// í¬ì¸íŠ¸ ì§€ì ë“¤ì„ ê°€ì§„ ë°°ì—´
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TArray<USceneComponent*> ImmutablePts;
 
-	// Æ÷ÀÎÆ® ÁöÁ¡µé
+	// í¬ì¸íŠ¸ ì§€ì ë“¤
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<USceneComponent> Pt_0;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)

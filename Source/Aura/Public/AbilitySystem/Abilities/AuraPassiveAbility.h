@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraPassiveAbility.generated.h"
 
 /**
- * ÆÐ½Ãºê ¾îºô¸®Æ¼
+ * íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°
  */
 UCLASS()
 class AURA_API UAuraPassiveAbility : public UAuraGameplayAbility
@@ -17,6 +17,6 @@ class AURA_API UAuraPassiveAbility : public UAuraGameplayAbility
 public:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) final;
 
-	// ÆÐ½Ãºê ½ºÅ³ ºñÈ°¼ºÈ­
+	// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ ë¹„í™œì„±í™”
 	void ReceiveDeactivate(const FGameplayTag& AbilityTag);
 };

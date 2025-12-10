@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 class AAuraProjectile;
 
 /**
- * ¹ß»çÃ¼¸¦ ³¯·Á¼­ µ¥¹ÌÁö¸¦ ÀÔÈ÷´Â ¾îºô¸®Æ¼. È­¿°±¸¿¡¼­ »ç¿ë
+ * ë°œì‚¬ì²´ë¥¼ ë‚ ë ¤ì„œ ë°ë¯¸ì§€ë¥¼ ì…íˆëŠ” ì–´ë¹Œë¦¬í‹°. í™”ì—¼êµ¬ì—ì„œ ì‚¬ìš©
  */
 UCLASS()
 class AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
@@ -17,20 +17,20 @@ class AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
 	GENERATED_BODY()
 
 private:
-	// UGameplayAbility¿¡¼­ »ó¼Ó
+	// UGameplayAbilityì—ì„œ ìƒì†
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 private:
-	// ¹ß»çÃ¼ »ı¼º
+	// ë°œì‚¬ì²´ ìƒì„±
 	UFUNCTION(BlueprintCallable, Category = "Projectile")
 	void SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch = false, float PitchOverride = 0.f);
 
 protected:
-	// ¹ß»çÃ¼ Å¬·¡½º
+	// ë°œì‚¬ì²´ í´ë˜ìŠ¤
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
 
-	// ¹ß»çÃ¼ °³¼ö
+	// ë°œì‚¬ì²´ ê°œìˆ˜
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
 	int32 NumProjectiles = 1;
 };

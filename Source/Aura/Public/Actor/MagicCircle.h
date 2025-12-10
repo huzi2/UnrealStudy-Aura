@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "MagicCircle.generated.h"
 
 /**
- * ¸¶¹ıÁø Å¬·¡½º
+ * ë§ˆë²•ì§„ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AMagicCircle : public AActor
@@ -25,7 +25,7 @@ public:
 	UDecalComponent* GetMagicCircleDecal() const { return MagicCircleDecal; }
 
 protected:
-	// ¸¶¹ıÁø¿¡ Ç¥½ÃÇÒ µ¥Ä® ÀÌÆåÆ®
+	// ë§ˆë²•ì§„ì— í‘œì‹œí•  ë°ì¹¼ ì´í™íŠ¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UDecalComponent> MagicCircleDecal;
 };

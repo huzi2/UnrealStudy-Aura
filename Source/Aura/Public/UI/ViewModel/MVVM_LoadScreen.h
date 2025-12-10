@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -8,11 +8,11 @@
 
 class UMVVM_LoadSlot;
 
-// ½½·ÔÀÌ ¼±ÅÃµÉ ¶§ ¾Ë·ÁÁÙ µ¨¸®°ÔÀÌÆ®
+// ìŠ¬ë¡¯ì´ ì„ íƒë  ë•Œ ì•Œë ¤ì¤„ ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSlotSelected);
 
 /**
- * ·Îµå ¸Ş´º¿Í ¿¬°áµÈ ºä¸ğµ¨ Å¬·¡½º
+ * ë¡œë“œ ë©”ë‰´ì™€ ì—°ê²°ëœ ë·°ëª¨ë¸ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UMVVM_LoadScreen : public UMVVMViewModelBase
@@ -23,56 +23,56 @@ public:
 	int32 GetNumLoadSlot() const { return NumLoadSlot; }
 	void SetNumLoadSlot(int32 InNumLoadSlot);
 
-	// ·Îµå ½½·Ô ºä¸ğµ¨µé »ı¼º
+	// ë¡œë“œ ìŠ¬ë¡¯ ë·°ëª¨ë¸ë“¤ ìƒì„±
 	void InitializeLoadSlot();
 
-	// ·Îµå ½½·Ô °¡Á®¿À±â
+	// ë¡œë“œ ìŠ¬ë¡¯ ê°€ì ¸ì˜¤ê¸°
 	UFUNCTION(BlueprintPure)
 	UMVVM_LoadSlot* GetLoadSlotViewModelByIndex(int32 Index) const;
 
-	// »õ ½½·Ô ¹öÆ°À» ´­·¶À» ¶§
+	// ìƒˆ ìŠ¬ë¡¯ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void NewSlotButtonPressed(int32 Slot, const FString& EnteredName);
 
-	// »õ °ÔÀÓ ¹öÆ°À» ´­·¶À» ¶§
+	// ìƒˆ ê²Œì„ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void NewGameButtonPressed(int32 Slot);
 
-	// ½½·Ô ¼±ÅÃ ¹öÆ°À» ´­·¶À» ¶§
+	// ìŠ¬ë¡¯ ì„ íƒ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void SelectSlotButtonPressed(int32 Slot);
 
-	// ½½·Ô »èÁ¦ ¹öÆ°À» ´­·¶À» ¶§
+	// ìŠ¬ë¡¯ ì‚­ì œ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void DeleteButtonPressed();
 
-	// ½ÃÀÛ ¹öÆ°À» ´­·¶À» ¶§
+	// ì‹œì‘ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void PlayButtonPressed();
 
-	// ¸ğµç ½½·Ô ³»¿ë ·Îµå
+	// ëª¨ë“  ìŠ¬ë¡¯ ë‚´ìš© ë¡œë“œ
 	void LoadData();
 
 public:
-	// ½½·ÔÀÌ ¼±ÅÃµÉ ¶§ ¾Ë·ÁÁÙ µ¨¸®°ÔÀÌÆ®
+	// ìŠ¬ë¡¯ì´ ì„ íƒë  ë•Œ ì•Œë ¤ì¤„ ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable)
 	FSlotSelected SlotSelectedDelegate;
 
 protected:
-	// ºä¸ğµ¨ »ı¼ºÇÏ±â À§ÇÑ ÇÊµå ¾Ë¸²¿ë º¯¼ö
+	// ë·°ëª¨ë¸ ìƒì„±í•˜ê¸° ìœ„í•œ í•„ë“œ ì•Œë¦¼ìš© ë³€ìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	int32 NumLoadSlot;
 
 private:
-	// ·Îµå ½½·Ô ºä¸ğµ¨ Å¬·¡½º
+	// ë¡œë“œ ìŠ¬ë¡¯ ë·°ëª¨ë¸ í´ë˜ìŠ¤
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UMVVM_LoadSlot> LoadSlotViewModelClass;
 
-	// ·Îµå ½½·Ôµé
+	// ë¡œë“œ ìŠ¬ë¡¯ë“¤
 	UPROPERTY()
 	TMap<int32, UMVVM_LoadSlot*> LoadSlots;
 
-	// °¢°¢ÀÇ ·Îµå ½½·Ô
+	// ê°ê°ì˜ ë¡œë“œ ìŠ¬ë¡¯
 	UPROPERTY()
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_0;
 	UPROPERTY()
@@ -80,7 +80,7 @@ private:
 	UPROPERTY()
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_2;
 
-	// ÇöÀç ¼±ÅÃÇÏ°í ÀÖ´Â ½½·Ô
+	// í˜„ì¬ ì„ íƒí•˜ê³  ìˆëŠ” ìŠ¬ë¡¯
 	UPROPERTY()
 	TObjectPtr<UMVVM_LoadSlot> SelectedSlot;
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraBeamSpell.h"
 #include "GameFramework/Character.h"
@@ -14,7 +14,7 @@ void UAuraBeamSpell::StoreMouseDataInfo(const FHitResult& HitResult)
 	}
 	else
 	{
-		// Å¸°ÙÀÌ ¾øÀ¸¸é ¾îºô¸®Æ¼ Ãë¼Ò
+		// íƒ€ê²Ÿì´ ì—†ìœ¼ë©´ ì–´ë¹Œë¦¬í‹° ì·¨ì†Œ
 		CancelAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true);
 	}
 }
@@ -41,11 +41,11 @@ void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
 
 			const FVector SocketLocation = Weapon->GetSocketLocation(FName(TEXT("TipSocket")));
 
-			// ¹«±â ¼ÒÄÏ¿¡¼­ Å¸°Ù À§Ä¡±îÁö Æ®·¹ÀÌ½º
+			// ë¬´ê¸° ì†Œì¼“ì—ì„œ íƒ€ê²Ÿ ìœ„ì¹˜ê¹Œì§€ íŠ¸ë ˆì´ìŠ¤
 			FHitResult HitResult;
 			UKismetSystemLibrary::SphereTraceSingle(OwnerCharcter, SocketLocation, BeamTargetLocation, 10.f, TraceTypeQuery1, false, ActorsToIgnore, EDrawDebugTrace::None, HitResult, true);
 
-			// Ãæµ¹ÇÑ Å¸°ÙÀ» ´ë»óÀ¸·Î »ïÀ½(¸¶¿ì½º À§Ä¡ ±ÙÃ³ÀÇ ÀûÀ» ÀÚµ¿ ¼³Á¤ÇÔ)
+			// ì¶©ëŒí•œ íƒ€ê²Ÿì„ ëŒ€ìƒìœ¼ë¡œ ì‚¼ìŒ(ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ê·¼ì²˜ì˜ ì ì„ ìë™ ì„¤ì •í•¨)
 			if (HitResult.bBlockingHit)
 			{
 				MouseHitLocation = HitResult.ImpactPoint;
@@ -54,7 +54,7 @@ void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
 		}
 	}
 
-	// Å¸°ÙÀÌ Á×¾úÀ½À» È®ÀÎÇÏ±â À§ÇØ µ¨¸®°ÔÀÌÆ® ¿¬°á
+	// íƒ€ê²Ÿì´ ì£½ì—ˆìŒì„ í™•ì¸í•˜ê¸° ìœ„í•´ ë¸ë¦¬ê²Œì´íŠ¸ ì—°ê²°
 	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(MouseHitActor))
 	{
 		if (!CombatInterface->GetOnDeathDelegate().IsAlreadyBound(this, &UAuraBeamSpell::PrimaryTargetDied))
@@ -76,15 +76,15 @@ void UAuraBeamSpell::StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTarget
 	TArray<AActor*> OverlappingActors;
 	UAuraAbilitySystemLibrary::GetLivePlayersWithRadius(GetAvatarActorFromActorInfo(), OverlappingActors, ActorsToIgnore, 850.f, MouseHitActor->GetActorLocation());
 
-	// ·¹º§¿¡ µû¶ó Ãß°¡ ´ë»óÀÌ ´Ã¾î³²
+	// ë ˆë²¨ì— ë”°ë¼ ì¶”ê°€ ëŒ€ìƒì´ ëŠ˜ì–´ë‚¨
 	const int32 NumAdditionalTargets = FMath::Min(GetAbilityLevel() - 1, MaxNumShockTargets);
 
-	// °¡Àå °¡±î¿î ¼øÀ¸·Î Å¸°ÙµéÀ» ¼±Á¤
+	// ê°€ì¥ ê°€ê¹Œìš´ ìˆœìœ¼ë¡œ íƒ€ê²Ÿë“¤ì„ ì„ ì •
 	UAuraAbilitySystemLibrary::GetClosestTargets(NumAdditionalTargets, OverlappingActors, OutAdditionalTargets, MouseHitActor->GetActorLocation());
 
 	for (AActor* Target : OutAdditionalTargets)
 	{
-		// Å¸°ÙÀÌ Á×¾úÀ½À» È®ÀÎÇÏ±â À§ÇØ µ¨¸®°ÔÀÌÆ® ¿¬°á
+		// íƒ€ê²Ÿì´ ì£½ì—ˆìŒì„ í™•ì¸í•˜ê¸° ìœ„í•´ ë¸ë¦¬ê²Œì´íŠ¸ ì—°ê²°
 		if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Target))
 		{
 			if (!CombatInterface->GetOnDeathDelegate().IsAlreadyBound(this, &UAuraBeamSpell::AdditionalTargetDied))

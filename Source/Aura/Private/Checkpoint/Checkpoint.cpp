@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Checkpoint/Checkpoint.h"
 #include "Components/SphereComponent.h"
@@ -25,7 +25,7 @@ ACheckpoint::ACheckpoint(const FObjectInitializer& ObjectInitializer)
 	MoveToComponent = CreateDefaultSubobject<USceneComponent>(TEXT("MoveToComponent"));
 	MoveToComponent->SetupAttachment(GetRootComponent());
 
-	// ÇÏÀÌ¶óÀÌÆ®µÉ ¶§ »ö±ò ¼³Á¤
+	// í•˜ì´ë¼ì´íŠ¸ë  ë•Œ ìƒ‰ê¹” ì„¤ì •
 	if (CheckpointMesh)
 	{
 		CheckpointMesh->SetCustomDepthStencilValue(CustomDepthStencilOverride);
@@ -45,7 +45,7 @@ void ACheckpoint::BeginPlay()
 
 void ACheckpoint::LoadActor_Implementation()
 {
-	// ÀúÀåµÇ¾ú´Ù¸é ÀÌÆåÆ®¸¦ Å´
+	// ì €ì¥ë˜ì—ˆë‹¤ë©´ ì´í™íŠ¸ë¥¼ í‚´
 	if (bReached)
 	{
 		HandleGlowEffects();
@@ -93,7 +93,7 @@ void ACheckpoint::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	{
 		bReached = true;
 
-		// ÇöÀç °ÔÀÓ »óÅÂ¸¦ ÀúÀå
+		// í˜„ì¬ ê²Œì„ ìƒíƒœë¥¼ ì €ì¥
 		if (AAuraGameModeBase* AuraGameModeBase = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 		{
 			const UWorld* World = GetWorld();
@@ -103,10 +103,10 @@ void ACheckpoint::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 			AuraGameModeBase->SaveWorldState(GetWorld(), MapName);
 		}
 
-		// ÃÖ½Å °ÔÀÓ ÁøÇà»óÈ² ÀúÀå
+		// ìµœì‹  ê²Œì„ ì§„í–‰ìƒí™© ì €ì¥
 		IPlayerInterface::Execute_SaveProgress(OtherActor, PlayerStartTag);
 
-		// ¸Ş½¬ÀÇ ¸ÓÆ¼¸®¾óÀÌ ºû³ªµµ·Ï º¯°æ
+		// ë©”ì‰¬ì˜ ë¨¸í‹°ë¦¬ì–¼ì´ ë¹›ë‚˜ë„ë¡ ë³€ê²½
 		HandleGlowEffects();
 	}
 }

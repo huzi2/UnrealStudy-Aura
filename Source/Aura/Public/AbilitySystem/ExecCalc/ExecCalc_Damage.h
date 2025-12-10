@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "ExecCalc_Damage.generated.h"
 
 /**
- * º¹ÀâÇÑ µ¥¹ÌÁö °è»êÀ» µû·Î Ã³¸®ÇÏ±â À§ÇÑ ½ÇÇà°è»ê Å¬·¡½º
+ * ë³µì¡í•œ ë°ë¯¸ì§€ ê³„ì‚°ì„ ë”°ë¡œ ì²˜ë¦¬í•˜ê¸° ìœ„í•œ ì‹¤í–‰ê³„ì‚° í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UExecCalc_Damage : public UGameplayEffectExecutionCalculation
@@ -21,6 +21,6 @@ private:
 	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const final;
 
 private:
-	// µğ¹öÇÁ Àû¿ë
+	// ë””ë²„í”„ ì ìš©
 	void DetermineDebuff(const FGameplayEffectCustomExecutionParameters& ExecutionParams, const FGameplayEffectSpec& Spec, const FAggregatorEvaluateParameters& EvaluationParameters, const TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition>& TagToCaptureDefs) const;
 };

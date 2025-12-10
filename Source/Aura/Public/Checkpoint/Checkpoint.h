@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,7 +12,7 @@
 class USphereComponent;
 
 /**
- * Ã¼Å©Æ÷ÀÎÆ® °´Ã¼ Å¬·¡½º
+ * ì²´í¬í¬ì¸íŠ¸ ê°ì²´ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API ACheckpoint : public APlayerStart, public ISaveInterface, public IHighlightInterface
@@ -25,31 +25,31 @@ protected:
 private:
 	virtual void BeginPlay() override;
 
-	// ISaveInterface¿¡¼­ »ó¼Ó
+	// ISaveInterfaceì—ì„œ ìƒì†
 	virtual bool ShouldLoadTransform_Implementation() const override { return false; };
 	virtual void LoadActor_Implementation() override;
 
-	// IHighlightInterface¿¡¼­ »ó¼Ó
+	// IHighlightInterfaceì—ì„œ ìƒì†
 	virtual void HighlightActor_Implementation() override;
 	virtual void UnHighlightActor_Implementation() override;
 	virtual void SetMoveToLocation_Implementation(FVector& OutDestination) override;
 
 protected:
-	// ºí·çÇÁ¸°Æ®¿¡¼­ ¸ÓÆ¼¸®¾ó°ú Å¸ÀÓ¶óÀÎÀ» ¿¬°áÇÏ±âÀ§ÇÑ ÇÔ¼ö
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ë¨¸í‹°ë¦¬ì–¼ê³¼ íƒ€ì„ë¼ì¸ì„ ì—°ê²°í•˜ê¸°ìœ„í•œ í•¨ìˆ˜
 	UFUNCTION(BlueprintImplementableEvent)
 	void CheckpointReached(UMaterialInstanceDynamic* DynamicMaterialInstance);
 
 private:
-	// Ã¼Å©Æ÷ÀÎÆ®¿¡ Ä³¸¯ÅÍ°¡ ´ê¾ÒÀ» ¶§ ¸Ş½¬ÀÇ ¸ÓÆ¼¸®¾ó º¯°æ
+	// ì²´í¬í¬ì¸íŠ¸ì— ìºë¦­í„°ê°€ ë‹¿ì•˜ì„ ë•Œ ë©”ì‰¬ì˜ ë¨¸í‹°ë¦¬ì–¼ ë³€ê²½
 	UFUNCTION(BlueprintCallable)
 	void HandleGlowEffects();
 
-	// Ãæµ¹ Ã³¸®
+	// ì¶©ëŒ ì²˜ë¦¬
 	UFUNCTION()
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
-	// ÇÃ·¹ÀÌ¾î°¡ ÇØ´ç Ã¼Å© Æ÷ÀÎÆ®¿¡ ´ê¾Ò¾ú´Â°¡?
+	// í”Œë ˆì´ì–´ê°€ í•´ë‹¹ ì²´í¬ í¬ì¸íŠ¸ì— ë‹¿ì•˜ì—ˆëŠ”ê°€?
 	UPROPERTY(BlueprintReadWrite, SaveGame)
 	bool bReached = false;
 
@@ -59,16 +59,16 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
 
-	// ÇÏÀÌ¶óÀÌÆ®µÇ¾úÀ» ¶§ ÀÌµ¿ Çàµ¿ÇßÀ» ¶§ ÀÌµ¿ÇÒ À§Ä¡
+	// í•˜ì´ë¼ì´íŠ¸ë˜ì—ˆì„ ë•Œ ì´ë™ í–‰ë™í–ˆì„ ë•Œ ì´ë™í•  ìœ„ì¹˜
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> MoveToComponent;
 
 private:
-	// ÇÏÀÌ¶óÀÌÆ®¿¡¼­ º¸¿©ÁÙ »ö»ó
+	// í•˜ì´ë¼ì´íŠ¸ì—ì„œ ë³´ì—¬ì¤„ ìƒ‰ìƒ
 	UPROPERTY(EditDefaultsOnly)
 	int32 CustomDepthStencilOverride = CUSTOM_DEPTH_TAN;
 
-	// °ÔÀÓ »óÅÂ ÀúÀåÇÏ´Â ±â´ÉÀ» »ç¿ëÇÒÁö?
+	// ê²Œì„ ìƒíƒœ ì €ì¥í•˜ëŠ” ê¸°ëŠ¥ì„ ì‚¬ìš©í• ì§€?
 	UPROPERTY(EditAnywhere)
 	bool bBindOverlapCallback = true;
 };

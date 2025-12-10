@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "LevelUpInfo.generated.h"
 
 /**
- * ·¹º§ ¾÷¿¡ ÇÊ¿äÇÑ Á¤º¸µé
+ * ë ˆë²¨ ì—…ì— í•„ìš”í•œ ì •ë³´ë“¤
  */
 USTRUCT(BlueprintType)
 struct FAuraLevelUpInfo
@@ -15,21 +15,21 @@ struct FAuraLevelUpInfo
 	GENERATED_BODY()
 
 public:
-	// ·¹º§¾÷¿¡ ÇÊ¿äÇÑ °æÇèÄ¡·®
+	// ë ˆë²¨ì—…ì— í•„ìš”í•œ ê²½í—˜ì¹˜ëŸ‰
 	UPROPERTY(EditDefaultsOnly)
 	int32 LevelUpRequirement = 0;
 
-	// ·¹º§¾÷ÇÏ¸é ¾òÀ» ¼ö ÀÖ´Â ´É·ÂÄ¡ Æ÷ÀÎÆ®
+	// ë ˆë²¨ì—…í•˜ë©´ ì–»ì„ ìˆ˜ ìˆëŠ” ëŠ¥ë ¥ì¹˜ í¬ì¸íŠ¸
 	UPROPERTY(EditDefaultsOnly)
 	int32 AttributePointAward = 1;
 
-	// ·¹º§¾÷ÇÏ¸é ¾òÀ» ¼ö ÀÖ´Â ½ºÅ³ Æ÷ÀÎÆ®
+	// ë ˆë²¨ì—…í•˜ë©´ ì–»ì„ ìˆ˜ ìˆëŠ” ìŠ¤í‚¬ í¬ì¸íŠ¸
 	UPROPERTY(EditDefaultsOnly)
 	int32 SpellPointAward = 1;
 };
 
 /**
- * ·¹º§ Á¤º¸¸¦ °¡Áö°í ÀÖ´Â µ¥ÀÌÅÍ ¿¡¼Â Å¬·¡½º
+ * ë ˆë²¨ ì •ë³´ë¥¼ ê°€ì§€ê³  ìˆëŠ” ë°ì´í„° ì—ì…‹ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API ULevelUpInfo : public UDataAsset
@@ -39,11 +39,11 @@ class AURA_API ULevelUpInfo : public UDataAsset
 public:
 	FORCEINLINE const TArray<FAuraLevelUpInfo>& GetLevelUpInformation() const { return LevelUpInformation; }
 
-	// °æÇèÄ¡¿¡ ¸Â´Â ·¹º§À» ¾ò¾î¿È
+	// ê²½í—˜ì¹˜ì— ë§ëŠ” ë ˆë²¨ì„ ì–»ì–´ì˜´
 	int32 FindLevelForXP(int32 XP) const;
-	// ÃÖ´ë ·¹º§
+	// ìµœëŒ€ ë ˆë²¨
 	int32 GetMaxLevel() const;
-	// ÇØ´ç ·¹º§¿¡ ¸Â´Â Á¤º¸
+	// í•´ë‹¹ ë ˆë²¨ì— ë§ëŠ” ì •ë³´
 	const FAuraLevelUpInfo& GetLevelUpInfo(int32 Level) const;
 
 private:

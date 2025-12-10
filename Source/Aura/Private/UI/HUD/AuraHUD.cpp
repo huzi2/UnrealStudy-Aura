@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/HUD/AuraHUD.h"
 #include "UI/Widget/AuraUserWidget.h"
@@ -47,14 +47,14 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	OverlayWidget = CreateWidget<UAuraUserWidget>(GetWorld(), OverlayWidgetClass);
 	if (!OverlayWidget) return;
 
-	// À§Á¬ ÄÁÆ®·Ñ·¯¿¡¼­ »ç¿ëÇÒ ±âº» º¯¼öµé ¼¼ÆÃ
+	// ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ì‚¬ìš©í•  ê¸°ë³¸ ë³€ìˆ˜ë“¤ ì„¸íŒ…
 	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
 	GetOverlayWidgetController(WidgetControllerParams);
 	if (!OverlayWidgetController) return;
 
-	// À§Á¬¿¡ À§Á¬ ÄÁÆ®·Ñ·¯ ¼¼ÆÃ
+	// ìœ„ì ¯ì— ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ ì„¸íŒ…
 	OverlayWidget->SetWidgetController(OverlayWidgetController);
-	// ¾îÆ®¸®ºäÆ® ¼¼Æ®ÀÇ Á¤º¸ ¹Ý¿µ
+	// ì–´íŠ¸ë¦¬ë·°íŠ¸ ì„¸íŠ¸ì˜ ì •ë³´ ë°˜ì˜
 	OverlayWidgetController->BroadcastInitialValue();
 	OverlayWidget->AddToViewport();
 }

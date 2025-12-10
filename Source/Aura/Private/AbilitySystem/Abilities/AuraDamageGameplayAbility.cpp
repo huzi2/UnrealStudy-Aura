@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraDamageGameplayAbility.h"
 #include "AbilitySystemBlueprintLibrary.h"
@@ -14,7 +14,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	bool bOverriedPitch,
 	float InPitchOverried) const
 {
-	// µ¥¹ÌÁö ÀÌÆåÆ®¿¡¼­ »ç¿ëÇÒ ±¸Á¶Ã¼ º¯¼ö ¼³Á¤
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ì—ì„œ ì‚¬ìš©í•  êµ¬ì¡°ì²´ ë³€ìˆ˜ ì„¤ì •
 	FDamageEffectParams Params;
 	Params.WorldContextObject = GetAvatarActorFromActorInfo();
 	Params.DamageGameplayEffectClass = DamageEffectClass;
@@ -31,7 +31,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	Params.KnockbackChance = KnockbackChance;
 	Params.KnockbackForceMagnitude = KnockbackForceMagnitude;
 
-	// ¹ß»çÃ¼¿¡¼­ ÇÏ´ø Ãæµ¹ º¤ÅÍ °è»êÀ» ¹ß»çÃ¼ ¾Æ´Ñ °÷¿¡¼­ ÇÏ±â À§ÇØ¼­ °è»ê
+	// ë°œì‚¬ì²´ì—ì„œ í•˜ë˜ ì¶©ëŒ ë²¡í„° ê³„ì‚°ì„ ë°œì‚¬ì²´ ì•„ë‹Œ ê³³ì—ì„œ í•˜ê¸° ìœ„í•´ì„œ ê³„ì‚°
 	if (IsValid(TargetActor))
 	{
 		FRotator Rotation = (TargetActor->GetActorLocation() - GetAvatarActorFromActorInfo()->GetActorLocation()).Rotation();
@@ -51,7 +51,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 		}
 	}
 
-	// ¸Å°³º¯¼ö·Î µ¤¾î¾º¿ï °æ¿ì °è»ê
+	// ë§¤ê°œë³€ìˆ˜ë¡œ ë®ì–´ì”Œìš¸ ê²½ìš° ê³„ì‚°
 	if (bOverriedKnockbackDirection)
 	{
 		InKnockbackDirectionOverried.Normalize();
@@ -77,7 +77,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 		}
 	}
 
-	// ¹æ»çÇü µ¥¹ÌÁö °ü·Ã º¯¼ö ¼³Á¤
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ê´€ë ¨ ë³€ìˆ˜ ì„¤ì •
 	if (bIsRadialDamage)
 	{
 		Params.bIsRadialDamage = bIsRadialDamage;
@@ -93,14 +93,14 @@ void UAuraDamageGameplayAbility::CauseDamage(AActor* TargetActor)
 	if (!DamageEffectClass) return;
 	if (!TargetActor) return;
 
-	// µ¥¹ÌÁö ÀÌÆåÆ® ½ºÆå ÇÚµé »ı¼º
+	// ë°ë¯¸ì§€ ì´í™íŠ¸ ìŠ¤í™ í•¸ë“¤ ìƒì„±
 	const FGameplayEffectSpecHandle DamageSpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffectClass, 1.f);
 
-	// ¾îºô¸®Æ¼ ·¹º§¿¡ µû¶ó Ä¿ºêÅ×ÀÌºí¿¡ Àû¿ëµÈ µ¥¹ÌÁö¸¦ ¾ò¾î¿Â´Ù.
+	// ì–´ë¹Œë¦¬í‹° ë ˆë²¨ì— ë”°ë¼ ì»¤ë¸Œí…Œì´ë¸”ì— ì ìš©ëœ ë°ë¯¸ì§€ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 	const float ScaledDamage = Damage.GetValueAtLevel(static_cast<float>(GetAbilityLevel()));
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(DamageSpecHandle, DamageTypeTag, ScaledDamage);
 
-	// Å¸°Ù ¾×ÅÍ¿¡°Ô µ¥¹ÌÁö ÀÌÆåÆ® Àû¿ë
+	// íƒ€ê²Ÿ ì•¡í„°ì—ê²Œ ë°ë¯¸ì§€ ì´í™íŠ¸ ì ìš©
 	GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*DamageSpecHandle.Data.Get(), UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor));
 }
 

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,6 +15,6 @@ class AURA_API UAuraAbilitySystemGlobals : public UAbilitySystemGlobals
 	GENERATED_BODY()
 	
 private:
-	// Ä¿½ºÅÒ °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ® ÄÁÅØ½ºÆ® ÇÚµéÀ» ¸¸µé¾úÀ¸¹Ç·Î ±×°É »ç¿ëÇÏ±â À§ÇØ ÀÌ ÇÔ¼ö¸¦ ÀçÁ¤ÀÇ
+	// ì»¤ìŠ¤í…€ ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ ì»¨í…ìŠ¤íŠ¸ í•¸ë“¤ì„ ë§Œë“¤ì—ˆìœ¼ë¯€ë¡œ ê·¸ê±¸ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì´ í•¨ìˆ˜ë¥¼ ì¬ì •ì˜
 	virtual FGameplayEffectContext* AllocGameplayEffectContext() const final;
 };

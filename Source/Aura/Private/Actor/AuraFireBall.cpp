@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Actor/AuraFireBall.h"
 #include "AbilitySystemBlueprintLibrary.h"
@@ -20,10 +20,10 @@ void AAuraFireBall::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 	if (HasAuthority())
 	{
-		// Å¸°Ù¿¡°Ô µ¥¹ÌÁö ÀÌÆåÆ®¸¦ Àû¿ë
+		// íƒ€ê²Ÿì—ê²Œ ë°ë¯¸ì§€ ì´í™íŠ¸ë¥¼ ì ìš©
 		if (UAbilitySystemComponent* TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
-			// Ãæ°İ º¤ÅÍ Àû¿ë
+			// ì¶©ê²© ë²¡í„° ì ìš©
 			const FVector DeathImpulse = GetActorForwardVector() * DamageEffectParams.DeathImpulseMagnitude;
 			DamageEffectParams.DeathImpulse = DeathImpulse;
 
@@ -35,7 +35,7 @@ void AAuraFireBall::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 void AAuraFireBall::OnHit()
 {
-	// ·ÎÄÃ¿¡¼­ °ÔÀÓÇÃ·¹ÀÌ Å¥ ½ÇÇà
+	// ë¡œì»¬ì—ì„œ ê²Œì„í”Œë ˆì´ í ì‹¤í–‰
 	if (GetOwner())
 	{
 		FGameplayCueParameters CueParams;

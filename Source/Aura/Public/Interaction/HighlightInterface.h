@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -14,20 +14,20 @@ class UHighlightInterface : public UInterface
 };
 
 /**
- * ÇÏÀÌ¶óÀÌÆ®¸¦ Àû¿ëÇÒ ÀÎÅÍÆäÀÌ½º
+ * í•˜ì´ë¼ì´íŠ¸ë¥¼ ì ìš©í•  ì¸í„°í˜ì´ìŠ¤
  */
 class AURA_API IHighlightInterface
 {
 	GENERATED_BODY()
 
 public:
-	// ÇÏÀÌ¶óÀÌÆ®
+	// í•˜ì´ë¼ì´íŠ¸
 	UFUNCTION(BlueprintNativeEvent)
 	void HighlightActor();
 	UFUNCTION(BlueprintNativeEvent)
 	void UnHighlightActor();
 
-	// ÇÏÀÌ¶óÀÌÆ®µÈ ´ë»ó¿¡°Ô¼­ ÀÌµ¿ ÁöÁ¡ ¾ò¾î¿À±â
+	// í•˜ì´ë¼ì´íŠ¸ëœ ëŒ€ìƒì—ê²Œì„œ ì´ë™ ì§€ì  ì–»ì–´ì˜¤ê¸°
 	UFUNCTION(BlueprintNativeEvent)
 	void SetMoveToLocation(FVector& OutDestination);
 };

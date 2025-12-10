@@ -1,10 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/ViewModel/MVVM_LoadSlot.h"
 
 void UMVVM_LoadSlot::SetPlayerName(const FString& InPlayerName)
 {
-	// ºä¸ğµ¨À» ÅëÇØ¼­ º¯¼ö°¡ ¹Ù²î¾úÀ½À» ¾Ë¸²(³»ºÎ¿¡¼­ ºê·ÎµåÄ³½ºÆ®)
+	// ë·°ëª¨ë¸ì„ í†µí•´ì„œ ë³€ìˆ˜ê°€ ë°”ë€Œì—ˆìŒì„ ì•Œë¦¼(ë‚´ë¶€ì—ì„œ ë¸Œë¡œë“œìºìŠ¤íŠ¸)
 	UE_MVVM_SET_PROPERTY_VALUE(PlayerName, InPlayerName);
 }
 

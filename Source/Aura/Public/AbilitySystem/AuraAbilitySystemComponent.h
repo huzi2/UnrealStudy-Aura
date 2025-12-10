@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -8,23 +8,23 @@
 
 class ULoadScreenSaveGame;
 
-// Àû¿ëµÈ ÀÌÆåÆ® ÀÚÃ¼ÀÇ ¿¡¼Â ÅÂ±×¸¦ È®ÀÎÇØ¼­ ÇØ´ç ÅÂ±×¿¡ ´ëÇÑ µ¨¸®°ÔÀÌÆ®
+// ì ìš©ëœ ì´í™íŠ¸ ìì²´ì˜ ì—ì…‹ íƒœê·¸ë¥¼ í™•ì¸í•´ì„œ í•´ë‹¹ íƒœê·¸ì— ëŒ€í•œ ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer&)
-// ¾îºô¸®Æ¼°¡ Àû¿ë ¶§¸¶´Ù ¼öÇàÇÒ µ¨¸®°ÔÀÌÆ®
+// ì–´ë¹Œë¦¬í‹°ê°€ ì ìš© ë•Œë§ˆë‹¤ ìˆ˜í–‰í•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_MULTICAST_DELEGATE(FAbilitiesGiven);
-// ¾îºô¸®Æ¼¿¡ ÇÊ¿äÇÑ Á¤º¸¸¦ ³Ö±âÀ§ÇØ ¿À¹ö·¹ÀÌÀ§Á¬ÄÁÆ®·Ñ·¯¿¡¼­ ¿¬°áÇÏ°í ForEachAbility()¿¡¼­ ¼öÇàÇÒ µ¨¸®°ÔÀÌÆ®
+// ì–´ë¹Œë¦¬í‹°ì— í•„ìš”í•œ ì •ë³´ë¥¼ ë„£ê¸°ìœ„í•´ ì˜¤ë²„ë ˆì´ìœ„ì ¯ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ì—°ê²°í•˜ê³  ForEachAbility()ì—ì„œ ìˆ˜í–‰í•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
-// ¾îºô¸®Æ¼ »óÅÂ°¡ º¯°æµÇ¾úÀ» ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®. ¾îºô¸®Æ¼ ÅÂ±×¿Í »óÅÂ ÅÂ±×, ¾îºô¸®Æ¼ ·¹º§
+// ì–´ë¹Œë¦¬í‹° ìƒíƒœê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸. ì–´ë¹Œë¦¬í‹° íƒœê·¸ì™€ ìƒíƒœ íƒœê·¸, ì–´ë¹Œë¦¬í‹° ë ˆë²¨
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag&, const FGameplayTag&, int32);
-// ½ºÅ³ ÀåÂøÇÒ ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®. ¾îºô¸®Æ¼ ÅÂ±×, »óÅÂ ÅÂ±×, ÀÎÇ² ÅÂ±×, ÀÌÀü ÀÎÇ² ÅÂ±×
+// ìŠ¤í‚¬ ì¥ì°©í•  ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸. ì–´ë¹Œë¦¬í‹° íƒœê·¸, ìƒíƒœ íƒœê·¸, ì¸í’‹ íƒœê·¸, ì´ì „ ì¸í’‹ íƒœê·¸
 DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&, const FGameplayTag&);
-// ÆĞ½Ãºê ½ºÅ³ ºñÈ°¼ºÈ­ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®. ¾îºô¸®Æ¼ ÅÂ±×
+// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ ë¹„í™œì„±í™”í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸. ì–´ë¹Œë¦¬í‹° íƒœê·¸
 DECLARE_MULTICAST_DELEGATE_OneParam(FDeactivatePassiveAbility, const FGameplayTag&);
-// ÆĞ½Ãºê ½ºÅ³ È°¼ºÈ­ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®. ¾îºô¸®Æ¼ ÅÂ±×, È°¼ºÈ­ ¿©ºÎ
+// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ í™œì„±í™”í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸. ì–´ë¹Œë¦¬í‹° íƒœê·¸, í™œì„±í™” ì—¬ë¶€
 DECLARE_MULTICAST_DELEGATE_TwoParams(FActivatePassiveAbility, const FGameplayTag&, bool);
 
 /**
- * Ä¿½ºÅÒ ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®
+ * ì»¤ìŠ¤í…€ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸
  */
 UCLASS()
 class AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -35,116 +35,116 @@ private:
 	virtual void OnRep_ActivateAbilities() final;
 
 public:
-	// ¾îºô¸®Æ¼¿¡¼­ ¾îºô¸®Æ¼ ÅÂ±× ¾ò¾î¿À±â
+	// ì–´ë¹Œë¦¬í‹°ì—ì„œ ì–´ë¹Œë¦¬í‹° íƒœê·¸ ì–»ì–´ì˜¤ê¸°
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
-	// ¾îºô¸®Æ¼¿¡¼­ ÀÎÇ² ÅÂ±× ¾ò¾î¿À±â
+	// ì–´ë¹Œë¦¬í‹°ì—ì„œ ì¸í’‹ íƒœê·¸ ì–»ì–´ì˜¤ê¸°
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
-	// ¾îºô¸®Æ¼¿¡¼­ ¾îºô¸®Æ¼ÀÇ »óÅÂ ÅÂ±× ¾ò¾î¿À±â
+	// ì–´ë¹Œë¦¬í‹°ì—ì„œ ì–´ë¹Œë¦¬í‹°ì˜ ìƒíƒœ íƒœê·¸ ì–»ì–´ì˜¤ê¸°
 	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 
-	// ÇØ´ç ½ºÅ³À» ½½·Ô¿¡¼­ Á¦°Å
+	// í•´ë‹¹ ìŠ¤í‚¬ì„ ìŠ¬ë¡¯ì—ì„œ ì œê±°
 	static void ClearSlot(FGameplayAbilitySpec& AbilitySpec);
 
-	// ÇØ´ç ¾îºô¸®Æ¼°¡ ÇØ´ç ½½·Ô¿¡ ÀÖ´Â Áö È®ÀÎ
+	// í•´ë‹¹ ì–´ë¹Œë¦¬í‹°ê°€ í•´ë‹¹ ìŠ¬ë¡¯ì— ìˆëŠ” ì§€ í™•ì¸
 	static bool AbilityHasSlot(const FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag);
-	// ÇØ´ç ¾îºô¸®Æ¼°¡ ¾î¶² ½½·Ô¿¡¶óµµ ÀÕ´Â Áö È®ÀÎ
+	// í•´ë‹¹ ì–´ë¹Œë¦¬í‹°ê°€ ì–´ë–¤ ìŠ¬ë¡¯ì—ë¼ë„ ì‡ëŠ” ì§€ í™•ì¸
 	static bool AbilityHasAnySlot(const FGameplayAbilitySpec& AbilitySpec);
 
-	// ÇØ´ç ½½·Ô¿¡ ½ºÅ³ µî·Ï
+	// í•´ë‹¹ ìŠ¬ë¡¯ì— ìŠ¤í‚¬ ë“±ë¡
 	static void AssignSlotToAbility(FGameplayAbilitySpec& AbilitySpec, const FGameplayTag& InputTag);
 
 public:
-	// ¾îºô¸®Æ¼ ÅÂ±×¿¡¼­ ÅëÇØ ¾îºô¸®Æ¼ ¾ò¾î¿À±â
+	// ì–´ë¹Œë¦¬í‹° íƒœê·¸ì—ì„œ í†µí•´ ì–´ë¹Œë¦¬í‹° ì–»ì–´ì˜¤ê¸°
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
-	// ¾îºô¸®Æ¼ ÅÂ±×¿¡¼­ ¾îºô¸®Æ¼ÀÇ »óÅÂ ÅÂ±× ¾ò¾î¿À±â
+	// ì–´ë¹Œë¦¬í‹° íƒœê·¸ì—ì„œ ì–´ë¹Œë¦¬í‹°ì˜ ìƒíƒœ íƒœê·¸ ì–»ì–´ì˜¤ê¸°
 	FGameplayTag GetStatusFromAbilityTag(const FGameplayTag& AbilityTag);
-	// ¾îºô¸®Æ¼ ÅÂ±×¿¡¼­ ÀÎÇ² ÅÂ±× ¾ò¾î¿À±â
+	// ì–´ë¹Œë¦¬í‹° íƒœê·¸ì—ì„œ ì¸í’‹ íƒœê·¸ ì–»ì–´ì˜¤ê¸°
 	FGameplayTag GetInputTagFromAbilityTag(const FGameplayTag& AbilityTag);
 
-	// ¾îºô¸®Æ¼ ÅÂ±×¿¡¼­ ¾îºô¸®Æ¼ ¼³¸í ¾ò¾î¿À±â
+	// ì–´ë¹Œë¦¬í‹° íƒœê·¸ì—ì„œ ì–´ë¹Œë¦¬í‹° ì„¤ëª… ì–»ì–´ì˜¤ê¸°
 	bool GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription);
 
-	// ÀÌÆåÆ® Àû¿ëµÉ ¶§ ÇÔ¼ö¿¡ ¹ÙÀÎµå
+	// ì´í™íŠ¸ ì ìš©ë  ë•Œ í•¨ìˆ˜ì— ë°”ì¸ë“œ
 	void AbilityActorInfoSet();
 
-	// Ä³¸¯ÅÍ¿¡ ¾îºô¸®Æ¼ Ãß°¡
+	// ìºë¦­í„°ì— ì–´ë¹Œë¦¬í‹° ì¶”ê°€
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilites);
-	// Ä³¸¯ÅÍ¿¡ ÆĞ½Ãºê ¾îºô¸®Æ¼ Ãß°¡
+	// ìºë¦­í„°ì— íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹° ì¶”ê°€
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilites);
-	// ¼¼ÀÌºê µ¥ÀÌÅÍ¸¦ ÅëÇØ ¾îºô¸®Æ¼ Ãß°¡
+	// ì„¸ì´ë¸Œ ë°ì´í„°ë¥¼ í†µí•´ ì–´ë¹Œë¦¬í‹° ì¶”ê°€
 	void AddCharacterAbilitiesFromSaveData(ULoadScreenSaveGame* SaveData);
 
-	// ÀÔ·ÂÀÌ ´­·¶À» ¶§ ¿¬°áµÈ ÅÂ±× ÇÔ¼ö È£Ãâ
+	// ì…ë ¥ì´ ëˆŒë €ì„ ë•Œ ì—°ê²°ëœ íƒœê·¸ í•¨ìˆ˜ í˜¸ì¶œ
 	void AbilityInputTagPressed(const FGameplayTag& InputTag);
-	// ÀÔ·ÂÀÌ ¸±¸®ÁîµÇ¾úÀ» ¶§ ¿¬°áµÈ ÅÂ±× ÇÔ¼ö È£Ãâ
+	// ì…ë ¥ì´ ë¦´ë¦¬ì¦ˆë˜ì—ˆì„ ë•Œ ì—°ê²°ëœ íƒœê·¸ í•¨ìˆ˜ í˜¸ì¶œ
 	void AbilityInputTagReleased(const FGameplayTag& InputTag);
-	// ÀÔ·ÂÀÌ ´­·¯Á³À» ¶§ ¿¬°áµÈ ÅÂ±× ÇÔ¼ö È£Ãâ
+	// ì…ë ¥ì´ ëˆŒëŸ¬ì¡Œì„ ë•Œ ì—°ê²°ëœ íƒœê·¸ í•¨ìˆ˜ í˜¸ì¶œ
 	void AbilityInputTagHeld(const FGameplayTag& InputTag);
 
-	// ¿¬°áµÈ ¸ğµç ¾îºô¸®Æ¼ ¼öÇà
+	// ì—°ê²°ëœ ëª¨ë“  ì–´ë¹Œë¦¬í‹° ìˆ˜í–‰
 	void ForEachAbility(const FForEachAbility& Delegate);
 
-	// ´É·ÂÄ¡ »ó½Â
+	// ëŠ¥ë ¥ì¹˜ ìƒìŠ¹
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
 
-	// ·¹º§¾÷ÇÒ ¶§ ¾îºô¸®Æ¼ »óÅÂ ¼³Á¤
+	// ë ˆë²¨ì—…í•  ë•Œ ì–´ë¹Œë¦¬í‹° ìƒíƒœ ì„¤ì •
 	void UpdateAbilityStatuses(int32 Level);
 
-	// ¼­¹öÇÑÅ× ½ºÅ³ Æ÷ÀÎÆ® »ç¿ë ¿äÃ»
+	// ì„œë²„í•œí…Œ ìŠ¤í‚¬ í¬ì¸íŠ¸ ì‚¬ìš© ìš”ì²­
 	UFUNCTION(Server, Reliable)
 	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);
 
-	// ¼­¹öÇÑÅ× ½ºÅ³ ÀåÂø ¿äÃ»
+	// ì„œë²„í•œí…Œ ìŠ¤í‚¬ ì¥ì°© ìš”ì²­
 	UFUNCTION(Server, Reliable)
 	void ServerEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& InputTag);
 
-	// Å¬¶ó, ¼­¹ö¿¡¼­ ÆĞ½Ãºê ½ºÅ³ ÀÌÆåÆ® È°¼ºÈ­
+	// í´ë¼, ì„œë²„ì—ì„œ íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ ì´í™íŠ¸ í™œì„±í™”
 	UFUNCTION(NetMulticast, Unreliable)
 	void MulticastActivatePassiveEffect(const FGameplayTag& AbilityTag, bool bActivate);
 
 private:
-	// ¼­¹öÇÑÅ× ´É·ÂÄ¡ »ó½Â ¿äÃ»
+	// ì„œë²„í•œí…Œ ëŠ¥ë ¥ì¹˜ ìƒìŠ¹ ìš”ì²­
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
 
-	// OnGameplayEffectAppliedDelegateToSelf µ¨¸®°ÔÀÌÆ®°¡ ¼­¹ö¿¡¼­¸¸ È£ÃâµÈ´Ù(¿£Áø³»¿ë). ±×·¡¼­ ¾Æ·¡ ÇÔ¼ö¸¦ Client RPC·Î ¸¸µé¾î Å¬¶óÀÌ¾ğÆ®¿¡¼­µµ È£ÃâµÇµµ·Ï ÇÑ´Ù.
+	// OnGameplayEffectAppliedDelegateToSelf ë¸ë¦¬ê²Œì´íŠ¸ê°€ ì„œë²„ì—ì„œë§Œ í˜¸ì¶œëœë‹¤(ì—”ì§„ë‚´ìš©). ê·¸ë˜ì„œ ì•„ë˜ í•¨ìˆ˜ë¥¼ Client RPCë¡œ ë§Œë“¤ì–´ í´ë¼ì´ì–¸íŠ¸ì—ì„œë„ í˜¸ì¶œë˜ë„ë¡ í•œë‹¤.
 	UFUNCTION(Client, Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle);
 
-	// Å¬¶óÀÌ¾ğÆ®¿¡°Ô ¾îºô¸®Æ¼ »óÅÂ°¡ º¯°æµÇ¾úÀ½À» ¾Ë¸²
+	// í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì–´ë¹Œë¦¬í‹° ìƒíƒœê°€ ë³€ê²½ë˜ì—ˆìŒì„ ì•Œë¦¼
 	UFUNCTION(Client, Reliable)
 	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, int32 AbilityLevel);
 
-	// Å¬¶óÀÌ¾ğÆ®¿¡¼­ ½ºÅ³ ÀåÂø ¼öÇà
+	// í´ë¼ì´ì–¸íŠ¸ì—ì„œ ìŠ¤í‚¬ ì¥ì°© ìˆ˜í–‰
 	UFUNCTION(Client, Reliable)
 	void ClientEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag);
 
-	// ÇØ´ç ÀÎÇ² ÅÂ±×¸¦ »ç¿ëÇÏ´Â ¸ğµç ½ºÅ³À» ½½·Ô¿¡¼­ Á¦°Å
+	// í•´ë‹¹ ì¸í’‹ íƒœê·¸ë¥¼ ì‚¬ìš©í•˜ëŠ” ëª¨ë“  ìŠ¤í‚¬ì„ ìŠ¬ë¡¯ì—ì„œ ì œê±°
 	void ClearAbilitiesOfSlot(const FGameplayTag& InputTag);
 
-	// ÇØ´ç ½½·ÔÀÌ ºñ¾îÀÖ´Â Áö È®ÀÎ
+	// í•´ë‹¹ ìŠ¬ë¡¯ì´ ë¹„ì–´ìˆëŠ” ì§€ í™•ì¸
 	bool SlotIsEmpty(const FGameplayTag& InputTag);
 
-	// ÇØ´ç ½½·Ô¿¡¼­ ½ºÅ³ ¾ò¾î¿À±â
+	// í•´ë‹¹ ìŠ¬ë¡¯ì—ì„œ ìŠ¤í‚¬ ì–»ì–´ì˜¤ê¸°
 	FGameplayAbilitySpec* GetSpecWithSlot(const FGameplayTag& InputTag);
 
-	// ÇØ´ç ½ºÅ³ÀÌ ÆĞ½Ãºê ½ºÅ³ÀÎ Áö È®ÀÎ
+	// í•´ë‹¹ ìŠ¤í‚¬ì´ íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ì¸ ì§€ í™•ì¸
 	bool IsPassiveAbility(const FGameplayAbilitySpec& AbilitySpec) const;
 
 public:
-	// ÀÌÆåÆ®¿¡ Àû¿ëµÈ ÅÂ±×¿Í ¿¬µ¿ÇÒ µ¨¸®°ÔÀÌÆ®
+	// ì´í™íŠ¸ì— ì ìš©ëœ íƒœê·¸ì™€ ì—°ë™í•  ë¸ë¦¬ê²Œì´íŠ¸
 	FEffectAssetTags EffectAssetTagsDelegate;
-	// ¾îºô¸®Æ¼°¡ Àû¿ëµÉ ¶§ µ¨¸®°ÔÀÌÆ®
+	// ì–´ë¹Œë¦¬í‹°ê°€ ì ìš©ë  ë•Œ ë¸ë¦¬ê²Œì´íŠ¸
 	FAbilitiesGiven AbilitiesGivenDelegate;
-	// ¾îºô¸®Æ¼ »óÅÂ°¡ ¼öÁ¤µÉ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// ì–´ë¹Œë¦¬í‹° ìƒíƒœê°€ ìˆ˜ì •ë  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	FAbilityStatusChanged AbilityStatusChangedDelegate;
-	// ½ºÅ³ ÀåÂøÇÒ ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ìŠ¤í‚¬ ì¥ì°©í•  ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	FAbilityEquipped AbilityEquippedDelegate;
-	// ÆĞ½Ãºê ½ºÅ³ ºñÈ°¼ºÈ­ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ ë¹„í™œì„±í™”í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	FDeactivatePassiveAbility DeactivatePassiveAbilityDelegate;
-	// ÆĞ½Ãºê ½ºÅ³ È°¼ºÈ­ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ í™œì„±í™”í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	FActivatePassiveAbility ActivatePassiveAbilityDelegate;
 
-	// ½ÃÀÛ ¾îºô¸®Æ¼µéÀ» Àû¿ë½ÃÄ×´Â Áö È®ÀÎ
+	// ì‹œì‘ ì–´ë¹Œë¦¬í‹°ë“¤ì„ ì ìš©ì‹œì¼°ëŠ” ì§€ í™•ì¸
 	bool bStartupAbilitiesGiven = false;
 };

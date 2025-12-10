@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -11,21 +11,21 @@
 class UAbilitySystemComponent;
 struct FGameplayEffectSpec;
 
-// ÄğÅ¸ÀÓÀÌ ½ÃÀÛµÇ°Å³ª ³¡³¯ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+// ì¿¨íƒ€ì„ì´ ì‹œì‘ë˜ê±°ë‚˜ ëë‚  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCooldownChangeSignature, float, TimeRemaining);
 
 /**
- * ºñµ¿±âÀûÀ¸·Î ÄğÅ¸ÀÓÀ» Ã¼Å©ÇÏ´Â ºí·çÇÁ¸°Æ® ³ëµå Å¬·¡½º
+ * ë¹„ë™ê¸°ì ìœ¼ë¡œ ì¿¨íƒ€ì„ì„ ì²´í¬í•˜ëŠ” ë¸”ë£¨í”„ë¦°íŠ¸ ë…¸ë“œ í´ë˜ìŠ¤
  */
-UCLASS(BlueprintType, meta = (ExposedAsyncProxy = "AsyncTask")) // ÀÚ±âÀÚ½ÅÀ» ¸®ÅÏÇÏ´Â ÇÉÀ» »ı¼º
+UCLASS(BlueprintType, meta = (ExposedAsyncProxy = "AsyncTask")) // ìê¸°ìì‹ ì„ ë¦¬í„´í•˜ëŠ” í•€ì„ ìƒì„±
 class AURA_API UWaitCooldownChange : public UBlueprintAsyncActionBase
 {
-	// ´Ù¸¥ ÀÛ¾÷À» Â÷´ÜÇÏÁö ¾Êµµ·Ï UBlueprintAsyncActionBase¸¦ »ó¼Ó¹Ş¾Æ ºñµ¿±âÀûÀ¸·Î ¼öÇàÇÏ´Â ÅÂ½ºÅ©¸¦ ¸¸µê
-	// ºñµ¿±â ÀÛ¾÷Àº ¹é±×¶ó¿îµå ½º·¹µå¿¡¼­ ¼öÇàµÈ´Ù.
+	// ë‹¤ë¥¸ ì‘ì—…ì„ ì°¨ë‹¨í•˜ì§€ ì•Šë„ë¡ UBlueprintAsyncActionBaseë¥¼ ìƒì†ë°›ì•„ ë¹„ë™ê¸°ì ìœ¼ë¡œ ìˆ˜í–‰í•˜ëŠ” íƒœìŠ¤í¬ë¥¼ ë§Œë“¦
+	// ë¹„ë™ê¸° ì‘ì—…ì€ ë°±ê·¸ë¼ìš´ë“œ ìŠ¤ë ˆë“œì—ì„œ ìˆ˜í–‰ëœë‹¤.
 	GENERATED_BODY()
 
 protected:
-	// ºí·çÇÁ¸°Æ®¿¡¼­¸¸ »ç¿ëÇÒ ¼ö ÀÖÀ½
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œë§Œ ì‚¬ìš©í•  ìˆ˜ ìˆìŒ
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"))
 	static UWaitCooldownChange* WaitForCooldownChange(UAbilitySystemComponent* InAbilitySystemComponent, const FGameplayTag& InCooldownTag);
 
@@ -37,7 +37,7 @@ private:
 	void CooldownTagChanged(const FGameplayTag InCooldownTag, int32 NewCount);
 
 public:
-	// ºí·çÇÁ¸°Æ®¿¡¼­ ¾Æ¿ôÇ² ÇÉÀ¸·Î »ç¿ëµÉ µ¨¸®°ÔÀÌÆ®µé
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì•„ì›ƒí’‹ í•€ìœ¼ë¡œ ì‚¬ìš©ë  ë¸ë¦¬ê²Œì´íŠ¸ë“¤
 	UPROPERTY(BlueprintAssignable)
 	FCooldownChangeSignature CooldownStart;
 	UPROPERTY(BlueprintAssignable)

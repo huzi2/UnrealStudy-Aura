@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/ModMagCalc/MMC_MaxHealth.h"
 #include "AbilitySystem/AuraAttributeSet.h"
@@ -6,40 +6,40 @@
 
 UMMC_MaxHealth::UMMC_MaxHealth()
 {
-	// Âü°íÇÒ ¾îÆ®¸®ºäÆ® ¼¼Æ®¸¦ °¡Á®¿È
+	// ì°¸ê³ í•  ì–´íŠ¸ë¦¬ë·°íŠ¸ ì„¸íŠ¸ë¥¼ ê°€ì ¸ì˜´
 	VigorDef.AttributeToCapture = UAuraAttributeSet::GetVigorAttribute();
-	// Å¸°ÙÀÎÁö ¼Ò½ºÀÎÁö ±¸ºĞ
+	// íƒ€ê²Ÿì¸ì§€ ì†ŒìŠ¤ì¸ì§€ êµ¬ë¶„
 	VigorDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
-	// ½º³À¼¦ ¼³Á¤
+	// ìŠ¤ëƒ…ìƒ· ì„¤ì •
 	VigorDef.bSnapshot = false;
 
-	// °è»ê¿¡ ÇÊ¿äÇÑ ¼Ó¼ºÀ» Ãß°¡
+	// ê³„ì‚°ì— í•„ìš”í•œ ì†ì„±ì„ ì¶”ê°€
 	RelevantAttributesToCapture.Add(VigorDef);
 }
 
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
-	// ÀÌÆåÆ®¿¡ ÀÚÃ¼ÀÇ ÅÂ±×¿Í Å¸°Ù¿¡ ´ëÇÑ ÅÂ±×¸¦ °¡Á®¿Â´Ù.
+	// ì´í™íŠ¸ì— ìì²´ì˜ íƒœê·¸ì™€ íƒ€ê²Ÿì— ëŒ€í•œ íƒœê·¸ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 
-	// ¾îÆ®¸®ºäÆ®¸¦ °è»êÇÒ ¶§ »ç¿ëµÇ´Â ±¸Á¶Ã¼. ÅÂ±×¿¡ µû¶ó Á¶°ÇÀÌ ´Ş¶óÁö°Å³ª ÇÒ ¶§ »ç¿ë
+	// ì–´íŠ¸ë¦¬ë·°íŠ¸ë¥¼ ê³„ì‚°í•  ë•Œ ì‚¬ìš©ë˜ëŠ” êµ¬ì¡°ì²´. íƒœê·¸ì— ë”°ë¼ ì¡°ê±´ì´ ë‹¬ë¼ì§€ê±°ë‚˜ í•  ë•Œ ì‚¬ìš©
 	FAggregatorEvaluateParameters EvaluationParameters;
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
 
-	// Vigor¿¡ ÀúÀåµÈ °ª ¾ò¾î¿À±â
+	// Vigorì— ì €ì¥ëœ ê°’ ì–»ì–´ì˜¤ê¸°
 	float Vigor = 0.f;
 	GetCapturedAttributeMagnitude(VigorDef, Spec, EvaluationParameters, Vigor);
 	Vigor = FMath::Max<float>(Vigor, 0.f);
 
-	// ÀÎÅÍÆäÀÌ½º¸¦ ÅëÇØ ·¹º§À» ¾ò¾î¿Â´Ù.
+	// ì¸í„°í˜ì´ìŠ¤ë¥¼ í†µí•´ ë ˆë²¨ì„ ì–»ì–´ì˜¨ë‹¤.
 	int32 PlayerLevel = 1;
 	if (Spec.GetContext().GetSourceObject()->Implements<UCombatInterface>())
 	{
 		PlayerLevel = ICombatInterface::Execute_GetPlayerLevel(Spec.GetContext().GetSourceObject());
 	}
 
-	// ÃÖÁ¾ °á°ú°ª. ±âº»°ª 80 + È°·Â * 2.5 + ·¹º§ * 10
+	// ìµœì¢… ê²°ê³¼ê°’. ê¸°ë³¸ê°’ 80 + í™œë ¥ * 2.5 + ë ˆë²¨ * 10
 	return 80.f + (2.5f * Vigor) + (10.f * static_cast<float>(PlayerLevel));
 }

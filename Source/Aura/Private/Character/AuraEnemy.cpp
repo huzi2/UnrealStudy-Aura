@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/AuraEnemy.h"
 #include "Aura/Aura.h"
@@ -19,7 +19,7 @@ AAuraEnemy::AAuraEnemy()
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECollisionResponse::ECR_Overlap);
 
-	// Å¸°ÙÀ¸·ÎÀÇ È¸ÀüÀ» ¹«ºê¸ÕÆ® ÄÄÆ÷³ÍÆ®°¡ ÇØ¼­ Á» ´õ ÀÚ¿¬½º·´°Ô Å¸°ÙÂÊÀ¸·Î È¸ÀüÇÏµµ·Ï ÇÔ
+	// íƒ€ê²Ÿìœ¼ë¡œì˜ íšŒì „ì„ ë¬´ë¸Œë¨¼íŠ¸ ì»´í¬ë„ŒíŠ¸ê°€ í•´ì„œ ì¢€ ë” ìì—°ìŠ¤ëŸ½ê²Œ íƒ€ê²Ÿìª½ìœ¼ë¡œ íšŒì „í•˜ë„ë¡ í•¨
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
@@ -34,7 +34,7 @@ AAuraEnemy::AAuraEnemy()
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBar"));
 	HealthBar->SetupAttachment(GetRootComponent());
 
-	// ÇÏÀÌ¶óÀÌÆ®µÉ ¶§ »ö±ò ¼³Á¤
+	// í•˜ì´ë¼ì´íŠ¸ë  ë•Œ ìƒ‰ê¹” ì„¤ì •
 	if (GetMesh())
 	{
 		GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
@@ -60,21 +60,21 @@ void AAuraEnemy::BeginPlay()
 
 	InitAbilityActorInfo();
 
-	// ±âº» ¾îºô¸®Æ¼´Â ÀûÄ³¸¯ÅÍÀÇ Á÷¾÷¿¡ ¸ÂÃç¼­ °¡Á®¿Â´Ù. ±×·± Á¤º¸´Â °ÔÀÓ¸ğµå¿¡ ÀúÀåµÇ¾îÀÖÀ¸¹Ç·Î ¼­¹ö¿¡¼­¸¸ ¼öÇàÇÏµµ·Ï ÇÑ´Ù.
+	// ê¸°ë³¸ ì–´ë¹Œë¦¬í‹°ëŠ” ì ìºë¦­í„°ì˜ ì§ì—…ì— ë§ì¶°ì„œ ê°€ì ¸ì˜¨ë‹¤. ê·¸ëŸ° ì •ë³´ëŠ” ê²Œì„ëª¨ë“œì— ì €ì¥ë˜ì–´ìˆìœ¼ë¯€ë¡œ ì„œë²„ì—ì„œë§Œ ìˆ˜í–‰í•˜ë„ë¡ í•œë‹¤.
 	if (HasAuthority())
 	{
-		// ±âº» ¾îºô¸®Æ¼µé ºÎ¿©
+		// ê¸°ë³¸ ì–´ë¹Œë¦¬í‹°ë“¤ ë¶€ì—¬
 		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterClass);
 	}
 
-	// À§Á¬ ÄÁÆ®·Ñ·¯¸¦ ÀÚ½ÅÀ¸·Î ¼³Á¤ÇÑ´Ù. À§Á¬ ÄÁÆ®·Ñ·¯´Â ´Ü¼øÇÑ UObjectÀÌ¹Ç·Î °¡´ÉÇÔ
+	// ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ìì‹ ìœ¼ë¡œ ì„¤ì •í•œë‹¤. ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ëŠ” ë‹¨ìˆœí•œ UObjectì´ë¯€ë¡œ ê°€ëŠ¥í•¨
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
 		AuraUserWidget->SetWidgetController(this);
 	}
 
-	// Ã¼·Â ¾îÆ®¸®ºäÆ® ¼¼Æ®°¡ º¯°æµÉ ¶§ UI¿¡ ¾Ë¸®±âÀ§ÇØ µ¨¸®°ÔÀÌÆ®¿Í ¹ÙÀÎµåÇÔ
-	// ÇÁ·Î±×·¡½º¹Ù À§Á¬ÀÇ ºí·çÇÁ¸°Æ® ±×·¡ÇÁ¿¡¼­ ÇØ´ç µ¨¸®°ÔÀÌÆ®ÀÇ ÀÌº¥Æ®¿¡ ´ëÇÑ Çàµ¿(Ã¼·Â¹Ù ¼öÁ¤)À» ÇÑ´Ù.
+	// ì²´ë ¥ ì–´íŠ¸ë¦¬ë·°íŠ¸ ì„¸íŠ¸ê°€ ë³€ê²½ë  ë•Œ UIì— ì•Œë¦¬ê¸°ìœ„í•´ ë¸ë¦¬ê²Œì´íŠ¸ì™€ ë°”ì¸ë“œí•¨
+	// í”„ë¡œê·¸ë˜ìŠ¤ë°” ìœ„ì ¯ì˜ ë¸”ë£¨í”„ë¦°íŠ¸ ê·¸ë˜í”„ì—ì„œ í•´ë‹¹ ë¸ë¦¬ê²Œì´íŠ¸ì˜ ì´ë²¤íŠ¸ì— ëŒ€í•œ í–‰ë™(ì²´ë ¥ë°” ìˆ˜ì •)ì„ í•œë‹¤.
 	if (const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet))
 	{
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetHealthAttribute()).AddLambda(
@@ -91,10 +91,10 @@ void AAuraEnemy::BeginPlay()
 			}
 		);
 
-		// Effects.HitReact ÅÂ±×¸¦ ¾ò¾úÀ» ¶§ ÇÇ°İ ¸ğ¼ÇÀ» Àç»ıÇÔÇÏ´Â ÇÔ¼ö¸¦ ¹ÙÀÎµå
+		// Effects.HitReact íƒœê·¸ë¥¼ ì–»ì—ˆì„ ë•Œ í”¼ê²© ëª¨ì…˜ì„ ì¬ìƒí•¨í•˜ëŠ” í•¨ìˆ˜ë¥¼ ë°”ì¸ë“œ
 		AbilitySystemComponent->RegisterGameplayTagEvent(UAuraGameplayTags::Get().Effects_HitReact, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::HitReactTagChanged);
 
-		// ÃÊ±â°ª ¼³Á¤
+		// ì´ˆê¸°ê°’ ì„¤ì •
 		OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 		OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	}
@@ -104,7 +104,7 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	// AI´Â ¼­¹ö¿¡¼­¸¸ »ç¿ë
+	// AIëŠ” ì„œë²„ì—ì„œë§Œ ì‚¬ìš©
 	if (!HasAuthority()) return;
 
 	if (AuraAIController = Cast<AAuraAIController>(NewController))
@@ -114,7 +114,7 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 			AuraAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 			AuraAIController->RunBehaviorTree(BehaviorTree);
 			
-			// ºí·¢º¸µå ÃÊ±â°ª ¼³Á¤
+			// ë¸”ë™ë³´ë“œ ì´ˆê¸°ê°’ ì„¤ì •
 			AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("HitReacting"), false);
 			AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("RangedAttacker"), CharacterClass != ECharacterClass::Warrior);
 		}
@@ -127,7 +127,7 @@ void AAuraEnemy::InitAbilityActorInfo()
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 		
-		// ±âÀı ÅÂ±×¿¡ ´ëÇÑ Äİ¹é ÇÔ¼ö ¼³Á¤
+		// ê¸°ì ˆ íƒœê·¸ì— ëŒ€í•œ ì½œë°± í•¨ìˆ˜ ì„¤ì •
 		AbilitySystemComponent->RegisterGameplayTagEvent(UAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::StunTagChanged);
 	}
 	
@@ -137,10 +137,10 @@ void AAuraEnemy::InitAbilityActorInfo()
 		AuraAbilitySystemComponent->AbilityActorInfoSet();
 	}
 
-	// ÀûÄ³¸¯ÅÍÀÇ Á÷¾÷¿¡ ¸ÂÃç¼­ ÃÊ±âÈ­. ±×·± Á¤º¸´Â °ÔÀÓ¸ğµå¿¡ ÀúÀåµÇ¾îÀÖÀ¸¹Ç·Î ¼­¹ö¿¡¼­¸¸ ¼öÇàÇÏµµ·Ï ÇÑ´Ù.
+	// ì ìºë¦­í„°ì˜ ì§ì—…ì— ë§ì¶°ì„œ ì´ˆê¸°í™”. ê·¸ëŸ° ì •ë³´ëŠ” ê²Œì„ëª¨ë“œì— ì €ì¥ë˜ì–´ìˆìœ¼ë¯€ë¡œ ì„œë²„ì—ì„œë§Œ ìˆ˜í–‰í•˜ë„ë¡ í•œë‹¤.
 	if (HasAuthority())
 	{
-		// °ÔÀÓÇÃ·¹ÀÌ ÀÌÆåÆ®¸¦ ÅëÇÑ ´É·ÂÄ¡ ÃÊ±âÈ­
+		// ê²Œì„í”Œë ˆì´ ì´í™íŠ¸ë¥¼ í†µí•œ ëŠ¥ë ¥ì¹˜ ì´ˆê¸°í™”
 		InitializeDefaultAttributes();
 	}
 }
@@ -154,7 +154,7 @@ void AAuraEnemy::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
 	Super::StunTagChanged(CallbackTag, NewCount);
 
-	// ºñÇìÀÌºñ¾î Æ®¸®¿¡ Àû¿ë
+	// ë¹„í—¤ì´ë¹„ì–´ íŠ¸ë¦¬ì— ì ìš©
 	if (AuraAIController && AuraAIController->GetBlackboardComponent())
 	{
 		AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("Stunned"), bIsStunned);
@@ -165,13 +165,13 @@ void AAuraEnemy::Die(const FVector& DeathImpulse)
 {
 	SetLifeSpan(5.f);
 
-	// ºí·¢º¸µå¿¡ Á×¾ú´Ù°í Ã¼Å©
+	// ë¸”ë™ë³´ë“œì— ì£½ì—ˆë‹¤ê³  ì²´í¬
 	if (AuraAIController && AuraAIController->GetBlackboardComponent())
 	{
 		AuraAIController->GetBlackboardComponent()->SetValueAsBool(TEXT("Dead"), true);
 	}
 
-	// ¾ÆÀÌÅÛ µå·Ó
+	// ì•„ì´í…œ ë“œë¡­
 	SpawnLoot();
 
 	Super::Die(DeathImpulse);
@@ -218,12 +218,12 @@ void AAuraEnemy::UnHighlightActor_Implementation()
 
 void AAuraEnemy::SetMoveToLocation_Implementation(FVector& OutDestination)
 {
-	// ¾Æ¹«°Íµµ ¾ÈÇÔ. ÇÏÀÌ¶óÀÌÆ® µÈ ´ë»ó¿¡°Ô ÀÌµ¿ÇÒ À§Ä¡¸¦ Á¤ÇÏ´Â°Çµ¥ Àû °´Ã¼¿¡°Ô´Â ÀÌµ¿ÇÏÁö ¾Ê´Â´Ù.
+	// ì•„ë¬´ê²ƒë„ ì•ˆí•¨. í•˜ì´ë¼ì´íŠ¸ ëœ ëŒ€ìƒì—ê²Œ ì´ë™í•  ìœ„ì¹˜ë¥¼ ì •í•˜ëŠ”ê±´ë° ì  ê°ì²´ì—ê²ŒëŠ” ì´ë™í•˜ì§€ ì•ŠëŠ”ë‹¤.
 }
 
 void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
-	// »õ·Î¿î ÅÂ±×°¡ µé¾î¿Ã ¶§¸¸
+	// ìƒˆë¡œìš´ íƒœê·¸ê°€ ë“¤ì–´ì˜¬ ë•Œë§Œ
 	bHitReacting = NewCount > 0;
 
 	if (GetCharacterMovement())

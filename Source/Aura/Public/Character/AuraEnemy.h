@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -14,7 +14,7 @@ class UBehaviorTree;
 class AAuraAIController;
 
 /**
- * ¸ó½ºÅÍ Ä³¸¯ÅÍ Å¬·¡½º
+ * ëª¬ìŠ¤í„° ìºë¦­í„° í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface, public IHighlightInterface
@@ -28,20 +28,20 @@ private:
 	virtual void BeginPlay() final;
 	virtual void PossessedBy(AController* NewController) final;
 
-	// AAuraCharacterBase¿¡¼­ »ó¼Ó
+	// AAuraCharacterBaseì—ì„œ ìƒì†
 	virtual void InitAbilityActorInfo() final;
 	virtual void InitializeDefaultAttributes() const final;
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount) final;
 
-	// ICombatInterface¿¡¼­ »ó¼Ó
+	// ICombatInterfaceì—ì„œ ìƒì†
 	virtual void Die(const FVector& DeathImpulse) final;
 	virtual int32 GetPlayerLevel_Implementation() const final;
 
-	// IEnemyInterface¿¡¼­ »ó¼Ó
+	// IEnemyInterfaceì—ì„œ ìƒì†
 	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) final;
 	virtual AActor* GetCombatTarget_Implementation() const final;
 
-	// IHighlightInterface¿¡¼­ »ó¼Ó
+	// IHighlightInterfaceì—ì„œ ìƒì†
 	virtual void HighlightActor_Implementation() final;
 	virtual void UnHighlightActor_Implementation() final;
 	virtual void SetMoveToLocation_Implementation(FVector& OutDestination) final;
@@ -50,7 +50,7 @@ public:
 	FORCEINLINE void SetLevel(int32 InLevel) { Level = InLevel; }
 
 protected:
-	// ¾ÆÀÌÅÛ µå·Ó
+	// ì•„ì´í…œ ë“œë¡­
 	UFUNCTION(BlueprintImplementableEvent)
 	void SpawnLoot();
 
@@ -58,31 +58,31 @@ private:
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
 public:
-	// ¿À¹ö·¹ÀÌ À§Á¬ ÄÁÆ®·Ñ·¯¿¡¼­ °¡Á®¿Â Ã¼·Â º¯°æµÉ ¶§ Àû¿ëÇÒ µ¨¸®°ÔÀÌÆ®
-	// À§Á¬ ÄÁÆ®·Ñ·¯¿¡¼­ ±¸ÇöÇÏ´Â °Í »Ó ¾Æ´Ï¶ó À§Á¬ ÄÁÆ®·Ñ·¯´Â ´Ü¼øÇÑ UObjectÀÌ¹Ç·Î ÀÌ·¸°Ô ¾×ÅÍ¿¡¼­µµ ¹Ù·Î UI·Î ¿¬°áÇÒ ¼ö ÀÖ´Ù.
+	// ì˜¤ë²„ë ˆì´ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ê°€ì ¸ì˜¨ ì²´ë ¥ ë³€ê²½ë  ë•Œ ì ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
+	// ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ êµ¬í˜„í•˜ëŠ” ê²ƒ ë¿ ì•„ë‹ˆë¼ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬ëŠ” ë‹¨ìˆœí•œ UObjectì´ë¯€ë¡œ ì´ë ‡ê²Œ ì•¡í„°ì—ì„œë„ ë°”ë¡œ UIë¡œ ì—°ê²°í•  ìˆ˜ ìˆë‹¤.
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnHealthChanged;
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnMaxHealthChanged;
 
 protected:
-	// Ã¼·Â¹Ù UI
+	// ì²´ë ¥ë°” UI
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
 
-	// ·¹º§
+	// ë ˆë²¨
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
 
-	// »ıÁ¸ ½Ã°£
+	// ìƒì¡´ ì‹œê°„
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float LifeSpan = 5.f;
 
-	// ÇÇ°İ ¸ğ¼Ç ÁßÀÎÁö?
+	// í”¼ê²© ëª¨ì…˜ ì¤‘ì¸ì§€?
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
 	bool bHitReacting = false;
 
-	// °ø°İ Å¸°Ùµé
+	// ê³µê²© íƒ€ê²Ÿë“¤
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	TObjectPtr<AActor> CombatTarget;
 
@@ -90,7 +90,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	TObjectPtr<UBehaviorTree> BehaviorTree;
 
-	// ÂüÁ¶ º¯¼ö
+	// ì°¸ì¡° ë³€ìˆ˜
 	UPROPERTY()
 	TObjectPtr<AAuraAIController> AuraAIController;
 };

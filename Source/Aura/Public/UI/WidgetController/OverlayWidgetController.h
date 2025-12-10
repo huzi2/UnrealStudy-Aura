@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,40 +12,40 @@ class UAuraAbilitySystemComponent;
 struct FOnAttributeChangeData;
 
 /**
- * ¸Ş½ÃÁö UI¿¡¼­ »ç¿ëÇÒ ±¸Á¶Ã¼
+ * ë©”ì‹œì§€ UIì—ì„œ ì‚¬ìš©í•  êµ¬ì¡°ì²´
  */
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
 {
-	// ÀÌ Å×ÀÌºíÀÇ Å° °ªÀº FName
+	// ì´ í…Œì´ë¸”ì˜ í‚¤ ê°’ì€ FName
 	GENERATED_BODY()
 
 public:
-	// ¸Ş½ÃÁöÀÇ ÅÂ±×
+	// ë©”ì‹œì§€ì˜ íƒœê·¸
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FGameplayTag MessageTag = FGameplayTag();
-	// ¸Ş½ÃÁö ³»¿ë
+	// ë©”ì‹œì§€ ë‚´ìš©
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FText Message = FText();
-	// ¸Ş½ÃÁö UI Å¬·¡½º
+	// ë©”ì‹œì§€ UI í´ë˜ìŠ¤
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UAuraUserWidget> MessageWidget;
-	// ¸Ş½ÃÁö¿¡ Ç¥½ÃÇÒ ÀÌ¹ÌÁö
+	// ë©”ì‹œì§€ì— í‘œì‹œí•  ì´ë¯¸ì§€
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UTexture2D> Image = nullptr;
 };
 
-// ¾îÆ®¸®ºäÆ® ¼¼Æ®ÀÇ °ªÀÌ º¯°æµÉ ¶§ À§Á¬µé¿¡°Ô ¾Ë·ÁÁÙ µ¨¸®°ÔÀÌÆ®
+// ì–´íŠ¸ë¦¬ë·°íŠ¸ ì„¸íŠ¸ì˜ ê°’ì´ ë³€ê²½ë  ë•Œ ìœ„ì ¯ë“¤ì—ê²Œ ì•Œë ¤ì¤„ ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
-// ·¹º§ÀÌ º¯°æµÇ¾úÀ» ¶§ À§Á¬µé¿¡°Ô ¾Ë·ÁÁÙ µ¨¸®°ÔÀÌÆ®. bool °ªÀº ¾Ë¸²À» ¶ç¿ïÁö ¿©ºÎ
+// ë ˆë²¨ì´ ë³€ê²½ë˜ì—ˆì„ ë•Œ ìœ„ì ¯ë“¤ì—ê²Œ ì•Œë ¤ì¤„ ë¸ë¦¬ê²Œì´íŠ¸. bool ê°’ì€ ì•Œë¦¼ì„ ë„ìš¸ì§€ ì—¬ë¶€
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLevelChangedSignature, int32, NewValue, bool, bLevelUp);
-// ÅÂ±×¿¡ µû¸¥ ¸Ş½ÃÁö À§Á¬À» Ç¥½ÃÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+// íƒœê·¸ì— ë”°ë¥¸ ë©”ì‹œì§€ ìœ„ì ¯ì„ í‘œì‹œí•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
 /**
- * ¿À¹ö·¹ÀÌ UI¿Í ÄÚµå(ºí·çÇÁ¸°Æ®)¸¦ ¿¬°áÇØÁÖ´Â ÄÁÆ®·Ñ·¯
+ * ì˜¤ë²„ë ˆì´ UIì™€ ì½”ë“œ(ë¸”ë£¨í”„ë¦°íŠ¸)ë¥¼ ì—°ê²°í•´ì£¼ëŠ” ì»¨íŠ¸ë¡¤ëŸ¬
  */
-UCLASS(BlueprintType, Blueprintable) // ºí·çÇÁ¸°Æ®¿¡¼­ Á÷Á¢ »ç¿ëÇÏ±â À§ÇØ ¼Ó¼º ÁöÁ¤
+UCLASS(BlueprintType, Blueprintable) // ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì§ì ‘ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì†ì„± ì§€ì •
 class AURA_API UOverlayWidgetController : public UAuraWidgetController
 {
 	GENERATED_BODY()
@@ -55,20 +55,20 @@ public:
 	virtual void BroadcastInitialValue() final;
 
 protected:
-	// ÀåÂøµÇ´Â ½ºÅ³ÀÇ Á¤º¸°¡ ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®ÀÇ µ¨¸®°ÔÀÌÆ®¸¦ ÅëÇØ Àü´ŞµÉ ¶§ ¼öÇà
+	// ì¥ì°©ë˜ëŠ” ìŠ¤í‚¬ì˜ ì •ë³´ê°€ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ì˜ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ í†µí•´ ì „ë‹¬ë  ë•Œ ìˆ˜í–‰
 	void OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag) const;
 
 private:
-	// Å×ÀÌºí¿¡¼­ FNameÀ¸·Î »ç¿ëÇØ¼­ ÇÊ¿äÇÑ µ¥ÀÌÅÍ¸¦ ¾ò¾î¿È. ¿¡µğÅÍ¿¡¼­ Å×ÀÌºíÀ» ¸¸µé ¶§ Å°°ªÀ» ÅÂ±×¿Í ¶È°°ÀÌ ¸¸µé¾î¾ßÇÑ´Ù.
+	// í…Œì´ë¸”ì—ì„œ FNameìœ¼ë¡œ ì‚¬ìš©í•´ì„œ í•„ìš”í•œ ë°ì´í„°ë¥¼ ì–»ì–´ì˜´. ì—ë””í„°ì—ì„œ í…Œì´ë¸”ì„ ë§Œë“¤ ë•Œ í‚¤ê°’ì„ íƒœê·¸ì™€ ë˜‘ê°™ì´ ë§Œë“¤ì–´ì•¼í•œë‹¤.
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag) const;
 
-	// °æÇèÄ¡ º¯°æ ½Ã UI¿¡ Àû¿ë
+	// ê²½í—˜ì¹˜ ë³€ê²½ ì‹œ UIì— ì ìš©
 	void OnXPChanged(int32 NewXP);
 
 public:
-	// BlueprintAssignable·Î ¿¬°áµÇ´Â ÇÔ¼öµéÀº °¢ UIÀÇ ºí·çÇÁ¸°Æ®¿¡¼­ Á÷Á¢ ±¸ÇöÇÑ´Ù.
-	// ¾îÆ®¸®ºäÆ® °ªµéÀÌ º¯°æµÉ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®µé
+	// BlueprintAssignableë¡œ ì—°ê²°ë˜ëŠ” í•¨ìˆ˜ë“¤ì€ ê° UIì˜ ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì§ì ‘ êµ¬í˜„í•œë‹¤.
+	// ì–´íŠ¸ë¦¬ë·°íŠ¸ ê°’ë“¤ì´ ë³€ê²½ë  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸ë“¤
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnAttributeChangedSignature OnHealthChanged;
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
@@ -78,20 +78,20 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnAttributeChangedSignature OnMaxManaChanged;
 
-	// ¸Ş½ÃÁö Ãâ·Â°ú ¿¬°áÇÒ µ¨¸®°ÔÀÌÆ®
+	// ë©”ì‹œì§€ ì¶œë ¥ê³¼ ì—°ê²°í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Messages")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 
-	// °æÇèÄ¡°¡ º¯°æµÉ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// ê²½í—˜ì¹˜ê°€ ë³€ê²½ë  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable, Category = "GAS|XP")
 	FOnAttributeChangedSignature OnXPPercentChangedDelegate;
 
-	// ·¹º§ ¾÷ ½Ã ·¹º§À» ¼öÁ¤ÇÒ µ¨¸®°ÔÀÌÆ®
+	// ë ˆë²¨ ì—… ì‹œ ë ˆë²¨ì„ ìˆ˜ì •í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Level")
 	FOnLevelChangedSignature OnPlayerLevelChangedDelegate;
 
 protected:
-	// ¸Ş½ÃÁö °ü·Ã µ¥ÀÌÅÍ Å×ÀÌºí
+	// ë©”ì‹œì§€ ê´€ë ¨ ë°ì´í„° í…Œì´ë¸”
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
 };

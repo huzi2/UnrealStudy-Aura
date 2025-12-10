@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "GameplayEffectTypes.h"
 #include "AuraAbilityTypes.generated.h"
@@ -6,7 +6,7 @@
 class UGameplayEffect;
 
 /**
- * µ¥¹ÌÁö ÀÌÆåÆ®¿¡¼­ »ç¿ëÇÒ ±¸Á¶Ã¼
+ * ë°ë¯¸ì§€ ì´í™íŠ¸ì—ì„œ ì‚¬ìš©í•  êµ¬ì¡°ì²´
  */
 USTRUCT(BlueprintType)
 struct FDamageEffectParams
@@ -14,76 +14,76 @@ struct FDamageEffectParams
 	GENERATED_BODY()
 
 public:
-	// ¿ùµå ¿ÀºêÁ§Æ®
+	// ì›”ë“œ ì˜¤ë¸Œì íŠ¸
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UObject> WorldContextObject = nullptr;
-	// µ¥¹ÌÁö¸¦ ÀÔÈ÷´Â ÀÌÆåÆ® Å¬·¡½º
+	// ë°ë¯¸ì§€ë¥¼ ì…íˆëŠ” ì´í™íŠ¸ í´ë˜ìŠ¤
 	UPROPERTY(BlueprintReadWrite)
 	TSubclassOf<UGameplayEffect> DamageGameplayEffectClass = nullptr;
-	// µ¥¹ÌÁö¸¦ ÀÔÈ÷´Â ÁÖÃ¼
+	// ë°ë¯¸ì§€ë¥¼ ì…íˆëŠ” ì£¼ì²´
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> SourceAbilitySystemComponent = nullptr;
-	// µ¥¹ÌÁö¸¦ ÀÔ´Â ÁÖÃ¼
+	// ë°ë¯¸ì§€ë¥¼ ì…ëŠ” ì£¼ì²´
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> TargetAbilitySystemComponent = nullptr;
 
-	// µ¥¹ÌÁö·®
+	// ë°ë¯¸ì§€ëŸ‰
 	UPROPERTY(BlueprintReadWrite)
 	float BaseDamage = 0.f;
-	// ½ºÅ³ ·¹º§
+	// ìŠ¤í‚¬ ë ˆë²¨
 	UPROPERTY(BlueprintReadWrite)
 	float AbilityLevel = 1.f;
-	// µ¥¹ÌÁö Å¸ÀÔ
+	// ë°ë¯¸ì§€ íƒ€ì…
 	UPROPERTY(BlueprintReadWrite)
 	FGameplayTag DamageTypeTag = FGameplayTag();
 
-	// µğ¹öÇÁ µ¥¹ÌÁö È®·ü
+	// ë””ë²„í”„ ë°ë¯¸ì§€ í™•ë¥ 
 	UPROPERTY(BlueprintReadWrite)
 	float DebuffChance = 0.f;
-	// µğ¹öÇÁ µ¥¹ÌÁö·®
+	// ë””ë²„í”„ ë°ë¯¸ì§€ëŸ‰
 	UPROPERTY(BlueprintReadWrite)
 	float DebuffDamage = 0.f;
-	// µğ¹öÇÁ µ¥¹ÌÁö Áö¼Ó½Ã°£
+	// ë””ë²„í”„ ë°ë¯¸ì§€ ì§€ì†ì‹œê°„
 	UPROPERTY(BlueprintReadWrite)
 	float DebuffDuration = 0.f;
-	// µğ¹öÇÁ µ¥¹ÌÁö ÁÖ±â
+	// ë””ë²„í”„ ë°ë¯¸ì§€ ì£¼ê¸°
 	UPROPERTY(BlueprintReadWrite)
 	float DebuffFrequency = 0.f;
 
-	// Á×¾úÀ» ¶§ Ãæ°İ Á¤µµ
+	// ì£½ì—ˆì„ ë•Œ ì¶©ê²© ì •ë„
 	UPROPERTY(BlueprintReadWrite)
 	float DeathImpulseMagnitude = 1000.f;
-	// Á×¾úÀ» ¶§ °¡ÇÒ Ãæ°İ º¤ÅÍ
+	// ì£½ì—ˆì„ ë•Œ ê°€í•  ì¶©ê²© ë²¡í„°
 	UPROPERTY(BlueprintReadWrite)
 	FVector DeathImpulse = FVector::ZeroVector;
 
-	// ³Ë¹é È®·ü
+	// ë„‰ë°± í™•ë¥ 
 	UPROPERTY(BlueprintReadWrite)
 	float KnockbackChance = 20.f;
-	// ³Ë¹é Ãæ°İ Á¤µµ
+	// ë„‰ë°± ì¶©ê²© ì •ë„
 	UPROPERTY(BlueprintReadWrite)
 	float KnockbackForceMagnitude = 500.f;
-	// ³Ë¹é¿¡ °¡ÇÒ Ãæ°İ º¤ÅÍ
+	// ë„‰ë°±ì— ê°€í•  ì¶©ê²© ë²¡í„°
 	UPROPERTY(BlueprintReadWrite)
 	FVector KnockbackForce = FVector::ZeroVector;
 
-	// ¹æ»çÇü µ¥¹ÌÁö °ü·Ã
-	// ¹æ»çÇü µ¥¹ÌÁöÀÎ°¡?
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ê´€ë ¨
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ì¸ê°€?
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsRadialDamage = false;
-	// ¹æ»çÇü µ¥¹ÌÁö ³»°¢ Å©±â
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ë‚´ê° í¬ê¸°
 	UPROPERTY(BlueprintReadWrite)
 	float RadialDamageInnerRadius = 0.f;
-	// ¹æ»çÇü µ¥¹ÌÁö ¿Ü°û Å©±â
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ì™¸ê³½ í¬ê¸°
 	UPROPERTY(BlueprintReadWrite)
 	float RadialDamageOuterRadius = 0.f;
-	// ¹æ»çÇü µ¥¹ÌÁö ¿øÁ¡
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ì›ì 
 	UPROPERTY(BlueprintReadWrite)
 	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
 
 /**
- * °ÔÀÓ ÇÃ·¹ÀÌ ÀÌÆåÆ® ÄÜÅØ½ºÆ®¿¡ ¹æ¾î À¯¹«¿Í Ä¡¸íÅ¸ À¯¹Â¸¦ Ãß°¡ÇÑ ±¸Á¶Ã¼
+ * ê²Œì„ í”Œë ˆì´ ì´í™íŠ¸ ì½˜í…ìŠ¤íŠ¸ì— ë°©ì–´ ìœ ë¬´ì™€ ì¹˜ëª…íƒ€ ìœ ë®¤ë¥¼ ì¶”ê°€í•œ êµ¬ì¡°ì²´
  */
 USTRUCT(BlueprintType)
 struct FAuraGameplayEffectContext : public FGameplayEffectContext
@@ -91,16 +91,16 @@ struct FAuraGameplayEffectContext : public FGameplayEffectContext
 	GENERATED_BODY()
 
 public:
-	// ±¸Á¶Ã¼ ¹İÈ¯
+	// êµ¬ì¡°ì²´ ë°˜í™˜
 	virtual UScriptStruct* GetScriptStruct() const final
 	{
 		return StaticStruct();
 	}
 
-	// Á÷·ÄÈ­
+	// ì§ë ¬í™”
 	virtual bool NetSerialize(FArchive& Ar, UPackageMap* Map, bool& bOutSuccess) final;
 
-	// ±íÀº º¹»ç ¼öÇà
+	// ê¹Šì€ ë³µì‚¬ ìˆ˜í–‰
 	virtual FAuraGameplayEffectContext* Duplicate() const final
 	{
 		FAuraGameplayEffectContext* NewContext = new FAuraGameplayEffectContext();
@@ -143,62 +143,62 @@ public:
 	FORCEINLINE void SetRadialDamageOrigin(const FVector& InRadialDamageOrigin) { RadialDamageOrigin = InRadialDamageOrigin; }
 
 private:
-	// °ø°İÀ» ¸·¾ÒÀ½
+	// ê³µê²©ì„ ë§‰ì•˜ìŒ
 	UPROPERTY()
 	bool bIsBlockedHit = false;
-	// °ø°İ¿¡ Ä¡¸íÅ¸°¡ ÅÍÁü
+	// ê³µê²©ì— ì¹˜ëª…íƒ€ê°€ í„°ì§
 	UPROPERTY()
 	bool bIsCriticalHit = false;
 
-	// µğ¹öÇÁ °ü·Ã
-	// µğ¹öÇÁ ¼º°ø ¿©ºÎ
+	// ë””ë²„í”„ ê´€ë ¨
+	// ë””ë²„í”„ ì„±ê³µ ì—¬ë¶€
 	UPROPERTY()
 	bool bIsSuccessfulDebuff = false;
-	// µğ¹öÇÁ µ¥¹ÌÁö
+	// ë””ë²„í”„ ë°ë¯¸ì§€
 	UPROPERTY()
 	float DebuffDamage = 0.f;
-	// µğ¹öÇÁ ½Ã°£
+	// ë””ë²„í”„ ì‹œê°„
 	UPROPERTY()
 	float DebuffDuration = 0.f;
-	// µğ¹öÇÁ °£°İ
+	// ë””ë²„í”„ ê°„ê²©
 	UPROPERTY()
 	float DebuffFrequency = 0.f;
 
-	// µ¥¹ÌÁö Å¸ÀÔ ÅÂ±×
+	// ë°ë¯¸ì§€ íƒ€ì… íƒœê·¸
 	TSharedPtr<FGameplayTag> DamageType;
 
-	// Á×¾úÀ» ¶§ °¡ÇÒ Ãæ°İ º¤ÅÍ
+	// ì£½ì—ˆì„ ë•Œ ê°€í•  ì¶©ê²© ë²¡í„°
 	UPROPERTY()
 	FVector DeathImpulse = FVector::ZeroVector;
 
-	// ³Ë¹é¿¡ °¡ÇÒ Ãæ°İ º¤ÅÍ
+	// ë„‰ë°±ì— ê°€í•  ì¶©ê²© ë²¡í„°
 	UPROPERTY()
 	FVector KnockbackForce = FVector::ZeroVector;
 
-	// ¹æ»çÇü µ¥¹ÌÁö °ü·Ã
-	// ¹æ»çÇü µ¥¹ÌÁöÀÎ°¡?
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ê´€ë ¨
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ì¸ê°€?
 	UPROPERTY()
 	bool bIsRadialDamage = false;
-	// ¹æ»çÇü µ¥¹ÌÁö ³»°¢ Å©±â
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ë‚´ê° í¬ê¸°
 	UPROPERTY()
 	float RadialDamageInnerRadius = 0.f;
-	// ¹æ»çÇü µ¥¹ÌÁö ¿Ü°û Å©±â
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ì™¸ê³½ í¬ê¸°
 	UPROPERTY()
 	float RadialDamageOuterRadius = 0.f;
-	// ¹æ»çÇü µ¥¹ÌÁö ¿øÁ¡
+	// ë°©ì‚¬í˜• ë°ë¯¸ì§€ ì›ì 
 	UPROPERTY()
 	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
 
-// Ä¿½ºÅÒ NetSerialize()¸¦ À§ÇØ À§ ±¸Á¶Ã¼ÀÇ ¼Ó¼º Á¤ÀÇ
+// ì»¤ìŠ¤í…€ NetSerialize()ë¥¼ ìœ„í•´ ìœ„ êµ¬ì¡°ì²´ì˜ ì†ì„± ì •ì˜
 template<>
 struct TStructOpsTypeTraits<FAuraGameplayEffectContext> : TStructOpsTypeTraitsBase2<FAuraGameplayEffectContext>
 {
 	enum
 	{
-		// NetSerializer¸¦ »ç¿ë
+		// NetSerializerë¥¼ ì‚¬ìš©
 		WithNetSerializer = true,
-		// ±¸Á¶Ã¼¸¦ º¹»ç °¡´É
+		// êµ¬ì¡°ì²´ë¥¼ ë³µì‚¬ ê°€ëŠ¥
 		WithCopy = true
 	};
 };

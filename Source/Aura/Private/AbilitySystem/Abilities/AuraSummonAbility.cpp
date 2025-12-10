@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbilitySystem/Abilities/AuraSummonAbility.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -20,14 +20,14 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations() const
 	const FVector Forward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
 	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
 
-	// ºÎÃ¤²ÃÀ» ¼ÒÈ¯ÇÒ À¯´Ö °³¼ö·Î ³ª´«´Ù.
+	// ë¶€ì±„ê¼´ì„ ì†Œí™˜í•  ìœ ë‹› ê°œìˆ˜ë¡œ ë‚˜ëˆˆë‹¤.
 	const float DeltaSpread = SpawnSpread / NumMinions;
 
-	// ºÎÃ¤²ÃÀÇ ¿ŞÂÊ ¹æÇâ º¤ÅÍ
+	// ë¶€ì±„ê¼´ì˜ ì™¼ìª½ ë°©í–¥ ë²¡í„°
 	const FVector RightOfSpread = Forward.RotateAngleAxis(SpawnSpread / 2.f, FVector::UpVector);
 	if (bDrawDebug) UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), Location, Location + RightOfSpread * MaxSpawnDistance, 4.f, FLinearColor::Green, 3.f);
 
-	// ºÎÃ¤²ÃÀÇ ¿À¸¥ÂÊ ¹æÇâ º¤ÅÍ
+	// ë¶€ì±„ê¼´ì˜ ì˜¤ë¥¸ìª½ ë°©í–¥ ë²¡í„°
 	const FVector LeftOfSpread = Forward.RotateAngleAxis(-SpawnSpread / 2.f, FVector::UpVector);
 	if (bDrawDebug) UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), Location, Location + LeftOfSpread * MaxSpawnDistance, 4.f, FLinearColor::Gray, 3.f);
 
@@ -36,14 +36,14 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations() const
 
 	for (int32 i = 0; i < NumMinions; ++i)
 	{
-		// ºÎÃ¤²Ã »çÀÌ
+		// ë¶€ì±„ê¼´ ì‚¬ì´
 		const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, FVector::UpVector);
 		if (bDrawDebug) UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), Location, Location + Direction * MaxSpawnDistance, 4.f, FLinearColor::Green, 3.f);
 
-		// min ~ max »ç°Å¸® Áß ÇÏ³ª¸¦ °í¸§
+		// min ~ max ì‚¬ê±°ë¦¬ ì¤‘ í•˜ë‚˜ë¥¼ ê³ ë¦„
 		FVector ChosenSpawnLocation = Location + Direction * FMath::FRandRange(MinSpawnDistance, MaxSpawnDistance);
 
-		// ¾ğ´ö°ú °°Àº °÷¿¡¼­ ¹®Á¦°¡ ¾øµµ·Ï ¶óÀÎÆ®·¹ÀÌ½º¸¦ ÅëÇØ ºÎµúÈ÷´Â ÁöÇü ÁÂÇ¥¸¦ È®ÀÎ
+		// ì–¸ë•ê³¼ ê°™ì€ ê³³ì—ì„œ ë¬¸ì œê°€ ì—†ë„ë¡ ë¼ì¸íŠ¸ë ˆì´ìŠ¤ë¥¼ í†µí•´ ë¶€ë”ªíˆëŠ” ì§€í˜• ì¢Œí‘œë¥¼ í™•ì¸
 		FHitResult Hit;
 		GetWorld()->LineTraceSingleByChannel(Hit, ChosenSpawnLocation + FVector(0.f, 0.f, 400.f), ChosenSpawnLocation - FVector(0.f, 0.f, 400.f), ECollisionChannel::ECC_Visibility);
 		if (Hit.bBlockingHit)

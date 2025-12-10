@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Actor/AuraEffectActor.h"
 #include "AbilitySystemComponent.h"
@@ -35,7 +35,7 @@ void AAuraEffectActor::Tick(float DeltaTime)
 	RunningTime += DeltaTime;
 
 	const float SinePeriod = 2.f * PI / SinePeriodConstant;
-	// À§¾Æ·¡ ÁÖ±â¸¶´Ù ÃÊ±âÈ­
+	// ìœ„ì•„ë˜ ì£¼ê¸°ë§ˆë‹¤ ì´ˆê¸°í™”
 	if (RunningTime > SinePeriod)
 	{
 		RunningTime = 0.f;
@@ -48,7 +48,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 {
 	if (!TargetActor) return;
 
-	// Àû¿¡°Ô´Â Àû¿ëµÇÁö ¾Ê´Â ÀÌÆåÆ®¸é ¸®ÅÏ
+	// ì ì—ê²ŒëŠ” ì ìš©ë˜ì§€ ì•ŠëŠ” ì´í™íŠ¸ë©´ ë¦¬í„´
 	if (TargetActor->ActorHasTag(TEXT("Enemy")) && !bApplyEffectsToEnemies) return;
 
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
@@ -56,20 +56,20 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	check(GameplayEffectClass);
 
 	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
-	// ÀÌÆåÆ®¸¦ ÀÏÀ¸Å² °´Ã¼
+	// ì´í™íŠ¸ë¥¼ ì¼ìœ¼í‚¨ ê°ì²´
 	EffectContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, ActorLevel, EffectContextHandle);
-	// ÀÌÆåÆ® ¹ßµ¿
+	// ì´í™íŠ¸ ë°œë™
 	FActiveGameplayEffectHandle ActiveEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 
-	// ÀÌÆåÆ®°¡ ¹«ÇÑÀÏ °æ¿ì ³ªÁß¿¡ ÇØÁ¦ÇÏ±âÀ§ÇØ FActiveGameplayEffectHandle¿Í UAbilitySystemComponent¸¦ ÀúÀåÇØµĞ´Ù.
+	// ì´í™íŠ¸ê°€ ë¬´í•œì¼ ê²½ìš° ë‚˜ì¤‘ì— í•´ì œí•˜ê¸°ìœ„í•´ FActiveGameplayEffectHandleì™€ UAbilitySystemComponentë¥¼ ì €ì¥í•´ë‘”ë‹¤.
 	const bool bIsInfinite = EffectSpecHandle.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;
 	if (bIsInfinite && InfiniteEffectRemovalPolicy != EEffectRemovalPolicy::DoNotRemove)
 	{
 		ActiveEffectHandles.Add(ActiveEffectHandle, TargetASC);
 	}
 
-	// ÀÌÆåÆ® À¯ÇüÀÌ ¹«ÇÑÀÌ ¾Æ´Ï¸é¼­ Àû¿ë ÈÄ Á¦°ÅµÇ¾ßÇÑ´Ù¸é Á¦°ÅÇÔ
+	// ì´í™íŠ¸ ìœ í˜•ì´ ë¬´í•œì´ ì•„ë‹ˆë©´ì„œ ì ìš© í›„ ì œê±°ë˜ì•¼í•œë‹¤ë©´ ì œê±°í•¨
 	if (bDestroyOnEffectApplication && !bIsInfinite)
 	{
 		Destroy();
@@ -111,7 +111,7 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
 	}
 
-	// ¹«ÇÑ ÀÌÆåÆ®ÀÇ Á¦°Å
+	// ë¬´í•œ ì´í™íŠ¸ì˜ ì œê±°
 	if (InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
 		UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
@@ -123,14 +123,14 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 		{
 			if (TargetASC == HandPair.Value)
 			{
-				// ÀÌÆåÆ®¸¦ Á¦°Å. µÚ º¯¼ö´Â Á¦°ÅÇÒ ½ºÅÃ. µğÆúÆ®·Î ³öµÎ¸é ¸ğµç ½ºÅÃÀ» Á¦°Å
+				// ì´í™íŠ¸ë¥¼ ì œê±°. ë’¤ ë³€ìˆ˜ëŠ” ì œê±°í•  ìŠ¤íƒ. ë””í´íŠ¸ë¡œ ë†”ë‘ë©´ ëª¨ë“  ìŠ¤íƒì„ ì œê±°
 				TargetASC->RemoveActiveGameplayEffect(HandPair.Key, 1);
-				// ·çÇÁ ³¡³ª°í Á¦°ÅµÈ ÀÌÆåÆ®µéÀ» TMap¿¡¼­ Á¦°ÅÇÏ±â À§ÇØ µû·Î ÀúÀå
+				// ë£¨í”„ ëë‚˜ê³  ì œê±°ëœ ì´í™íŠ¸ë“¤ì„ TMapì—ì„œ ì œê±°í•˜ê¸° ìœ„í•´ ë”°ë¡œ ì €ì¥
 				HandlesToRemove.Add(HandPair.Key);
 			}
 		}
 
-		// TMap Á¤¸®
+		// TMap ì •ë¦¬
 		for (const FActiveGameplayEffectHandle& Handle : HandlesToRemove)
 		{
 			ActiveEffectHandles.FindAndRemoveChecked(Handle);
@@ -153,14 +153,14 @@ void AAuraEffectActor::StartSinusoidalMovement()
 
 void AAuraEffectActor::ItemMovement(float DeltaTime)
 {
-	// È¸Àü
+	// íšŒì „
 	if (bRotates)
 	{
 		const FRotator DeltaRotation(0.f, DeltaTime * RotationRate, 0.f);
 		CalculatedRotation = UKismetMathLibrary::ComposeRotators(CalculatedRotation, DeltaRotation);
 	}
 
-	// À§¾Æ·¡ »çÀÎ ÆÄµ¿ ¿òÁ÷ÀÓ
+	// ìœ„ì•„ë˜ ì‚¬ì¸ íŒŒë™ ì›€ì§ì„
 	if (bSinusoidalMovement)
 	{
 		const float Sine = SineAmplitude * FMath::Sin(RunningTime * SinePeriodConstant);

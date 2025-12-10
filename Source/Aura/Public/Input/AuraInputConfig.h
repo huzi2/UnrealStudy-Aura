@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,7 +10,7 @@
 class UInputAction;
 
 /**
- * Çâ»óµÈ ÀÔ·Â°ú ÅÂ±×¸¦ ¿¬°áÇÏ±â À§ÇÑ ±¸Á¶Ã¼
+ * í–¥ìƒëœ ì…ë ¥ê³¼ íƒœê·¸ë¥¼ ì—°ê²°í•˜ê¸° ìœ„í•œ êµ¬ì¡°ì²´
  */
 USTRUCT(BlueprintType)
 struct FAuraInputAction
@@ -18,16 +18,16 @@ struct FAuraInputAction
 	GENERATED_BODY()
 
 public:
-	// ÀÎÇ² ¾×¼Ç
+	// ì¸í’‹ ì•¡ì…˜
 	UPROPERTY(EditDefaultsOnly)
 	const UInputAction* InputAction = nullptr;
-	// ÀÎÇ² ÅÂ±×
+	// ì¸í’‹ íƒœê·¸
 	UPROPERTY(EditDefaultsOnly)
 	FGameplayTag InputTag = FGameplayTag();
 };
 
 /**
- * ÀÎÇ² ÅÂ±×¿Í ¾×¼Ç °ü¸® Å¬·¡½º
+ * ì¸í’‹ íƒœê·¸ì™€ ì•¡ì…˜ ê´€ë¦¬ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAuraInputConfig : public UDataAsset
@@ -35,11 +35,11 @@ class AURA_API UAuraInputConfig : public UDataAsset
 	GENERATED_BODY()
 	
 public:
-	// ÀÎÇ² ÅÂ±×·Î ÀÎÇ² ¾×¼Ç Ã£±â
+	// ì¸í’‹ íƒœê·¸ë¡œ ì¸í’‹ ì•¡ì…˜ ì°¾ê¸°
 	const UInputAction* FindAbilityInputActionForTag(const FGameplayTag& InputTag, bool bLogNotFound = false) const;
 
 public:
-	// ¸ğµç ÀÎÇ² ÅÂ±×-¾×¼Ç ¿¬°á ÄÁÅ×ÀÌ³Ê
+	// ëª¨ë“  ì¸í’‹ íƒœê·¸-ì•¡ì…˜ ì—°ê²° ì»¨í…Œì´ë„ˆ
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FAuraInputAction> AbilityInputActions;
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMouseTargetDataSignature, const FGameplayAbilityTargetDataHandle&, DataHandle);
 
 /**
- * ¸¶¿ì½º ¾Æ·¡ Å¸°ÙÀ» Ã£´Â ¾îºô¸®Æ¼ ÅÂ½ºÅ©
+ * ë§ˆìš°ìŠ¤ ì•„ë˜ íƒ€ê²Ÿì„ ì°¾ëŠ” ì–´ë¹Œë¦¬í‹° íƒœìŠ¤í¬
  */
 UCLASS()
 class AURA_API UTargetDataUnderMouse : public UAbilityTask
@@ -20,19 +20,19 @@ private:
 	virtual void Activate() final;
 
 private:
-	// ºí·çÇÁ¸°Æ®¿¡¼­ TargetDataUnderMouseÀÇ ÀÌ¸§À¸·Î È£ÃâµÇ°í, OwningAbility ÇÉÀ» ¼û±â°í self·Î ±âº»°ªÀ» ³ÖÀ½. BlueprintInternalUseOnly´Â ÇØ´ç ÇÔ¼ö°¡ ºí·çÇÁ¸°Æ® ³»ºÎ¿¡¼­¸¸ »ç¿ëµÇ¾î¾ßÇÑ´Ù´Â ¶æ
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ TargetDataUnderMouseì˜ ì´ë¦„ìœ¼ë¡œ í˜¸ì¶œë˜ê³ , OwningAbility í•€ì„ ìˆ¨ê¸°ê³  selfë¡œ ê¸°ë³¸ê°’ì„ ë„£ìŒ. BlueprintInternalUseOnlyëŠ” í•´ë‹¹ í•¨ìˆ˜ê°€ ë¸”ë£¨í”„ë¦°íŠ¸ ë‚´ë¶€ì—ì„œë§Œ ì‚¬ìš©ë˜ì–´ì•¼í•œë‹¤ëŠ” ëœ»
 	UFUNCTION(BlueprintCallable, Category = "Ability|Tasks", meta = (DisplayName = "TargetDataUnderMouse", HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true"))
 	static UTargetDataUnderMouse* CreateTargetDataUnderMouse(UGameplayAbility* OwningAbility);
 
 private:
-	// Å¬¶ó¿¡¼­ È®ÀÎÇÑ Å¸°Ù À§Ä¡¸¦ ¼­¹ö¿¡ Àü´Ş
+	// í´ë¼ì—ì„œ í™•ì¸í•œ íƒ€ê²Ÿ ìœ„ì¹˜ë¥¼ ì„œë²„ì— ì „ë‹¬
 	void SendMouseCursorData();
 
-	// Å¸°Ù µ¥ÀÌÅÍ°¡ º¹»ç‰çÀ» ¶§ È£Ãâ
+	// íƒ€ê²Ÿ ë°ì´í„°ê°€ ë³µì‚¬ë¬ì„ ë•Œ í˜¸ì¶œ
 	void OnTargetDataReplicatedCallback(const FGameplayAbilityTargetDataHandle& DataHandle, FGameplayTag ActivationTag);
 
 private:
-	// ºí·çÇÁ¸°Æ®¿¡¼­ CreateTargetDataUnderMouse() ÇÔ¼öÀÇ ÇÉÀ¸·Î ÀÚµ¿ ¿¬°áµÈ´Ù.
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ CreateTargetDataUnderMouse() í•¨ìˆ˜ì˜ í•€ìœ¼ë¡œ ìë™ ì—°ê²°ëœë‹¤.
 	UPROPERTY(BlueprintAssignable)
 	FMouseTargetDataSignature ValidData;
 };

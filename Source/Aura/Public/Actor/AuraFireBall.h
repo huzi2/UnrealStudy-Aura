@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraFireBall.generated.h"
 
 /**
- * È­¿° Æø¹ß¿¡¼­ »ç¿ëÇÒ ¹ß»çÃ¼ Å¬·¡½º
+ * í™”ì—¼ í­ë°œì—ì„œ ì‚¬ìš©í•  ë°œì‚¬ì²´ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API AAuraFireBall : public AAuraProjectile
@@ -17,7 +17,7 @@ class AURA_API AAuraFireBall : public AAuraProjectile
 private:
 	virtual void BeginPlay() final;
 
-	// AAuraProjectile¿¡¼­ »ó¼Ó
+	// AAuraProjectileì—ì„œ ìƒì†
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) final;
 	virtual void OnHit() final;
 
@@ -25,16 +25,16 @@ public:
 	FORCEINLINE void SetReturnToActor(AActor* InReturnToActor) { ReturnToActor = InReturnToActor; }
 	FORCEINLINE void SetExplosionDamageEffectParams(const FDamageEffectParams& InExplosionDamageEffectParams) { ExplosionDamageEffectParams = InExplosionDamageEffectParams; }
 
-	// È­¿°±¸°¡ ¹ß»çµÇ¾ú´Ù°¡ µ¹¾Æ¿À´Â Å¸ÀÓ¶óÀÎÀ» ½ÃÀÛÇÏ´Â ÀÌº¥Æ® ÇÔ¼ö
+	// í™”ì—¼êµ¬ê°€ ë°œì‚¬ë˜ì—ˆë‹¤ê°€ ëŒì•„ì˜¤ëŠ” íƒ€ì„ë¼ì¸ì„ ì‹œì‘í•˜ëŠ” ì´ë²¤íŠ¸ í•¨ìˆ˜
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartOutgoingTimeline();
 
 protected:
-	// È­¿°±¸°¡ µÇµ¹¾Æ¿Ã Å¸°Ù ¾×ÅÍ(½ÃÀüÀÚ)
+	// í™”ì—¼êµ¬ê°€ ë˜ëŒì•„ì˜¬ íƒ€ê²Ÿ ì•¡í„°(ì‹œì „ì)
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<AActor> ReturnToActor;
 
-	// È­¿°±¸°¡ Æø¹ßÇÒ ¶§ »ç¿ëÇÒ µ¥¹ÌÁö ÀÌÆåÆ® ÆÄ¶÷
+	// í™”ì—¼êµ¬ê°€ í­ë°œí•  ë•Œ ì‚¬ìš©í•  ë°ë¯¸ì§€ ì´í™íŠ¸ íŒŒëŒ
 	UPROPERTY(BlueprintReadWrite)
 	FDamageEffectParams ExplosionDamageEffectParams;
 };

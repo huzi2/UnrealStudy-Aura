@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Actor/AuraEnemySpawnVolume.h"
 #include "Components/BoxComponent.h"
@@ -12,7 +12,7 @@ AAuraEnemySpawnVolume::AAuraEnemySpawnVolume()
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	SetRootComponent(Box);
 
-	// Æù¿¡ ´ëÇØ¼­¸¸ ¹ÝÀÀ
+	// í°ì— ëŒ€í•´ì„œë§Œ ë°˜ì‘
 	Box->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Box->SetCollisionObjectType(ECC_WorldStatic);
 	Box->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -31,7 +31,7 @@ void AAuraEnemySpawnVolume::BeginPlay()
 
 void AAuraEnemySpawnVolume::LoadActor_Implementation()
 {
-	// ÇÃ·¹ÀÌ¾î°¡ ´êÀº Àû ÀÖÀ¸¸é ´Ù½Ã ¼ÒÈ¯ÇÏÁö ¾Êµµ·Ï ·ÎµåÇÏÀÚ¸¶ÀÚ ¹Ù·Î »èÁ¦ÇÔ
+	// í”Œë ˆì´ì–´ê°€ ë‹¿ì€ ì  ìžˆìœ¼ë©´ ë‹¤ì‹œ ì†Œí™˜í•˜ì§€ ì•Šë„ë¡ ë¡œë“œí•˜ìžë§ˆìž ë°”ë¡œ ì‚­ì œí•¨
 	if (bReached)
 	{
 		Destroy();
@@ -42,12 +42,12 @@ void AAuraEnemySpawnVolume::OnBoxOverlap(UPrimitiveComponent* OverlappedComponen
 {
 	if (!OtherActor) return;
 
-	// ÇÃ·¹ÀÌ¾î¿¡°Ô¸¸ ¹ÝÀÀ
+	// í”Œë ˆì´ì–´ì—ê²Œë§Œ ë°˜ì‘
 	if (!OtherActor->Implements<UPlayerInterface>()) return;
 
 	bReached = true;
 
-	// ¸ðµç Æ÷ÀÎÆ®¿¡¼­ ÀûÀ» ¼ÒÈ¯ÇÏ°í
+	// ëª¨ë“  í¬ì¸íŠ¸ì—ì„œ ì ì„ ì†Œí™˜í•˜ê³ 
 	for (const AAuraEnemySpawnPoint* Point : SpawnPoints)
 	{
 		if (IsValid(Point))
@@ -56,7 +56,7 @@ void AAuraEnemySpawnVolume::OnBoxOverlap(UPrimitiveComponent* OverlappedComponen
 		}
 	}
 
-	// ¼ÒÈ¯ÀÌ ³¡³ª¸é Ãæµ¹Ã³¸® ¹«È¿
+	// ì†Œí™˜ì´ ëë‚˜ë©´ ì¶©ëŒì²˜ë¦¬ ë¬´íš¨
 	if (Box)
 	{
 		Box->SetCollisionEnabled(ECollisionEnabled::NoCollision);

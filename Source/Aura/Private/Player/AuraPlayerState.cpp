@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
@@ -7,8 +7,8 @@
 
 AAuraPlayerState::AAuraPlayerState()
 {
-	// GAS ¼¼Æ®¸¦ ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÆ®¿¡¼­ »ç¿ëÇÏ·Á¸é ¾÷µ¥ÀÌÆ® ºóµµ°¡ ³ôÀº °ÍÀÌ ÁÁ´Ù.
-	// Æ÷Æ®³ªÀÌÆ®³ª ¶óÀÌ¶ó °°Àº °æ¿ì¿¡µµ ³ô°Ô ¼³Á¤ÇØ¼­ »ç¿ëÇÑ´Ù°íÇÔ
+	// GAS ì„¸íŠ¸ë¥¼ í”Œë ˆì´ì–´ ìŠ¤í…Œì´íŠ¸ì—ì„œ ì‚¬ìš©í•˜ë ¤ë©´ ì—…ë°ì´íŠ¸ ë¹ˆë„ê°€ ë†’ì€ ê²ƒì´ ì¢‹ë‹¤.
+	// í¬íŠ¸ë‚˜ì´íŠ¸ë‚˜ ë¼ì´ë¼ ê°™ì€ ê²½ìš°ì—ë„ ë†’ê²Œ ì„¤ì •í•´ì„œ ì‚¬ìš©í•œë‹¤ê³ í•¨
 	NetUpdateFrequency = 100.f;
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
@@ -37,7 +37,7 @@ void AAuraPlayerState::SetLevel(int32 InLevel)
 {
 	Level = InLevel;
 
-	// boolÀ» false·Î ÇØ¼­ UI°¡ ¾Ë¸²À» ¶ç¿ìÁö ¾Êµµ·Ï ÇÑ´Ù.(·ÎµåÇß´Âµ¥ ·¹º§¾÷ ¾Ë¸² ¶ß´Â °Å ¹æÁö)
+	// boolì„ falseë¡œ í•´ì„œ UIê°€ ì•Œë¦¼ì„ ë„ìš°ì§€ ì•Šë„ë¡ í•œë‹¤.(ë¡œë“œí–ˆëŠ”ë° ë ˆë²¨ì—… ì•Œë¦¼ ëœ¨ëŠ” ê±° ë°©ì§€)
 	OnLevelChangedDelegate.Broadcast(Level, false);
 }
 
@@ -45,7 +45,7 @@ void AAuraPlayerState::AddToLevel(int32 InLevel)
 {
 	Level += InLevel;
 
-	// AddToLevelÀº °ÔÀÓ ³»¿¡¼­ ·¹º§¾÷ÇÒ °æ¿ì¿¡ »ç¿ëÇÏ±â¿¡ UI¿¡ ¾Ë¸²
+	// AddToLevelì€ ê²Œì„ ë‚´ì—ì„œ ë ˆë²¨ì—…í•  ê²½ìš°ì— ì‚¬ìš©í•˜ê¸°ì— UIì— ì•Œë¦¼
 	OnLevelChangedDelegate.Broadcast(Level, true);
 }
 

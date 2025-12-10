@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "AuraFireBolt.generated.h"
 
 /**
- * È­¿°±¸ ½ºÅ³ Å¬·¡½º
+ * í™”ì—¼êµ¬ ìŠ¤í‚¬ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UAuraFireBolt : public UAuraProjectileSpell
@@ -15,28 +15,28 @@ class AURA_API UAuraFireBolt : public UAuraProjectileSpell
 	GENERATED_BODY()
 	
 private:
-	// UAuraGameplayAbility¿¡¼­ »ó¼Ó
+	// UAuraGameplayAbilityì—ì„œ ìƒì†
 	virtual FString GetDescription(int32 Level) const final;
 	virtual FString GetNextLevelDescription(int32 Level) const final;
 
 private:
-	// È­¿°±¸´Â ½ºÅ³ ·¹º§¿¡ µû¶ó ¿©·¯°³ÀÇ ¹ß»çÃ¼¸¦ »ı¼ºÇÔ. ¹ß»çÃ¼¸¦ ¿©·¯°³ »ı¼ºÇÏ´Â ÇÔ¼ö
+	// í™”ì—¼êµ¬ëŠ” ìŠ¤í‚¬ ë ˆë²¨ì— ë”°ë¼ ì—¬ëŸ¬ê°œì˜ ë°œì‚¬ì²´ë¥¼ ìƒì„±í•¨. ë°œì‚¬ì²´ë¥¼ ì—¬ëŸ¬ê°œ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
 	UFUNCTION(BlueprintCallable)
 	void SpawnProjectiles(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch, float PitchOverride, AActor* HomingTarget);
 
 private:
-	// ¹ß»çÃ¼ ÃÖ´ë °¹¼ö. ¹ß»çÃ¼ °¹¼ö´Â ·¹º§À» µû¶ó°¡°í ÃÖ´ë 5°³±îÁö Áõ°¡
+	// ë°œì‚¬ì²´ ìµœëŒ€ ê°¯ìˆ˜. ë°œì‚¬ì²´ ê°¯ìˆ˜ëŠ” ë ˆë²¨ì„ ë”°ë¼ê°€ê³  ìµœëŒ€ 5ê°œê¹Œì§€ ì¦ê°€
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
 	int32 MaxNumProjectiles = 5;
 
-	// ¹ß»çÃ¼°¡ ÆÛÁö´Â Á¤µµ
+	// ë°œì‚¬ì²´ê°€ í¼ì§€ëŠ” ì •ë„
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
 	float ProjectileSpread = 90.f;
 
-	// Ãß°İÀ» ÇÒ °ÍÀÎ°¡
+	// ì¶”ê²©ì„ í•  ê²ƒì¸ê°€
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
 	bool bLaunchHomingProjectiles = true;
-	// ¹ß»çÃ¼ Ãß°İ °ª
+	// ë°œì‚¬ì²´ ì¶”ê²© ê°’
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
 	float HomingAccelerationMin = 1600.f;
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")

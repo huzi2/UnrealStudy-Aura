@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "Player/AuraPlayerController.h"
@@ -28,7 +28,7 @@ void UAuraWidgetController::BroadcastAbilityInfo()
 	if (!GetAuraAbilitySystemComponent()) return;
 	if (!AuraAbilitySystemComponent->bStartupAbilitiesGiven) return;
 
-	// ¾îºô¸®Æ¼ µ¨¸®°ÔÀÌÆ®¿¡ ¾îºô¸®Æ¼ Á¤º¸µé(ÅÂ±×, ¾ÆÀÌÄÜ µî)À» Àû¿ë
+	// ì–´ë¹Œë¦¬í‹° ë¸ë¦¬ê²Œì´íŠ¸ì— ì–´ë¹Œë¦¬í‹° ì •ë³´ë“¤(íƒœê·¸, ì•„ì´ì½˜ ë“±)ì„ ì ìš©
 	FForEachAbility BroadcastDelegate;
 	BroadcastDelegate.BindLambda([this](const FGameplayAbilitySpec& AbilitySpec)
 		{
@@ -39,7 +39,7 @@ void UAuraWidgetController::BroadcastAbilityInfo()
 		}
 	);
 
-	// ¸ðµç ¾îºô¸®Æ¼¿¡ ´ëÇÏ¿© À§ µ¨¸®°ÔÀÌÆ®¸¦ ¼öÇà
+	// ëª¨ë“  ì–´ë¹Œë¦¬í‹°ì— ëŒ€í•˜ì—¬ ìœ„ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ìˆ˜í–‰
 	AuraAbilitySystemComponent->ForEachAbility(BroadcastDelegate);
 }
 

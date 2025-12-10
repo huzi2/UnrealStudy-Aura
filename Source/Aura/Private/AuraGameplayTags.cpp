@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AuraGameplayTags.h"
 #include "GameplayTagsManager.h"
@@ -9,15 +9,15 @@ UAuraGameplayTags UAuraGameplayTags::GameplayTags;
 
 void UAuraGameplayTags::InitializeNativeGameplayTags()
 {
-	// ÇÊ¿äÇÑ ÅÂ±×µé ÅÂ±× ¸Å´ÏÀú¿¡ Ãß°¡
+	// í•„ìš”í•œ íƒœê·¸ë“¤ íƒœê·¸ ë§¤ë‹ˆì €ì— ì¶”ê°€
 
-	// ÁÖ¿ä ¼Ó¼º ÅÂ±×µé
+	// ì£¼ìš” ì†ì„± íƒœê·¸ë“¤
 	GameplayTags.Attribute_Primary_Strength = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Primary.Strength"), TEXT("Increases physical damage"));
 	GameplayTags.Attribute_Primary_Intelligence = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Primary.Intelligence"), TEXT("Increases magical damage"));
 	GameplayTags.Attribute_Primary_Resilience = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Primary.Resilience"), TEXT("Increases Armor and Armor Penetration"));
 	GameplayTags.Attribute_Primary_Vigor = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Primary.Vigor"), TEXT("Increases Health"));
 
-	// 2Â÷ ¼Ó¼º ÅÂ±×µé
+	// 2ì°¨ ì†ì„± íƒœê·¸ë“¤
 	GameplayTags.Attribute_Secondary_Armor = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Secondary.Armor"), TEXT("Reduces damage taken, improves Block Chance"));
 	GameplayTags.Attribute_Secondary_ArmorPenetration = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Secondary.ArmorPenetration"), TEXT("Ignores Percentage of enemy Armor, increases Critical Hit Chance"));
 	GameplayTags.Attribute_Secondary_BlockChance = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Secondary.BlockChance"), TEXT("Chance to cut incoming damage in half"));
@@ -29,16 +29,16 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Attribute_Secondary_MaxHealth = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Secondary.MaxHealth"), TEXT("Maximum amount of Health obtainable"));
 	GameplayTags.Attribute_Secondary_MaxMana = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Secondary.MaxMana"), TEXT("Maximum amount of Mana obtainable"));
 
-	// µ¥¹ÌÁö Å¸ÀÔ ÀúÇ× ÅÂ±×µé
+	// ë°ë¯¸ì§€ íƒ€ì… ì €í•­ íƒœê·¸ë“¤
 	GameplayTags.Attribute_Resistance_Fire = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Resistance.Fire"), TEXT("Resistance to Fire Damage"));
 	GameplayTags.Attribute_Resistance_Lightning = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Resistance.Lightning"), TEXT("Resistance to Lightning Damage"));
 	GameplayTags.Attribute_Resistance_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Resistance.Arcane"), TEXT("Resistance to Arcane Damage"));
 	GameplayTags.Attribute_Resistance_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Resistance.Physical"), TEXT("Resistance to Physical Damage"));
 
-	// ¸ŞÅ¸ ¼Ó¼º ÅÂ±×µé
+	// ë©”íƒ€ ì†ì„± íƒœê·¸ë“¤
 	GameplayTags.Attribute_Meta_IncomingXP = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Attributes.Meta.IncomingXP"), TEXT("Incoming XP Meta Attribute"));
 
-	// ÀÔ·Â ÅÂ±×µé
+	// ì…ë ¥ íƒœê·¸ë“¤
 	GameplayTags.InputTag_LMB = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("InputTag.LMB"), TEXT("Input Tag for Left Mouse Button"));
 	GameplayTags.InputTag_RMB = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("InputTag.RMB"), TEXT("Input Tag for Left Mouse Button"));
 	GameplayTags.InputTag_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("InputTag.1"), TEXT("Input Tag for 1 key"));
@@ -48,43 +48,43 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.InputTag_Passive_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("InputTag.Passive.1"), TEXT("Input Tag for Passive 1"));
 	GameplayTags.InputTag_Passive_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("InputTag.Passive.2"), TEXT("Input Tag for Passive 2"));
 
-	// µ¥¹ÌÁö¸¦ ÀÔÈ÷´Â ¾îºô¸®Æ¼ ÅÂ±×
+	// ë°ë¯¸ì§€ë¥¼ ì…íˆëŠ” ì–´ë¹Œë¦¬í‹° íƒœê·¸
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage"), TEXT("Damage"));
 	GameplayTags.Damage_Fire = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage.Fire"), TEXT("Fire Damage Type"));
 	GameplayTags.Damage_Lightning = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage.Lightning"), TEXT("Lightning Damage Type"));
 	GameplayTags.Damage_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage.Arcane"), TEXT("Arcane Damage Type"));
 	GameplayTags.Damage_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Damage.Physical"), TEXT("Fire Damage Type"));
 
-	// µ¥¹ÌÁö Å¸ÀÔ°ú µ¥¹ÌÁö Å¸ÀÔ ÀúÇ×À» ¸Ê¿¡ ¿¬°á
+	// ë°ë¯¸ì§€ íƒ€ì…ê³¼ ë°ë¯¸ì§€ íƒ€ì… ì €í•­ì„ ë§µì— ì—°ê²°
 	GameplayTags.DamageTypesToResistances.Reserve(DAMAGE_TYPE_MAX);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Attribute_Resistance_Fire);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Lightning, GameplayTags.Attribute_Resistance_Lightning);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Arcane, GameplayTags.Attribute_Resistance_Arcane);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Physical, GameplayTags.Attribute_Resistance_Physical);
 
-	// µğ¹öÇÁ ÅÂ±×µé
+	// ë””ë²„í”„ íƒœê·¸ë“¤
 	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Burn"), TEXT("Debuff for Fire Damage"));
 	GameplayTags.Debuff_Stun = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Stun"), TEXT("Debuff for Lightning Damage"));
 	GameplayTags.Debuff_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Arcane"), TEXT("Debuff for Arcane Damage"));
 	GameplayTags.Debuff_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Physical"), TEXT("Debuff for Physical Damage"));
 
-	// µ¥¹ÌÁö Å¸ÀÔ°ú µğ¹öÇÁ ÅÂ±×À» ¸Ê¿¡ ¿¬°á
+	// ë°ë¯¸ì§€ íƒ€ì…ê³¼ ë””ë²„í”„ íƒœê·¸ì„ ë§µì— ì—°ê²°
 	GameplayTags.DamageTypesToDebuffs.Reserve(DAMAGE_TYPE_MAX);
 	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Fire, GameplayTags.Debuff_Burn);
 	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Lightning, GameplayTags.Debuff_Stun);
 	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Arcane, GameplayTags.Debuff_Arcane);
 	GameplayTags.DamageTypesToDebuffs.Add(GameplayTags.Damage_Physical, GameplayTags.Debuff_Physical);
 
-	// µğ¹öÇÁ º¯¼öµé
+	// ë””ë²„í”„ ë³€ìˆ˜ë“¤
 	GameplayTags.Debuff_Chance = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Chance"), TEXT("Debuff Chance"));
 	GameplayTags.Debuff_Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Damage"), TEXT("Debuff Damage"));
 	GameplayTags.Debuff_Duration = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Duration"), TEXT("Debuff Duration"));
 	GameplayTags.Debuff_Frequency = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Debuff.Frequency"), TEXT("Debuff Frequency"));
 
-	// ¸Â¾ÒÀ» ¶§ Å¸°Ù¿¡°Ô ºÎ¿©ÇØ¼­ ÇÇ°İ ¸ğ¼Ç Ãâ·ÂÇÏ°ÔÇÏ´Â ÅÂ±×
+	// ë§ì•˜ì„ ë•Œ íƒ€ê²Ÿì—ê²Œ ë¶€ì—¬í•´ì„œ í”¼ê²© ëª¨ì…˜ ì¶œë ¥í•˜ê²Œí•˜ëŠ” íƒœê·¸
 	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Effects.HitReact"), TEXT("Tag granted when Hit Reacting"));
 
-	// ¾îºô¸®Æ¼µé
+	// ì–´ë¹Œë¦¬í‹°ë“¤
 	GameplayTags.Abilities_None = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.None"), TEXT("No Ability - like the nullptr for Ability Tags"));
 
 	GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Attack"), TEXT("Attack Ability Tag"));
@@ -95,43 +95,43 @@ void UAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Abilities_Arcane_ArcaneShards = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Arcane.ArcaneShards"), TEXT("Arcane Shards Ability Tag"));
 	GameplayTags.Abilities_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.HitReact"), TEXT("HitReact Ability Tag"));
 
-	// ÆĞ½Ãºê ¾îºô¸®Æ¼µé
+	// íŒ¨ì‹œë¸Œ ì–´ë¹Œë¦¬í‹°ë“¤
 	GameplayTags.Abilities_Paasive_HaloOfProtection = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Paasive.HaloOfProtection"), TEXT("Halo Of Protection"));
 	GameplayTags.Abilities_Paasive_LifeSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Paasive.LifeSiphon"), TEXT("Life Siphon"));
 	GameplayTags.Abilities_Paasive_ManaSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Paasive.ManaSiphon"), TEXT("Mana Siphon"));
 
-	// ¾îºô¸®Æ¼ »óÅÂ
+	// ì–´ë¹Œë¦¬í‹° ìƒíƒœ
 	GameplayTags.Abilities_Status_Locked = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Status.Locked"), TEXT("Locked Status"));
 	GameplayTags.Abilities_Status_Eligible = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Status.Eligible"), TEXT("Eligible Status"));
 	GameplayTags.Abilities_Status_Unlocked = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Status.Unlocked"), TEXT("Unlocked Status"));
 	GameplayTags.Abilities_Status_Equipped = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Status.Equipped"), TEXT("Equipped Status"));
 
-	// ¾îºô¸®Æ¼ Á¾·ù
+	// ì–´ë¹Œë¦¬í‹° ì¢…ë¥˜
 	GameplayTags.Abilities_Type_Offensive = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Type.Offensive"), TEXT("Type Offensive"));
 	GameplayTags.Abilities_Type_Passive = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Type.Passive"), TEXT("Type Passive"));
 	GameplayTags.Abilities_Type_None = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Abilities.Type.None"), TEXT("Type None"));
 
-	// ¾îºô¸®Æ¼ÀÇ ÄğÅ¸ÀÓ
+	// ì–´ë¹Œë¦¬í‹°ì˜ ì¿¨íƒ€ì„
 	GameplayTags.Cooldown_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Cooldown.Fire.FireBolt"), TEXT("FireBolt Cooldown Tag"));
 
-	// °ø°İ ¸ùÅ¸ÁÖ ¼ÒÄÏ
+	// ê³µê²© ëª½íƒ€ì£¼ ì†Œì¼“
 	GameplayTags.CombatSocket_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.Weapon"), TEXT("Attack by Weapon"));
 	GameplayTags.CombatSocket_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.LeftHand"), TEXT("Attack by Left Hand"));
 	GameplayTags.CombatSocket_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.RightHand"), TEXT("Attack by Right Hand"));
 	GameplayTags.CombatSocket_Tail = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("CombatSocket.Tail"), TEXT("Attack by Tail"));
 
-	// °ø°İ ¸ùÅ¸ÁÖ ÅÂ±×
+	// ê³µê²© ëª½íƒ€ì£¼ íƒœê·¸
 	GameplayTags.Montage_Attack1 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack1"), TEXT("Attack 1"));
 	GameplayTags.Montage_Attack2 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack2"), TEXT("Attack 2"));
 	GameplayTags.Montage_Attack3 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack3"), TEXT("Attack 3"));
 	GameplayTags.Montage_Attack4 = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Montage.Attack4"), TEXT("Attack 4"));
 
-	// ÇØ´ç ÅÂ±×°¡ ÀÖÀ¸¸é ÇØ´ç ÀÔ·ÂÀ» ¸·À½
+	// í•´ë‹¹ íƒœê·¸ê°€ ìˆìœ¼ë©´ í•´ë‹¹ ì…ë ¥ì„ ë§‰ìŒ
 	GameplayTags.Player_Block_InputPressed = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.InputPressed"), TEXT("Block Input Pressed callback for input"));
 	GameplayTags.Player_Block_InputHeld = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.InputHeld"), TEXT("Block Input Held callback for input"));
 	GameplayTags.Player_Block_InputReleased = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.InputReleased"), TEXT("Block Input Released callback for input"));
 	GameplayTags.Player_Block_CursorTrace = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("Player.Block.CursorTrace"), TEXT("Block tracing under the cursor"));
 
-	// °ÔÀÓÇÃ·¹ÀÌ Å¥
+	// ê²Œì„í”Œë ˆì´ í
 	GameplayTags.GameplayCue_FireBlast = UGameplayTagsManager::Get().AddNativeGameplayTag(TEXT("GameplayCue.FireBlast"), TEXT("FireBlast GameplayCue Tag"));
 }

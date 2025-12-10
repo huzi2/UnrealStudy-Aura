@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AI/BTService_FindNearestPlayer.h"
 #include "AIController.h"
@@ -13,14 +13,14 @@ void UBTService_FindNearestPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, u
 	
 	if (APawn* OwningPawn = AIOwner->GetPawn())
 	{
-		// Å¸°ÙÀ¸·Î Àâ¾Æ¾ßÇÒ ÅÂ±×¸¦ ¼³Á¤
+		// íƒ€ê²Ÿìœ¼ë¡œ ì¡ì•„ì•¼í•  íƒœê·¸ë¥¼ ì„¤ì •
 		const FName TargetTag = OwningPawn->ActorHasTag(TEXT("Player")) ? TEXT("Enemy") : TEXT("Player");
 
-		// ÇØ´ç ÅÂ±×¸¦ °¡Áø ¸ğµç ¾×ÅÍ¸¦ °¡Á®¿Â´Ù.
+		// í•´ë‹¹ íƒœê·¸ë¥¼ ê°€ì§„ ëª¨ë“  ì•¡í„°ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 		TArray<AActor*> ActorsWithTag;
 		UGameplayStatics::GetAllActorsWithTag(OwningPawn, TargetTag, ActorsWithTag);
 
-		// °¡Àå °¡±î¿î Å¸°ÙÀ» Ã£À½
+		// ê°€ì¥ ê°€ê¹Œìš´ íƒ€ê²Ÿì„ ì°¾ìŒ
 		float ClosetDistance = TNumericLimits<float>::Max();
 		AActor* ClosetActor = nullptr;
 		for (AActor* Actor : ActorsWithTag)
@@ -35,7 +35,7 @@ void UBTService_FindNearestPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, u
 			}
 		}
 
-		// ºí·¢º¸µå¿¡ °ª ¼¼ÆÃ
+		// ë¸”ë™ë³´ë“œì— ê°’ ì„¸íŒ…
 		if (ClosetActor)
 		{
 			UBTFunctionLibrary::SetBlackboardValueAsObject(this, TargetToFollowSelector, ClosetActor);

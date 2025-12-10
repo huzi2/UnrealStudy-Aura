@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,13 +7,13 @@
 #include "Game/LoadScreenSaveGame.h"
 #include "MVVM_LoadSlot.generated.h"
 
-// À§Á¬ ½ºÀ§Ã³ ÀüÈ¯ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+// ìœ„ì ¯ ìŠ¤ìœ„ì²˜ ì „í™˜í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSetWidgetSwitcherIndex, int32, WidgetSwitcherIndex);
-// TakenÀÇ ½½·Ô ¼±ÅÃ ¹öÆ°À» È°¼º/ºñÈ°¼ºÈ­ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+// Takenì˜ ìŠ¬ë¡¯ ì„ íƒ ë²„íŠ¼ì„ í™œì„±/ë¹„í™œì„±í™”í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnableSelectSlotButton, bool, bEnable);
 
 /**
- * ·Îµå ¸Ş´º¿¡¼­ °¢°¢ÀÇ ·Îµå ½½·Ô°ú ¿¬°áµÈ ºä¸ğµ¨ Å¬·¡½º
+ * ë¡œë“œ ë©”ë‰´ì—ì„œ ê°ê°ì˜ ë¡œë“œ ìŠ¬ë¡¯ê³¼ ì—°ê²°ëœ ë·°ëª¨ë¸ í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
@@ -41,39 +41,39 @@ public:
 	void InitializeSlot();
 
 public:
-	// À§Á¬ ½ºÀ§Ã³ ÀüÈ¯ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// ìœ„ì ¯ ìŠ¤ìœ„ì²˜ ì „í™˜í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable)
 	FSetWidgetSwitcherIndex SetWidgetSwitcherIndexDelegate;
-	// TakenÀÇ ½½·Ô ¼±ÅÃ ¹öÆ°À» È°¼º/ºñÈ°¼ºÈ­ÇÒ ¶§ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®
+	// Takenì˜ ìŠ¬ë¡¯ ì„ íƒ ë²„íŠ¼ì„ í™œì„±/ë¹„í™œì„±í™”í•  ë•Œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable)
 	FEnableSelectSlotButton EnableSelectSlotButtonDelegate;
 
 protected:
-	// UI¿Í ¹ÙÀÎµùÇÒ º¯¼ö
+	// UIì™€ ë°”ì¸ë”©í•  ë³€ìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	FString PlayerName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	FString MapName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	int32 PlayerLevel;
-	// ºä¸ğµ¨ »ı¼ºÇÏ±â À§ÇÑ ÇÊµå ¾Ë¸²¿ë º¯¼ö
+	// ë·°ëª¨ë¸ ìƒì„±í•˜ê¸° ìœ„í•œ í•„ë“œ ì•Œë¦¼ìš© ë³€ìˆ˜
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
 	FString SlotName;
 
 private:
-	// ½½·ÔÀ» ¼¼ÀÌºêÇÒ ¶§ »ç¿ëÇÒ º¯¼öµé
+	// ìŠ¬ë¡¯ì„ ì„¸ì´ë¸Œí•  ë•Œ ì‚¬ìš©í•  ë³€ìˆ˜ë“¤
 	UPROPERTY()
 	int32 SlotIndex;
 
-	// ÇöÀç ·Îµå ½½·ÔÀÇ »óÅÂ
+	// í˜„ì¬ ë¡œë“œ ìŠ¬ë¡¯ì˜ ìƒíƒœ
 	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SlotStatus;
 
-	// ½½·Ô¿¡¼­ ¸¶Áö¸·À¸·Î »ç¿ëÇÑ ÇÃ·¹ÀÌ¾î ½ºÅ¸Æ® ÅÂ±×
+	// ìŠ¬ë¡¯ì—ì„œ ë§ˆì§€ë§‰ìœ¼ë¡œ ì‚¬ìš©í•œ í”Œë ˆì´ì–´ ìŠ¤íƒ€íŠ¸ íƒœê·¸
 	UPROPERTY()
 	FName PlayerStartTag;
 
-	// ¸¶Áö¸·À¸·Î ÀÖ¾ú´ø ¸Ê
+	// ë§ˆì§€ë§‰ìœ¼ë¡œ ìˆì—ˆë˜ ë§µ
 	UPROPERTY()
 	FString MapAssetName;
 };

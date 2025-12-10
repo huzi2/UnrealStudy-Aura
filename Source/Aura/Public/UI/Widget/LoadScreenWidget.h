@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "LoadScreenWidget.generated.h"
 
 /**
- * ·Îµå ¸Ş´º UI Å¬·¡½º
+ * ë¡œë“œ ë©”ë‰´ UI í´ë˜ìŠ¤
  */
 UCLASS()
 class AURA_API ULoadScreenWidget : public UUserWidget

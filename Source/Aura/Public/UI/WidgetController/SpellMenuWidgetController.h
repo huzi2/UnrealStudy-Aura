@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,15 +7,15 @@
 #include "AuraGameplayTags.h"
 #include "SpellMenuWidgetController.generated.h"
 
-// ½ºÅ³ ¸Ş´º¿¡¼­ ½ºÅ³ Æ®¸®ÀÇ ½ºÅ³ ¹öÆ°À» ´­·¶À» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+// ìŠ¤í‚¬ ë©”ë‰´ì—ì„œ ìŠ¤í‚¬ íŠ¸ë¦¬ì˜ ìŠ¤í‚¬ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FSpellGlobeSelectedSignature, bool, bSpendPointButtonEnabled, bool, bEquipButtonEnabled, FString, DescriptionString, FString, NextLevelDescriptionString);
-// ½ºÅ³ ÀåÂø ¹öÆ°À» ´­·¶À» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®(¾Ö´Ï¸ŞÀÌ¼Ç Äµ½½)
+// ìŠ¤í‚¬ ì¥ì°© ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸(ì• ë‹ˆë©”ì´ì…˜ ìº”ìŠ¬)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWaitForEquipSelectionSignature, const FGameplayTag&, AbilityTypeTag);
-// ½ºÅ³ ÀåÂø ¹öÆ°À» ´­·¶À» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®(½ºÅ³ ±¸½½ÀÇ ´ë±â»óÅÂ Ãë¼Ò)
+// ìŠ¤í‚¬ ì¥ì°© ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸(ìŠ¤í‚¬ êµ¬ìŠ¬ì˜ ëŒ€ê¸°ìƒíƒœ ì·¨ì†Œ)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSpellGlobeReassignedSignature, const FGameplayTag&, AbilityTag);
 
 /**
-* ½ºÅ³ ¸Ş´ºÀÇ À§Á¬ ÄÁÆ®·Ñ·¯
+* ìŠ¤í‚¬ ë©”ë‰´ì˜ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬
 */
 USTRUCT()
 struct FSelectedAbility
@@ -28,7 +28,7 @@ public:
 };
 
 /**
- * ½ºÅ³ ¸Ş´ºÀÇ À§Á¬ ÄÁÆ®·Ñ·¯
+ * ìŠ¤í‚¬ ë©”ë‰´ì˜ ìœ„ì ¯ ì»¨íŠ¸ë¡¤ëŸ¬
  */
 UCLASS(BlueprintType, Blueprintable)
 class AURA_API USpellMenuWidgetController : public UAuraWidgetController
@@ -40,60 +40,60 @@ public:
 	virtual void BroadcastInitialValue() final;
 
 private:
-	// ½ºÅ³ Æ®¸®ÀÇ ½ºÅ³ ¹öÆ°ÀÌ ´­·ÈÀ½
+	// ìŠ¤í‚¬ íŠ¸ë¦¬ì˜ ìŠ¤í‚¬ ë²„íŠ¼ì´ ëˆŒë ¸ìŒ
 	UFUNCTION(BlueprintCallable)
 	void SpellGlobeSelected(const FGameplayTag& AbilityTag);
 
-	// ½ºÅ³ ¹öÆ° ¼±ÅÃ Ãë¼Ò
+	// ìŠ¤í‚¬ ë²„íŠ¼ ì„ íƒ ì·¨ì†Œ
 	UFUNCTION(BlueprintCallable)
 	void SpellGlobeDeselect();
 
-	// ½ºÅ³ Æ÷ÀÎÆ® ¹öÆ°À» ´­·¶À» ¶§
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void SpendPointButtonPressed();
 
-	// ½ºÅ³ ÀåÂø ¹öÆ°À» ´­·¶À» ¶§
+	// ìŠ¤í‚¬ ì¥ì°© ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void EquipButtonPressed();
 
-	// ½ºÅ³ ÀåÂø ´ë±â »óÅÂ¿¡¼­ ÀåÂøÇÒ ½ºÅ³ ±¸½½À» ´­·¶À» ¶§
+	// ìŠ¤í‚¬ ì¥ì°© ëŒ€ê¸° ìƒíƒœì—ì„œ ì¥ì°©í•  ìŠ¤í‚¬ êµ¬ìŠ¬ì„ ëˆŒë €ì„ ë•Œ
 	UFUNCTION(BlueprintCallable)
 	void SpellRowGlobePressed(const FGameplayTag& InputTag, const FGameplayTag& AbilityTypeTag);
 
-	// ½ºÅ³ Æ÷ÀÎÆ®¿Í ÀåÂø ¹öÆ°ÀÇ È°¼ºÈ­ À¯¹« È®ÀÎ
+	// ìŠ¤í‚¬ í¬ì¸íŠ¸ì™€ ì¥ì°© ë²„íŠ¼ì˜ í™œì„±í™” ìœ ë¬´ í™•ì¸
 	static void ShouldEnableButton(const FGameplayTag& StatusTag, int32 SpellPoints, bool& bShouldEnableSpellPointsButton, bool& bShouldEnableEquipButton);
 
-	// ÀåÂøµÇ´Â ½ºÅ³ÀÇ Á¤º¸°¡ ¾îºô¸®Æ¼ ½Ã½ºÅÛ ÄÄÆ÷³ÍÆ®ÀÇ µ¨¸®°ÔÀÌÆ®¸¦ ÅëÇØ Àü´ŞµÉ ¶§ ¼öÇà
+	// ì¥ì°©ë˜ëŠ” ìŠ¤í‚¬ì˜ ì •ë³´ê°€ ì–´ë¹Œë¦¬í‹° ì‹œìŠ¤í…œ ì»´í¬ë„ŒíŠ¸ì˜ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ í†µí•´ ì „ë‹¬ë  ë•Œ ìˆ˜í–‰
 	void OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag, const FGameplayTag& InputTag, const FGameplayTag& PrevInputTag);
 
 public:
-	// ÇÃ·¹ÀÌ¾îÀÇ ½ºÅ³ Æ÷ÀÎÆ®°¡ º¯°æµÇ¾úÀ» ¶§ UI¿¡¼­ »ç¿ëÇÒ µ¨¸®°ÔÀÌÆ®. ºí·çÇÁ¸°Æ®¿¡¼­ Á¤ÀÇ
+	// í”Œë ˆì´ì–´ì˜ ìŠ¤í‚¬ í¬ì¸íŠ¸ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ UIì—ì„œ ì‚¬ìš©í•  ë¸ë¦¬ê²Œì´íŠ¸. ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì •ì˜
 	UPROPERTY(BlueprintAssignable)
 	FOnPlayerStatChangedSignature SpellPointsChangedDelegate;
 
-	// ½ºÅ³ ¸Ş´º¿¡¼­ ½ºÅ³ Æ®¸®ÀÇ ½ºÅ³ ¹öÆ°À» ´­·¶À» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ìŠ¤í‚¬ ë©”ë‰´ì—ì„œ ìŠ¤í‚¬ íŠ¸ë¦¬ì˜ ìŠ¤í‚¬ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable)
 	FSpellGlobeSelectedSignature SpellGlobeSelectedDelegate;
 
-	// ½ºÅ³ ÀåÂø ¹öÆ°À» ´­·¶À» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®(¾Ö´Ï¸ŞÀÌ¼Ç Äµ½½)
+	// ìŠ¤í‚¬ ì¥ì°© ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸(ì• ë‹ˆë©”ì´ì…˜ ìº”ìŠ¬)
 	UPROPERTY(BlueprintAssignable)
 	FWaitForEquipSelectionSignature WaitForEquipSelectionDelegate;
 
-	// ½ºÅ³ ÀåÂø ¹öÆ°À» ´­·¶À» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®(½ºÅ³ ±¸½½ÀÇ ´ë±â»óÅÂ Ãë¼Ò)
+	// ìŠ¤í‚¬ ì¥ì°© ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸(ìŠ¤í‚¬ êµ¬ìŠ¬ì˜ ëŒ€ê¸°ìƒíƒœ ì·¨ì†Œ)
 	UPROPERTY(BlueprintAssignable)
 	FSpellGlobeReassignedSignature FSpellGlobeReassignedDelegate;
 
-	// ½ºÅ³ ÀåÂø ¹öÆ°À» ´©¸£°í ´ë±â Áß¿¡¼­ ¼±ÅÃÀ» Ãë¼ÒÇßÀ» ¶§ È£ÃâÇÒ µ¨¸®°ÔÀÌÆ®
+	// ìŠ¤í‚¬ ì¥ì°© ë²„íŠ¼ì„ ëˆ„ë¥´ê³  ëŒ€ê¸° ì¤‘ì—ì„œ ì„ íƒì„ ì·¨ì†Œí–ˆì„ ë•Œ í˜¸ì¶œí•  ë¸ë¦¬ê²Œì´íŠ¸
 	UPROPERTY(BlueprintAssignable)
 	FWaitForEquipSelectionSignature StopWaitingForEquipDelegate;
 
 private:
-	// ÇöÀç ¼±ÅÃÇÑ ½ºÅ³ÀÇ ÅÂ±×¿Í »óÅÂ ÅÂ±×
+	// í˜„ì¬ ì„ íƒí•œ ìŠ¤í‚¬ì˜ íƒœê·¸ì™€ ìƒíƒœ íƒœê·¸
 	FSelectedAbility SelectedAbility = { UAuraGameplayTags::Get().Abilities_None, UAuraGameplayTags::Get().Abilities_Status_Locked };
-	// ÇöÀç ½ºÅ³ Æ÷ÀÎÆ®
+	// í˜„ì¬ ìŠ¤í‚¬ í¬ì¸íŠ¸
 	int32 CurrentSpellPoints = 0;
-	// ½ºÅ³ ÀåÂøÀ» ´ë±âÇÏ´Â »óÅÂÀÎ°¡?
+	// ìŠ¤í‚¬ ì¥ì°©ì„ ëŒ€ê¸°í•˜ëŠ” ìƒíƒœì¸ê°€?
 	bool bWaitingForEquipSelection = false;
-	// ÇöÀç ¼±ÅÃµÇ¾îÀÖ´Â·Ô ½ºÅ³ ½½·ÔÀÇ ÀÎÇ² ÅÂ±×(ÀåÂøÀ» À§ÇÔ)
+	// í˜„ì¬ ì„ íƒë˜ì–´ìˆëŠ”ë¡¯ ìŠ¤í‚¬ ìŠ¬ë¡¯ì˜ ì¸í’‹ íƒœê·¸(ì¥ì°©ì„ ìœ„í•¨)
 	FGameplayTag SelectedInputTag;
 };

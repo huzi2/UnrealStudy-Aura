@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 
 class UGameplayAbility;
 
-// È°¼ºÈ­µÈ ½½·Ô Á¾·ù
+// í™œì„±í™”ëœ ìŠ¬ë¡¯ ì¢…ë¥˜
 UENUM(BlueprintType)
 enum ESaveSlotStatus
 {
@@ -18,7 +18,7 @@ enum ESaveSlotStatus
 	Taken
 };
 
-// ¾×ÅÍ »óÅÂ¸¦ ÀúÀåÇÏ±â À§ÇÑ ±¸Á¶Ã¼
+// ì•¡í„° ìƒíƒœë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ êµ¬ì¡°ì²´
 USTRUCT()
 struct FSavedActor
 {
@@ -31,7 +31,7 @@ public:
 	UPROPERTY()
 	FTransform Transform = FTransform();
 
-	// ¾×ÅÍ¿¡¼­ SaveGameÀ¸·Î ¼³Á¤µÈ º¯¼öµéÀ» Á÷·ÄÈ­·Î ÀúÀåÇÏ´Â º¯¼ö(FMemoryWriter¿¡¼­ »ç¿ë)
+	// ì•¡í„°ì—ì„œ SaveGameìœ¼ë¡œ ì„¤ì •ëœ ë³€ìˆ˜ë“¤ì„ ì§ë ¬í™”ë¡œ ì €ì¥í•˜ëŠ” ë³€ìˆ˜(FMemoryWriterì—ì„œ ì‚¬ìš©)
 	UPROPERTY()
 	TArray<uint8> Bytes;
 };
@@ -41,7 +41,7 @@ inline bool operator==(const FSavedActor& a, const FSavedActor& b)
 	return a.ActorName == b.ActorName;
 }
 
-// ¸Ê »óÅÂ¸¦ ÀúÀåÇÏ±â À§ÇÑ ±¸Á¶Ã¼
+// ë§µ ìƒíƒœë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ êµ¬ì¡°ì²´
 USTRUCT()
 struct FSavedMap
 {
@@ -51,12 +51,12 @@ public:
 	UPROPERTY()
 	FString MapAssetName = FString();
 
-	// ¸Ê¿¡ ÀÖ´ø ¸ğµç ¾×ÅÍµé Á¤º¸
+	// ë§µì— ìˆë˜ ëª¨ë“  ì•¡í„°ë“¤ ì •ë³´
 	UPROPERTY()
 	TArray<FSavedActor> SavedActors;
 };
 
-// ¾îºô¸®Æ¼ ÀúÀåÀ» À§ÇÑ ±¸Á¶Ã¼
+// ì–´ë¹Œë¦¬í‹° ì €ì¥ì„ ìœ„í•œ êµ¬ì¡°ì²´
 USTRUCT(BlueprintType)
 struct FSavedAbility
 {
@@ -77,14 +77,14 @@ public:
 	int32 AbilityLevel = 1;
 };
 
-// FSavedAbility°¡ °°´Ù´Â Á¶°Ç. AddUnique¸¦ À§ÇØ ¸¸µé¾úÀ½
+// FSavedAbilityê°€ ê°™ë‹¤ëŠ” ì¡°ê±´. AddUniqueë¥¼ ìœ„í•´ ë§Œë“¤ì—ˆìŒ
 inline bool operator==(const FSavedAbility& a, const FSavedAbility& b)
 {
 	return a.AbilityTag.MatchesTagExact(b.AbilityTag);
 }
 
 /**
- * ÀúÀåÇÒ °ÔÀÓ µ¥ÀÌÅÍ
+ * ì €ì¥í•  ê²Œì„ ë°ì´í„°
  */
 UCLASS()
 class AURA_API ULoadScreenSaveGame : public USaveGame
@@ -96,7 +96,7 @@ public:
 	bool HasMap(const FString& InMapName) const;
 
 public:
-	// ¼¼ÀÌºê ½½·Ô °ü·Ã ÀúÀå ³»¿ë
+	// ì„¸ì´ë¸Œ ìŠ¬ë¡¯ ê´€ë ¨ ì €ì¥ ë‚´ìš©
 	UPROPERTY()
 	FString SlotName = FString();
 	UPROPERTY()
@@ -114,7 +114,7 @@ public:
 	UPROPERTY()
 	bool bFirstTimeLoadIn = true;
 
-	// ÇÃ·¹ÀÌ¾î °ü·Ã ÀúÀå ³»¿ë
+	// í”Œë ˆì´ì–´ ê´€ë ¨ ì €ì¥ ë‚´ìš©
 	UPROPERTY()
 	int32 PlayerLevel = 1;
 	UPROPERTY()
@@ -124,7 +124,7 @@ public:
 	UPROPERTY()
 	int32 SpellPoints = 0;
 
-	// ÇÃ·¹ÀÌ¾î ±âº» ´É·ÂÄ¡ ÀúÀå ³»¿ë
+	// í”Œë ˆì´ì–´ ê¸°ë³¸ ëŠ¥ë ¥ì¹˜ ì €ì¥ ë‚´ìš©
 	UPROPERTY()
 	float Strength = 0.f;
 	UPROPERTY()
@@ -134,11 +134,11 @@ public:
 	UPROPERTY()
 	float Vigor = 0.f;
 
-	// ÇÃ·¹ÀÌ¾î°¡ °¡Áö°í ÀÖ´ø ½ºÅ³µé
+	// í”Œë ˆì´ì–´ê°€ ê°€ì§€ê³  ìˆë˜ ìŠ¤í‚¬ë“¤
 	UPROPERTY()
 	TArray<FSavedAbility> SavedAbilities;
 
-	// °ÔÀÓ¿¡ ÀÖ´ø ¸ğµç ¸Ê Á¤º¸
+	// ê²Œì„ì— ìˆë˜ ëª¨ë“  ë§µ ì •ë³´
 	UPROPERTY()
 	TArray<FSavedMap> SavedMaps;
 };
